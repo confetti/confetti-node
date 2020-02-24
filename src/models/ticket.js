@@ -1,0 +1,64 @@
+module.exports = function({ samples }) {
+  return {
+    key: 'ticket',
+    name: 'Ticket',
+    sample: samples.ticket,
+    attributes: [
+      {
+        key: 'id',
+        label: 'ID',
+        description: 'Identifier of the ticket.',
+        type: 'number'
+      },
+      { key: 'persons', label: 'Persons', type: 'number' },
+      { key: 'hashid', label: 'Hashid', type: 'string' },
+      { key: 'description', label: 'Description', type: 'string' },
+      { key: 'price', label: 'Price', type: 'number' },
+      { key: 'currency', label: 'Currency', type: 'string' },
+      { key: 'name', label: 'Name', type: 'string' },
+      { key: 'email', label: 'Email', type: 'string' },
+      { key: 'token', label: 'Token', type: 'string' },
+      { key: 'status', label: 'Status', type: 'string' },
+      { key: 'emailStatus', label: 'Email Status', type: 'string' },
+      { key: 'checkinAt', label: 'Checkin At', type: 'date' },
+      { key: 'waitlistAt', label: 'Waitlist At', type: 'date' },
+      { key: 'startDate', label: 'Start Date', type: 'date' },
+      { key: 'endDate', label: 'End Date', type: 'date' },
+      { key: 'values', label: 'Values', type: 'object' },
+      { key: 'comment', label: 'Comment', type: 'string' },
+      { key: 'guests', label: 'Guests', type: 'number' },
+      { key: 'termsAcceptedAt', label: 'Terms Accepted At', type: 'date' },
+      {
+        key: 'deletionRequestedAt',
+        label: 'Deletion Requested At',
+        type: 'date'
+      },
+      { key: 'createdAt', label: 'Created At', type: 'date' },
+      { key: 'updatedAt', label: 'Updated At', type: 'date' },
+      { key: 'ticketBatchId', label: 'Ticket Batch Id', type: 'number' },
+      { key: 'paymentId', label: 'Payment Id', type: 'number' },
+      { key: 'eventId', label: 'Event Id', type: 'number' },
+      { key: 'contactId', label: 'Contact Id', type: 'number' }
+    ],
+    filters: {
+      eventId: {
+        type: 'number',
+        required: true
+      },
+      status: {
+        type: 'array',
+        values: [
+          { key: 'attending', label: 'Attending', type: 'string' },
+          { key: 'waitlist', label: 'Waitlist', type: 'string' },
+          { key: 'declined', label: 'Decline', type: 'string' },
+          { key: 'invited', label: 'Invited', type: 'string' },
+          {
+            key: 'deletion-requested',
+            label: 'Deletion requested',
+            type: 'string'
+          }
+        ]
+      }
+    }
+  }
+}
