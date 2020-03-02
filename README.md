@@ -1,1 +1,1 @@
-Hellow Confetti API Wrapper 👋
+Hello Confetti API Wrapper 👋
