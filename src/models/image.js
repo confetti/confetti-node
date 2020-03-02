@@ -11,7 +11,6 @@ module.exports = function({ samples }) {
         type: 'number'
       },
       { key: 'type', label: 'Type', type: 'string' },
-      { key: 'url', label: 'Url', type: 'string' },
       { key: 'order', label: 'Order', type: 'string' },
 
       { key: 'original', label: 'Original', type: 'string' },

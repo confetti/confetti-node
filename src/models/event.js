@@ -72,7 +72,21 @@ module.exports = function({ samples }) {
         ]
       },
       type: {
-        inclusion: ['future', 'past']
+        type: 'enum',
+        values: [
+          {
+            label: 'Future',
+            description: "Get events that haven't taken place yet",
+            type: 'string',
+            key: 'future'
+          },
+          {
+            label: 'Past',
+            description: 'Get events that has happend in the past',
+            type: 'string',
+            key: 'past'
+          }
+        ]
       }
     }
   }

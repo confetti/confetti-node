@@ -40,10 +40,28 @@ module.exports = function({ samples }) {
       { key: 'eventId', label: 'Event Id', type: 'number' },
       { key: 'contactId', label: 'Contact Id', type: 'number' }
     ],
+    sorting: [
+      'name',
+      'createdAt',
+      'description',
+      'hashid',
+      'email',
+      'status',
+      'checkinAt'
+    ],
     filters: {
       eventId: {
         type: 'number',
         required: true
+      },
+      search: {
+        type: 'string'
+      },
+      description: {
+        type: 'string'
+      },
+      checkedIn: {
+        type: 'boolean'
       },
       status: {
         type: 'array',
