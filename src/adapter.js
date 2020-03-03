@@ -36,7 +36,7 @@ module.exports = function({ apiKey, http }) {
       method,
       timeout: method === 'get' ? 5000 : 15000,
       headers: {
-        Authorization: `apikey ${apiKey}`,
+        'Authorization': `apikey ${apiKey}`,
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip'
       }
