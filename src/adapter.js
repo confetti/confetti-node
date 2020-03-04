@@ -1,7 +1,5 @@
-const Q = require('q')
 const url = require('url')
 const qs = require('qs')
-const zlib = require('zlib')
 
 const { Store } = require('yayson')()
 const store = new Store()
@@ -9,20 +7,9 @@ const store = new Store()
 const API_HOST = process.env.API_HOST || 'api.confetti.events'
 const API_PROTOCOL = process.env.API_PROTOCOL || 'https'
 
-const softParseJSON = function(body, raw) {
-  if (body.indexOf('{') !== 0) {
-    return body
-  }
-  if (raw) {
-    return JSON.parse(body)
-  } else {
-    return store.sync(JSON.parse(body))
-  }
-}
-
-module.exports = function({ apiKey, http }) {
-  if (!http) {
-    http = require('q-io/http')
+module.exports = function({ apiKey, fetch }) {
+  if (!fetch) {
+    fetch = require('node-fetch')
   }
 
   if (!apiKey) {
@@ -36,12 +23,12 @@ module.exports = function({ apiKey, http }) {
       method,
       timeout: method === 'get' ? 5000 : 15000,
       headers: {
-        'Authorization': `apikey ${apiKey}`,
+        Authorization: `apikey ${apiKey}`,
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip'
       }
     }
-    httpOptions.url = url.format({
+    const fetchUrl = url.format({
       host: API_HOST,
       protocol: API_PROTOCOL,
       pathname: path,
@@ -49,14 +36,20 @@ module.exports = function({ apiKey, http }) {
     })
 
     if (json) {
-      httpOptions.body = [JSON.stringify(json)]
+      httpOptions.body = JSON.stringify(json)
     }
-    const res = await http.request(httpOptions)
-    let body = await res.body.read()
-    if (res.headers['content-encoding'] === 'gzip') {
-      body = await Q.nfcall(zlib.gunzip, body)
+    const res = await fetch(fetchUrl, httpOptions)
+
+    if (res.headers.get('content-type') == 'application/json') {
+      const body = await res.json()
+      if (raw) {
+        return body
+      } else {
+        return store.sync(body)
+      }
+    } else {
+      return await res.text()
     }
-    return softParseJSON(body.toString(), raw)
   }
 
   const adapter = {

@@ -26,10 +26,8 @@
     "sinon-chai": "^3.5.0"
   },
   "dependencies": {
-    "q": "^1.5.1",
-    "q-io": "^1.13.6",
+    "node-fetch": "^2.6.0",
     "qs": "^6.9.1",
-    "yayson": "^2.0.10-quickfix",
-    "zlib": "^1.0.5"
+    "yayson": "^2.0.10-quickfix"
   }
 }

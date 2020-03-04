@@ -1,16 +1,14 @@
 const Confetti = require('../../src')
-const { expect, http, sinon } = require('../helper')
+const { expect, sinon, fetchData } = require('../helper')
+let fetch
 
 describe('Adapter', function() {
   before(function() {
-    sinon.spy(http, 'request')
-  })
-  after(function() {
-    http.request.restore()
+    fetch = sinon.stub().returns(fetchData({}))
   })
 
   it('should make a find all request with correct url', async function() {
-    const confetti = new Confetti({ key: 'my-key', http })
+    const confetti = new Confetti({ key: 'my-key', fetch })
     await confetti.events.findAll({
       filter: { workspaceId: 10 },
       page: {
@@ -18,34 +16,37 @@ describe('Adapter', function() {
         offset: 10
       }
     })
-    expect(http.request).to.have.been.calledWith({
-      url:
-        'https://api.confetti.events/' +
+    expect(fetch).to.have.been.calledWith(
+      'https://api.confetti.events/' +
         encodeURI(
           'events?filter[workspaceId]=10&page[limit]=1&page[offset]=10'
         ),
-      method: 'get',
-      timeout: 5000,
-      headers: {
-        Authorization: 'apikey my-key',
-        'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip'
+      {
+        method: 'get',
+        timeout: 5000,
+        headers: {
+          Authorization: 'apikey my-key',
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'gzip'
+        }
       }
-    })
+    )
   })
 
   it('should make a find request with correct url', async function() {
-    const confetti = new Confetti({ key: 'my-key', http })
+    const confetti = new Confetti({ key: 'my-key', fetch })
     await confetti.events.find(3)
-    expect(http.request).to.have.been.calledWith({
-      url: 'https://api.confetti.events/events/3',
-      method: 'get',
-      timeout: 5000,
-      headers: {
-        Authorization: 'apikey my-key',
-        'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip'
+    expect(fetch).to.have.been.calledWith(
+      'https://api.confetti.events/events/3',
+      {
+        method: 'get',
+        timeout: 5000,
+        headers: {
+          Authorization: 'apikey my-key',
+          'Content-Type': 'application/json',
+          'Accept-Encoding': 'gzip'
+        }
       }
-    })
+    )
   })
 })
