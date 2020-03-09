@@ -3,7 +3,13 @@ module.exports = function() {
     const raw = require(`./${model}/raw`)
     const formatted = require(`./${model}/formatted`)
     const rawMultiple = { data: [raw.data, raw.data] }
-    const formattedMultiple = [formatted, formatted]
+    const formattedMultiple = [
+      JSON.parse(JSON.stringify(formatted)),
+      JSON.parse(JSON.stringify(formatted))
+    ]
+    delete formattedMultiple[0].meta
+    delete formattedMultiple[1].meta
+
     return {
       single: {
         formatted: formatted,
