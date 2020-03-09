@@ -11,7 +11,6 @@ describe('Resources', () => {
         .stub()
         .returns(fetchData(Confetti.models.event.sample.single.raw))
       const confetti = new Confetti({ key: 'my-key', fetch })
-
       const data = await confetti.events.find(1)
       expect(data).to.deep.equal(Confetti.models.event.sample.single.formatted)
     })
@@ -20,7 +19,6 @@ describe('Resources', () => {
         .stub()
         .returns(fetchData(Confetti.models.event.sample.multiple.raw))
       const confetti = new Confetti({ key: 'my-key', fetch })
-
       const data = await confetti.events.findAll()
       expect(data).to.deep.equal(
         Confetti.models.event.sample.multiple.formatted

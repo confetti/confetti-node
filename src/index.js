@@ -5,12 +5,6 @@ const adapter = require('./adapter')
 const resources = require('./resources')
 const models = require('./models')
 
-const request = {
-  get(path) {},
-  post(path) {},
-  delete(path) {}
-}
-
 class Confetti {
   constructor(settings = {}) {
     Object.assign(
