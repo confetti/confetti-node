@@ -1,14 +1,16 @@
 const Confetti = require('../../src')
-const { expect, sinon, fetchData } = require('../helper')
-let fetch
+const { expect, sinon, fetchData, fetch } = require('../helper')
+
+const confetti = new Confetti({ key: 'my-key', fetch })
 
 describe('Adapter', function() {
-  before(function() {
-    fetch = sinon.stub().returns(fetchData({}))
+  afterEach(() => {
+    fetch.restore()
   })
 
   it('should make a find all request with correct url', async function() {
-    const confetti = new Confetti({ key: 'my-key', fetch })
+    fetch.get(/.*\/events/, {})
+
     await confetti.events.findAll({
       filter: { workspaceId: 10 },
       page: {
@@ -16,37 +18,117 @@ describe('Adapter', function() {
         offset: 10
       }
     })
-    expect(fetch).to.have.been.calledWith(
+
+    const [url, params] = fetch.calls()[0]
+    expect(url).to.equal(
       'https://api.confetti.events/' +
-        encodeURI(
-          'events?filter[workspaceId]=10&page[limit]=1&page[offset]=10'
-        ),
-      {
-        method: 'get',
-        timeout: 5000,
-        headers: {
-          Authorization: 'apikey my-key',
-          'Content-Type': 'application/json',
-          'Accept-Encoding': 'gzip'
-        }
-      }
+        encodeURI('events?filter[workspaceId]=10&page[limit]=1&page[offset]=10')
     )
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip'
+      }
+    })
   })
 
   it('should make a find request with correct url', async function() {
-    const confetti = new Confetti({ key: 'my-key', fetch })
+    fetch.get('https://api.confetti.events/events/3', {})
     await confetti.events.find(3)
-    expect(fetch).to.have.been.calledWith(
-      'https://api.confetti.events/events/3',
-      {
-        method: 'get',
-        timeout: 5000,
-        headers: {
-          Authorization: 'apikey my-key',
-          'Content-Type': 'application/json',
-          'Accept-Encoding': 'gzip'
+    const [url, params] = fetch.calls()[0]
+    expect(url).to.equal('https://api.confetti.events/events/3')
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip'
+      }
+    })
+  })
+
+  it('should handle a text response', async function() {
+    fetch.get('https://api.confetti.events/events/1', {
+      status: 200,
+      body: 'foo'
+    })
+    const res = await confetti.events.find(1)
+    expect(res).to.equal('foo')
+  })
+
+  it('should handle 404 response', async function() {
+    fetch.get('https://api.confetti.events/events/1', {
+      status: 404,
+      body: {
+        message: 'event',
+        type: 'event',
+        name: 'NotFoundError'
+      }
+    })
+    try {
+      const res = await confetti.events.find(1)
+      throw new Error('test failed')
+    } catch (e) {
+      expect(e.name).to.equal('NotFoundError')
+      expect(e.message).to.equal('event')
+      expect(e.errorType).to.equal('event')
+      expect(e.type).to.equal('event')
+    }
+  })
+
+  it('should handle 400 response', async function() {
+    fetch.get('https://api.confetti.events/events/1', {
+      status: 400,
+      body: {
+        message: 'validation',
+        type: 'validation',
+        name: 'ParameterError',
+        fields: {
+          name: [
+            "Name can't be blank",
+            'Name is too short (minimum is 3 characters)'
+          ],
+          email: ["Email can't be blank", 'Email is not a valid email'],
+          terms: ['Terms must be accepted.']
         }
       }
-    )
+    })
+    try {
+      const res = await confetti.events.find(1)
+      throw new Error('test failed')
+    } catch (e) {
+      expect(e.name).to.equal('ParameterError')
+      expect(e.message).to.equal('validation')
+      expect(e.errorType).to.equal('validation')
+      expect(e.type).to.equal('validation')
+      expect(e.fields).to.deep.equal({
+        name: [
+          "Name can't be blank",
+          'Name is too short (minimum is 3 characters)'
+        ],
+        email: ["Email can't be blank", 'Email is not a valid email'],
+        terms: ['Terms must be accepted.']
+      })
+    }
+  })
+
+  it('should handle 500 response', async function() {
+    fetch.get('https://api.confetti.events/events/1', {
+      status: 500,
+      body: {}
+    })
+    try {
+      const res = await confetti.events.find(1)
+      throw new Error('test failed')
+    } catch (e) {
+      expect(e.name).to.equal('Error')
+      expect(e.message).to.equal('')
+      expect(e.errorType).to.equal(undefined)
+      expect(e.type).to.equal(undefined)
+    }
   })
 })

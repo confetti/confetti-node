@@ -1,7 +1,7 @@
 module.exports = function({ adapter, models }) {
   const createResource = resourceName => {
     return {
-      findAll({ filter, sort, page } = {}) {
+      findAll({ filter, sort, page, raw } = {}) {
         return adapter.get({
           path: resourceName,
           filter,
@@ -9,8 +9,8 @@ module.exports = function({ adapter, models }) {
           page
         })
       },
-      find(id) {
-        return adapter.get({ path: `${resourceName}/${id}` })
+      find(id, { raw } = {}) {
+        return adapter.get({ path: `${resourceName}/${id}`, raw })
       }
     }
   }

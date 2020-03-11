@@ -10,7 +10,12 @@ class Confetti {
     Object.assign(
       this,
       resources({
-        adapter: adapter({ apiKey: settings.key, fetch: settings.fetch }),
+        adapter: adapter({
+          apiKey: settings.key,
+          fetch: settings.fetch,
+          apiHost: settings.host,
+          apiProtocol: settings.protocol
+        }),
         models
       })
     )
