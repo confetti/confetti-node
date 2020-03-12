@@ -77,6 +77,49 @@ module.exports = function({ samples }) {
           }
         ]
       }
-    }
+    },
+    webhooks: [
+      {
+        type: 'ticket.attending',
+        label: 'Attending',
+        description: 'Triggers when someone attendes a event'
+      },
+      {
+        type: 'ticket.declined',
+        label: 'Declined',
+        description: 'Triggers when someone declines'
+      },
+      {
+        type: 'ticket.invited',
+        label: 'Invited',
+        description: 'Triggers when someone is invited'
+      },
+      {
+        type: 'ticket.waitlist',
+        label: 'Waitlisted',
+        description: 'Triggers when someone is waitlisted'
+      },
+      {
+        type: 'ticket.updated',
+        label: 'Updated',
+        description: 'Triggers when a ticket is updated'
+      },
+      {
+        type: 'ticket.deleted',
+        label: 'Deleted',
+        description: 'Triggers when a ticket is deleted'
+      },
+      {
+        type: 'ticket.unsubscribed',
+        label: 'Unsubscribed',
+        description: 'Triggers when someone is unsubscribed from emails'
+      },
+      {
+        type: 'ticket.deletion-requested',
+        label: 'Deletion requested',
+        description:
+          'Triggers when someone requests to get deleted from an event'
+      }
+    ]
   }
 }

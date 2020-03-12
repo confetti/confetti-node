@@ -88,6 +88,18 @@ module.exports = function({ samples }) {
           }
         ]
       }
-    }
+    },
+    webhooks: [
+      {
+        type: 'event.updated',
+        label: 'Updated',
+        description: 'Triggers when an event is updated'
+      },
+      {
+        type: 'event.created',
+        label: 'Created',
+        description: 'Triggers when an event is created'
+      }
+    ]
   }
 }

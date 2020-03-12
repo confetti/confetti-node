@@ -73,6 +73,18 @@ module.exports = function({ samples }) {
           }
         ]
       }
-    }
+    },
+    webhooks: [
+      {
+        type: 'payment.paid',
+        label: 'Paid',
+        description: 'Triggers when a payment is paid'
+      },
+      {
+        type: 'payment.refunded',
+        label: 'Refunded',
+        description: 'Triggers when a payment is refunded'
+      }
+    ]
   }
 }
