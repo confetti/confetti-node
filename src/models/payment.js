@@ -1,6 +1,7 @@
 module.exports = function({ samples }) {
   return {
     key: 'payment',
+    endpoint: 'payments',
     name: 'Payment',
     sample: samples.payment,
     attributes: [

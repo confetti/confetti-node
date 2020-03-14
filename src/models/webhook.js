@@ -2,6 +2,7 @@ module.exports = function({ samples }) {
   return {
     key: 'webhook',
     name: 'Webhook',
+    endpoint: 'webhooks',
     sample: samples.webhook,
     attributes: [
       {

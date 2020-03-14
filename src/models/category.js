@@ -2,6 +2,7 @@ module.exports = function({ samples }) {
   return {
     key: 'category',
     name: 'Category',
+    endpoint: 'categories',
     sample: samples.category,
     attributes: [
       {

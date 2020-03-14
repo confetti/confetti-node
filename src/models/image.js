@@ -2,6 +2,7 @@ module.exports = function({ samples }) {
   return {
     key: 'image',
     name: 'Image',
+    endpoint: 'images',
     sample: samples.image,
     attributes: [
       {

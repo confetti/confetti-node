@@ -2,6 +2,7 @@ module.exports = function({ samples }) {
   return {
     key: 'workspace',
     name: 'Workspace',
+    endpoint: 'workspaces',
     sample: samples.workspace,
     attributes: [
       {
