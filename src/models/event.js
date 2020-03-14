@@ -93,12 +93,12 @@ module.exports = function({ samples }) {
       {
         type: 'event.updated',
         label: 'Updated',
-        description: 'Triggers when an event is updated'
+        description: 'Triggers when an event is updated.'
       },
       {
         type: 'event.created',
         label: 'Created',
-        description: 'Triggers when an event is created'
+        description: 'Triggers when an event is created.'
       }
     ]
   }

@@ -79,12 +79,12 @@ module.exports = function({ samples }) {
       {
         type: 'payment.paid',
         label: 'Paid',
-        description: 'Triggers when a payment is paid'
+        description: 'Triggers when a payment is paid.'
       },
       {
         type: 'payment.refunded',
         label: 'Refunded',
-        description: 'Triggers when a payment is refunded'
+        description: 'Triggers when a payment is refunded.'
       }
     ]
   }
