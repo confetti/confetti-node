@@ -1,7 +1,7 @@
 const Confetti = require('../../src')
 const { expect, sinon, fetchData, fetch } = require('../helper')
 
-const confetti = new Confetti({ key: 'my-key', fetch })
+const confetti = new Confetti({ apiKey: 'my-key', fetch })
 
 describe('Adapter', function() {
   afterEach(() => {

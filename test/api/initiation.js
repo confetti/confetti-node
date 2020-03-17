@@ -6,9 +6,10 @@ describe('Initiat', function() {
     new Confetti({ key: 'my-key' })
   })
 
-  it('should fail to initiate a Confetti api instance due to missing api key', function() {
-    expect(() => {
-      new Confetti()
-    }).to.throw('missing_api_key')
+  it('should fail to call due on Confetti api instance due to missing api key', async function() {
+    const confetti = new Confetti()
+    await expect(confetti.events.findAll()).to.be.rejectedWith(
+      'missing_api_key'
+    )
   })
 })

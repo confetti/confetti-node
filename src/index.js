@@ -11,7 +11,7 @@ class Confetti {
       this,
       resources({
         adapter: adapter({
-          apiKey: settings.key,
+          apiKey: settings.apiKey,
           fetch: settings.fetch,
           apiHost: settings.host,
           apiProtocol: settings.protocol
@@ -23,5 +23,13 @@ class Confetti {
 }
 
 Confetti.models = models
+
+Object.assign(
+  Confetti,
+  resources({
+    adapter: adapter(),
+    models
+  })
+)
 
 module.exports = Confetti

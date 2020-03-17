@@ -1,16 +1,36 @@
 module.exports = function({ adapter, models }) {
   const createResource = resourceName => {
     return {
-      findAll({ filter, sort, page, raw } = {}) {
+      findAll({
+        filter,
+        sort,
+        page,
+        raw,
+        apiKey,
+        fetch,
+        apiHost,
+        apiProtocol
+      } = {}) {
         return adapter.get({
           path: resourceName,
           filter,
           sort,
-          page
+          page,
+          apiKey,
+          fetch,
+          apiHost,
+          apiProtocol
         })
       },
-      find(id, { raw } = {}) {
-        return adapter.get({ path: `${resourceName}/${id}`, raw })
+      find(id, { raw, apiKey, fetch, apiHost, apiProtocol } = {}) {
+        return adapter.get({
+          path: `${resourceName}/${id}`,
+          raw,
+          apiKey,
+          fetch,
+          apiHost,
+          apiProtocol
+        })
       }
     }
   }

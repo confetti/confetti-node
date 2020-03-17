@@ -6,20 +6,24 @@ const { ParameterError, NotFoundError } = require('./errors')
 const { Store } = require('yayson')()
 const store = new Store()
 
-module.exports = function({ apiKey, fetch, apiHost, apiProtocol }) {
-  const API_HOST = apiHost || process.env.API_HOST || 'api.confetti.events'
-  const API_PROTOCOL = apiProtocol || process.env.API_PROTOCOL || 'https'
-
-  if (!fetch) {
-    fetch = require('node-fetch')
-  }
-
-  if (!apiKey) {
-    throw new Error('missing_api_key')
-  }
-
+module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
   const httpRequest = async function(method, options) {
     let { path, json, filter, sort, page, raw } = options
+
+    if (options.apiKey) apiKey = options.apiKey
+    if (options.fetch) fetch = options.fetch
+    if (options.apiHost) apiHost = options.host
+    if (options.apiProtocol) apiProtocol = options.protocol
+
+    const API_HOST = apiHost || process.env.API_HOST || 'api.confetti.events'
+    const API_PROTOCOL = apiProtocol || process.env.API_PROTOCOL || 'https'
+
+    if (!fetch) {
+      fetch = require('node-fetch')
+    }
+    if (!apiKey) {
+      throw new Error('missing_api_key')
+    }
 
     const httpOptions = {
       method,
