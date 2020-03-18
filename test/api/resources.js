@@ -296,6 +296,17 @@ describe('Resources', () => {
           Confetti.models.webhook.sample.single.formatted
         )
       })
+
+      it('should delete a webhook', async function() {
+        fetch.delete('https://api.confetti.events/webhooks/1', 204)
+        await Confetti.webhooks.delete(1, {
+          apiKey: 'my-key',
+          fetch
+        })
+        const [url, options] = fetch.lastCall()
+        expect(url).to.equal('https://api.confetti.events/webhooks/1')
+        expect(options.method).to.equal('delete')
+      })
     })
 
     describe('Workspaces', function() {

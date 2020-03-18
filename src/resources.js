@@ -56,6 +56,22 @@ module.exports = function({ adapter, models }) {
       })
     }
   }
+  const addDelete = (resources, resourceName) => {
+    resources[resourceName].delete = (
+      id,
+      { raw, apiKey, fetch, apiHost, apiProtocol } = {}
+    ) => {
+      return adapter.delete({
+        path: `${resourceName}/${id}`,
+        raw,
+        apiKey,
+        fetch,
+        apiHost,
+        apiProtocol,
+        type: resourceName
+      })
+    }
+  }
 
   let resources = {}
 
@@ -74,6 +90,7 @@ module.exports = function({ adapter, models }) {
 
   resources = ['webhooks'].reduce((result, key) => {
     addCreate(result, key)
+    addDelete(result, key)
     return result
   }, resources)
 
