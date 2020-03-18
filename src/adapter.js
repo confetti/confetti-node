@@ -12,13 +12,15 @@ class WorkspacePresenter extends Presenter {}
 WorkspacePresenter.prototype.type = 'workspace'
 class WebhookPresenter extends Presenter {
   attributes(webhook) {
-    webhook.event = {
-      id: webhook.eventId
+    if (webhook.eventId) {
+      webhook.event = {
+        id: webhook.eventId
+      }
+      delete webhook.eventId
     }
     webhook.workspace = {
       id: webhook.workspaceId
     }
-    delete webhook.eventId
     delete webhook.workspaceId
     return super.attributes(webhook)
   }
