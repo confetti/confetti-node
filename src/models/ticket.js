@@ -83,12 +83,14 @@ module.exports = function({ samples }) {
       {
         type: 'ticket.attending',
         label: 'Attending',
-        description: 'Triggers when someone attendes a event.'
+        description: 'Triggers when someone attendes a event.',
+        important: true
       },
       {
         type: 'ticket.declined',
         label: 'Declined',
-        description: 'Triggers when someone declines.'
+        description: 'Triggers when someone declines.',
+        important: true
       },
       {
         type: 'ticket.invited',
