@@ -236,6 +236,66 @@ describe('Resources', () => {
           Confetti.models.webhook.sample.multiple.formatted
         )
       })
+      it('should create a webhook', async function() {
+        fetch.post(
+          'https://api.confetti.events/webhooks',
+          Confetti.models.webhook.sample.single.raw
+        )
+        const data = await Confetti.webhooks.create(
+          {
+            type: 'ticket.attending',
+            url: 'https://hooks.zapier.com/hooks/standard/1337/',
+            provider: 'zapier',
+            workspaceId: 57,
+            eventId: 2
+          },
+          {
+            apiKey: 'my-key',
+            fetch
+          }
+        )
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'webhook',
+            attributes: {
+              url: 'https://hooks.zapier.com/hooks/standard/1337/',
+              provider: 'zapier',
+              type: 'ticket.attending'
+            },
+            relationships: {
+              workspace: {
+                data: {
+                  type: 'workspace',
+                  id: '57'
+                }
+              },
+              event: {
+                data: {
+                  type: 'event',
+                  id: '2'
+                }
+              }
+            }
+          },
+          included: [
+            {
+              attributes: {},
+              id: '2',
+              type: 'event'
+            },
+            {
+              attributes: {},
+              id: '57',
+              type: 'workspace'
+            }
+          ]
+        })
+
+        expect(data).to.deep.equal(
+          Confetti.models.webhook.sample.single.formatted
+        )
+      })
     })
 
     describe('Workspaces', function() {
