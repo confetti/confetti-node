@@ -6,37 +6,11 @@ const { ParameterError, NotFoundError } = require('./errors')
 const { Store, Presenter } = require('yayson')()
 const store = new Store()
 
-class EventPresenter extends Presenter {}
-EventPresenter.prototype.type = 'event'
-class WorkspacePresenter extends Presenter {}
-WorkspacePresenter.prototype.type = 'workspace'
-class WebhookPresenter extends Presenter {
-  attributes(webhook) {
-    if (webhook.eventId) {
-      webhook.event = {
-        id: webhook.eventId
-      }
-      delete webhook.eventId
-    }
-    webhook.workspace = {
-      id: webhook.workspaceId
-    }
-    delete webhook.workspaceId
-    return super.attributes(webhook)
-  }
-  relationships() {
-    return {
-      event: EventPresenter,
-      workspace: WorkspacePresenter
-    }
-  }
-}
-WebhookPresenter.prototype.type = 'webhook'
-const presenter = new WebhookPresenter()
+const presenters = require('./presenters')
 
 module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
   const httpRequest = async function(method, options) {
-    let { path, json, filter, sort, page, raw } = options
+    let { path, json, filter, sort, page, raw, type } = options
 
     if (options.apiKey) apiKey = options.apiKey
     if (options.fetch) fetch = options.fetch
@@ -69,7 +43,7 @@ module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       search: qs.stringify({ filter, sort, page })
     })
     if (json) {
-      httpOptions.body = JSON.stringify(presenter.render(json))
+      httpOptions.body = JSON.stringify(presenters[type].render(json))
     }
 
     const res = await fetch(fetchUrl, httpOptions)
