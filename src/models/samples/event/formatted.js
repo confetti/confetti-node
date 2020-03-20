@@ -1,12 +1,12 @@
 module.exports = {
   name: 'My first event',
   startDate: '2020-09-19T16:00:00.000Z',
+  endDate: '2020-09-19T19:00:00.000Z',
   timeZone: 'Europe/Berlin',
   slug: 'green-summer-18717b',
   status: 'open',
   featureLevel: 'business',
   signupType: 'rsvp',
-  publishedAt: '2018-10-11T13:06:16.432Z',
   website: 'http://jonny-action.confetti.test/my-first-event',
   email: 'jonny.stromberg@gmail.com',
   rsvpLimit: 100,

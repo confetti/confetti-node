@@ -26,7 +26,6 @@ module.exports = function({ samples }) {
       { key: 'signupType', label: 'Signup Type', type: 'string' },
       { key: 'signupStartAt', label: 'Signup Start At', type: 'date' },
       { key: 'signupEndAt', label: 'Signup End At', type: 'date' },
-      { key: 'publishedAt', label: 'Published At', type: 'date' },
       { key: 'website', label: 'Website', type: 'string' },
       { key: 'email', label: 'Email', type: 'string' },
       { key: 'rsvpLimit', label: 'Rsvp Limit', type: 'number' },
