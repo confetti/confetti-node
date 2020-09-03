@@ -26,16 +26,16 @@ module.exports = {
       colors: {},
       waitlist: true,
       location: {
-        url: 'http://www.google.com/maps?q=undefined'
-      }
+        url: 'http://www.google.com/maps?q=undefined',
+      },
     },
     relationships: {
       images: {
-        data: null
-      }
-    }
+        data: null,
+      },
+    },
   },
   meta: {
-    webhookType: 'event.updated'
-  }
+    webhookType: 'event.updated',
+  },
 }

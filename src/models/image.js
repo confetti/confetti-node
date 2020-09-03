@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'image',
     name: 'Image',
@@ -9,7 +9,7 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the category.',
-        type: 'number'
+        type: 'number',
       },
       { key: 'type', label: 'Type', type: 'string' },
       { key: 'order', label: 'Order', type: 'string' },
@@ -28,8 +28,8 @@ module.exports = function({ samples }) {
 
       { key: 'title', label: 'Title', type: 'string' },
       { key: 'description', label: 'Description', type: 'string' },
-      { key: 'link', label: 'Link', type: 'string' }
+      { key: 'link', label: 'Link', type: 'string' },
     ],
-    filters: {}
+    filters: {},
   }
 }

@@ -8,8 +8,8 @@ const store = new Store()
 
 const presenters = require('./presenters')
 
-module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
-  const httpRequest = async function(method, options) {
+module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
+  const httpRequest = async function (method, options) {
     let { path, json, filter, sort, page, raw, type } = options
 
     if (options.apiKey) apiKey = options.apiKey
@@ -33,14 +33,14 @@ module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       headers: {
         Authorization: `apikey ${apiKey}`,
         'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip'
-      }
+        'Accept-Encoding': 'gzip',
+      },
     }
     const fetchUrl = url.format({
       host: API_HOST,
       protocol: API_PROTOCOL,
       pathname: path,
-      search: qs.stringify({ filter, sort, page })
+      search: qs.stringify({ filter, sort, page }),
     })
     if (json) {
       httpOptions.body = JSON.stringify(presenters[type].render(json))
@@ -95,7 +95,7 @@ module.exports = function({ apiKey, fetch, apiHost, apiProtocol } = {}) {
 
     async delete(options) {
       return await httpRequest('delete', options)
-    }
+    },
   }
 
   return adapter

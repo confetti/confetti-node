@@ -7,5 +7,5 @@ module.exports = {
   payment: require('./payment')({ samples }),
   ticket: require('./ticket')({ samples }),
   webhook: require('./webhook')({ samples }),
-  workspace: require('./workspace')({ samples })
+  workspace: require('./workspace')({ samples }),
 }

@@ -26,5 +26,5 @@ module.exports = {
   contactId: 112395,
   id: '3344691',
   type: 'ticket',
-  meta: { webhookType: 'ticket.attending' }
+  meta: { webhookType: 'ticket.attending' },
 }

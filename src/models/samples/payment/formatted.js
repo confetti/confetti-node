@@ -14,5 +14,5 @@ module.exports = {
   customer: { other: 'Extra information' },
   id: '288298',
   type: 'payment',
-  meta: { webhookType: 'payment.paid' }
+  meta: { webhookType: 'payment.paid' },
 }

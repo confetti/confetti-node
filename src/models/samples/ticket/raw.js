@@ -19,7 +19,7 @@ module.exports = {
       endDate: null,
       values: {
         'field-one-field': 'Veg',
-        'field-what-do-you-think': ['Yes']
+        'field-what-do-you-think': ['Yes'],
       },
       comment: null,
       guests: 0,
@@ -30,10 +30,10 @@ module.exports = {
       ticketBatchId: 16090,
       paymentId: 288297,
       eventId: 16969,
-      contactId: 112395
-    }
+      contactId: 112395,
+    },
   },
   meta: {
-    webhookType: 'ticket.attending'
-  }
+    webhookType: 'ticket.attending',
+  },
 }

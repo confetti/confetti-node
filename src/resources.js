@@ -1,4 +1,4 @@
-module.exports = function({ adapter, models }) {
+module.exports = function ({ adapter, models }) {
   const addFindAll = (resources, resourceName) => {
     resources[resourceName].findAll = ({
       filter,
@@ -8,7 +8,7 @@ module.exports = function({ adapter, models }) {
       apiKey,
       fetch,
       apiHost,
-      apiProtocol
+      apiProtocol,
     } = {}) => {
       return adapter.get({
         path: resourceName,
@@ -19,7 +19,7 @@ module.exports = function({ adapter, models }) {
         fetch,
         apiHost,
         apiProtocol,
-        type: resourceName
+        type: resourceName,
       })
     }
   }
@@ -35,7 +35,7 @@ module.exports = function({ adapter, models }) {
         fetch,
         apiHost,
         apiProtocol,
-        type: resourceName
+        type: resourceName,
       })
     }
   }
@@ -52,7 +52,7 @@ module.exports = function({ adapter, models }) {
         fetch,
         apiHost,
         apiProtocol,
-        type: resourceName
+        type: resourceName,
       })
     }
   }
@@ -68,7 +68,7 @@ module.exports = function({ adapter, models }) {
         fetch,
         apiHost,
         apiProtocol,
-        type: resourceName
+        type: resourceName,
       })
     }
   }
@@ -80,7 +80,7 @@ module.exports = function({ adapter, models }) {
     'payments',
     'tickets',
     'webhooks',
-    'workspaces'
+    'workspaces',
   ].reduce((result, key) => {
     result[key] = {}
     addFindAll(result, key)

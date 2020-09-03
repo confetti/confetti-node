@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'event',
     endpoint: 'events',
@@ -9,13 +9,13 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the event.',
-        type: 'number'
+        type: 'number',
       },
       {
         key: 'name',
         label: 'Name',
         description: 'Event name',
-        type: 'string'
+        type: 'string',
       },
       { key: 'startDate', label: 'Start Date', type: 'date' },
       { key: 'endDate', label: 'End Date', type: 'date' },
@@ -43,15 +43,15 @@ module.exports = function({ samples }) {
       { key: 'locale', label: 'Locale', type: 'string' },
       { key: 'primaryColor', label: 'Primary color', type: 'string' },
       { key: 'colors', label: 'Colors', type: 'string' },
-      { key: 'waitlist', label: 'Has a waitlist', type: 'string' }
+      { key: 'waitlist', label: 'Has a waitlist', type: 'string' },
     ],
     filters: {
       hasWorkspace: {
         type: 'boolean',
-        description: ''
+        description: '',
       },
       workspaceId: {
-        type: 'number'
+        type: 'number',
       },
       signupType: {
         type: 'enum',
@@ -60,15 +60,15 @@ module.exports = function({ samples }) {
             label: 'RSVP',
             description: 'Events with signup type RSVP',
             type: 'string',
-            key: 'rsvp'
+            key: 'rsvp',
           },
           {
             label: 'Tickets',
             description: 'Events with signup type tickets',
             type: 'string',
-            key: 'tickets'
-          }
-        ]
+            key: 'tickets',
+          },
+        ],
       },
       type: {
         type: 'enum',
@@ -77,28 +77,28 @@ module.exports = function({ samples }) {
             label: 'Future',
             description: "Get events that haven't taken place yet",
             type: 'string',
-            key: 'future'
+            key: 'future',
           },
           {
             label: 'Past',
             description: 'Get events that has happend in the past',
             type: 'string',
-            key: 'past'
-          }
-        ]
-      }
+            key: 'past',
+          },
+        ],
+      },
     },
     webhooks: [
       {
         type: 'event.updated',
         label: 'Updated',
-        description: 'Triggers when an event is updated.'
+        description: 'Triggers when an event is updated.',
       },
       {
         type: 'event.created',
         label: 'Created',
-        description: 'Triggers when an event is created.'
-      }
-    ]
+        description: 'Triggers when an event is created.',
+      },
+    ],
   }
 }

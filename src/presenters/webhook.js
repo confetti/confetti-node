@@ -1,15 +1,15 @@
-module.exports = function({ presenters, Presenter }) {
+module.exports = function ({ presenters, Presenter }) {
   class WebhookPresenter extends Presenter {
     attributes(webhook) {
       if (webhook.eventId) {
         webhook.event = {
-          id: webhook.eventId
+          id: webhook.eventId,
         }
         delete webhook.eventId
       }
       if (webhook.workspaceId) {
         webhook.workspace = {
-          id: webhook.workspaceId
+          id: webhook.workspaceId,
         }
         delete webhook.workspaceId
       }
@@ -19,7 +19,7 @@ module.exports = function({ presenters, Presenter }) {
     relationships() {
       return {
         event: presenters.EventPresenter,
-        workspace: presenters.WorkspacePresenter
+        workspace: presenters.WorkspacePresenter,
       }
     }
   }

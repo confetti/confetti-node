@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'workspace',
     name: 'Workspace',
@@ -9,13 +9,13 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the workspace.',
-        type: 'number'
+        type: 'number',
       },
       {
         key: 'name',
         label: 'Name',
         description: 'Workspace name.',
-        type: 'string'
+        type: 'string',
       },
       { key: 'timeZone', label: 'Time Zone', type: 'string' },
       { key: 'slug', label: 'Slug', type: 'string' },
@@ -28,8 +28,8 @@ module.exports = function({ samples }) {
       { key: 'shareTitle', label: 'ShareTitle', type: 'string' },
       { key: 'shareDescription', label: 'Share description', type: 'string' },
       { key: 'summary', label: 'Summary', type: 'string' },
-      { key: 'primaryColor', label: 'Primary color', type: 'string' }
+      { key: 'primaryColor', label: 'Primary color', type: 'string' },
     ],
-    filters: {}
+    filters: {},
   }
 }

@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'category',
     name: 'Category',
@@ -9,15 +9,15 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the category.',
-        type: 'number'
+        type: 'number',
       },
       {
         key: 'name',
         label: 'Name',
         description: 'Category name.',
-        type: 'string'
-      }
+        type: 'string',
+      },
     ],
-    filters: {}
+    filters: {},
   }
 }

@@ -5,5 +5,5 @@ module.exports = {
   status: 'active',
   createdAt: '2020-02-29T15:12:12.435Z',
   updatedAt: '2020-02-29T15:12:12.435Z',
-  id: '1'
+  id: '1',
 }

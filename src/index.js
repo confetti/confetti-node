@@ -14,9 +14,9 @@ class Confetti {
           apiKey: settings.apiKey,
           fetch: settings.fetch,
           apiHost: settings.host,
-          apiProtocol: settings.protocol
+          apiProtocol: settings.protocol,
         }),
-        models
+        models,
       })
     )
   }
@@ -28,7 +28,7 @@ Object.assign(
   Confetti,
   resources({
     adapter: adapter(),
-    models
+    models,
   })
 )
 

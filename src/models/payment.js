@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'payment',
     endpoint: 'payments',
@@ -9,7 +9,7 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the ticket.',
-        type: 'number'
+        type: 'number',
       },
       { key: 'name', label: 'Name', type: 'string' },
       { key: 'email', label: 'Email', type: 'string' },
@@ -26,12 +26,12 @@ module.exports = function({ samples }) {
       { key: 'paidAt', label: 'Paid At', type: 'date' },
       { key: 'commission', label: 'Commission', type: 'number' },
       { key: 'commissionVat', label: 'Commission VAT', type: 'date' },
-      { key: 'customer', label: 'Customer information', type: 'object' }
+      { key: 'customer', label: 'Customer information', type: 'object' },
     ],
     filters: {
       eventId: {
         type: 'number',
-        required: true
+        required: true,
       },
       status: {
         type: 'array',
@@ -40,52 +40,52 @@ module.exports = function({ samples }) {
             key: 'paid',
             value: 'paid',
             label: 'Paid',
-            type: 'string'
+            type: 'string',
           },
           {
             key: 'refunded',
             value: 'refunded',
             label: 'Refunded',
-            type: 'string'
+            type: 'string',
           },
           {
             key: 'pendingInvoice',
             value: 'pending-invoice',
             label: 'Pending Invoice',
-            type: 'string'
+            type: 'string',
           },
           {
             key: 'sentInvoice',
             value: 'sent-invoice',
             label: 'Sent Invoice',
-            type: 'string'
+            type: 'string',
           },
           {
             key: 'paidInvoice',
             value: 'paid-invoice',
             label: 'Paid Invoice',
-            type: 'string'
+            type: 'string',
           },
           {
             key: 'cancelledInvoice',
             value: 'cancelled-invoice',
             label: 'Cancelled Invoice',
-            type: 'string'
-          }
-        ]
-      }
+            type: 'string',
+          },
+        ],
+      },
     },
     webhooks: [
       {
         type: 'payment.paid',
         label: 'Paid',
-        description: 'Triggers when a payment is paid.'
+        description: 'Triggers when a payment is paid.',
       },
       {
         type: 'payment.refunded',
         label: 'Refunded',
-        description: 'Triggers when a payment is refunded.'
-      }
-    ]
+        description: 'Triggers when a payment is refunded.',
+      },
+    ],
   }
 }

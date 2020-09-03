@@ -16,11 +16,11 @@ module.exports = {
       commission: '5.65',
       commissionVat: '1.13',
       customer: {
-        other: 'Extra information'
-      }
-    }
+        other: 'Extra information',
+      },
+    },
   },
   meta: {
-    webhookType: 'payment.paid'
-  }
+    webhookType: 'payment.paid',
+  },
 }

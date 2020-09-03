@@ -25,5 +25,5 @@ module.exports = {
   id: '16500',
   type: 'event',
   images: null,
-  meta: { webhookType: 'event.updated' }
+  meta: { webhookType: 'event.updated' },
 }

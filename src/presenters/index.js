@@ -12,5 +12,5 @@ presenters.WorkspacePresenter = WorkspacePresenter
 module.exports = {
   webhooks: WebhookPresenter,
   events: EventPresenter,
-  workspaces: WorkspacePresenter
+  workspaces: WorkspacePresenter,
 }

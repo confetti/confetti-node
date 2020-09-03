@@ -1,4 +1,4 @@
-module.exports = function({ samples }) {
+module.exports = function ({ samples }) {
   return {
     key: 'ticket',
     endpoint: 'tickets',
@@ -9,7 +9,7 @@ module.exports = function({ samples }) {
         key: 'id',
         label: 'ID',
         description: 'Identifier of the ticket.',
-        type: 'number'
+        type: 'number',
       },
       { key: 'persons', label: 'Persons', type: 'number' },
       { key: 'hashid', label: 'Hashid', type: 'string' },
@@ -32,14 +32,14 @@ module.exports = function({ samples }) {
       {
         key: 'deletionRequestedAt',
         label: 'Deletion Requested At',
-        type: 'date'
+        type: 'date',
       },
       { key: 'createdAt', label: 'Created At', type: 'date' },
       { key: 'updatedAt', label: 'Updated At', type: 'date' },
       { key: 'ticketBatchId', label: 'Ticket Batch Id', type: 'number' },
       { key: 'paymentId', label: 'Payment Id', type: 'number' },
       { key: 'eventId', label: 'Event Id', type: 'number' },
-      { key: 'contactId', label: 'Contact Id', type: 'number' }
+      { key: 'contactId', label: 'Contact Id', type: 'number' },
     ],
     sorting: [
       'name',
@@ -48,21 +48,21 @@ module.exports = function({ samples }) {
       'hashid',
       'email',
       'status',
-      'checkinAt'
+      'checkinAt',
     ],
     filters: {
       eventId: {
         type: 'number',
-        required: true
+        required: true,
       },
       search: {
-        type: 'string'
+        type: 'string',
       },
       description: {
-        type: 'string'
+        type: 'string',
       },
       checkedIn: {
-        type: 'boolean'
+        type: 'boolean',
       },
       status: {
         type: 'array',
@@ -74,55 +74,55 @@ module.exports = function({ samples }) {
           {
             key: 'deletion-requested',
             label: 'Deletion requested',
-            type: 'string'
-          }
-        ]
-      }
+            type: 'string',
+          },
+        ],
+      },
     },
     webhooks: [
       {
         type: 'ticket.attending',
         label: 'Attending',
         description: 'Triggers when someone attendes a event.',
-        important: true
+        important: true,
       },
       {
         type: 'ticket.declined',
         label: 'Declined',
         description: 'Triggers when someone declines.',
-        important: true
+        important: true,
       },
       {
         type: 'ticket.invited',
         label: 'Invited',
-        description: 'Triggers when someone is invited.'
+        description: 'Triggers when someone is invited.',
       },
       {
         type: 'ticket.waitlist',
         label: 'Waitlisted',
-        description: 'Triggers when someone is waitlisted.'
+        description: 'Triggers when someone is waitlisted.',
       },
       {
         type: 'ticket.updated',
         label: 'Updated',
-        description: 'Triggers when a ticket is updated.'
+        description: 'Triggers when a ticket is updated.',
       },
       {
         type: 'ticket.deleted',
         label: 'Deleted',
-        description: 'Triggers when a ticket is deleted.'
+        description: 'Triggers when a ticket is deleted.',
       },
       {
         type: 'ticket.unsubscribed',
         label: 'Unsubscribed',
-        description: 'Triggers when someone is unsubscribed from emails.'
+        description: 'Triggers when someone is unsubscribed from emails.',
       },
       {
         type: 'ticket.deletion-requested',
         label: 'Deletion requested',
         description:
-          'Triggers when someone requests to get deleted from an event.'
-      }
-    ]
+          'Triggers when someone requests to get deleted from an event.',
+      },
+    ],
   }
 }

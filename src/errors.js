@@ -1,9 +1,9 @@
 const _ = require('lodash')
 const util = require('util')
 
-const customError = function(name) {
+const customError = function (name) {
   var error
-  error = function(type, options) {
+  error = function (type, options) {
     if (options == null) {
       options = {}
     }
@@ -22,5 +22,5 @@ const customError = function(name) {
 module.exports = {
   UnauthorizedError: customError('UnauthorizedError'),
   ParameterError: customError('ParameterError'),
-  NotFoundError: customError('NotFoundError')
+  NotFoundError: customError('NotFoundError'),
 }

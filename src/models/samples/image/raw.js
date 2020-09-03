@@ -3,7 +3,7 @@ module.exports = {
     id: 1,
     type: 'event',
     attributes: {
-      name: 'My event'
-    }
-  }
+      name: 'My event',
+    },
+  },
 }
