@@ -1,5 +1,5 @@
 module.exports = {
   id: 1,
-  name: 'My event',
-  type: 'event',
+  name: 'My workspace',
+  type: 'workspace',
 }

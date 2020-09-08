@@ -46,15 +46,9 @@ module.exports = function ({ samples }) {
       { key: 'waitlist', label: 'Has a waitlist', type: 'string' },
     ],
     filters: {
-      hasWorkspace: {
-        type: 'boolean',
-        description: '',
-      },
-      workspaceId: {
-        type: 'number',
-      },
       signupType: {
         type: 'enum',
+        default: '',
         values: [
           {
             label: 'RSVP',
@@ -72,6 +66,7 @@ module.exports = function ({ samples }) {
       },
       type: {
         type: 'enum',
+        default: '',
         values: [
           {
             label: 'Future',

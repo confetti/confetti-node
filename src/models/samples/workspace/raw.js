@@ -1,9 +1,9 @@
 module.exports = {
   data: {
     id: 1,
-    type: 'event',
+    type: 'workspace',
     attributes: {
-      name: 'My event',
+      name: 'My workspace',
     },
   },
 }

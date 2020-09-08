@@ -32,9 +32,18 @@ module.exports = function ({ samples }) {
       eventId: {
         type: 'number',
         required: true,
+        default: '',
       },
       status: {
         type: 'array',
+        default: [
+          'paid',
+          'refunded',
+          'pending-invoice',
+          'sent-invoice',
+          'paid-invoice',
+          'cancelled-invoice',
+        ],
         values: [
           {
             key: 'paid',

@@ -54,25 +54,64 @@ module.exports = function ({ samples }) {
       eventId: {
         type: 'number',
         required: true,
+        default: '',
       },
       search: {
         type: 'string',
+        default: '',
       },
       description: {
         type: 'string',
+        default: '',
       },
       checkedIn: {
         type: 'boolean',
+        default: '',
       },
       status: {
         type: 'array',
+        default: [
+          'attending',
+          'waitlist',
+          'declined',
+          'invited',
+          'consumed',
+          'deletion.requested',
+        ],
         values: [
-          { key: 'attending', label: 'Attending', type: 'string' },
-          { key: 'waitlist', label: 'Waitlist', type: 'string' },
-          { key: 'declined', label: 'Decline', type: 'string' },
-          { key: 'invited', label: 'Invited', type: 'string' },
           {
-            key: 'deletion-requested',
+            key: 'attending',
+            value: 'attending',
+            label: 'Attending',
+            type: 'string',
+          },
+          {
+            key: 'waitlist',
+            value: 'waitlist',
+            label: 'Waitlist',
+            type: 'string',
+          },
+          {
+            key: 'declined',
+            value: 'declined',
+            label: 'Decline',
+            type: 'string',
+          },
+          {
+            key: 'invited',
+            value: 'invited',
+            label: 'Invited',
+            type: 'string',
+          },
+          {
+            key: 'consumed',
+            value: 'consumed',
+            label: 'Consumed',
+            type: 'string',
+          },
+          {
+            key: 'deletionRequested',
+            value: 'deletion-requested',
             label: 'Deletion requested',
             type: 'string',
           },
