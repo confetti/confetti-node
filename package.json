@@ -7,7 +7,7 @@
     "test": "mocha",
     "preversion": "npm test",
     "postversion": "git push --follow-tags origin master",
-    "release": "npm version minor"
+    "release": "npm version patch"
   },
   "repository": {
     "type": "git",
