@@ -1,3 +1,9 @@
+# 1.0.15
+
+- Remove event attribute colors
+- Add event attributes contrastColor, enableExtraGuests, maxExtraGuests
+- Update dependencies
+
 # 1.0.14
 
 - Remove deprecated filters
