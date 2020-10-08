@@ -18,6 +18,11 @@ module.exports = function ({ samples }) {
       { key: 'createdAt', label: 'Created At', type: 'date' },
       { key: 'updatedAt', label: 'Updated At', type: 'date' },
     ],
-    filters: {},
+    filters: {
+      eventId: {
+        type: 'number',
+        default: '',
+      },
+    },
   }
 }
