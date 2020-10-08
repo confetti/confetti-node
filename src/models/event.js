@@ -42,8 +42,14 @@ module.exports = function ({ samples }) {
       { key: 'timeFormat', label: 'Time format', type: 'string' },
       { key: 'locale', label: 'Locale', type: 'string' },
       { key: 'primaryColor', label: 'Primary color', type: 'string' },
-      { key: 'colors', label: 'Colors', type: 'string' },
+      { key: 'contrastColor', label: 'Contrast color', type: 'string' },
       { key: 'waitlist', label: 'Has a waitlist', type: 'string' },
+      {
+        key: 'enableExtraGuests',
+        label: 'Are people allowed to bring guests',
+        type: 'boolean',
+      },
+      { key: 'maxExtraGuests', label: 'How many extra guests', type: 'number' },
     ],
     filters: {
       signupType: {
