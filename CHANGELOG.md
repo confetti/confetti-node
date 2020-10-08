@@ -1,3 +1,7 @@
+# 1.0.16
+
+- Add eventId to webhook filters
+
 # 1.0.15
 
 - Remove event attribute colors
