@@ -4,7 +4,10 @@
   "description": "A Node wrapper for the Confetti API.",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "preversion": "npm test",
+    "postversion": "git push --follow-tags origin master",
+    "release": "npm version minor"
   },
   "repository": {
     "type": "git",
