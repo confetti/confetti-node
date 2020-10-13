@@ -6,9 +6,9 @@ describe('Resources', () => {
   afterEach(() => {
     fetch.restore()
   })
-  describe('Instance', function() {
-    describe('Events', function() {
-      it('should request one event', async function() {
+  describe('Instance', function () {
+    describe('Events', function () {
+      it('should request one event', async function () {
         fetch.get(
           'https://api.confetti.events/events/1',
           Confetti.models.event.sample.single.raw
@@ -19,7 +19,7 @@ describe('Resources', () => {
           Confetti.models.event.sample.single.formatted
         )
       })
-      it('should request multiple events', async function() {
+      it('should request multiple events', async function () {
         fetch.get(
           'https://api.confetti.events/events',
           Confetti.models.event.sample.multiple.raw
@@ -32,8 +32,8 @@ describe('Resources', () => {
       })
     })
 
-    describe('Payments', function() {
-      it('should request one payment', async function() {
+    describe('Payments', function () {
+      it('should request one payment', async function () {
         fetch.get(
           'https://api.confetti.events/payments/1',
           Confetti.models.payment.sample.single.raw
@@ -44,7 +44,7 @@ describe('Resources', () => {
           Confetti.models.payment.sample.single.formatted
         )
       })
-      it('should request multiple payments', async function() {
+      it('should request multiple payments', async function () {
         fetch.get(
           'https://api.confetti.events/payments',
           Confetti.models.payment.sample.multiple.raw
@@ -57,8 +57,8 @@ describe('Resources', () => {
       })
     })
 
-    describe('Tickets', function() {
-      it('should request one ticket', async function() {
+    describe('Tickets', function () {
+      it('should request one ticket', async function () {
         fetch.get(
           'https://api.confetti.events/tickets/1',
           Confetti.models.ticket.sample.single.raw
@@ -69,7 +69,7 @@ describe('Resources', () => {
           Confetti.models.ticket.sample.single.formatted
         )
       })
-      it('should request multiple tickets', async function() {
+      it('should request multiple tickets', async function () {
         fetch.get(
           'https://api.confetti.events/tickets',
           Confetti.models.ticket.sample.multiple.raw
@@ -82,8 +82,8 @@ describe('Resources', () => {
       })
     })
 
-    describe('Webhooks', function() {
-      it('should request one webhook', async function() {
+    describe('Webhooks', function () {
+      it('should request one webhook', async function () {
         fetch.get(
           'https://api.confetti.events/webhooks/1',
           Confetti.models.webhook.sample.single.raw
@@ -94,7 +94,7 @@ describe('Resources', () => {
           Confetti.models.webhook.sample.single.formatted
         )
       })
-      it('should request multiple webhooks', async function() {
+      it('should request multiple webhooks', async function () {
         fetch.get(
           'https://api.confetti.events/webhooks',
           Confetti.models.webhook.sample.multiple.raw
@@ -107,8 +107,8 @@ describe('Resources', () => {
       })
     })
 
-    describe('Workspaces', function() {
-      it('should request one workspace', async function() {
+    describe('Workspaces', function () {
+      it('should request one workspace', async function () {
         fetch.get(
           'https://api.confetti.events/workspaces/1',
           Confetti.models.workspace.sample.single.raw
@@ -119,7 +119,7 @@ describe('Resources', () => {
           Confetti.models.workspace.sample.single.formatted
         )
       })
-      it('should request multiple workspaces', async function() {
+      it('should request multiple workspaces', async function () {
         fetch.get(
           'https://api.confetti.events/workspaces',
           Confetti.models.workspace.sample.multiple.raw
@@ -133,9 +133,9 @@ describe('Resources', () => {
     })
   })
 
-  describe('Static', function() {
-    describe('Events', function() {
-      it('should request one event', async function() {
+  describe('Static', function () {
+    describe('Events', function () {
+      it('should request one event', async function () {
         fetch.get(
           'https://api.confetti.events/events/1',
           Confetti.models.event.sample.single.raw
@@ -145,7 +145,7 @@ describe('Resources', () => {
           Confetti.models.event.sample.single.formatted
         )
       })
-      it('should request multiple events', async function() {
+      it('should request multiple events', async function () {
         fetch.get(
           'https://api.confetti.events/events',
           Confetti.models.event.sample.multiple.raw
@@ -157,28 +157,28 @@ describe('Resources', () => {
       })
     })
 
-    describe('Payments', function() {
-      it('should request one payment', async function() {
+    describe('Payments', function () {
+      it('should request one payment', async function () {
         fetch.get(
           'https://api.confetti.events/payments/1',
           Confetti.models.payment.sample.single.raw
         )
         const data = await Confetti.payments.find(1, {
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.payment.sample.single.formatted
         )
       })
-      it('should request multiple payments', async function() {
+      it('should request multiple payments', async function () {
         fetch.get(
           'https://api.confetti.events/payments',
           Confetti.models.payment.sample.multiple.raw
         )
         const data = await Confetti.payments.findAll({
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.payment.sample.multiple.formatted
@@ -186,8 +186,8 @@ describe('Resources', () => {
       })
     })
 
-    describe('Tickets', function() {
-      it('should request one ticket', async function() {
+    describe('Tickets', function () {
+      it('should request one ticket', async function () {
         fetch.get(
           'https://api.confetti.events/tickets/1',
           Confetti.models.ticket.sample.single.raw
@@ -197,7 +197,7 @@ describe('Resources', () => {
           Confetti.models.ticket.sample.single.formatted
         )
       })
-      it('should request multiple tickets', async function() {
+      it('should request multiple tickets', async function () {
         fetch.get(
           'https://api.confetti.events/tickets',
           Confetti.models.ticket.sample.multiple.raw
@@ -209,34 +209,34 @@ describe('Resources', () => {
       })
     })
 
-    describe('Webhooks', function() {
-      it('should request one webhook', async function() {
+    describe('Webhooks', function () {
+      it('should request one webhook', async function () {
         fetch.get(
           'https://api.confetti.events/webhooks/1',
           Confetti.models.webhook.sample.single.raw
         )
         const data = await Confetti.webhooks.find(1, {
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.webhook.sample.single.formatted
         )
       })
-      it('should request multiple webhooks', async function() {
+      it('should request multiple webhooks', async function () {
         fetch.get(
           'https://api.confetti.events/webhooks',
           Confetti.models.webhook.sample.multiple.raw
         )
         const data = await Confetti.webhooks.findAll({
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.webhook.sample.multiple.formatted
         )
       })
-      it('should create a webhook', async function() {
+      it('should create a webhook', async function () {
         fetch.post(
           'https://api.confetti.events/webhooks',
           Confetti.models.webhook.sample.single.raw
@@ -247,11 +247,11 @@ describe('Resources', () => {
             url: 'https://hooks.zapier.com/hooks/standard/1337/',
             provider: 'zapier',
             workspaceId: 57,
-            eventId: 2
+            eventId: 2,
           },
           {
             apiKey: 'my-key',
-            fetch
+            fetch,
           }
         )
         const json = JSON.parse(fetch.lastCall()[1].body)
@@ -261,35 +261,35 @@ describe('Resources', () => {
             attributes: {
               url: 'https://hooks.zapier.com/hooks/standard/1337/',
               provider: 'zapier',
-              type: 'ticket.attending'
+              type: 'ticket.attending',
             },
             relationships: {
               workspace: {
                 data: {
                   type: 'workspace',
-                  id: '57'
-                }
+                  id: '57',
+                },
               },
               event: {
                 data: {
                   type: 'event',
-                  id: '2'
-                }
-              }
-            }
+                  id: '2',
+                },
+              },
+            },
           },
           included: [
             {
               attributes: {},
               id: '2',
-              type: 'event'
+              type: 'event',
             },
             {
               attributes: {},
               id: '57',
-              type: 'workspace'
-            }
-          ]
+              type: 'workspace',
+            },
+          ],
         })
 
         expect(data).to.deep.equal(
@@ -297,11 +297,11 @@ describe('Resources', () => {
         )
       })
 
-      it('should delete a webhook', async function() {
+      it('should delete a webhook', async function () {
         fetch.delete('https://api.confetti.events/webhooks/1', 204)
         await Confetti.webhooks.delete(1, {
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         const [url, options] = fetch.lastCall()
         expect(url).to.equal('https://api.confetti.events/webhooks/1')
@@ -309,28 +309,28 @@ describe('Resources', () => {
       })
     })
 
-    describe('Workspaces', function() {
-      it('should request one workspace', async function() {
+    describe('Workspaces', function () {
+      it('should request one workspace', async function () {
         fetch.get(
           'https://api.confetti.events/workspaces/1',
           Confetti.models.workspace.sample.single.raw
         )
         const data = await Confetti.workspaces.find(1, {
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.workspace.sample.single.formatted
         )
       })
-      it('should request multiple workspaces', async function() {
+      it('should request multiple workspaces', async function () {
         fetch.get(
           'https://api.confetti.events/workspaces',
           Confetti.models.workspace.sample.multiple.raw
         )
         const data = await Confetti.workspaces.findAll({
           apiKey: 'my-key',
-          fetch
+          fetch,
         })
         expect(data).to.deep.equal(
           Confetti.models.workspace.sample.multiple.formatted

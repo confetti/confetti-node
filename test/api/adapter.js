@@ -3,20 +3,20 @@ const { expect, sinon, fetchData, fetch } = require('../helper')
 
 const confetti = new Confetti({ apiKey: 'my-key', fetch })
 
-describe('Adapter', function() {
+describe('Adapter', function () {
   afterEach(() => {
     fetch.restore()
   })
 
-  it('should make a find all request with correct url', async function() {
+  it('should make a find all request with correct url', async function () {
     fetch.get(/.*\/events/, {})
 
     await confetti.events.findAll({
       filter: { workspaceId: 10 },
       page: {
         limit: 1,
-        offset: 10
-      }
+        offset: 10,
+      },
     })
 
     const [url, params] = fetch.calls()[0]
@@ -30,12 +30,12 @@ describe('Adapter', function() {
       headers: {
         Authorization: 'apikey my-key',
         'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip'
-      }
+        'Accept-Encoding': 'gzip',
+      },
     })
   })
 
-  it('should make a find request with correct url', async function() {
+  it('should make a find request with correct url', async function () {
     fetch.get('https://api.confetti.events/events/3', {})
     await confetti.events.find(3)
     const [url, params] = fetch.calls()[0]
@@ -46,28 +46,28 @@ describe('Adapter', function() {
       headers: {
         Authorization: 'apikey my-key',
         'Content-Type': 'application/json',
-        'Accept-Encoding': 'gzip'
-      }
+        'Accept-Encoding': 'gzip',
+      },
     })
   })
 
-  it('should handle a text response', async function() {
+  it('should handle a text response', async function () {
     fetch.get('https://api.confetti.events/events/1', {
       status: 200,
-      body: 'foo'
+      body: 'foo',
     })
     const res = await confetti.events.find(1)
     expect(res).to.equal('foo')
   })
 
-  it('should handle 404 response', async function() {
+  it('should handle 404 response', async function () {
     fetch.get('https://api.confetti.events/events/1', {
       status: 404,
       body: {
         message: 'event',
         type: 'event',
-        name: 'NotFoundError'
-      }
+        name: 'NotFoundError',
+      },
     })
     try {
       const res = await confetti.events.find(1)
@@ -80,7 +80,7 @@ describe('Adapter', function() {
     }
   })
 
-  it('should handle 400 response', async function() {
+  it('should handle 400 response', async function () {
     fetch.get('https://api.confetti.events/events/1', {
       status: 400,
       body: {
@@ -90,12 +90,12 @@ describe('Adapter', function() {
         fields: {
           name: [
             "Name can't be blank",
-            'Name is too short (minimum is 3 characters)'
+            'Name is too short (minimum is 3 characters)',
           ],
           email: ["Email can't be blank", 'Email is not a valid email'],
-          terms: ['Terms must be accepted.']
-        }
-      }
+          terms: ['Terms must be accepted.'],
+        },
+      },
     })
     try {
       const res = await confetti.events.find(1)
@@ -108,18 +108,18 @@ describe('Adapter', function() {
       expect(e.fields).to.deep.equal({
         name: [
           "Name can't be blank",
-          'Name is too short (minimum is 3 characters)'
+          'Name is too short (minimum is 3 characters)',
         ],
         email: ["Email can't be blank", 'Email is not a valid email'],
-        terms: ['Terms must be accepted.']
+        terms: ['Terms must be accepted.'],
       })
     }
   })
 
-  it('should handle 500 response', async function() {
+  it('should handle 500 response', async function () {
     fetch.get('https://api.confetti.events/events/1', {
       status: 500,
-      body: {}
+      body: {},
     })
     try {
       const res = await confetti.events.find(1)

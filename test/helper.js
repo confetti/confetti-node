@@ -12,5 +12,5 @@ const fetch = fetchMock.sandbox()
 module.exports = {
   expect: chai.expect,
   sinon,
-  fetch
+  fetch,
 }
