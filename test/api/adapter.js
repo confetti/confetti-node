@@ -11,18 +11,40 @@ describe('Adapter', function () {
   it('should make a find all request with correct url', async function () {
     fetch.get(/.*\/events/, {})
 
+    await confetti.events.findAll()
+    const [url, params] = fetch.calls()[0]
+
+    expect(url).to.equal('https://api.confetti.events/events')
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip',
+      },
+    })
+  })
+
+  it('should make a complicated find all request with correct url', async function () {
+    fetch.get(/.*\/events/, {})
+
     await confetti.events.findAll({
       filter: { workspaceId: 10 },
+      include: ['categories', 'pages.blocks'],
       page: {
         limit: 1,
         offset: 10,
       },
     })
-
     const [url, params] = fetch.calls()[0]
+
     expect(url).to.equal(
       'https://api.confetti.events/' +
-        encodeURI('events?filter[workspaceId]=10&page[limit]=1&page[offset]=10')
+        encodeURI(
+          'events?filter[workspaceId]=10&page[limit]=1&page[offset]=10&include='
+        ) +
+        encodeURIComponent('categories,pages.blocks')
     )
     expect(params).to.deep.equal({
       method: 'get',
@@ -40,6 +62,26 @@ describe('Adapter', function () {
     await confetti.events.find(3)
     const [url, params] = fetch.calls()[0]
     expect(url).to.equal('https://api.confetti.events/events/3')
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip',
+      },
+    })
+  })
+
+  it('should make a find request with includes with correct url', async function () {
+    fetch.get(/.*\/events/, {})
+    await confetti.events.find(3, { include: ['categories', 'pages.blocks'] })
+    const [url, params] = fetch.calls()[0]
+    expect(url).to.equal(
+      'https://api.confetti.events/events/3' +
+        encodeURI('?include=') +
+        encodeURIComponent('categories,pages.blocks')
+    )
     expect(params).to.deep.equal({
       method: 'get',
       timeout: 5000,

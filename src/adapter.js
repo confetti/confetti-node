@@ -10,7 +10,7 @@ const presenters = require('./presenters')
 
 module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
   const httpRequest = async function (method, options) {
-    let { path, json, filter, sort, page, raw, type } = options
+    let { path, json, filter, include, sort, page, raw, type } = options
 
     if (options.apiKey) apiKey = options.apiKey
     if (options.fetch) fetch = options.fetch
@@ -26,6 +26,9 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
     if (!apiKey) {
       throw new Error('missing_api_key')
     }
+    if (Array.isArray(include)) {
+      include = encodeURI(include.join(','))
+    }
 
     const httpOptions = {
       method,
@@ -40,7 +43,7 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       host: API_HOST,
       protocol: API_PROTOCOL,
       pathname: path,
-      search: qs.stringify({ filter, sort, page }),
+      search: qs.stringify({ filter, sort, page, include }),
     })
     if (json) {
       httpOptions.body = JSON.stringify(presenters[type].render(json))

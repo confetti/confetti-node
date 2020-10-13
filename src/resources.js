@@ -2,6 +2,7 @@ module.exports = function ({ adapter, models }) {
   const addFindAll = (resources, resourceName) => {
     resources[resourceName].findAll = ({
       filter,
+      include,
       sort,
       page,
       raw,
@@ -13,6 +14,7 @@ module.exports = function ({ adapter, models }) {
       return adapter.get({
         path: resourceName,
         filter,
+        include,
         sort,
         page,
         apiKey,
@@ -26,10 +28,11 @@ module.exports = function ({ adapter, models }) {
   const addFind = (resources, resourceName) => {
     resources[resourceName].find = (
       id,
-      { raw, apiKey, fetch, apiHost, apiProtocol } = {}
+      { include, raw, apiKey, fetch, apiHost, apiProtocol } = {}
     ) => {
       return adapter.get({
         path: `${resourceName}/${id}`,
+        include,
         raw,
         apiKey,
         fetch,
