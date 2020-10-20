@@ -1,3 +1,8 @@
+# 1.1.0
+
+- Feature: Support including categories, pages, blocks and images for events
+- Rename (debug) settings params host to apiHost and protocol to apiProtocol
+
 # 1.0.16
 
 - Add eventId to webhook filters
