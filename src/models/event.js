@@ -101,5 +101,6 @@ module.exports = function ({ samples }) {
         description: 'Triggers when an event is created.',
       },
     ],
+    includes: ['categories', 'pages', 'pages.blocks', 'pages.blocks.images'],
   }
 }
