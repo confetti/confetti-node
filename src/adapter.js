@@ -12,18 +12,22 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
   const httpRequest = async function (method, options) {
     let { path, json, filter, include, sort, page, raw, type } = options
 
-    if (options.apiKey) apiKey = options.apiKey
-    if (options.fetch) fetch = options.fetch
-    if (options.apiHost) apiHost = options.host
-    if (options.apiProtocol) apiProtocol = options.protocol
+    const API_HOST =
+      options.apiHost ||
+      apiHost ||
+      process.env.API_HOST ||
+      'api.confetti.events'
 
-    const API_HOST = apiHost || process.env.API_HOST || 'api.confetti.events'
-    const API_PROTOCOL = apiProtocol || process.env.API_PROTOCOL || 'https'
+    const API_PROTOCOL =
+      options.apiProtocol || apiProtocol || process.env.API_PROTOCOL || 'https'
 
-    if (!fetch) {
-      fetch = require('node-fetch')
+    let API_KEY = options.apiKey || apiKey
+    let fetchLib = options.fetch || fetch
+
+    if (!fetchLib) {
+      fetchLib = require('node-fetch')
     }
-    if (!apiKey) {
+    if (!API_KEY) {
       throw new Error('missing_api_key')
     }
     if (Array.isArray(include)) {
@@ -34,7 +38,7 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       method,
       timeout: method === 'get' ? 5000 : 15000,
       headers: {
-        Authorization: `apikey ${apiKey}`,
+        Authorization: `apikey ${API_KEY}`,
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip',
       },
@@ -49,7 +53,7 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       httpOptions.body = JSON.stringify(presenters[type].render(json))
     }
 
-    const res = await fetch(fetchUrl, httpOptions)
+    const res = await fetchLib(fetchUrl, httpOptions)
 
     if (res.status >= 200 && res.status < 299) {
       const contentType = res.headers.get('content-type') || ''

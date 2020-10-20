@@ -173,4 +173,51 @@ describe('Adapter', function () {
       expect(e.type).to.equal(undefined)
     }
   })
+
+  it('should use provided api host and protocol in instance mode if avaliable', async function () {
+    fetch.get(/.*\/events/, {})
+
+    const confetti2 = new Confetti({
+      apiKey: 'my-key',
+      apiHost: 'localhost:3040',
+      apiProtocol: 'http',
+      fetch,
+    })
+    await confetti2.events.findAll()
+    const [url, params] = fetch.calls()[0]
+
+    expect(url).to.equal('http://localhost:3040/events')
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip',
+      },
+    })
+  })
+
+  it('should use provided api host and protocol in static mode if avaliable', async function () {
+    fetch.get(/.*\/events/, {})
+
+    await Confetti.events.findAll({
+      apiKey: 'my-key',
+      apiHost: 'localhost:3040',
+      apiProtocol: 'http',
+      fetch,
+    })
+    const [url, params] = fetch.calls()[0]
+
+    expect(url).to.equal('http://localhost:3040/events')
+    expect(params).to.deep.equal({
+      method: 'get',
+      timeout: 5000,
+      headers: {
+        Authorization: 'apikey my-key',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip',
+      },
+    })
+  })
 })

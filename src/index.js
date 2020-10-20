@@ -13,8 +13,8 @@ class Confetti {
         adapter: adapter({
           apiKey: settings.apiKey,
           fetch: settings.fetch,
-          apiHost: settings.host,
-          apiProtocol: settings.protocol,
+          apiHost: settings.apiHost,
+          apiProtocol: settings.apiProtocol,
         }),
         models,
       })
