@@ -1,3 +1,8 @@
+# 1.1.1 - 2020-11-06
+
+- Add value to some event model enums
+- Correct value of ticket deletion requested
+
 # 1.1.0
 
 - Feature: Support including categories, pages, blocks and images for events
