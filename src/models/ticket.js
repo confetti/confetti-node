@@ -76,7 +76,7 @@ module.exports = function ({ samples }) {
           'declined',
           'invited',
           'consumed',
-          'deletion.requested',
+          'deletion-requested',
         ],
         values: [
           {
