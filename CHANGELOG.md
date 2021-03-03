@@ -1,3 +1,7 @@
+# 1.1.2 - 2021-03-03
+
+- Add `location` attribute to event model
+
 # 1.1.1 - 2020-11-06
 
 - Add value to some event model enums
