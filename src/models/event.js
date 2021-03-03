@@ -50,6 +50,7 @@ module.exports = function ({ samples }) {
         type: 'boolean',
       },
       { key: 'maxExtraGuests', label: 'How many extra guests', type: 'number' },
+      { key: 'location', label: 'Location', type: 'object' },
     ],
     filters: {
       signupType: {
