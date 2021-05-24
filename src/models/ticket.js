@@ -18,6 +18,7 @@ module.exports = function ({ samples }) {
       { key: 'currency', label: 'Currency', type: 'string' },
       { key: 'name', label: 'Name', type: 'string' },
       { key: 'email', label: 'Email', type: 'string' },
+      { key: 'phone', label: 'Phone', type: 'string' },
       { key: 'token', label: 'Token', type: 'string' },
       { key: 'status', label: 'Status', type: 'string' },
       { key: 'emailStatus', label: 'Email Status', type: 'string' },

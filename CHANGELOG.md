@@ -1,3 +1,7 @@
+# 1.1.3 - 2021-05-24
+
+- Add `phone` to ticket model
+
 # 1.1.2 - 2021-03-03
 
 - Add `location` attribute to event model
