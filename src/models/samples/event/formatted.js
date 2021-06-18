@@ -19,7 +19,7 @@ module.exports = {
   timeFormat: '24',
   locale: 'en',
   primaryColor: '#00DB7D',
-  colors: {},
+  contrastColor: '#ffaa99',
   waitlist: true,
   location: { url: 'http://www.google.com/maps?q=undefined' },
   id: '16500',

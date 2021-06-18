@@ -1,3 +1,7 @@
+# 1.1.4 - 2021-06-18
+
+- Add `contrastColor` to event model samples and remove `colors`
+
 # 1.1.3 - 2021-05-24
 
 - Add `phone` to ticket model
