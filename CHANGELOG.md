@@ -1,6 +1,7 @@
 # 1.1.4 - 2022-01-05
 
 - Updated dependencies
+- Add Contact model and it's webhooks
 
 # 1.1.4 - 2021-06-18
 

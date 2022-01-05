@@ -3,6 +3,10 @@ const samples = {
     raw: require('./category/raw'),
     formatted: require('./category/formatted'),
   },
+  contact: {
+    raw: require('./contact/raw'),
+    formatted: require('./contact/formatted'),
+  },
   event: {
     raw: require('./event/raw'),
     formatted: require('./event/formatted'),
@@ -55,6 +59,7 @@ module.exports = function () {
 
   const models = [
     'category',
+    'contact',
     'event',
     'image',
     'payment',
