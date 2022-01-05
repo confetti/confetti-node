@@ -1,3 +1,7 @@
+# 1.1.4 - 2022-01-05
+
+- Updated dependencies
+
 # 1.1.4 - 2021-06-18
 
 - Add `contrastColor` to event model samples and remove `colors`
