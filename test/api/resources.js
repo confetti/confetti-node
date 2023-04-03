@@ -82,6 +82,31 @@ describe('Resources', () => {
       })
     })
 
+    describe('Contacts', function () {
+      it('should request one contact', async function () {
+        fetch.get(
+          'https://api.confetti.events/contacts/1',
+          Confetti.models.contact.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.contacts.find(1)
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.single.formatted
+        )
+      })
+      it('should request multiple contacts', async function () {
+        fetch.get(
+          'https://api.confetti.events/contacts',
+          Confetti.models.contact.sample.multiple.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.contacts.findAll()
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.multiple.formatted
+        )
+      })
+    })
+
     describe('Webhooks', function () {
       it('should request one webhook', async function () {
         fetch.get(
