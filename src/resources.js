@@ -84,6 +84,7 @@ module.exports = function ({ adapter, models }) {
     'tickets',
     'webhooks',
     'workspaces',
+    'contacts',
   ].reduce((result, key) => {
     result[key] = {}
     addFindAll(result, key)

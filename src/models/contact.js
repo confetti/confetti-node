@@ -41,7 +41,7 @@ module.exports = function ({ samples }) {
       {
         type: 'contact.updated',
         label: 'Updated',
-        description: 'Triggers a contact is updated.',
+        description: 'Triggers when a contact is updated.',
         important: true,
       },
       {
@@ -57,7 +57,7 @@ module.exports = function ({ samples }) {
       {
         type: 'contact.deleted',
         label: 'Deleted',
-        description: 'Triggers a contact is deleted.',
+        description: 'Triggers when a contact is deleted.',
       },
     ],
   }
