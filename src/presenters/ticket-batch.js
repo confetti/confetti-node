@@ -1,6 +1,6 @@
 module.exports = function ({ presenters, Presenter }) {
   class TicketBatchPresenter extends Presenter {}
-  TicketBatchPresenter.prototype.type = 'ticketBatch'
-  TicketBatchPresenter.prototype.plural = 'ticketBatches'
+  TicketBatchPresenter.type = 'ticketBatch'
+  TicketBatchPresenter.plural = 'ticketBatches'
   return TicketBatchPresenter
 }

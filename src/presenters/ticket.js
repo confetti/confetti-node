@@ -23,7 +23,7 @@ module.exports = function ({ presenters, Presenter }) {
       }
     }
   }
-  TicketPresenter.prototype.type = 'ticket'
-  TicketPresenter.prototype.plural = 'tickets'
+  TicketPresenter.type = 'ticket'
+  TicketPresenter.plural = 'tickets'
   return TicketPresenter
 }

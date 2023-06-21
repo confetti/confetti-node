@@ -16,7 +16,7 @@ module.exports = function ({ presenters, Presenter }) {
       }
     }
   }
-  ContactPresenter.prototype.type = 'contact'
-  ContactPresenter.prototype.plural = 'contacts'
+  ContactPresenter.type = 'contact'
+  ContactPresenter.plural = 'contacts'
   return ContactPresenter
 }
