@@ -1,36 +1,52 @@
+const transformAttributes = require('../utils/transform-attributes')
+
 module.exports = function ({ samples }) {
+  const attributes = [
+    {
+      key: 'id',
+      label: 'ID',
+      description: 'Identifier of the contact.',
+      type: 'number',
+    },
+    { key: 'firstName', label: 'First Name', type: 'string' },
+    { key: 'lastName', label: 'Last Name', type: 'string' },
+    { key: 'email', label: 'Email', type: 'string' },
+    { key: 'phone', label: 'Phone', type: 'string' },
+    { key: 'token', label: 'Token', type: 'string' },
+    { key: 'status', label: 'Status', type: 'string' },
+    { key: 'comment', label: 'Comment', type: 'string' },
+
+    { key: 'lastSeen', label: 'Last Seen', type: 'date' },
+    {
+      key: 'deletionRequestedAt',
+      label: 'Deletion Requested At',
+      type: 'date',
+    },
+    { key: 'createdAt', label: 'Created At', type: 'date' },
+    { key: 'updatedAt', label: 'Updated At', type: 'date' },
+    { key: 'organisationId', label: 'Organisation Id', type: 'number' },
+  ]
+
+  const createConfig = {
+    firstName: {},
+    lastName: {},
+    email: { required: true },
+    phone: {},
+  }
+
+  const operations = {
+    create: { fields: transformAttributes(attributes, createConfig) },
+  }
+
   return {
     key: 'contact',
     endpoint: 'contacts',
     name: 'Contact',
     sample: samples.contact,
-    attributes: [
-      {
-        key: 'id',
-        label: 'ID',
-        description: 'Identifier of the contact.',
-        type: 'number',
-      },
-      { key: 'firstName', label: 'First Name', type: 'string' },
-      { key: 'lastName', label: 'Last Name', type: 'string' },
-      { key: 'email', label: 'Email', type: 'string' },
-      { key: 'phone', label: 'Phone', type: 'string' },
-      { key: 'token', label: 'Token', type: 'string' },
-      { key: 'status', label: 'Status', type: 'string' },
-      { key: 'comment', label: 'Comment', type: 'string' },
-
-      { key: 'lastSeen', label: 'Last Seen', type: 'date' },
-      {
-        key: 'deletionRequestedAt',
-        label: 'Deletion Requested At',
-        type: 'date',
-      },
-      { key: 'createdAt', label: 'Created At', type: 'date' },
-      { key: 'updatedAt', label: 'Updated At', type: 'date' },
-      { key: 'organisationId', label: 'Organisation Id', type: 'number' },
-    ],
+    attributes,
     sorting: [],
     filters: {},
+    operations,
     webhooks: [
       {
         type: 'contact.created',

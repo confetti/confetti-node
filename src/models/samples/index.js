@@ -31,6 +31,10 @@ const samples = {
     raw: require('./workspace/raw'),
     formatted: require('./workspace/formatted'),
   },
+  ticketBatch: {
+    raw: require('./ticket-batch/raw'),
+    formatted: require('./ticket-batch/formatted'),
+  },
 }
 
 module.exports = function () {
@@ -66,6 +70,7 @@ module.exports = function () {
     'ticket',
     'webhook',
     'workspace',
+    'ticketBatch',
   ]
 
   return models.reduce((result, key) => {

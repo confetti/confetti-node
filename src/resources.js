@@ -1,3 +1,5 @@
+const camelToKebabCase = require('./utils/camel-to-kebab-case')
+
 module.exports = function ({ adapter, models }) {
   const addFindAll = (resources, resourceName) => {
     resources[resourceName].findAll = ({
@@ -12,7 +14,7 @@ module.exports = function ({ adapter, models }) {
       apiProtocol,
     } = {}) => {
       return adapter.get({
-        path: resourceName,
+        path: camelToKebabCase(resourceName),
         filter,
         include,
         sort,
@@ -31,7 +33,7 @@ module.exports = function ({ adapter, models }) {
       { include, raw, apiKey, fetch, apiHost, apiProtocol } = {}
     ) => {
       return adapter.get({
-        path: `${resourceName}/${id}`,
+        path: `${camelToKebabCase(resourceName)}/${id}`,
         include,
         raw,
         apiKey,
@@ -48,7 +50,7 @@ module.exports = function ({ adapter, models }) {
       { raw, apiKey, fetch, apiHost, apiProtocol } = {}
     ) => {
       return adapter.post({
-        path: `${resourceName}`,
+        path: `${camelToKebabCase(resourceName)}`,
         raw,
         json,
         apiKey,
@@ -65,7 +67,7 @@ module.exports = function ({ adapter, models }) {
       { raw, apiKey, fetch, apiHost, apiProtocol } = {}
     ) => {
       return adapter.delete({
-        path: `${resourceName}/${id}`,
+        path: `${camelToKebabCase(resourceName)}/${id}`,
         raw,
         apiKey,
         fetch,
@@ -85,6 +87,8 @@ module.exports = function ({ adapter, models }) {
     'webhooks',
     'workspaces',
     'contacts',
+    'categories',
+    'ticketBatches',
   ].reduce((result, key) => {
     result[key] = {}
     addFindAll(result, key)
@@ -95,6 +99,11 @@ module.exports = function ({ adapter, models }) {
   resources = ['webhooks'].reduce((result, key) => {
     addCreate(result, key)
     addDelete(result, key)
+    return result
+  }, resources)
+
+  resources = ['contacts', 'tickets'].reduce((result, key) => {
+    addCreate(result, key)
     return result
   }, resources)
 

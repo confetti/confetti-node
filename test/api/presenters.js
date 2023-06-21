@@ -1,55 +1,133 @@
 const { expect } = require('../helper')
-const { events, webhooks, workspaces } = require('../../src/presenters')
+const { webhooks, tickets, contacts } = require('../../src/presenters')
 
 describe('Presenters', function () {
-  it('should present a webhook with relation ids', function () {
-    const webhook = webhooks.render({
-      type: 'ticket.attending',
-      url: 'https://hooks.zapier.com/hooks/standard/1337/',
-      provider: 'zapier',
-      workspaceId: 57,
-      eventId: 2,
+  describe('Webhooks', function () {
+    it('should present a webhook with relation ids', function () {
+      const webhook = webhooks.render({
+        type: 'ticket.attending',
+        url: 'https://hooks.zapier.com/hooks/standard/1337/',
+        provider: 'zapier',
+        workspaceId: 57,
+        eventId: 2,
+      })
+      expect(webhook).to.deep.equal({
+        data: {
+          type: 'webhook',
+          attributes: {
+            type: 'ticket.attending',
+            url: 'https://hooks.zapier.com/hooks/standard/1337/',
+            provider: 'zapier',
+          },
+          relationships: {
+            event: { data: { id: '2', type: 'event' } },
+            workspace: { data: { id: '57', type: 'workspace' } },
+          },
+        },
+        included: [
+          { id: '2', type: 'event', attributes: {} },
+          { id: '57', type: 'workspace', attributes: {} },
+        ],
+      })
     })
-    expect(webhook).to.deep.equal({
-      data: {
-        type: 'webhook',
-        attributes: {
-          type: 'ticket.attending',
-          url: 'https://hooks.zapier.com/hooks/standard/1337/',
-          provider: 'zapier',
+    it('should present a webhook without eventId', function () {
+      const webhook = webhooks.render({
+        type: 'ticket.attending',
+        url: 'https://hooks.zapier.com/hooks/standard/1337/',
+        provider: 'zapier',
+        workspaceId: 57,
+      })
+      expect(webhook).to.deep.equal({
+        data: {
+          type: 'webhook',
+          attributes: {
+            type: 'ticket.attending',
+            url: 'https://hooks.zapier.com/hooks/standard/1337/',
+            provider: 'zapier',
+          },
+          relationships: {
+            event: { data: null },
+            workspace: { data: { id: '57', type: 'workspace' } },
+          },
         },
-        relationships: {
-          event: { data: { id: '2', type: 'event' } },
-          workspace: { data: { id: '57', type: 'workspace' } },
-        },
-      },
-      included: [
-        { id: '2', type: 'event', attributes: {} },
-        { id: '57', type: 'workspace', attributes: {} },
-      ],
+        included: [{ id: '57', type: 'workspace', attributes: {} }],
+      })
     })
   })
-  it('should present a webhook without eventId', function () {
-    const webhook = webhooks.render({
-      type: 'ticket.attending',
-      url: 'https://hooks.zapier.com/hooks/standard/1337/',
-      provider: 'zapier',
-      workspaceId: 57,
+  describe('Tickets', function () {
+    it('should present a ticket with relation ids', function () {
+      const ticket = tickets.render({
+        firstName: 'John',
+        lastname: 'Doe',
+        email: 'john@doe.se',
+        ticketBatchId: 57,
+        eventId: 2,
+      })
+      expect(ticket).to.deep.equal({
+        data: {
+          type: 'ticket',
+          attributes: {
+            firstName: 'John',
+            lastname: 'Doe',
+            email: 'john@doe.se',
+          },
+          relationships: {
+            event: { data: { id: '2', type: 'event' } },
+            ticketBatch: { data: { id: '57', type: 'ticketBatch' } },
+          },
+        },
+        included: [
+          { id: '2', type: 'event', attributes: {} },
+          { id: '57', type: 'ticketBatch', attributes: {} },
+        ],
+      })
     })
-    expect(webhook).to.deep.equal({
-      data: {
-        type: 'webhook',
-        attributes: {
-          type: 'ticket.attending',
-          url: 'https://hooks.zapier.com/hooks/standard/1337/',
-          provider: 'zapier',
+    it('should present a ticket without ticketBatchId', function () {
+      const ticket = tickets.render({
+        firstName: 'John',
+        lastname: 'Doe',
+        email: 'john@doe.se',
+        eventId: 2,
+      })
+      expect(ticket).to.deep.equal({
+        data: {
+          type: 'ticket',
+          attributes: {
+            firstName: 'John',
+            lastname: 'Doe',
+            email: 'john@doe.se',
+          },
+          relationships: {
+            event: { data: { id: '2', type: 'event' } },
+            ticketBatch: { data: null },
+          },
         },
-        relationships: {
-          event: { data: null },
-          workspace: { data: { id: '57', type: 'workspace' } },
+        included: [{ id: '2', type: 'event', attributes: {} }],
+      })
+    })
+  })
+  describe('Contacts', function () {
+    it('should present a contact with relation ids', function () {
+      const contact = contacts.render({
+        firstName: 'John',
+        lastname: 'Doe',
+        email: 'john@doe.se',
+        workspaceId: 57,
+      })
+      expect(contact).to.deep.equal({
+        data: {
+          type: 'contact',
+          attributes: {
+            firstName: 'John',
+            lastname: 'Doe',
+            email: 'john@doe.se',
+          },
+          relationships: {
+            workspace: { data: { id: '57', type: 'workspace' } },
+          },
         },
-      },
-      included: [{ id: '57', type: 'workspace', attributes: {} }],
+        included: [{ id: '57', type: 'workspace', attributes: {} }],
+      })
     })
   })
 })

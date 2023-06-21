@@ -1,47 +1,66 @@
+const transformAttributes = require('../utils/transform-attributes')
+
 module.exports = function ({ samples }) {
+  const attributes = [
+    {
+      key: 'id',
+      label: 'ID',
+      description: 'Identifier of the ticket.',
+      type: 'number',
+    },
+    { key: 'persons', label: 'Persons', type: 'number' },
+    { key: 'hashid', label: 'Hashid', type: 'string' },
+    { key: 'description', label: 'Description', type: 'string' },
+    { key: 'price', label: 'Price', type: 'number' },
+    { key: 'currency', label: 'Currency', type: 'string' },
+    { key: 'firstName', label: 'First name', type: 'string' },
+    { key: 'lastName', label: 'Last name', type: 'string' },
+    { key: 'name', label: 'Name', type: 'string' },
+    { key: 'email', label: 'Email', type: 'string' },
+    { key: 'phone', label: 'Phone', type: 'string' },
+    { key: 'token', label: 'Token', type: 'string' },
+    { key: 'status', label: 'Status', type: 'string' },
+    { key: 'emailStatus', label: 'Email Status', type: 'string' },
+    { key: 'checkinAt', label: 'Checkin At', type: 'date' },
+    { key: 'waitlistAt', label: 'Waitlist At', type: 'date' },
+    { key: 'startDate', label: 'Start Date', type: 'date' },
+    { key: 'endDate', label: 'End Date', type: 'date' },
+    { key: 'values', label: 'Values', type: 'object' },
+    { key: 'comment', label: 'Comment', type: 'string' },
+    { key: 'guests', label: 'Guests', type: 'number' },
+    { key: 'termsAcceptedAt', label: 'Terms Accepted At', type: 'date' },
+    {
+      key: 'deletionRequestedAt',
+      label: 'Deletion Requested At',
+      type: 'date',
+    },
+    { key: 'createdAt', label: 'Created At', type: 'date' },
+    { key: 'updatedAt', label: 'Updated At', type: 'date' },
+    { key: 'ticketBatchId', label: 'Ticket Batch Id', type: 'number' },
+    { key: 'paymentId', label: 'Payment Id', type: 'number' },
+    { key: 'eventId', label: 'Event Id', type: 'number' },
+    { key: 'contactId', label: 'Contact Id', type: 'number' },
+  ]
+
+  const createConfig = {
+    firstName: {},
+    lastName: {},
+    email: { required: true },
+    phone: {},
+    comment: {},
+    status: { required: true },
+  }
+
+  const operations = {
+    create: { fields: transformAttributes(attributes, createConfig) },
+  }
+
   return {
     key: 'ticket',
     endpoint: 'tickets',
     name: 'Ticket',
     sample: samples.ticket,
-    attributes: [
-      {
-        key: 'id',
-        label: 'ID',
-        description: 'Identifier of the ticket.',
-        type: 'number',
-      },
-      { key: 'persons', label: 'Persons', type: 'number' },
-      { key: 'hashid', label: 'Hashid', type: 'string' },
-      { key: 'description', label: 'Description', type: 'string' },
-      { key: 'price', label: 'Price', type: 'number' },
-      { key: 'currency', label: 'Currency', type: 'string' },
-      { key: 'name', label: 'Name', type: 'string' },
-      { key: 'email', label: 'Email', type: 'string' },
-      { key: 'phone', label: 'Phone', type: 'string' },
-      { key: 'token', label: 'Token', type: 'string' },
-      { key: 'status', label: 'Status', type: 'string' },
-      { key: 'emailStatus', label: 'Email Status', type: 'string' },
-      { key: 'checkinAt', label: 'Checkin At', type: 'date' },
-      { key: 'waitlistAt', label: 'Waitlist At', type: 'date' },
-      { key: 'startDate', label: 'Start Date', type: 'date' },
-      { key: 'endDate', label: 'End Date', type: 'date' },
-      { key: 'values', label: 'Values', type: 'object' },
-      { key: 'comment', label: 'Comment', type: 'string' },
-      { key: 'guests', label: 'Guests', type: 'number' },
-      { key: 'termsAcceptedAt', label: 'Terms Accepted At', type: 'date' },
-      {
-        key: 'deletionRequestedAt',
-        label: 'Deletion Requested At',
-        type: 'date',
-      },
-      { key: 'createdAt', label: 'Created At', type: 'date' },
-      { key: 'updatedAt', label: 'Updated At', type: 'date' },
-      { key: 'ticketBatchId', label: 'Ticket Batch Id', type: 'number' },
-      { key: 'paymentId', label: 'Payment Id', type: 'number' },
-      { key: 'eventId', label: 'Event Id', type: 'number' },
-      { key: 'contactId', label: 'Contact Id', type: 'number' },
-    ],
+    attributes,
     sorting: [
       'name',
       'createdAt',
@@ -119,6 +138,7 @@ module.exports = function ({ samples }) {
         ],
       },
     },
+    operations,
     webhooks: [
       {
         type: 'ticket.attending',

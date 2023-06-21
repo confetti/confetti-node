@@ -24,5 +24,6 @@ module.exports = function ({ presenters, Presenter }) {
     }
   }
   WebhookPresenter.prototype.type = 'webhook'
+  WebhookPresenter.prototype.plural = 'webhooks'
   return WebhookPresenter
 }

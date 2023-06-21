@@ -17,6 +17,10 @@ module.exports = function ({ samples }) {
         description: 'Category name.',
         type: 'string',
       },
+      { key: 'status', label: 'Status', type: 'string' },
+      { key: 'createdAt', label: 'Created At', type: 'date' },
+      { key: 'updatedAt', label: 'Updated At', type: 'date' },
+      { key: 'organisationId', label: 'Organisation Id', type: 'number' },
     ],
     filters: {},
   }

@@ -1,6 +1,6 @@
 const Confetti = require('../../src')
 
-const { expect, sinon, fetch } = require('../helper')
+const { expect, fetch } = require('../helper')
 
 describe('Resources', () => {
   afterEach(() => {
@@ -57,6 +57,31 @@ describe('Resources', () => {
       })
     })
 
+    describe('TicketBatches', function () {
+      it('should request one ticketBatch', async function () {
+        fetch.get(
+          'https://api.confetti.events/ticket-batches/1',
+          Confetti.models.ticketBatch.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.ticketBatches.find(1)
+        expect(data).to.deep.equal(
+          Confetti.models.ticketBatch.sample.single.formatted
+        )
+      })
+      it('should request multiple ticketBatches', async function () {
+        fetch.get(
+          'https://api.confetti.events/ticket-batches',
+          Confetti.models.ticketBatch.sample.multiple.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.ticketBatches.findAll()
+        expect(data).to.deep.equal(
+          Confetti.models.ticketBatch.sample.multiple.formatted
+        )
+      })
+    })
+
     describe('Tickets', function () {
       it('should request one ticket', async function () {
         fetch.get(
@@ -78,6 +103,109 @@ describe('Resources', () => {
         const data = await confetti.tickets.findAll()
         expect(data).to.deep.equal(
           Confetti.models.ticket.sample.multiple.formatted
+        )
+      })
+      it('should create a ticket', async function () {
+        fetch.post(
+          'https://api.confetti.events/tickets',
+          Confetti.models.ticket.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.tickets.create({
+          eventId: 1,
+          firstName: 'John',
+          lastName: 'Doe',
+          status: 'invited',
+          email: 'john@doe.se',
+        })
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'ticket',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+              status: 'invited',
+              email: 'john@doe.se',
+            },
+            relationships: {
+              event: {
+                data: {
+                  type: 'event',
+                  id: '1',
+                },
+              },
+              ticketBatch: {
+                data: null,
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '1',
+              type: 'event',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticket.sample.single.formatted
+        )
+      })
+      it('should create a ticket for ticketBatch', async function () {
+        fetch.post(
+          'https://api.confetti.events/tickets',
+          Confetti.models.ticket.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.tickets.create({
+          eventId: 1,
+          firstName: 'John',
+          lastName: 'Doe',
+          status: 'invited',
+          email: 'john@doe.se',
+          ticketBatchId: 22,
+        })
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'ticket',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+              status: 'invited',
+              email: 'john@doe.se',
+            },
+            relationships: {
+              event: {
+                data: {
+                  type: 'event',
+                  id: '1',
+                },
+              },
+              ticketBatch: {
+                data: {
+                  type: 'ticketBatch',
+                  id: '22',
+                },
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '1',
+              type: 'event',
+            },
+            {
+              attributes: {},
+              id: '22',
+              type: 'ticketBatch',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticket.sample.single.formatted
         )
       })
     })
@@ -103,6 +231,46 @@ describe('Resources', () => {
         const data = await confetti.contacts.findAll()
         expect(data).to.deep.equal(
           Confetti.models.contact.sample.multiple.formatted
+        )
+      })
+      it('should create a contact', async function () {
+        fetch.post(
+          'https://api.confetti.events/contacts',
+          Confetti.models.contact.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.contacts.create({
+          workspaceId: 57,
+          firstName: 'John',
+          lastName: 'Doe',
+        })
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'contact',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+            },
+            relationships: {
+              workspace: {
+                data: {
+                  type: 'workspace',
+                  id: '57',
+                },
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '57',
+              type: 'workspace',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.single.formatted
         )
       })
     })
@@ -153,6 +321,31 @@ describe('Resources', () => {
         const data = await confetti.workspaces.findAll()
         expect(data).to.deep.equal(
           Confetti.models.workspace.sample.multiple.formatted
+        )
+      })
+    })
+
+    describe('Categories', function () {
+      it('should request multiple categories', async function () {
+        fetch.get(
+          'https://api.confetti.events/categories',
+          Confetti.models.category.sample.multiple.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.categories.findAll()
+        expect(data).to.deep.equal(
+          Confetti.models.category.sample.multiple.formatted
+        )
+      })
+      it('should request one category', async function () {
+        fetch.get(
+          'https://api.confetti.events/categories/1',
+          Confetti.models.category.sample.single.raw
+        )
+        const confetti = new Confetti({ apiKey: 'my-key', fetch })
+        const data = await confetti.categories.find(1)
+        expect(data).to.deep.equal(
+          Confetti.models.category.sample.single.formatted
         )
       })
     })
@@ -211,6 +404,36 @@ describe('Resources', () => {
       })
     })
 
+    describe('TicketBatches', function () {
+      it('should request one ticketBatch', async function () {
+        fetch.get(
+          'https://api.confetti.events/ticket-batches/1',
+          Confetti.models.ticketBatch.sample.single.raw
+        )
+
+        const data = await Confetti.ticketBatches.find(1, {
+          apiKey: 'my-key',
+          fetch,
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticketBatch.sample.single.formatted
+        )
+      })
+      it('should request multiple ticketBatches', async function () {
+        fetch.get(
+          'https://api.confetti.events/ticket-batches',
+          Confetti.models.ticketBatch.sample.multiple.raw
+        )
+        const data = await Confetti.ticketBatches.findAll({
+          apiKey: 'my-key',
+          fetch,
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticketBatch.sample.multiple.formatted
+        )
+      })
+    })
+
     describe('Tickets', function () {
       it('should request one ticket', async function () {
         fetch.get(
@@ -230,6 +453,114 @@ describe('Resources', () => {
         const data = await Confetti.tickets.findAll({ apiKey: 'my-key', fetch })
         expect(data).to.deep.equal(
           Confetti.models.ticket.sample.multiple.formatted
+        )
+      })
+      it('should create a ticket', async function () {
+        fetch.post(
+          'https://api.confetti.events/tickets',
+          Confetti.models.ticket.sample.single.raw
+        )
+
+        const data = await Confetti.tickets.create(
+          {
+            eventId: 1,
+            firstName: 'John',
+            lastName: 'Doe',
+            status: 'invited',
+            email: 'john@doe.se',
+          },
+          { apiKey: 'my-key', fetch }
+        )
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'ticket',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+              status: 'invited',
+              email: 'john@doe.se',
+            },
+            relationships: {
+              event: {
+                data: {
+                  type: 'event',
+                  id: '1',
+                },
+              },
+              ticketBatch: {
+                data: null,
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '1',
+              type: 'event',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticket.sample.single.formatted
+        )
+      })
+      it('should create a ticket for ticketBatch', async function () {
+        fetch.post(
+          'https://api.confetti.events/tickets',
+          Confetti.models.ticket.sample.single.raw
+        )
+        const data = await Confetti.tickets.create(
+          {
+            eventId: 1,
+            firstName: 'John',
+            lastName: 'Doe',
+            status: 'invited',
+            email: 'john@doe.se',
+            ticketBatchId: 22,
+          },
+          { apiKey: 'my-key', fetch }
+        )
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'ticket',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+              status: 'invited',
+              email: 'john@doe.se',
+            },
+            relationships: {
+              event: {
+                data: {
+                  type: 'event',
+                  id: '1',
+                },
+              },
+              ticketBatch: {
+                data: {
+                  type: 'ticketBatch',
+                  id: '22',
+                },
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '1',
+              type: 'event',
+            },
+            {
+              attributes: {},
+              id: '22',
+              type: 'ticketBatch',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.ticket.sample.single.formatted
         )
       })
     })
@@ -321,7 +652,6 @@ describe('Resources', () => {
           Confetti.models.webhook.sample.single.formatted
         )
       })
-
       it('should delete a webhook', async function () {
         fetch.delete('https://api.confetti.events/webhooks/1', 204)
         await Confetti.webhooks.delete(1, {
@@ -359,6 +689,110 @@ describe('Resources', () => {
         })
         expect(data).to.deep.equal(
           Confetti.models.workspace.sample.multiple.formatted
+        )
+      })
+    })
+
+    describe('Categories', function () {
+      it('should request multiple categories', async function () {
+        fetch.get(
+          'https://api.confetti.events/categories',
+          Confetti.models.category.sample.multiple.raw
+        )
+        const data = await Confetti.categories.findAll({
+          apiKey: 'my-key',
+          fetch,
+        })
+
+        expect(data).to.deep.equal(
+          Confetti.models.category.sample.multiple.formatted
+        )
+      })
+      it('should request one category', async function () {
+        fetch.get(
+          'https://api.confetti.events/categories/1',
+          Confetti.models.category.sample.single.raw
+        )
+
+        const data = await Confetti.categories.find(1, {
+          apiKey: 'my-key',
+          fetch,
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.category.sample.single.formatted
+        )
+      })
+    })
+
+    describe('Contacts', function () {
+      it('should request one contact', async function () {
+        fetch.get(
+          'https://api.confetti.events/contacts/1',
+          Confetti.models.contact.sample.single.raw
+        )
+
+        const data = await Confetti.contacts.find(1, {
+          apiKey: 'my-key',
+          fetch,
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.single.formatted
+        )
+      })
+      it('should request multiple contacts', async function () {
+        fetch.get(
+          'https://api.confetti.events/contacts',
+          Confetti.models.contact.sample.multiple.raw
+        )
+        const data = await Confetti.contacts.findAll({
+          apiKey: 'my-key',
+          fetch,
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.multiple.formatted
+        )
+      })
+      it('should create a contact', async function () {
+        fetch.post(
+          'https://api.confetti.events/contacts',
+          Confetti.models.contact.sample.single.raw
+        )
+
+        const data = await Confetti.contacts.create(
+          {
+            workspaceId: 57,
+            firstName: 'John',
+            lastName: 'Doe',
+          },
+          { apiKey: 'my-key', fetch }
+        )
+        const json = JSON.parse(fetch.lastCall()[1].body)
+        expect(json).to.deep.equal({
+          data: {
+            type: 'contact',
+            attributes: {
+              firstName: 'John',
+              lastName: 'Doe',
+            },
+            relationships: {
+              workspace: {
+                data: {
+                  type: 'workspace',
+                  id: '57',
+                },
+              },
+            },
+          },
+          included: [
+            {
+              attributes: {},
+              id: '57',
+              type: 'workspace',
+            },
+          ],
+        })
+        expect(data).to.deep.equal(
+          Confetti.models.contact.sample.single.formatted
         )
       })
     })

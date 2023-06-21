@@ -5,6 +5,8 @@ module.exports = {
   price: 10,
   currency: 'SEK',
   name: 'Foo Bar',
+  firstName: 'Foo',
+  lastName: 'Bar',
   email: 'foo@bar.com',
   phone: '+46701111111',
   token: 'd92614282978451b7942fffda421df47740c',
