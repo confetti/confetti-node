@@ -49,6 +49,11 @@ module.exports = function ({ samples }) {
     phone: {},
     comment: {},
     status: { required: true },
+    sendConfirmation: {
+      type: 'boolean',
+      label: 'Send confirmation email',
+      required: true,
+    },
   }
 
   const operations = {
