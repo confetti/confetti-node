@@ -27,7 +27,7 @@ module.exports = function ({ samples }) {
     { key: 'organisationId', label: 'Organisation Id', type: 'number' },
   ]
 
-  const createConfig = {
+  const createAttributes = {
     firstName: {},
     lastName: {},
     email: { required: true },
@@ -35,7 +35,18 @@ module.exports = function ({ samples }) {
   }
 
   const operations = {
-    create: { fields: transformAttributes(attributes, createConfig) },
+    create: {
+      attributes: transformAttributes(attributes, createAttributes),
+      meta: {},
+      relationships: [
+        {
+          key: 'categories',
+          label: 'Categories',
+          model: 'category',
+          multiple: true,
+        },
+      ],
+    },
   }
 
   return {

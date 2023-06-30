@@ -42,22 +42,39 @@ module.exports = function ({ samples }) {
     { key: 'contactId', label: 'Contact Id', type: 'number' },
   ]
 
-  const createConfig = {
+  const createAttributes = {
     firstName: {},
     lastName: {},
     email: { required: true },
     phone: {},
     comment: {},
     status: { required: true },
-    sendConfirmation: {
-      type: 'boolean',
-      label: 'Send confirmation email',
-      required: true,
-    },
   }
 
   const operations = {
-    create: { fields: transformAttributes(attributes, createConfig) },
+    create: {
+      attributes: transformAttributes(attributes, createAttributes),
+      meta: {
+        sendEmailConfirmation: {
+          type: 'boolean',
+          label: 'Send email confirmation',
+          required: true,
+        },
+      },
+      relationships: [
+        {
+          key: 'event',
+          label: 'Event',
+          model: 'event',
+          required: true,
+        },
+        {
+          key: 'ticketBatch',
+          label: 'Event',
+          model: 'event',
+        },
+      ],
+    },
   }
 
   return {
