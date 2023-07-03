@@ -105,6 +105,33 @@ describe('Presenters', function () {
         included: [{ id: '2', type: 'event', attributes: {} }],
       })
     })
+    it('should present a ticket with meta info', function () {
+      const ticket = tickets.render({
+        firstName: 'John',
+        lastname: 'Doe',
+        email: 'john@doe.se',
+        eventId: 2,
+        sendEmailConfirmation: true,
+      })
+      expect(ticket).to.deep.equal({
+        data: {
+          type: 'ticket',
+          attributes: {
+            firstName: 'John',
+            lastname: 'Doe',
+            email: 'john@doe.se',
+            meta: {
+              sendEmailConfirmation: true,
+            },
+          },
+          relationships: {
+            event: { data: { id: '2', type: 'event' } },
+            ticketBatch: { data: null },
+          },
+        },
+        included: [{ id: '2', type: 'event', attributes: {} }],
+      })
+    })
   })
   describe('Contacts', function () {
     it('should present a contact with relation ids', function () {
@@ -113,6 +140,7 @@ describe('Presenters', function () {
         lastname: 'Doe',
         email: 'john@doe.se',
         workspaceId: 57,
+        categoryIds: [1, 3],
       })
       expect(contact).to.deep.equal({
         data: {
@@ -124,9 +152,19 @@ describe('Presenters', function () {
           },
           relationships: {
             workspace: { data: { id: '57', type: 'workspace' } },
+            categories: {
+              data: [
+                { id: '1', type: 'category' },
+                { id: '3', type: 'category' },
+              ],
+            },
           },
         },
-        included: [{ id: '57', type: 'workspace', attributes: {} }],
+        included: [
+          { id: '57', type: 'workspace', attributes: {} },
+          { id: '1', type: 'category', attributes: {} },
+          { id: '3', type: 'category', attributes: {} },
+        ],
       })
     })
   })

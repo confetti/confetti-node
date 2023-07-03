@@ -50,7 +50,15 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       search: qs.stringify({ filter, sort, page, include }),
     })
     if (json) {
-      httpOptions.body = JSON.stringify(presenters[type].render(json))
+      const presented = presenters[type].render(json)
+
+      const meta = presented?.data?.attributes?.meta
+      if (meta) {
+        presented.data.meta = meta
+        delete presented.data.attributes.meta
+      }
+
+      httpOptions.body = JSON.stringify(presented)
     }
 
     const res = await fetchLib(fetchUrl, httpOptions)

@@ -7,12 +7,17 @@ module.exports = function ({ presenters, Presenter }) {
         }
         delete contact.workspaceId
       }
+      if (contact.categoryIds?.length) {
+        contact.categories = contact.categoryIds.map((id) => ({ id }))
+        delete contact.categoryIds
+      }
       const s = super.attributes(contact)
       return s
     }
     relationships() {
       return {
         workspace: presenters.WorkspacePresenter,
+        categories: presenters.CategoryPresenter,
       }
     }
   }

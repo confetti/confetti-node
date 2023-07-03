@@ -13,6 +13,14 @@ module.exports = function ({ presenters, Presenter }) {
         }
         delete ticket.ticketBatchId
       }
+
+      if ([true, false].includes(ticket.sendEmailConfirmation)) {
+        ticket.meta = {
+          sendEmailConfirmation: ticket.sendEmailConfirmation,
+        }
+      }
+      delete ticket.sendEmailConfirmation
+
       const s = super.attributes(ticket)
       return s
     }

@@ -117,6 +117,7 @@ describe('Resources', () => {
           lastName: 'Doe',
           status: 'invited',
           email: 'john@doe.se',
+          sendEmailConfirmation: true,
         })
         const json = JSON.parse(fetch.lastCall()[1].body)
         expect(json).to.deep.equal({
@@ -127,6 +128,9 @@ describe('Resources', () => {
               lastName: 'Doe',
               status: 'invited',
               email: 'john@doe.se',
+            },
+            meta: {
+              sendEmailConfirmation: true,
             },
             relationships: {
               event: {
@@ -243,6 +247,7 @@ describe('Resources', () => {
           workspaceId: 57,
           firstName: 'John',
           lastName: 'Doe',
+          categoryIds: [1, 3],
         })
         const json = JSON.parse(fetch.lastCall()[1].body)
         expect(json).to.deep.equal({
@@ -253,6 +258,12 @@ describe('Resources', () => {
               lastName: 'Doe',
             },
             relationships: {
+              categories: {
+                data: [
+                  { id: '1', type: 'category' },
+                  { id: '3', type: 'category' },
+                ],
+              },
               workspace: {
                 data: {
                   type: 'workspace',
@@ -266,6 +277,16 @@ describe('Resources', () => {
               attributes: {},
               id: '57',
               type: 'workspace',
+            },
+            {
+              attributes: {},
+              id: '1',
+              type: 'category',
+            },
+            {
+              attributes: {},
+              id: '3',
+              type: 'category',
             },
           ],
         })
@@ -763,6 +784,7 @@ describe('Resources', () => {
             workspaceId: 57,
             firstName: 'John',
             lastName: 'Doe',
+            categoryIds: [1, 3],
           },
           { apiKey: 'my-key', fetch }
         )
@@ -775,6 +797,12 @@ describe('Resources', () => {
               lastName: 'Doe',
             },
             relationships: {
+              categories: {
+                data: [
+                  { id: '1', type: 'category' },
+                  { id: '3', type: 'category' },
+                ],
+              },
               workspace: {
                 data: {
                   type: 'workspace',
@@ -788,6 +816,16 @@ describe('Resources', () => {
               attributes: {},
               id: '57',
               type: 'workspace',
+            },
+            {
+              attributes: {},
+              id: '1',
+              type: 'category',
+            },
+            {
+              attributes: {},
+              id: '3',
+              type: 'category',
             },
           ],
         })
