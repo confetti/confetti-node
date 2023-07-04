@@ -46,7 +46,10 @@ module.exports = function ({ samples }) {
     firstName: {},
     lastName: {},
     email: { required: true },
-    phone: {},
+    phone: {
+      placeholder: '+46 12 345 67 89',
+      helpText: 'Mobile phone number with country code.',
+    },
     comment: {},
     status: { required: true },
   }
