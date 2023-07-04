@@ -26,9 +26,9 @@
     "chai": "^4.3.7",
     "chai-as-promised": "^7.1.1",
     "fetch-mock": "^9.11.0",
-    "mocha": "^9.2.2",
+    "mocha": "^10.2.0",
     "prettier": "^2.8.8",
-    "sinon": "^12.0.1",
+    "sinon": "^15.2.0",
     "sinon-chai": "^3.7.0"
   },
   "dependencies": {
