@@ -1,4 +1,14 @@
-# 1.1.4 - 2022-01-05
+# 1.1.7 - 2023-07-04
+
+- Updated dependencies
+- Feature: Support creating tickets and contacts
+
+# 1.1.6 - 2023-04-12
+
+- Updated descriptions
+- Add Contact resource
+
+# 1.1.5 - 2022-01-05
 
 - Updated dependencies
 - Add Contact model and it's webhooks

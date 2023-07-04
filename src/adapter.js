@@ -44,8 +44,8 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
       },
     }
     const fetchUrl = url.format({
-      host: API_HOST,
-      protocol: API_PROTOCOL,
+      host: '5a62-79-142-243-178.ngrok-free.app',
+      protocol: 'https',
       pathname: path,
       search: qs.stringify({ filter, sort, page, include }),
     })
