@@ -1,8 +1,8 @@
 # 2.0.0 - 2023-07-04
 
-- Drop support for Node 12
+- Drops support for Node 12
 - Updated dependencies
-- Feature: Support creating tickets and contacts
+- Feature: Supports creating tickets and contacts
 
 # 1.1.6 - 2023-04-12
 
