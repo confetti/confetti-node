@@ -1,4 +1,15 @@
-# 1.1.4 - 2022-01-05
+# 2.0.0 - 2023-07-04
+
+- Drops support for Node 12
+- Updated dependencies
+- Feature: Supports creating tickets and contacts
+
+# 1.1.6 - 2023-04-12
+
+- Updated descriptions
+- Add Contact resource
+
+# 1.1.5 - 2022-01-05
 
 - Updated dependencies
 - Add Contact model and it's webhooks

@@ -11,4 +11,5 @@ module.exports = {
   ticket: require('./ticket')({ samples }),
   webhook: require('./webhook')({ samples }),
   workspace: require('./workspace')({ samples }),
+  ticketBatch: require('./ticket-batch')({ samples }),
 }

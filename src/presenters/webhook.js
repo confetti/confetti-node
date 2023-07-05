@@ -23,6 +23,7 @@ module.exports = function ({ presenters, Presenter }) {
       }
     }
   }
-  WebhookPresenter.prototype.type = 'webhook'
+  WebhookPresenter.type = 'webhook'
+  WebhookPresenter.plural = 'webhooks'
   return WebhookPresenter
 }
