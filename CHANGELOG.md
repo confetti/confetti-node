@@ -1,3 +1,8 @@
+# 2.0.1 - 2023-11-12
+
+- Updated dependencies
+- Remove dotenv dependency
+
 # 2.0.0 - 2023-07-04
 
 - Drops support for Node 12
