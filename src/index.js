@@ -1,6 +1,3 @@
-const dotenv = require('dotenv')
-dotenv.config()
-
 const adapter = require('./adapter')
 const resources = require('./resources')
 const models = require('./models')

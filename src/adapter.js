@@ -15,11 +15,11 @@ module.exports = function ({ apiKey, fetch, apiHost, apiProtocol } = {}) {
     const API_HOST =
       options.apiHost ||
       apiHost ||
-      process.env.API_HOST ||
+      process.env.CONFETTI_API_HOST ||
       'api.confetti.events'
 
     const API_PROTOCOL =
-      options.apiProtocol || apiProtocol || process.env.API_PROTOCOL || 'https'
+      options.apiProtocol || apiProtocol || process.env.CONFETTI_API_PROTOCOL || 'https'
 
     let API_KEY = options.apiKey || apiKey
     let fetchLib = options.fetch || fetch
