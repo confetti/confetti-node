@@ -43,40 +43,34 @@ module.exports = function ({ samples }) {
   ]
 
   const createAttributes = {
+    eventId: { required: true },
+    ticketBatchId: {
+      helpText: 'Required for ticket events',
+    },
     firstName: {},
     lastName: {},
     email: { required: true },
+    status: {
+      required: true,
+      values: ['attending', 'invited'],
+    },
     phone: {
       placeholder: '+46 12 345 67 89',
-      helpText: 'Mobile phone number with country code.',
+      helpText: 'Mobile phone number with country code. Example: +46701234567',
     },
     comment: {},
-    status: { required: true },
+    sendEmailConfirmation: {
+      type: 'boolean',
+      label: 'Send email confirmation',
+      required: true,
+      helpText:
+        'If set to true, an email confirmation will be sent to the attendee / invitee.',
+    },
   }
 
   const operations = {
     create: {
       attributes: transformAttributes(attributes, createAttributes),
-      meta: {
-        sendEmailConfirmation: {
-          type: 'boolean',
-          label: 'Send email confirmation',
-          required: true,
-        },
-      },
-      relationships: [
-        {
-          key: 'event',
-          label: 'Event',
-          model: 'event',
-          required: true,
-        },
-        {
-          key: 'ticketBatch',
-          label: 'Event',
-          model: 'event',
-        },
-      ],
     },
   }
 
