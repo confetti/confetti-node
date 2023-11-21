@@ -1,6 +1,6 @@
 {
   "name": "confetti",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A Node wrapper for the Confetti API.",
   "main": "src/index.js",
   "scripts": {

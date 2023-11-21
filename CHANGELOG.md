@@ -1,3 +1,7 @@
+# 2.0.2 - 2023-11-21
+
+- Add attributes for create operations
+
 # 2.0.1 - 2023-11-12
 
 - Updated dependencies
