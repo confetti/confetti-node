@@ -33,22 +33,20 @@ module.exports = function ({ samples }) {
     email: { required: true },
     phone: {
       placeholder: '+46 12 345 67 89',
-      helpText: 'Mobile phone number with country code.',
+      helpText: 'Mobile phone number with country code. Example: +46701234567',
+    },
+    comment: {},
+    categoryIds: {
+      type: 'number',
+      label: 'Categories',
+      multiple: true,
+      helpText: 'Attach categories to your contact.',
     },
   }
 
   const operations = {
     create: {
       attributes: transformAttributes(attributes, createAttributes),
-      meta: {},
-      relationships: [
-        {
-          key: 'categories',
-          label: 'Categories',
-          model: 'category',
-          multiple: true,
-        },
-      ],
     },
   }
 
