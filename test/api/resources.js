@@ -785,6 +785,7 @@ describe('Resources', () => {
             firstName: 'John',
             lastName: 'Doe',
             categoryIds: [1, 3],
+            company: 'My new company AB',
           },
           { apiKey: 'my-key', fetch }
         )
@@ -795,6 +796,7 @@ describe('Resources', () => {
             attributes: {
               firstName: 'John',
               lastName: 'Doe',
+              company: 'My new company AB',
             },
             relationships: {
               categories: {
