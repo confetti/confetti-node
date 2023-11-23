@@ -25,6 +25,7 @@ module.exports = function ({ samples }) {
     { key: 'createdAt', label: 'Created At', type: 'date' },
     { key: 'updatedAt', label: 'Updated At', type: 'date' },
     { key: 'organisationId', label: 'Organisation Id', type: 'number' },
+    { key: 'company', label: 'Company', type: 'string' },
   ]
 
   const createAttributes = {
@@ -36,6 +37,7 @@ module.exports = function ({ samples }) {
       helpText: 'Mobile phone number with country code. Example: +46701234567',
     },
     comment: {},
+    company: {},
     categoryIds: {
       type: 'number',
       label: 'Categories',

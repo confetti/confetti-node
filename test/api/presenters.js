@@ -141,6 +141,7 @@ describe('Presenters', function () {
         email: 'john@doe.se',
         workspaceId: 57,
         categoryIds: [1, 3],
+        company: 'Test AB',
       })
       expect(contact).to.deep.equal({
         data: {
@@ -149,6 +150,7 @@ describe('Presenters', function () {
             firstName: 'John',
             lastname: 'Doe',
             email: 'john@doe.se',
+            company: 'Test AB',
           },
           relationships: {
             workspace: { data: { id: '57', type: 'workspace' } },
