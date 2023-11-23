@@ -1,3 +1,7 @@
+# 2.0.3 - 2023-11-23
+
+- Add company field to contact model
+
 # 2.0.2 - 2023-11-21
 
 - Add attributes for create operations
