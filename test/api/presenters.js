@@ -1,5 +1,6 @@
 const { expect } = require('../helper')
 const { webhooks, tickets, contacts } = require('../../src/presenters')
+const { company } = require('../../src/models/samples/ticket/formatted')
 
 describe('Presenters', function () {
   describe('Webhooks', function () {
@@ -62,6 +63,7 @@ describe('Presenters', function () {
         email: 'john@doe.se',
         ticketBatchId: 57,
         eventId: 2,
+        company: 'Company AB',
       })
       expect(ticket).to.deep.equal({
         data: {
@@ -70,6 +72,7 @@ describe('Presenters', function () {
             firstName: 'John',
             lastname: 'Doe',
             email: 'john@doe.se',
+            company: 'Company AB',
           },
           relationships: {
             event: { data: { id: '2', type: 'event' } },

@@ -1,4 +1,5 @@
 const Confetti = require('../../src')
+const { company } = require('../../src/models/samples/ticket/formatted')
 
 const { expect, fetch } = require('../helper')
 
@@ -489,6 +490,7 @@ describe('Resources', () => {
             lastName: 'Doe',
             status: 'invited',
             email: 'john@doe.se',
+            company: 'Company AB',
           },
           { apiKey: 'my-key', fetch }
         )
@@ -501,6 +503,7 @@ describe('Resources', () => {
               lastName: 'Doe',
               status: 'invited',
               email: 'john@doe.se',
+              company: 'Company AB',
             },
             relationships: {
               event: {
