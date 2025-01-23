@@ -1,6 +1,5 @@
 const { expect } = require('../helper')
 const { webhooks, tickets, contacts } = require('../../src/presenters')
-const { company } = require('../../src/models/samples/ticket/formatted')
 
 describe('Presenters', function () {
   describe('Webhooks', function () {

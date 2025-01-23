@@ -1,5 +1,4 @@
 const Confetti = require('../../src')
-const { company } = require('../../src/models/samples/ticket/formatted')
 
 const { expect, fetch } = require('../helper')
 
