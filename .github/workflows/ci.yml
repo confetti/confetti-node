@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push: # Run on push to all branches
+
+jobs:
+  test:
+    name: 'Test'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm i -g npm@10.8.1
+      - name: Run Tests
+        run: npm test
