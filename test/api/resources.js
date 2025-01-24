@@ -489,6 +489,7 @@ describe('Resources', () => {
             lastName: 'Doe',
             status: 'invited',
             email: 'john@doe.se',
+            company: 'Company AB',
           },
           { apiKey: 'my-key', fetch }
         )
@@ -501,6 +502,7 @@ describe('Resources', () => {
               lastName: 'Doe',
               status: 'invited',
               email: 'john@doe.se',
+              company: 'Company AB',
             },
             relationships: {
               event: {

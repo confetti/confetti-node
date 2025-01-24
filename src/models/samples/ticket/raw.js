@@ -25,6 +25,7 @@ module.exports = {
         'field-what-do-you-think': ['Yes'],
       },
       comment: null,
+      company: 'Company AB',
       guests: 0,
       termsAcceptedAt: '2020-03-09T19:53:30.304Z',
       deletionRequestedAt: null,

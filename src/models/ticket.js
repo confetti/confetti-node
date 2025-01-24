@@ -18,6 +18,7 @@ module.exports = function ({ samples }) {
     { key: 'name', label: 'Name', type: 'string' },
     { key: 'email', label: 'Email', type: 'string' },
     { key: 'phone', label: 'Phone', type: 'string' },
+    { key: 'company', label: 'Company', type: 'string' },
     { key: 'token', label: 'Token', type: 'string' },
     { key: 'status', label: 'Status', type: 'string' },
     { key: 'emailStatus', label: 'Email Status', type: 'string' },
@@ -59,6 +60,7 @@ module.exports = function ({ samples }) {
       helpText: 'Mobile phone number with country code. Example: +46701234567',
     },
     comment: {},
+    company: {},
     sendEmailConfirmation: {
       type: 'boolean',
       label: 'Send email confirmation',
