@@ -1,3 +1,7 @@
+# 2.0.5 - 2025-01-24
+
+- Add company field to ticket model
+
 # 2.0.3 - 2023-11-23
 
 - Add company field to contact model
