@@ -60,7 +60,6 @@ module.exports = function ({ samples }) {
       helpText: 'Mobile phone number with country code. Example: +46701234567',
     },
     comment: {},
-    company: {},
     sendEmailConfirmation: {
       type: 'boolean',
       label: 'Send email confirmation',
