@@ -1,4 +1,4 @@
-# 2.0.7 - 2025-01-27
+# 2.0.6 - 2025-01-27
 
 - Fix: removes company field from create attributes in ticket model
 
