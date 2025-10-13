@@ -1,9 +1,12 @@
-module.exports = {
-  spec: 'test/**/*.js',
-  diff: true,
-  extension: ['js'],
-  package: './package.json',
-  timeout: 5000,
+process.env.NODE_ENV = 'test'
+
+export default {
   exit: true,
-  'watch-files': ['test/**/*.js', 'src/**/*.js']
+  recursive: true,
+  diff: true,
+  extension: ['ts'],
+  reporter: 'spec',
+  require: ['tsx/esm'],
+  ui: 'bdd',
+  'watch-files': ['test/**/*.ts', 'src/**/*.ts'],
 }
