@@ -55,7 +55,8 @@ export function extractFiltersFromSchema(schema: z.ZodSchema): Record<
             const innerType = field._def.innerType
             filters[key] = extractFieldConfig(innerType as z.ZodTypeAny, key)
           } else {
-            filters[key] = extractFieldConfig(field as z.ZodTypeAny, key)
+            const config = extractFieldConfig(field as z.ZodTypeAny, key)
+            filters[key] = { ...config, required: true }
           }
         }
       }

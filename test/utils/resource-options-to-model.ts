@@ -13,16 +13,16 @@ describe('resource-options-to-model', () => {
       const schema = z.object({
         filter: z.object({
           eventId: z.number(),
-          search: z.string(),
-          checkedIn: z.boolean(),
-          status: z.array(z.enum(['attending', 'declined'])),
+          search: z.string().optional(),
+          checkedIn: z.boolean().optional(),
+          status: z.array(z.enum(['attending', 'declined'])).optional(),
         }),
       })
 
       const result = extractFiltersFromSchema(schema)
 
       expect(result).to.deep.equal({
-        eventId: { type: 'number', label: 'Event Id' },
+        eventId: { type: 'number', label: 'Event Id', required: true },
         search: { type: 'string', label: 'Search' },
         checkedIn: { type: 'boolean', label: 'Checked In' },
         status: {
@@ -55,8 +55,8 @@ describe('resource-options-to-model', () => {
     it('should handle enum fields with options', () => {
       const schema = z.object({
         filter: z.object({
-          type: z.enum(['future', 'past']),
-          signupType: z.enum(['rsvp', 'tickets']),
+          type: z.enum(['future', 'past']).optional(),
+          signupType: z.enum(['rsvp', 'tickets']).optional(),
         }),
       })
 
@@ -156,7 +156,7 @@ describe('resource-options-to-model', () => {
       const schema = z.object({
         filter: z.object({
           eventId: z.number(),
-          status: z.array(z.enum(['paid', 'refunded', 'pending-invoice'])),
+          status: z.array(z.enum(['paid', 'refunded', 'pending-invoice'])).optional(),
           search: z.string().optional(),
         }),
         sort: z.string(),
@@ -166,7 +166,7 @@ describe('resource-options-to-model', () => {
       const result = extractFiltersFromSchema(schema)
 
       expect(result).to.deep.equal({
-        eventId: { type: 'number', label: 'Event Id' },
+        eventId: { type: 'number', label: 'Event Id', required: true },
         status: {
           type: 'array',
           label: 'Status',
