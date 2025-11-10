@@ -38,7 +38,3 @@ export interface ValidationError extends ApiError {
 export interface NotFoundError extends ApiError {
   code: 'not_found'
 }
-
-export interface UnauthorizedError extends ApiError {
-  code: 'unauthorized'
-}

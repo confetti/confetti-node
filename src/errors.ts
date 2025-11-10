@@ -1,38 +1,36 @@
-import { inherits } from 'util'
-
 interface ErrorOptions {
   [key: string]: unknown
 }
 
-class CustomError extends Error {
+export class ParameterError extends Error {
   public errorType: string
-  public name: string
 
-  constructor(type: string, options: ErrorOptions = {}) {
-    super()
-    this.name = this.constructor.name
-    this.message = type
-    this.errorType = type
-    Error.captureStackTrace(this, this.constructor)
+  constructor(message: string, options: ErrorOptions = {}) {
+    super(message)
+    this.name = 'ParameterError'
+    this.errorType = message
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor)
+    }
     Object.assign(this, options)
   }
 }
 
-const customError = function (name: string) {
-  const error = function (type: string, options: ErrorOptions = {}) {
-    return new CustomError(type, options)
+export class NotFoundError extends Error {
+  public errorType: string
+
+  constructor(message: string, options: ErrorOptions = {}) {
+    super(message)
+    this.name = 'NotFoundError'
+    this.errorType = message
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor)
+    }
+    Object.assign(this, options)
   }
-  inherits(error, Error)
-  error.prototype.name = name
-  return error
 }
 
-export const UnauthorizedError = customError('UnauthorizedError')
-export const ParameterError = customError('ParameterError')
-export const NotFoundError = customError('NotFoundError')
-
 export default {
-  UnauthorizedError,
   ParameterError,
   NotFoundError,
 }

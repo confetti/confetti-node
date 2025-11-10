@@ -1,6 +1,7 @@
 import Confetti from '../../src'
 import { expect } from '../helper'
 import nock from 'nock'
+import { ParameterError, NotFoundError } from '../../src/errors.js'
 
 describe('Adapter', function () {
   beforeEach(() => {
@@ -113,8 +114,11 @@ describe('Adapter', function () {
       await confetti.events.find(1)
       expect.fail('Should have thrown an error')
     } catch (error: unknown) {
-      expect((error as { name: string }).name).to.equal('CustomError')
-      expect((error as { errorType: string }).errorType).to.equal('validation')
+      if (!(error instanceof ParameterError)) {
+        throw error
+      }
+      expect(error.name).to.equal('ParameterError')
+      expect(error.errorType).to.equal('validation')
     }
 
     expect(scope.isDone()).to.be.true
@@ -129,8 +133,11 @@ describe('Adapter', function () {
       await confetti.events.find(1)
       expect.fail('Should have thrown an error')
     } catch (error: unknown) {
-      expect((error as { name: string }).name).to.equal('CustomError')
-      expect((error as { errorType: string }).errorType).to.equal('Not Found')
+      if (!(error instanceof NotFoundError)) {
+        throw error
+      }
+      expect(error.name).to.equal('NotFoundError')
+      expect(error.errorType).to.equal('Not Found')
     }
 
     expect(scope.isDone()).to.be.true

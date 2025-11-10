@@ -132,11 +132,11 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         }
       }
       if (res.status == 400) {
-        const error = ParameterError('validation', errorBody as Record<string, unknown>)
+        const error = new ParameterError('validation', errorBody as Record<string, unknown>)
         throw error
       } else if (res.status == 404) {
         const errorMessage = (errorBody as ApiError)?.message || 'object'
-        const error = NotFoundError(errorMessage, errorBody as Record<string, unknown>)
+        const error = new NotFoundError(errorMessage, errorBody as Record<string, unknown>)
         throw error
       } else {
         throw new Error()
