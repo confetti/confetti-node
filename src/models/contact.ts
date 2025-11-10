@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { contactsResourceOptionsSchema } from '../schemas/contact.js'
+import { contactsFindAllOptionsSchema } from '../schemas/contact.js'
 
 export default function ContactModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function ContactModel(): ModelDefinition {
     path: 'contacts',
     name: 'Contact',
     sample: loadSamples('contact'),
-    sorting: extractSortingFromSchema(contactsResourceOptionsSchema),
-    filters: extractFiltersFromSchema(contactsResourceOptionsSchema),
-    includes: extractIncludesFromSchema(contactsResourceOptionsSchema),
+    sorting: extractSortingFromSchema(contactsFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(contactsFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(contactsFindAllOptionsSchema),
     operations: {
       read: {
         schema: ContactSchema,

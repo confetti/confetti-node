@@ -5,7 +5,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../../src/utils/resource-options-to-model.js'
-import { eventsResourceOptionsSchema } from '../../src/schemas/event.js'
+import { eventsFindAllOptionsSchema } from '../../src/schemas/event.js'
 
 describe('resource-options-to-model', () => {
   describe('extractFiltersFromSchema', () => {
@@ -83,7 +83,7 @@ describe('resource-options-to-model', () => {
     })
 
     it('should extract enhanced enum filters from eventsResourceOptionsSchema', () => {
-      const result = extractFiltersFromSchema(eventsResourceOptionsSchema)
+      const result = extractFiltersFromSchema(eventsFindAllOptionsSchema)
 
       expect(result).to.deep.equal({
         signupType: {
@@ -278,7 +278,7 @@ describe('resource-options-to-model', () => {
   })
 
   describe('integration tests with real schemas', () => {
-    it('should work with eventsResourceOptionsSchema structure', () => {
+    it('should work with eventsFindAllOptionsSchema structure', () => {
       const eventsSchema = z.object({
         filter: z
           .object({

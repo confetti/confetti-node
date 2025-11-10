@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const TicketBatchSchema = z.object({
   id: z.number().describe(
@@ -64,7 +69,7 @@ export const TicketBatchSchema = z.object({
   ),
 })
 
-export const ticketBatchesResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
+const ticketBatchesFindAllSchema = {
   filter: z
     .object({
       eventId: z.union([z.string(), z.number()]),
@@ -72,20 +77,16 @@ export const ticketBatchesResourceOptionsSchema = baseFindAllResourceOptionsSche
     .optional(),
   sort: z.never().optional(),
   include: z.never().optional(),
-})
+}
 
-export const ticketBatchesFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
+export const ticketBatchesFindAllOptionsSchema = baseFindAllOptionsSchema.extend(ticketBatchesFindAllSchema)
+export const ticketBatchesFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticTicketBatchesResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z
-    .object({
-      eventId: z.union([z.string(), z.number()]),
-    })
-    .optional(),
-  sort: z.never().optional(),
-  include: z.never().optional(),
-})
-
-export const staticTicketBatchesFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticTicketBatchesFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketBatchesFindAllSchema)
+export const staticTicketBatchesFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 
 export type TicketBatch = z.infer<typeof TicketBatchSchema>
+export type TicketBatchesFindAllOptions = z.infer<typeof ticketBatchesFindAllOptionsSchema>
+export type TicketBatchesFindOptions = z.infer<typeof ticketBatchesFindOptionsSchema>
+export type StaticTicketBatchesFindAllOptions = z.infer<typeof staticTicketBatchesFindAllOptionsSchema>
+export type StaticTicketBatchesFindOptions = z.infer<typeof staticTicketBatchesFindOptionsSchema>

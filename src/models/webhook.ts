@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { webhooksResourceOptionsSchema } from '../schemas/webhook.js'
+import { webhooksFindAllOptionsSchema } from '../schemas/webhook.js'
 
 export default function WebhookModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function WebhookModel(): ModelDefinition {
     path: 'webhooks',
     name: 'Webhook',
     sample: loadSamples('webhook'),
-    sorting: extractSortingFromSchema(webhooksResourceOptionsSchema),
-    filters: extractFiltersFromSchema(webhooksResourceOptionsSchema),
-    includes: extractIncludesFromSchema(webhooksResourceOptionsSchema),
+    sorting: extractSortingFromSchema(webhooksFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(webhooksFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(webhooksFindAllOptionsSchema),
     operations: {
       read: {
         schema: WebhookSchema,

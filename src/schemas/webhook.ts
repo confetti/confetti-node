@@ -1,5 +1,11 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  baseOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const WebhookSchema = z.object({
   id: z.number().describe(
@@ -99,7 +105,7 @@ export const WebhookCreateSchema = z.object({
     ),
 })
 
-export const webhooksResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
+const webhooksFindAllSchema = {
   filter: z
     .object({
       eventId: z.union([z.string(), z.number()]).optional(),
@@ -107,23 +113,22 @@ export const webhooksResourceOptionsSchema = baseFindAllResourceOptionsSchema.ex
     .optional(),
   sort: z.never().optional(),
   include: z.never().optional(),
-})
+}
 
-export const webhooksFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
+export const webhooksFindAllOptionsSchema = baseFindAllOptionsSchema.extend(webhooksFindAllSchema)
+export const webhooksFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticWebhooksResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z
-    .object({
-      eventId: z.union([z.string(), z.number()]).optional(),
-    })
-    .optional(),
-  sort: z.never().optional(),
-  include: z.never().optional(),
-})
+export const staticWebhooksFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(webhooksFindAllSchema)
+export const staticWebhooksFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 
-export const staticWebhooksFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
-
-export const staticWebhooksCreateOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticWebhooksCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Webhook = z.infer<typeof WebhookSchema>
 export type WebhookCreate = z.infer<typeof WebhookCreateSchema>
+export type WebhookCreateData = z.infer<typeof WebhookCreateSchema>
+export type WebhooksFindAllOptions = z.infer<typeof webhooksFindAllOptionsSchema>
+export type WebhooksFindOptions = z.infer<typeof webhooksFindOptionsSchema>
+export type WebhooksCreateOptions = z.infer<typeof baseOptionsSchema>
+export type StaticWebhooksFindAllOptions = z.infer<typeof staticWebhooksFindAllOptionsSchema>
+export type StaticWebhooksFindOptions = z.infer<typeof staticWebhooksFindOptionsSchema>
+export type StaticWebhooksCreateOptions = z.infer<typeof staticWebhooksCreateOptionsSchema>

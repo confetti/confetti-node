@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const EventSchema = z.object({
   id: z.number().describe(
@@ -86,7 +91,7 @@ export const EventSchema = z.object({
   ),
 })
 
-export const eventsResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
+const eventsFindAllSchema = {
   filter: z
     .object({
       signupType: z
@@ -182,108 +187,16 @@ export const eventsResourceOptionsSchema = baseFindAllResourceOptionsSchema.exte
       ),
     )
     .optional(),
-})
+}
 
-export const eventsFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
+export const eventsFindAllOptionsSchema = baseFindAllOptionsSchema.extend(eventsFindAllSchema)
+export const eventsFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticEventsResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z
-    .object({
-      signupType: z
-        .enum(['rsvp', 'tickets'])
-        .describe(
-          JSON.stringify({
-            label: 'Signup Type',
-            description: 'Filter events by signup type',
-            values: [
-              {
-                label: 'RSVP',
-                description: 'Events with signup type RSVP',
-                type: 'string',
-                key: 'rsvp',
-                value: 'rsvp',
-              },
-              {
-                label: 'Tickets',
-                description: 'Events with signup type tickets',
-                type: 'string',
-                key: 'tickets',
-                value: 'tickets',
-              },
-            ],
-          }),
-        )
-        .optional(),
-      type: z
-        .enum(['future', 'past'])
-        .describe(
-          JSON.stringify({
-            label: 'Event Type',
-            description: 'Filter events by time',
-            values: [
-              {
-                label: 'Future',
-                description: 'Upcoming events',
-                type: 'string',
-                key: 'future',
-                value: 'future',
-              },
-              {
-                label: 'Past',
-                description: 'Completed events',
-                type: 'string',
-                key: 'past',
-                value: 'past',
-              },
-            ],
-          }),
-        )
-        .optional(),
-    })
-    .optional(),
-  sort: z.never().optional(),
-  include: z
-    .array(
-      z.enum(['categories', 'pages', 'pages.blocks', 'pages.blocks.images']).describe(
-        JSON.stringify({
-          label: 'Include Relations',
-          description: 'Include related data',
-          values: [
-            {
-              label: 'Categories',
-              description: 'Event categories',
-              type: 'string',
-              key: 'categories',
-              value: 'categories',
-            },
-            {
-              label: 'Pages',
-              description: 'Event pages',
-              type: 'string',
-              key: 'pages',
-              value: 'pages',
-            },
-            {
-              label: 'Pages Blocks',
-              description: 'Page content blocks',
-              type: 'string',
-              key: 'pages.blocks',
-              value: 'pages.blocks',
-            },
-            {
-              label: 'Pages Blocks Images',
-              description: 'Block images',
-              type: 'string',
-              key: 'pages.blocks.images',
-              value: 'pages.blocks.images',
-            },
-          ],
-        }),
-      ),
-    )
-    .optional(),
-})
-
-export const staticEventsFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticEventsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(eventsFindAllSchema)
+export const staticEventsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 
 export type Event = z.infer<typeof EventSchema>
+export type EventsFindAllOptions = z.infer<typeof eventsFindAllOptionsSchema>
+export type EventsFindOptions = z.infer<typeof eventsFindOptionsSchema>
+export type StaticEventsFindAllOptions = z.infer<typeof staticEventsFindAllOptionsSchema>
+export type StaticEventsFindOptions = z.infer<typeof staticEventsFindOptionsSchema>

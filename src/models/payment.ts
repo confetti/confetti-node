@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { paymentsResourceOptionsSchema } from '../schemas/payment.js'
+import { paymentsFindAllOptionsSchema } from '../schemas/payment.js'
 
 export default function PaymentModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function PaymentModel(): ModelDefinition {
     path: 'payments',
     name: 'Payment',
     sample: loadSamples('payment'),
-    sorting: extractSortingFromSchema(paymentsResourceOptionsSchema),
-    filters: extractFiltersFromSchema(paymentsResourceOptionsSchema),
-    includes: extractIncludesFromSchema(paymentsResourceOptionsSchema),
+    sorting: extractSortingFromSchema(paymentsFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(paymentsFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(paymentsFindAllOptionsSchema),
     operations: {
       read: {
         schema: PaymentSchema,

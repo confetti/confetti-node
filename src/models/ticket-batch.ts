@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { ticketBatchesResourceOptionsSchema } from '../schemas/ticket-batch.js'
+import { ticketBatchesFindAllOptionsSchema } from '../schemas/ticket-batch.js'
 
 export default function TicketBatchModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function TicketBatchModel(): ModelDefinition {
     path: 'ticket-batches',
     name: 'Ticket Batch',
     sample: loadSamples('ticketBatch'),
-    sorting: extractSortingFromSchema(ticketBatchesResourceOptionsSchema),
-    filters: extractFiltersFromSchema(ticketBatchesResourceOptionsSchema),
-    includes: extractIncludesFromSchema(ticketBatchesResourceOptionsSchema),
+    sorting: extractSortingFromSchema(ticketBatchesFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(ticketBatchesFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(ticketBatchesFindAllOptionsSchema),
     operations: {
       read: {
         schema: TicketBatchSchema,

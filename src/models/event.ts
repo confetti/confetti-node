@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { eventsResourceOptionsSchema } from '../schemas/event.js'
+import { eventsFindAllOptionsSchema } from '../schemas/event.js'
 
 export default function EventModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function EventModel(): ModelDefinition {
     path: 'events',
     name: 'Event',
     sample: loadSamples('event'),
-    sorting: extractSortingFromSchema(eventsResourceOptionsSchema),
-    filters: extractFiltersFromSchema(eventsResourceOptionsSchema),
-    includes: extractIncludesFromSchema(eventsResourceOptionsSchema),
+    sorting: extractSortingFromSchema(eventsFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(eventsFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(eventsFindAllOptionsSchema),
     operations: {
       read: {
         schema: EventSchema,

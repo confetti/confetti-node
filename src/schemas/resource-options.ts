@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
-export const baseResourceOptionsSchema = z.object({
+export const baseOptionsSchema = z.object({
   raw: z.boolean().optional(),
   apiKey: z.string().optional(),
   apiHost: z.string().optional(),
   apiProtocol: z.string().optional(),
 })
 
-export const findBaseResourceOptionsSchema = baseResourceOptionsSchema.extend({
+export const findBaseOptionsSchema = baseOptionsSchema.extend({
   include: z.array(z.string()).optional(),
 })
 
@@ -18,7 +18,7 @@ export const pageOptionsSchema = z.object({
   limit: z.number().optional(),
 })
 
-export const baseFindAllResourceOptionsSchema = findBaseResourceOptionsSchema.extend({
+export const baseFindAllOptionsSchema = findBaseOptionsSchema.extend({
   filter: z
     .record(
       z.string(),
@@ -30,18 +30,18 @@ export const baseFindAllResourceOptionsSchema = findBaseResourceOptionsSchema.ex
 })
 
 // Static method schemas (apiKey required)
-export const staticBaseResourceOptionsSchema = z.object({
+export const staticBaseOptionsSchema = z.object({
   raw: z.boolean().optional(),
   apiKey: z.string(),
   apiHost: z.string().optional(),
   apiProtocol: z.string().optional(),
 })
 
-export const staticFindBaseResourceOptionsSchema = staticBaseResourceOptionsSchema.extend({
+export const staticBaseFindOptionsSchema = staticBaseOptionsSchema.extend({
   include: z.array(z.string()).optional(),
 })
 
-export const staticBaseFindAllResourceOptionsSchema = staticFindBaseResourceOptionsSchema.extend({
+export const staticBaseFindAllOptionsSchema = staticBaseFindOptionsSchema.extend({
   filter: z
     .record(
       z.string(),
@@ -51,3 +51,9 @@ export const staticBaseFindAllResourceOptionsSchema = staticFindBaseResourceOpti
   sort: z.string().optional(),
   page: pageOptionsSchema.optional(),
 })
+
+export type FindBaseResourceOptions = z.infer<typeof findBaseOptionsSchema>
+export type BaseFindAllResourceOptions = z.infer<typeof baseFindAllOptionsSchema>
+export type StaticBaseResourceOptions = z.infer<typeof staticBaseOptionsSchema>
+export type StaticFindBaseResourceOptions = z.infer<typeof staticBaseFindOptionsSchema>
+export type StaticBaseFindAllResourceOptions = z.infer<typeof staticBaseFindAllOptionsSchema>

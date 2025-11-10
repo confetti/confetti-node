@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { ticketsResourceOptionsSchema } from '../schemas/ticket.js'
+import { ticketsFindAllOptionsSchema } from '../schemas/ticket.js'
 
 export default function TicketModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function TicketModel(): ModelDefinition {
     path: 'tickets',
     name: 'Ticket',
     sample: loadSamples('ticket'),
-    sorting: extractSortingFromSchema(ticketsResourceOptionsSchema),
-    filters: extractFiltersFromSchema(ticketsResourceOptionsSchema),
-    includes: extractIncludesFromSchema(ticketsResourceOptionsSchema),
+    sorting: extractSortingFromSchema(ticketsFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(ticketsFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(ticketsFindAllOptionsSchema),
     operations: {
       read: {
         schema: TicketSchema,

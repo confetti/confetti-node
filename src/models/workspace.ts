@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { workspacesResourceOptionsSchema } from '../schemas/workspace.js'
+import { workspacesFindAllOptionsSchema } from '../schemas/workspace.js'
 
 export default function WorkspaceModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function WorkspaceModel(): ModelDefinition {
     path: 'workspaces',
     name: 'Workspace',
     sample: loadSamples('workspace'),
-    sorting: extractSortingFromSchema(workspacesResourceOptionsSchema),
-    filters: extractFiltersFromSchema(workspacesResourceOptionsSchema),
-    includes: extractIncludesFromSchema(workspacesResourceOptionsSchema),
+    sorting: extractSortingFromSchema(workspacesFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(workspacesFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(workspacesFindAllOptionsSchema),
     operations: {
       read: {
         schema: WorkspaceSchema,

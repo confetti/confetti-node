@@ -1,5 +1,11 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  baseOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const ContactSchema = z.object({
   id: z.number().describe(
@@ -142,23 +148,25 @@ export const ContactCreateSchema = z.object({
   ),
 })
 
-export const contactsResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
+const contactsFindAllSchema = {
   filter: z.never().optional(),
   sort: z.never().optional(),
   include: z.never().optional(),
-})
+}
 
-export const contactsFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
+export const contactsFindAllOptionsSchema = baseFindAllOptionsSchema.extend(contactsFindAllSchema)
+export const contactsFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticContactsResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z.never().optional(),
-  sort: z.never().optional(),
-  include: z.never().optional(),
-})
-
-export const staticContactsFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
-
-export const staticContactsCreateOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticContactsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(contactsFindAllSchema)
+export const staticContactsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
+export const staticContactsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Contact = z.infer<typeof ContactSchema>
 export type ContactCreate = z.infer<typeof ContactCreateSchema>
+export type ContactCreateData = z.infer<typeof ContactCreateSchema>
+export type ContactsFindAllOptions = z.infer<typeof contactsFindAllOptionsSchema>
+export type ContactsFindOptions = z.infer<typeof contactsFindOptionsSchema>
+export type ContactsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type StaticContactsFindAllOptions = z.infer<typeof staticContactsFindAllOptionsSchema>
+export type StaticContactsFindOptions = z.infer<typeof staticContactsFindOptionsSchema>
+export type StaticContactsCreateOptions = z.infer<typeof staticContactsCreateOptionsSchema>

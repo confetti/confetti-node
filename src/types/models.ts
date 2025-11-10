@@ -1,21 +1,16 @@
 // Model types for Confetti API - Generated from Zod schemas
 
-import type {
-  Category,
-  Contact,
-  ContactCreate,
-  Event,
-  Ticket,
-  TicketCreate,
-  Payment,
-  Webhook,
-  WebhookCreate,
-  Workspace,
-  TicketBatch,
-  Block,
-  Image,
-  Page,
-} from '../models/index.js'
+import type { Category } from '../schemas/category.js'
+import type { Contact, ContactCreate } from '../schemas/contact.js'
+import type { Event } from '../schemas/event.js'
+import type { Ticket, TicketCreate } from '../schemas/ticket.js'
+import type { Payment } from '../schemas/payment.js'
+import type { Webhook, WebhookCreate } from '../schemas/webhook.js'
+import type { Workspace } from '../schemas/workspace.js'
+import type { TicketBatch } from '../schemas/ticket-batch.js'
+import type { Block } from '../schemas/block.js'
+import type { Image } from '../schemas/image.js'
+import type { Page } from '../schemas/page.js'
 
 // Re-export all model types
 export type {

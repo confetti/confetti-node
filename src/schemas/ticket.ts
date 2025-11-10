@@ -1,5 +1,11 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema as baseFindAllOptionsSchema,
+  staticBaseFindAllOptionsSchema as staticBaseFindAllOptionsSchema,
+  baseOptionsSchema,
+  staticBaseFindOptionsSchema,
+  findBaseOptionsSchema,
+} from './resource-options.js'
 
 export const TicketSchema = z.object({
   id: z.number().describe(
@@ -196,7 +202,7 @@ export const TicketCreateSchema = z.object({
   ),
 })
 
-const ticketsResourceOptionsExtensions = {
+const ticketsFindAllSchema = {
   filter: z.object({
     eventId: z.union([z.string(), z.number()]),
     search: z.string().optional(),
@@ -320,17 +326,19 @@ const ticketsResourceOptionsExtensions = {
   include: z.never().optional(),
 }
 
-export const ticketsResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend(ticketsResourceOptionsExtensions)
+export const ticketsFindAllOptionsSchema = baseFindAllOptionsSchema.extend(ticketsFindAllSchema)
+export const ticketsFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const ticketsFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
-
-export const staticTicketsResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend(
-  ticketsResourceOptionsExtensions,
-)
-
-export const staticTicketsFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
-
-export const staticTicketsCreateOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticTicketsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketsFindAllSchema)
+export const staticTicketsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
+export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
+export type TicketCreateData = z.infer<typeof TicketCreateSchema>
+export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
+export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
+export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type StaticTicketsFindAllOptions = z.infer<typeof staticTicketsFindAllOptionsSchema>
+export type StaticTicketsFindOptions = z.infer<typeof staticTicketsFindOptionsSchema>
+export type StaticTicketsCreateOptions = z.infer<typeof staticTicketsCreateOptionsSchema>

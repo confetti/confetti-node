@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { baseFindAllResourceOptionsSchema, staticBaseFindAllResourceOptionsSchema } from './resource-options.js'
+import {
+  baseFindAllOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const WorkspaceSchema = z.object({
   id: z.number().describe(
@@ -56,20 +61,20 @@ export const WorkspaceSchema = z.object({
   ),
 })
 
-export const workspacesResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
+const workspacesFindAllSchema = {
   filter: z.never().optional(),
   sort: z.never().optional(),
   include: z.never().optional(),
-})
+}
 
-export const workspacesFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
+export const workspacesFindAllOptionsSchema = baseFindAllOptionsSchema.extend(workspacesFindAllSchema)
+export const workspacesFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticWorkspacesResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z.never().optional(),
-  sort: z.never().optional(),
-  include: z.never().optional(),
-})
-
-export const staticWorkspacesFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
+export const staticWorkspacesFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(workspacesFindAllSchema)
+export const staticWorkspacesFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 
 export type Workspace = z.infer<typeof WorkspaceSchema>
+export type WorkspacesFindAllOptions = z.infer<typeof workspacesFindAllOptionsSchema>
+export type WorkspacesFindOptions = z.infer<typeof workspacesFindOptionsSchema>
+export type StaticWorkspacesFindAllOptions = z.infer<typeof staticWorkspacesFindAllOptionsSchema>
+export type StaticWorkspacesFindOptions = z.infer<typeof staticWorkspacesFindOptionsSchema>

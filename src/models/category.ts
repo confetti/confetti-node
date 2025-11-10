@@ -7,7 +7,7 @@ import {
   extractSortingFromSchema,
   extractIncludesFromSchema,
 } from '../utils/resource-options-to-model.js'
-import { categoriesResourceOptionsSchema } from '../schemas/category.js'
+import { categoriesFindAllOptionsSchema } from '../schemas/category.js'
 
 export default function CategoryModel(): ModelDefinition {
   return {
@@ -16,9 +16,9 @@ export default function CategoryModel(): ModelDefinition {
     path: 'categories',
     name: 'Category',
     sample: loadSamples('category'),
-    sorting: extractSortingFromSchema(categoriesResourceOptionsSchema),
-    filters: extractFiltersFromSchema(categoriesResourceOptionsSchema),
-    includes: extractIncludesFromSchema(categoriesResourceOptionsSchema),
+    sorting: extractSortingFromSchema(categoriesFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(categoriesFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(categoriesFindAllOptionsSchema),
     operations: {
       read: {
         schema: CategorySchema,

@@ -10,42 +10,63 @@ import {
   categoriesResource,
   ticketBatchesResource,
 } from './resources.js'
-import {
+import type {
   CategoriesFindAllOptions,
+  CategoriesFindOptions,
+  StaticCategoriesFindAllOptions,
+  StaticCategoriesFindOptions,
+} from './schemas/category.js'
+import type {
   ContactsFindAllOptions,
   ContactsCreateOptions,
+  StaticContactsFindAllOptions,
+  StaticContactsFindOptions,
+  StaticContactsCreateOptions,
+  ContactCreateData,
+  ContactsFindOptions,
+} from './schemas/contact.js'
+import type {
   EventsFindAllOptions,
+  EventsFindOptions,
+  StaticEventsFindAllOptions,
+  StaticEventsFindOptions,
+} from './schemas/event.js'
+import type {
   PaymentsFindAllOptions,
+  PaymentsFindOptions,
+  StaticPaymentsFindAllOptions,
+  StaticPaymentsFindOptions,
+} from './schemas/payment.js'
+import type {
   TicketBatchesFindAllOptions,
+  StaticTicketBatchesFindAllOptions,
+  StaticTicketBatchesFindOptions,
+  TicketBatchesFindOptions,
+} from './schemas/ticket-batch.js'
+import type {
   TicketsFindAllOptions,
+  TicketsFindOptions,
   TicketsCreateOptions,
+  StaticTicketsFindAllOptions,
+  StaticTicketsFindOptions,
+  StaticTicketsCreateOptions,
+  TicketCreateData,
+} from './schemas/ticket.js'
+import type {
   WebhooksFindAllOptions,
   WebhooksCreateOptions,
-  WorkspacesFindAllOptions,
-  TicketCreateData,
-  ContactCreateData,
-  WebhookCreateData,
-  // Static method types (apiKey required)
-  StaticEventsFindAllOptions,
-  StaticContactsFindAllOptions,
-  StaticTicketsFindAllOptions,
-  StaticPaymentsFindAllOptions,
   StaticWebhooksFindAllOptions,
-  StaticWorkspacesFindAllOptions,
-  StaticCategoriesFindAllOptions,
-  StaticTicketBatchesFindAllOptions,
-  StaticEventsFindOptions,
-  StaticTicketsFindOptions,
-  StaticContactsFindOptions,
-  StaticPaymentsFindOptions,
   StaticWebhooksFindOptions,
-  StaticWorkspacesFindOptions,
-  StaticCategoriesFindOptions,
-  StaticTicketBatchesFindOptions,
-  StaticTicketsCreateOptions,
-  StaticContactsCreateOptions,
   StaticWebhooksCreateOptions,
-} from './types/index.js'
+  WebhookCreateData,
+  WebhooksFindOptions,
+} from './schemas/webhook.js'
+import type {
+  WorkspacesFindAllOptions,
+  StaticWorkspacesFindAllOptions,
+  StaticWorkspacesFindOptions,
+  WorkspacesFindOptions,
+} from './schemas/workspace.js'
 
 export interface ConfettiSettings {
   apiKey?: string
@@ -73,7 +94,7 @@ class Confetti {
     findAll: (options: EventsFindAllOptions = {}) => {
       return eventsResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: EventsFindAllOptions = {}) => {
+    find: (id: string | number, options: EventsFindOptions = {}) => {
       return eventsResource.find(id, options, this.adapter)
     },
   }
@@ -87,10 +108,10 @@ class Confetti {
   }
 
   tickets = {
-    findAll: (options: TicketsFindAllOptions = {}) => {
+    findAll: (options: TicketsFindAllOptions) => {
       return ticketsResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: TicketsFindAllOptions = {}) => {
+    find: (id: string | number, options: TicketsFindOptions = {}) => {
       return ticketsResource.find(id, options, this.adapter)
     },
     create: (json: TicketCreateData, options: TicketsCreateOptions = {}) => {
@@ -113,7 +134,7 @@ class Confetti {
     findAll: (options: ContactsFindAllOptions = {}) => {
       return contactsResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: ContactsFindAllOptions = {}) => {
+    find: (id: string | number, options: ContactsFindOptions = {}) => {
       return contactsResource.find(id, options, this.adapter)
     },
     create: (json: ContactCreateData, options: ContactsCreateOptions = {}) => {
@@ -133,10 +154,10 @@ class Confetti {
   }
 
   payments = {
-    findAll: (options: PaymentsFindAllOptions = {}) => {
+    findAll: (options: PaymentsFindAllOptions) => {
       return paymentsResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: PaymentsFindAllOptions = {}) => {
+    find: (id: string | number, options: PaymentsFindOptions = {}) => {
       return paymentsResource.find(id, options, this.adapter)
     },
   }
@@ -153,7 +174,7 @@ class Confetti {
     findAll: (options: WorkspacesFindAllOptions = {}) => {
       return workspacesResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: WorkspacesFindAllOptions = {}) => {
+    find: (id: string | number, options: WorkspacesFindOptions = {}) => {
       return workspacesResource.find(id, options, this.adapter)
     },
   }
@@ -170,7 +191,7 @@ class Confetti {
     findAll: (options: WebhooksFindAllOptions = {}) => {
       return webhooksResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: WebhooksFindAllOptions = {}) => {
+    find: (id: string | number, options: WebhooksFindOptions = {}) => {
       return webhooksResource.find(id, options, this.adapter)
     },
     create: (json: WebhookCreateData, options: WebhooksCreateOptions = {}) => {
@@ -199,7 +220,7 @@ class Confetti {
     findAll: (options: CategoriesFindAllOptions = {}) => {
       return categoriesResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: CategoriesFindAllOptions = {}) => {
+    find: (id: string | number, options: CategoriesFindOptions = {}) => {
       return categoriesResource.find(id, options, this.adapter)
     },
   }
@@ -216,7 +237,7 @@ class Confetti {
     findAll: (options: TicketBatchesFindAllOptions = {}) => {
       return ticketBatchesResource.findAll(options, this.adapter)
     },
-    find: (id: string | number, options: TicketBatchesFindAllOptions = {}) => {
+    find: (id: string | number, options: TicketBatchesFindOptions = {}) => {
       return ticketBatchesResource.find(id, options, this.adapter)
     },
   }

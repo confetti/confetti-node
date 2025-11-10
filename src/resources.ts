@@ -1,37 +1,58 @@
 import {
-  EventsFindAllOptions,
-  ContactsFindAllOptions,
-  TicketsFindAllOptions,
-  PaymentsFindAllOptions,
-  WebhooksFindAllOptions,
-  WorkspacesFindAllOptions,
-  CategoriesFindAllOptions,
-  TicketBatchesFindAllOptions,
-  EventsFindOptions,
-  TicketsFindOptions,
-  ContactsFindOptions,
-  PaymentsFindOptions,
-  WebhooksFindOptions,
-  WorkspacesFindOptions,
-  CategoriesFindOptions,
-  TicketBatchesFindOptions,
-  TicketsCreateOptions,
-  ContactsCreateOptions,
-  WebhooksCreateOptions,
-  TicketCreateData,
-  ContactCreateData,
-  WebhookCreateData,
-} from './types/resources.js'
-
-import { eventsResourceOptionsSchema, eventsFindOptionsSchema } from './schemas/event.js'
-import { contactsResourceOptionsSchema, contactsFindOptionsSchema } from './schemas/contact.js'
-import { ticketsResourceOptionsSchema, ticketsFindOptionsSchema } from './schemas/ticket.js'
-import { paymentsResourceOptionsSchema, paymentsFindOptionsSchema } from './schemas/payment.js'
-import { webhooksResourceOptionsSchema, webhooksFindOptionsSchema } from './schemas/webhook.js'
-import { workspacesResourceOptionsSchema, workspacesFindOptionsSchema } from './schemas/workspace.js'
-import { categoriesResourceOptionsSchema, categoriesFindOptionsSchema } from './schemas/category.js'
-import { ticketBatchesResourceOptionsSchema, ticketBatchesFindOptionsSchema } from './schemas/ticket-batch.js'
-import { baseResourceOptionsSchema } from './schemas/resource-options.js'
+  eventsFindAllOptionsSchema,
+  eventsFindOptionsSchema,
+  type EventsFindAllOptions,
+  type EventsFindOptions,
+} from './schemas/event.js'
+import {
+  contactsFindOptionsSchema,
+  type ContactsFindAllOptions,
+  type ContactsFindOptions,
+  type ContactsCreateOptions,
+  type ContactCreateData,
+  contactsFindAllOptionsSchema,
+} from './schemas/contact.js'
+import {
+  ticketsFindAllOptionsSchema,
+  ticketsFindOptionsSchema,
+  type TicketsFindAllOptions,
+  type TicketsFindOptions,
+  type TicketsCreateOptions,
+  type TicketCreateData,
+} from './schemas/ticket.js'
+import {
+  paymentsFindAllOptionsSchema,
+  paymentsFindOptionsSchema,
+  type PaymentsFindAllOptions,
+  type PaymentsFindOptions,
+} from './schemas/payment.js'
+import {
+  webhooksFindAllOptionsSchema,
+  webhooksFindOptionsSchema,
+  type WebhooksFindAllOptions,
+  type WebhooksFindOptions,
+  type WebhooksCreateOptions,
+  type WebhookCreateData,
+} from './schemas/webhook.js'
+import {
+  workspacesFindAllOptionsSchema,
+  workspacesFindOptionsSchema,
+  type WorkspacesFindAllOptions,
+  type WorkspacesFindOptions,
+} from './schemas/workspace.js'
+import {
+  categoriesFindAllOptionsSchema,
+  categoriesFindOptionsSchema,
+  type CategoriesFindAllOptions,
+  type CategoriesFindOptions,
+} from './schemas/category.js'
+import {
+  ticketBatchesFindAllOptionsSchema,
+  ticketBatchesFindOptionsSchema,
+  type TicketBatchesFindAllOptions,
+  type TicketBatchesFindOptions,
+} from './schemas/ticket-batch.js'
+import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
 import { Event, Contact, Ticket, Payment, Webhook, Workspace, Category, TicketBatch } from './types/models.js'
@@ -39,7 +60,7 @@ import models from './models/index.js'
 
 export const eventsResource = {
   findAll: (options: EventsFindAllOptions = {}, adapter: Adapter): Promise<Event[]> => {
-    const validatedOptions = eventsResourceOptionsSchema.parse(options)
+    const validatedOptions = eventsFindAllOptionsSchema.parse(options)
     return adapter.get<Event[]>({ path: models.event.path, type: models.event.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: EventsFindOptions = {}, adapter: Adapter): Promise<Event> => {
@@ -50,7 +71,7 @@ export const eventsResource = {
 
 export const ticketsResource = {
   findAll: (options: TicketsFindAllOptions, adapter: Adapter): Promise<Ticket[]> => {
-    const validatedOptions = ticketsResourceOptionsSchema.parse(options)
+    const validatedOptions = ticketsFindAllOptionsSchema.parse(options)
     return adapter.get<Ticket[]>({ path: models.ticket.path, type: models.ticket.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: TicketsFindOptions = {}, adapter: Adapter): Promise<Ticket> => {
@@ -62,7 +83,7 @@ export const ticketsResource = {
     })
   },
   create: (json: TicketCreateData, options: TicketsCreateOptions = {}, adapter: Adapter): Promise<Ticket> => {
-    const validatedOptions = baseResourceOptionsSchema.parse(options)
+    const validatedOptions = baseOptionsSchema.parse(options)
     if (!models.ticket.operations.create) throw new Error('Ticket create operation not found')
     const validatedData = models.ticket.operations.create.schema.parse(json)
 
@@ -77,7 +98,7 @@ export const ticketsResource = {
 
 export const contactsResource = {
   findAll: (options: ContactsFindAllOptions = {}, adapter: Adapter): Promise<Contact[]> => {
-    const validatedOptions = contactsResourceOptionsSchema.parse(options)
+    const validatedOptions = contactsFindAllOptionsSchema.parse(options)
     return adapter.get<Contact[]>({ path: models.contact.path, type: models.contact.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: ContactsFindOptions = {}, adapter: Adapter): Promise<Contact> => {
@@ -89,7 +110,7 @@ export const contactsResource = {
     })
   },
   create: (json: ContactCreateData, options: ContactsCreateOptions = {}, adapter: Adapter): Promise<Contact> => {
-    const validatedOptions = baseResourceOptionsSchema.parse(options)
+    const validatedOptions = baseOptionsSchema.parse(options)
     if (!models.contact.operations.create) throw new Error('Contact create operation not found')
     const validatedData = models.contact.operations.create.schema.parse(json)
 
@@ -103,8 +124,8 @@ export const contactsResource = {
 }
 
 export const paymentsResource = {
-  findAll: (options: PaymentsFindAllOptions = {}, adapter: Adapter): Promise<Payment[]> => {
-    const validatedOptions = paymentsResourceOptionsSchema.parse(options)
+  findAll: (options: PaymentsFindAllOptions, adapter: Adapter): Promise<Payment[]> => {
+    const validatedOptions = paymentsFindAllOptionsSchema.parse(options)
     return adapter.get<Payment[]>({ path: models.payment.path, type: models.payment.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: PaymentsFindOptions = {}, adapter: Adapter): Promise<Payment> => {
@@ -119,7 +140,7 @@ export const paymentsResource = {
 
 export const webhooksResource = {
   findAll: (options: WebhooksFindAllOptions = {}, adapter: Adapter): Promise<Webhook[]> => {
-    const validatedOptions = webhooksResourceOptionsSchema.parse(options)
+    const validatedOptions = webhooksFindAllOptionsSchema.parse(options)
     return adapter.get<Webhook[]>({ path: models.webhook.path, type: models.webhook.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: WebhooksFindOptions = {}, adapter: Adapter): Promise<Webhook> => {
@@ -131,7 +152,7 @@ export const webhooksResource = {
     })
   },
   create: (json: WebhookCreateData, options: WebhooksCreateOptions = {}, adapter: Adapter): Promise<Webhook> => {
-    const validatedOptions = baseResourceOptionsSchema.parse(options)
+    const validatedOptions = baseOptionsSchema.parse(options)
     if (!models.webhook.operations.create) throw new Error('Webhook create operation not found')
     const validatedData = models.webhook.operations.create.schema.parse(json)
     return adapter.post<Webhook>({
@@ -153,7 +174,7 @@ export const webhooksResource = {
 
 export const workspacesResource = {
   findAll: (options: WorkspacesFindAllOptions = {}, adapter: Adapter): Promise<Workspace[]> => {
-    const validatedOptions = workspacesResourceOptionsSchema.parse(options)
+    const validatedOptions = workspacesFindAllOptionsSchema.parse(options)
     return adapter.get<Workspace[]>({
       path: models.workspace.path,
       type: models.workspace.endpoint,
@@ -172,7 +193,7 @@ export const workspacesResource = {
 
 export const categoriesResource = {
   findAll: (options: CategoriesFindAllOptions = {}, adapter: Adapter): Promise<Category[]> => {
-    const validatedOptions = categoriesResourceOptionsSchema.parse(options)
+    const validatedOptions = categoriesFindAllOptionsSchema.parse(options)
     return adapter.get<Category[]>({ path: models.category.path, type: models.category.endpoint, ...validatedOptions })
   },
   find: (id: string | number, options: CategoriesFindOptions = {}, adapter: Adapter): Promise<Category> => {
@@ -187,7 +208,7 @@ export const categoriesResource = {
 
 export const ticketBatchesResource = {
   findAll: (options: TicketBatchesFindAllOptions = {}, adapter: Adapter): Promise<TicketBatch[]> => {
-    const validatedOptions = ticketBatchesResourceOptionsSchema.parse(options)
+    const validatedOptions = ticketBatchesFindAllOptionsSchema.parse(options)
     return adapter.get<TicketBatch[]>({
       path: models.ticketBatch.path,
       type: models.ticketBatch.endpoint,

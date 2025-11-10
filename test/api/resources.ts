@@ -59,10 +59,11 @@ describe('Resources', () => {
 
         nock('https://api.confetti.events')
           .get('/payments')
+          .query({ filter: { eventId: 12 } })
           .reply(200, mockData as MockResponseData)
 
         const confetti = new Confetti({ apiKey: 'my-key' })
-        const data = await confetti.payments.findAll()
+        const data = await confetti.payments.findAll({ filter: { eventId: 12 } })
 
         expect(data).to.deep.equal(Confetti.models.payment.sample.multiple.formatted)
       })
@@ -309,9 +310,10 @@ describe('Resources', () => {
 
         nock('https://api.confetti.events')
           .get('/payments')
+          .query({ filter: { eventId: 12 } })
           .reply(200, mockData as MockResponseData)
 
-        const data = await Confetti.payments.findAll({ apiKey: 'my-key' })
+        const data = await Confetti.payments.findAll({ apiKey: 'my-key', filter: { eventId: 12 } })
         expect(data).to.deep.equal(Confetti.models.payment.sample.multiple.formatted)
       })
     })
