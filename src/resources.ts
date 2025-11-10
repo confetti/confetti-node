@@ -49,7 +49,7 @@ export const eventsResource = {
 }
 
 export const ticketsResource = {
-  findAll: (options: TicketsFindAllOptions = {}, adapter: Adapter): Promise<Ticket[]> => {
+  findAll: (options: TicketsFindAllOptions, adapter: Adapter): Promise<Ticket[]> => {
     const validatedOptions = ticketsResourceOptionsSchema.parse(options)
     return adapter.get<Ticket[]>({ path: models.ticket.path, type: models.ticket.endpoint, ...validatedOptions })
   },

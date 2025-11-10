@@ -113,10 +113,11 @@ describe('Resources', () => {
 
         nock('https://api.confetti.events')
           .get('/tickets')
+          .query({ filter: { eventId: 1 } })
           .reply(200, mockData as MockResponseData)
 
         const confetti = new Confetti({ apiKey: 'my-key' })
-        const data = await confetti.tickets.findAll()
+        const data = await confetti.tickets.findAll({ filter: { eventId: 1 } })
 
         expect(data).to.deep.equal(Confetti.models.ticket.sample.multiple.formatted)
       })
@@ -354,9 +355,10 @@ describe('Resources', () => {
 
         nock('https://api.confetti.events')
           .get('/tickets')
+          .query({ filter: { eventId: 1 } })
           .reply(200, mockData as MockResponseData)
 
-        const data = await Confetti.tickets.findAll({ apiKey: 'my-key' })
+        const data = await Confetti.tickets.findAll({ apiKey: 'my-key', filter: { eventId: 1 } })
         expect(data).to.deep.equal(Confetti.models.ticket.sample.multiple.formatted)
       })
       it('should create a ticket', async function () {

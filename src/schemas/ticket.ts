@@ -196,69 +196,67 @@ export const TicketCreateSchema = z.object({
   ),
 })
 
-export const ticketsResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend({
-  filter: z
-    .object({
-      eventId: z.union([z.string(), z.number()]).optional(),
-      search: z.string().optional(),
-      description: z.string().optional(),
-      checkedIn: z.boolean().optional(),
-      status: z
-        .array(
-          z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
-            JSON.stringify({
-              label: 'Ticket Status',
-              description: 'Filter tickets by status',
-              values: [
-                {
-                  label: 'Attending',
-                  description: 'Tickets for attendees',
-                  type: 'string',
-                  key: 'attending',
-                  value: 'attending',
-                },
-                {
-                  label: 'Waitlist',
-                  description: 'Tickets on waitlist',
-                  type: 'string',
-                  key: 'waitlist',
-                  value: 'waitlist',
-                },
-                {
-                  label: 'Declined',
-                  description: 'Declined tickets',
-                  type: 'string',
-                  key: 'declined',
-                  value: 'declined',
-                },
-                {
-                  label: 'Invited',
-                  description: 'Invited tickets',
-                  type: 'string',
-                  key: 'invited',
-                  value: 'invited',
-                },
-                {
-                  label: 'Consumed',
-                  description: 'Consumed tickets',
-                  type: 'string',
-                  key: 'consumed',
-                  value: 'consumed',
-                },
-                {
-                  label: 'Deletion Requested',
-                  description: 'Tickets with deletion requested',
-                  type: 'string',
-                  key: 'deletion-requested',
-                  value: 'deletion-requested',
-                },
-              ],
-            }),
-          ),
-        )
-        .optional(),
-    })
-    .optional(),
+const ticketsResourceOptionsExtensions = {
+  filter: z.object({
+    eventId: z.union([z.string(), z.number()]),
+    search: z.string().optional(),
+    description: z.string().optional(),
+    checkedIn: z.boolean().optional(),
+    status: z
+      .array(
+        z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
+          JSON.stringify({
+            label: 'Ticket Status',
+            description: 'Filter tickets by status',
+            values: [
+              {
+                label: 'Attending',
+                description: 'Tickets for attendees',
+                type: 'string',
+                key: 'attending',
+                value: 'attending',
+              },
+              {
+                label: 'Waitlist',
+                description: 'Tickets on waitlist',
+                type: 'string',
+                key: 'waitlist',
+                value: 'waitlist',
+              },
+              {
+                label: 'Declined',
+                description: 'Declined tickets',
+                type: 'string',
+                key: 'declined',
+                value: 'declined',
+              },
+              {
+                label: 'Invited',
+                description: 'Invited tickets',
+                type: 'string',
+                key: 'invited',
+                value: 'invited',
+              },
+              {
+                label: 'Consumed',
+                description: 'Consumed tickets',
+                type: 'string',
+                key: 'consumed',
+                value: 'consumed',
+              },
+              {
+                label: 'Deletion Requested',
+                description: 'Tickets with deletion requested',
+                type: 'string',
+                key: 'deletion-requested',
+                value: 'deletion-requested',
+              },
+            ],
+          }),
+        ),
+      )
+      .optional(),
+  }),
   sort: z
     .enum(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
     .describe(
@@ -320,135 +318,15 @@ export const ticketsResourceOptionsSchema = baseFindAllResourceOptionsSchema.ext
     )
     .optional(),
   include: z.never().optional(),
-})
+}
+
+export const ticketsResourceOptionsSchema = baseFindAllResourceOptionsSchema.extend(ticketsResourceOptionsExtensions)
 
 export const ticketsFindOptionsSchema = baseFindAllResourceOptionsSchema.extend({})
 
-export const staticTicketsResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({
-  filter: z
-    .object({
-      eventId: z.union([z.string(), z.number()]).optional(),
-      search: z.string().optional(),
-      description: z.string().optional(),
-      checkedIn: z.boolean().optional(),
-      status: z
-        .array(
-          z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
-            JSON.stringify({
-              label: 'Ticket Status',
-              description: 'Filter tickets by status',
-              values: [
-                {
-                  label: 'Attending',
-                  description: 'Tickets for attendees',
-                  type: 'string',
-                  key: 'attending',
-                  value: 'attending',
-                },
-                {
-                  label: 'Waitlist',
-                  description: 'Tickets on waitlist',
-                  type: 'string',
-                  key: 'waitlist',
-                  value: 'waitlist',
-                },
-                {
-                  label: 'Declined',
-                  description: 'Declined tickets',
-                  type: 'string',
-                  key: 'declined',
-                  value: 'declined',
-                },
-                {
-                  label: 'Invited',
-                  description: 'Invited tickets',
-                  type: 'string',
-                  key: 'invited',
-                  value: 'invited',
-                },
-                {
-                  label: 'Consumed',
-                  description: 'Consumed tickets',
-                  type: 'string',
-                  key: 'consumed',
-                  value: 'consumed',
-                },
-                {
-                  label: 'Deletion Requested',
-                  description: 'Tickets with deletion requested',
-                  type: 'string',
-                  key: 'deletion-requested',
-                  value: 'deletion-requested',
-                },
-              ],
-            }),
-          ),
-        )
-        .optional(),
-    })
-    .optional(),
-  sort: z
-    .enum(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
-    .describe(
-      JSON.stringify({
-        label: 'Sort By',
-        description: 'Sort tickets by field',
-        values: [
-          {
-            label: 'Name',
-            description: 'Sort by ticket holder name',
-            type: 'string',
-            key: 'name',
-            value: 'name',
-          },
-          {
-            label: 'Created At',
-            description: 'Sort by creation date',
-            type: 'string',
-            key: 'createdAt',
-            value: 'createdAt',
-          },
-          {
-            label: 'Description',
-            description: 'Sort by description',
-            type: 'string',
-            key: 'description',
-            value: 'description',
-          },
-          {
-            label: 'Hash ID',
-            description: 'Sort by hash ID',
-            type: 'string',
-            key: 'hashid',
-            value: 'hashid',
-          },
-          {
-            label: 'Email',
-            description: 'Sort by email address',
-            type: 'string',
-            key: 'email',
-            value: 'email',
-          },
-          {
-            label: 'Status',
-            description: 'Sort by ticket status',
-            type: 'string',
-            key: 'status',
-            value: 'status',
-          },
-          {
-            label: 'Check-in At',
-            description: 'Sort by check-in time',
-            type: 'string',
-            key: 'checkinAt',
-            value: 'checkinAt',
-          },
-        ],
-      }),
-    )
-    .optional(),
-  include: z.never().optional(),
-})
+export const staticTicketsResourceOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend(
+  ticketsResourceOptionsExtensions,
+)
 
 export const staticTicketsFindOptionsSchema = staticBaseFindAllResourceOptionsSchema.extend({})
 
