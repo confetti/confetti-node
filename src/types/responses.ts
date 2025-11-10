@@ -29,12 +29,3 @@ export interface ApiError {
   code?: string
   details?: Record<string, unknown>
 }
-
-export interface ValidationError extends ApiError {
-  code: 'validation'
-  details: Record<string, string[]>
-}
-
-export interface NotFoundError extends ApiError {
-  code: 'not_found'
-}
