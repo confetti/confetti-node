@@ -13,6 +13,9 @@ type WebhookOutput = Webhook & {
 
 export default function ({ presenters, Presenter }: PresenterOptions): WebhookPresenter {
   class WebhookPresenterClass extends Presenter {
+    static type = 'webhook' as const
+    static plural = 'webhooks' as const
+
     attributes(webhook: WebhookInput): WebhookOutput {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const webhookData = webhook as any
@@ -40,8 +43,5 @@ export default function ({ presenters, Presenter }: PresenterOptions): WebhookPr
     }
   }
 
-  WebhookPresenterClass.type = 'webhook'
-  WebhookPresenterClass.plural = 'webhooks'
-
-  return WebhookPresenterClass as unknown as WebhookPresenter
+  return WebhookPresenterClass
 }

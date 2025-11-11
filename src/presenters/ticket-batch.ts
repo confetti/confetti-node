@@ -1,10 +1,10 @@
 import { PresenterOptions, TicketBatchPresenter } from '../types/presenters.js'
 
 export default function ({ Presenter }: PresenterOptions): TicketBatchPresenter {
-  class TicketBatchPresenterClass extends Presenter {}
+  class TicketBatchPresenterClass extends Presenter {
+    static type = 'ticketBatch' as const
+    static plural = 'ticketBatches' as const
+  }
 
-  TicketBatchPresenterClass.type = 'ticketBatch'
-  TicketBatchPresenterClass.plural = 'ticketBatches'
-
-  return TicketBatchPresenterClass as unknown as TicketBatchPresenter
+  return TicketBatchPresenterClass
 }

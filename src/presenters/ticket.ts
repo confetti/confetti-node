@@ -15,6 +15,9 @@ type TicketOutput = Ticket & {
 
 export default function ({ presenters, Presenter }: PresenterOptions): TicketPresenter {
   class TicketPresenterClass extends Presenter {
+    static type = 'ticket' as const
+    static plural = 'tickets' as const
+
     attributes(ticket: TicketInput): TicketOutput {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const ticketData = ticket as any
@@ -50,8 +53,5 @@ export default function ({ presenters, Presenter }: PresenterOptions): TicketPre
     }
   }
 
-  TicketPresenterClass.type = 'ticket'
-  TicketPresenterClass.plural = 'tickets'
-
-  return TicketPresenterClass as unknown as TicketPresenter
+  return TicketPresenterClass
 }

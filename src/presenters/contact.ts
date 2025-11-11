@@ -13,6 +13,9 @@ type ContactOutput = Contact & {
 
 export default function ({ presenters, Presenter }: PresenterOptions): ContactPresenter {
   class ContactPresenterClass extends Presenter {
+    static type = 'contact' as const
+    static plural = 'contacts' as const
+
     attributes(contact: ContactInput): ContactOutput {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const contactData = contact as any
@@ -40,8 +43,5 @@ export default function ({ presenters, Presenter }: PresenterOptions): ContactPr
     }
   }
 
-  ContactPresenterClass.type = 'contact'
-  ContactPresenterClass.plural = 'contacts'
-
-  return ContactPresenterClass as unknown as ContactPresenter
+  return ContactPresenterClass
 }

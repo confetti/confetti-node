@@ -1,10 +1,10 @@
 import { PresenterOptions, PaymentPresenter } from '../types/presenters.js'
 
 export default function ({ Presenter }: PresenterOptions): PaymentPresenter {
-  class PaymentPresenterClass extends Presenter {}
+  class PaymentPresenterClass extends Presenter {
+    static type = 'payment' as const
+    static plural = 'payments' as const
+  }
 
-  PaymentPresenterClass.type = 'payment'
-  PaymentPresenterClass.plural = 'payments'
-
-  return PaymentPresenterClass as unknown as PaymentPresenter
+  return PaymentPresenterClass
 }

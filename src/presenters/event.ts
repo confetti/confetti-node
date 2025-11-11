@@ -1,10 +1,10 @@
 import { PresenterOptions, EventPresenter } from '../types/presenters.js'
 
 export default function ({ Presenter }: PresenterOptions): EventPresenter {
-  class EventPresenterClass extends Presenter {}
+  class EventPresenterClass extends Presenter {
+    static type = 'event' as const
+    static plural = 'events' as const
+  }
 
-  EventPresenterClass.type = 'event'
-  EventPresenterClass.plural = 'events'
-
-  return EventPresenterClass as unknown as EventPresenter
+  return EventPresenterClass
 }

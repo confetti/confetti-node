@@ -1,24 +1,19 @@
 // Presenter types for Confetti API
 
+import type { Presenter } from 'yayson'
 import { Contact, Ticket, Webhook } from './models.js'
 
 // Base presenter class type from yayson
-export interface YaysonPresenter {
+export type YaysonPresenter = typeof Presenter
+
+// Base presenter interface - describes a constructor type with static properties and methods
+export interface BasePresenter {
   new (): {
     attributes?(_data: unknown): unknown
     relationships?(): Record<string, unknown>
-    render(_data: unknown): unknown
   }
   type: string
   plural: string
-}
-
-// Base presenter interface
-export interface BasePresenter {
-  type: string
-  plural: string
-  attributes(_data: unknown): unknown
-  relationships(): Record<string, unknown>
   render(_data: unknown): unknown
 }
 
@@ -55,18 +50,20 @@ export interface CategoryPresenter extends BasePresenter {
 export interface ContactPresenter extends BasePresenter {
   type: 'contact'
   plural: 'contacts'
-  attributes(
-    _contact: Contact & {
-      workspaceId?: number
-      categoryIds?: number[]
-    },
-  ): Contact & {
-    workspace?: { id: number }
-    categories?: { id: number }[]
-  }
-  relationships(): {
-    workspace: WorkspacePresenter
-    categories: CategoryPresenter
+  new (): {
+    attributes(
+      _contact: Contact & {
+        workspaceId?: number
+        categoryIds?: number[]
+      },
+    ): Contact & {
+      workspace?: { id: number }
+      categories?: { id: number }[]
+    }
+    relationships(): {
+      workspace: WorkspacePresenter
+      categories: CategoryPresenter
+    }
   }
 }
 
@@ -78,38 +75,42 @@ export interface EventPresenter extends BasePresenter {
 export interface TicketPresenter extends BasePresenter {
   type: 'ticket'
   plural: 'tickets'
-  attributes(
-    _ticket: Ticket & {
-      eventId?: number
-      ticketBatchId?: number
-      sendEmailConfirmation?: boolean
-    },
-  ): Ticket & {
-    event?: { id: number }
-    ticketBatch?: { id: number }
-    meta?: { sendEmailConfirmation: boolean }
-  }
-  relationships(): {
-    event: EventPresenter
-    ticketBatch: TicketBatchPresenter
+  new (): {
+    attributes(
+      _ticket: Ticket & {
+        eventId?: number
+        ticketBatchId?: number
+        sendEmailConfirmation?: boolean
+      },
+    ): Ticket & {
+      event?: { id: number }
+      ticketBatch?: { id: number }
+      meta?: { sendEmailConfirmation: boolean }
+    }
+    relationships(): {
+      event: EventPresenter
+      ticketBatch: TicketBatchPresenter
+    }
   }
 }
 
 export interface WebhookPresenter extends BasePresenter {
   type: 'webhook'
   plural: 'webhooks'
-  attributes(
-    _webhook: Webhook & {
-      eventId?: number
-      workspaceId?: number
-    },
-  ): Webhook & {
-    event?: { id: number }
-    workspace?: { id: number }
-  }
-  relationships(): {
-    event: EventPresenter
-    workspace: WorkspacePresenter
+  new (): {
+    attributes(
+      _webhook: Webhook & {
+        eventId?: number
+        workspaceId?: number
+      },
+    ): Webhook & {
+      event?: { id: number }
+      workspace?: { id: number }
+    }
+    relationships(): {
+      event: EventPresenter
+      workspace: WorkspacePresenter
+    }
   }
 }
 

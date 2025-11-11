@@ -6,7 +6,7 @@ declare module 'yayson' {
   export class Presenter {
     static type: string
     static plural: string
-    render(data: unknown): unknown
+    static render(data: unknown): unknown
     attributes?(data: unknown): unknown
     relationships?(): Record<string, unknown>
   }
