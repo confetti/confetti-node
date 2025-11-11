@@ -1,11 +1,12 @@
-import { expect } from '../helper'
+import { describe, test } from 'node:test'
+import assert from 'node:assert'
 import presenters from '../../src/presenters'
 
 const { webhooks, tickets, contacts } = presenters
 
-describe('Presenters', function () {
-  describe('Webhooks', function () {
-    it('should present a webhook with relation ids', function () {
+describe('Presenters', () => {
+  describe('Webhooks', () => {
+    test('should present a webhook with relation ids', () => {
       const webhook = webhooks.render({
         type: 'ticket.attending',
         url: 'https://hooks.zapier.com/hooks/standard/1337/',
@@ -13,7 +14,7 @@ describe('Presenters', function () {
         workspaceId: 57,
         eventId: 2,
       })
-      expect(webhook).to.deep.equal({
+      assert.deepStrictEqual(webhook, {
         data: {
           type: 'webhook',
           attributes: {
@@ -32,14 +33,14 @@ describe('Presenters', function () {
         ],
       })
     })
-    it('should present a webhook without eventId', function () {
+    test('should present a webhook without eventId', () => {
       const webhook = webhooks.render({
         type: 'ticket.attending',
         url: 'https://hooks.zapier.com/hooks/standard/1337/',
         provider: 'zapier',
         workspaceId: 57,
       })
-      expect(webhook).to.deep.equal({
+      assert.deepStrictEqual(webhook, {
         data: {
           type: 'webhook',
           attributes: {
@@ -56,8 +57,8 @@ describe('Presenters', function () {
       })
     })
   })
-  describe('Tickets', function () {
-    it('should present a ticket with relation ids', function () {
+  describe('Tickets', () => {
+    test('should present a ticket with relation ids', () => {
       const ticket = tickets.render({
         firstName: 'John',
         lastname: 'Doe',
@@ -66,7 +67,7 @@ describe('Presenters', function () {
         eventId: 2,
         company: 'Company AB',
       })
-      expect(ticket).to.deep.equal({
+      assert.deepStrictEqual(ticket, {
         data: {
           type: 'ticket',
           attributes: {
@@ -86,14 +87,14 @@ describe('Presenters', function () {
         ],
       })
     })
-    it('should present a ticket without ticketBatchId', function () {
+    test('should present a ticket without ticketBatchId', () => {
       const ticket = tickets.render({
         firstName: 'John',
         lastname: 'Doe',
         email: 'john@doe.se',
         eventId: 2,
       })
-      expect(ticket).to.deep.equal({
+      assert.deepStrictEqual(ticket, {
         data: {
           type: 'ticket',
           attributes: {
@@ -109,7 +110,7 @@ describe('Presenters', function () {
         included: [{ id: '2', type: 'event', attributes: {} }],
       })
     })
-    it('should present a ticket with meta info', function () {
+    test('should present a ticket with meta info', () => {
       const ticket = tickets.render({
         firstName: 'John',
         lastname: 'Doe',
@@ -117,7 +118,7 @@ describe('Presenters', function () {
         eventId: 2,
         sendEmailConfirmation: true,
       })
-      expect(ticket).to.deep.equal({
+      assert.deepStrictEqual(ticket, {
         data: {
           type: 'ticket',
           attributes: {
@@ -137,8 +138,8 @@ describe('Presenters', function () {
       })
     })
   })
-  describe('Contacts', function () {
-    it('should present a contact with relation ids', function () {
+  describe('Contacts', () => {
+    test('should present a contact with relation ids', () => {
       const contact = contacts.render({
         firstName: 'John',
         lastname: 'Doe',
@@ -147,7 +148,7 @@ describe('Presenters', function () {
         categoryIds: [1, 3],
         company: 'Test AB',
       })
-      expect(contact).to.deep.equal({
+      assert.deepStrictEqual(contact, {
         data: {
           type: 'contact',
           attributes: {

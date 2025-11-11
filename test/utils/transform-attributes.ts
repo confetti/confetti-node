@@ -1,8 +1,9 @@
-import { expect } from '../helper'
+import { describe, test } from 'node:test'
+import assert from 'node:assert'
 import transformAttributes from '../../src/utils/transform-attributes'
 
-describe('transformAttributes()', function () {
-  it('should pick attributes using configuration object ', function () {
+describe('transformAttributes()', () => {
+  test('should pick attributes using configuration object ', () => {
     const attributes = [
       { key: 'firstName', label: 'First name', type: 'string' },
       { key: 'lastName', label: 'Last name', type: 'string' },
@@ -15,12 +16,12 @@ describe('transformAttributes()', function () {
 
     const config = { firstName: {}, lastName: {} }
 
-    expect(transformAttributes(attributes, config)).to.deep.equal([
+    assert.deepStrictEqual(transformAttributes(attributes, config), [
       { key: 'firstName', label: 'First name', type: 'string' },
       { key: 'lastName', label: 'Last name', type: 'string' },
     ])
   })
-  it('should add additional properties from config object', function () {
+  test('should add additional properties from config object', () => {
     const attributes = [
       { key: 'firstName', label: 'First name', type: 'string' },
       { key: 'lastName', label: 'Last name', type: 'string' },
@@ -36,7 +37,7 @@ describe('transformAttributes()', function () {
       lastName: { required: true, default: 'Test' },
     }
 
-    expect(transformAttributes(attributes, config)).to.deep.equal([
+    assert.deepStrictEqual(transformAttributes(attributes, config), [
       {
         key: 'firstName',
         label: 'First name',
@@ -52,7 +53,7 @@ describe('transformAttributes()', function () {
       },
     ])
   })
-  it('should add key from config object if missing in array', function () {
+  test('should add key from config object if missing in array', () => {
     const attributes = [
       { key: 'firstName', label: 'First name', type: 'string' },
       { key: 'lastName', label: 'Last name', type: 'string' },
@@ -68,7 +69,7 @@ describe('transformAttributes()', function () {
       someCreateField: { label: 'Some create field', type: 'string' },
     }
 
-    expect(transformAttributes(attributes, config)).to.deep.equal([
+    assert.deepStrictEqual(transformAttributes(attributes, config), [
       {
         key: 'firstName',
         label: 'First name',

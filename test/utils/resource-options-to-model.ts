@@ -1,4 +1,5 @@
-import { expect } from 'chai'
+import { describe, test } from 'node:test'
+import assert from 'node:assert'
 import { z } from 'zod'
 import {
   extractFiltersFromSchema,
@@ -9,7 +10,7 @@ import { eventsFindAllOptionsSchema } from '../../src/schemas/event.js'
 
 describe('resource-options-to-model', () => {
   describe('extractFiltersFromSchema', () => {
-    it('should extract filters from a schema with filter object', () => {
+    test('should extract filters from a schema with filter object', () => {
       const schema = z.object({
         filter: z.object({
           eventId: z.number(),
@@ -21,7 +22,7 @@ describe('resource-options-to-model', () => {
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({
+      assert.deepStrictEqual(result, {
         eventId: { type: 'number', label: 'Event Id', required: true },
         search: { type: 'string', label: 'Search' },
         checkedIn: { type: 'boolean', label: 'Checked In' },
@@ -36,7 +37,7 @@ describe('resource-options-to-model', () => {
       })
     })
 
-    it('should extract filters from optional filter fields', () => {
+    test('should extract filters from optional filter fields', () => {
       const schema = z.object({
         filter: z.object({
           eventId: z.number().optional(),
@@ -46,13 +47,13 @@ describe('resource-options-to-model', () => {
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({
+      assert.deepStrictEqual(result, {
         eventId: { type: 'number', label: 'Event Id' },
         search: { type: 'string', label: 'Search' },
       })
     })
 
-    it('should handle enum fields with options', () => {
+    test('should handle enum fields with options', () => {
       const schema = z.object({
         filter: z.object({
           type: z.enum(['future', 'past']).optional(),
@@ -62,7 +63,7 @@ describe('resource-options-to-model', () => {
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({
+      assert.deepStrictEqual(result, {
         type: {
           type: 'string',
           label: 'Type',
@@ -82,10 +83,10 @@ describe('resource-options-to-model', () => {
       })
     })
 
-    it('should extract enhanced enum filters from eventsResourceOptionsSchema', () => {
+    test('should extract enhanced enum filters from eventsResourceOptionsSchema', () => {
       const result = extractFiltersFromSchema(eventsFindAllOptionsSchema)
 
-      expect(result).to.deep.equal({
+      assert.deepStrictEqual(result, {
         signupType: {
           type: 'enum',
           label: 'Signup Type',
@@ -131,7 +132,7 @@ describe('resource-options-to-model', () => {
       })
     })
 
-    it('should return empty object when no filter field exists', () => {
+    test('should return empty object when no filter field exists', () => {
       const schema = z.object({
         sort: z.string(),
         include: z.array(z.string()),
@@ -139,20 +140,20 @@ describe('resource-options-to-model', () => {
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({})
+      assert.deepStrictEqual(result, {})
     })
 
-    it('should return empty object when filter is not an object', () => {
+    test('should return empty object when filter is not an object', () => {
       const schema = z.object({
         filter: z.string(),
       })
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({})
+      assert.deepStrictEqual(result, {})
     })
 
-    it('should handle complex nested schemas', () => {
+    test('should handle complex nested schemas', () => {
       const schema = z.object({
         filter: z.object({
           eventId: z.number(),
@@ -165,7 +166,7 @@ describe('resource-options-to-model', () => {
 
       const result = extractFiltersFromSchema(schema)
 
-      expect(result).to.deep.equal({
+      assert.deepStrictEqual(result, {
         eventId: { type: 'number', label: 'Event Id', required: true },
         status: {
           type: 'array',
@@ -182,17 +183,17 @@ describe('resource-options-to-model', () => {
   })
 
   describe('extractSortingFromSchema', () => {
-    it('should extract sorting options from enum field', () => {
+    test('should extract sorting options from enum field', () => {
       const schema = z.object({
         sort: z.enum(['name', 'createdAt', 'email', 'status']),
       })
 
       const result = extractSortingFromSchema(schema)
 
-      expect(result).to.deep.equal(['name', 'createdAt', 'email', 'status'])
+      assert.deepStrictEqual(result, ['name', 'createdAt', 'email', 'status'])
     })
 
-    it('should return empty array when no sort field exists', () => {
+    test('should return empty array when no sort field exists', () => {
       const schema = z.object({
         filter: z.object({}),
         include: z.array(z.string()),
@@ -200,42 +201,42 @@ describe('resource-options-to-model', () => {
 
       const result = extractSortingFromSchema(schema)
 
-      expect(result).to.deep.equal([])
+      assert.deepStrictEqual(result, [])
     })
 
-    it('should return empty array when sort is not an enum', () => {
+    test('should return empty array when sort is not an enum', () => {
       const schema = z.object({
         sort: z.string(),
       })
 
       const result = extractSortingFromSchema(schema)
 
-      expect(result).to.deep.equal([])
+      assert.deepStrictEqual(result, [])
     })
 
-    it('should handle optional sort fields', () => {
+    test('should handle optional sort fields', () => {
       const schema = z.object({
         sort: z.enum(['name', 'createdAt']).optional(),
       })
 
       const result = extractSortingFromSchema(schema)
 
-      expect(result).to.deep.equal(['name', 'createdAt'])
+      assert.deepStrictEqual(result, ['name', 'createdAt'])
     })
   })
 
   describe('extractIncludesFromSchema', () => {
-    it('should extract includes from array of enum values', () => {
+    test('should extract includes from array of enum values', () => {
       const schema = z.object({
         include: z.array(z.enum(['categories', 'pages', 'pages.blocks'])),
       })
 
       const result = extractIncludesFromSchema(schema)
 
-      expect(result).to.deep.equal(['categories', 'pages', 'pages.blocks'])
+      assert.deepStrictEqual(result, ['categories', 'pages', 'pages.blocks'])
     })
 
-    it('should return empty array when no include field exists', () => {
+    test('should return empty array when no include field exists', () => {
       const schema = z.object({
         filter: z.object({}),
         sort: z.string(),
@@ -243,42 +244,42 @@ describe('resource-options-to-model', () => {
 
       const result = extractIncludesFromSchema(schema)
 
-      expect(result).to.deep.equal([])
+      assert.deepStrictEqual(result, [])
     })
 
-    it('should return empty array when include is not an array', () => {
+    test('should return empty array when include is not an array', () => {
       const schema = z.object({
         include: z.string(),
       })
 
       const result = extractIncludesFromSchema(schema)
 
-      expect(result).to.deep.equal([])
+      assert.deepStrictEqual(result, [])
     })
 
-    it('should return empty array when include array elements are not enums', () => {
+    test('should return empty array when include array elements are not enums', () => {
       const schema = z.object({
         include: z.array(z.string()),
       })
 
       const result = extractIncludesFromSchema(schema)
 
-      expect(result).to.deep.equal([])
+      assert.deepStrictEqual(result, [])
     })
 
-    it('should handle optional include fields', () => {
+    test('should handle optional include fields', () => {
       const schema = z.object({
         include: z.array(z.enum(['categories', 'pages'])).optional(),
       })
 
       const result = extractIncludesFromSchema(schema)
 
-      expect(result).to.deep.equal(['categories', 'pages'])
+      assert.deepStrictEqual(result, ['categories', 'pages'])
     })
   })
 
   describe('integration tests with real schemas', () => {
-    it('should work with eventsFindAllOptionsSchema structure', () => {
+    test('should work with eventsFindAllOptionsSchema structure', () => {
       const eventsSchema = z.object({
         filter: z
           .object({
@@ -294,7 +295,7 @@ describe('resource-options-to-model', () => {
       const sorting = extractSortingFromSchema(eventsSchema)
       const includes = extractIncludesFromSchema(eventsSchema)
 
-      expect(filters).to.deep.equal({
+      assert.deepStrictEqual(filters, {
         signupType: {
           type: 'string',
           label: 'Signup Type',
@@ -313,11 +314,11 @@ describe('resource-options-to-model', () => {
         },
       })
 
-      expect(sorting).to.deep.equal([])
-      expect(includes).to.deep.equal(['categories', 'pages', 'pages.blocks', 'pages.blocks.images'])
+      assert.deepStrictEqual(sorting, [])
+      assert.deepStrictEqual(includes, ['categories', 'pages', 'pages.blocks', 'pages.blocks.images'])
     })
 
-    it('should work with ticketsResourceOptionsSchema structure', () => {
+    test('should work with ticketsResourceOptionsSchema structure', () => {
       const ticketsSchema = z.object({
         filter: z
           .object({
@@ -338,7 +339,7 @@ describe('resource-options-to-model', () => {
       const sorting = extractSortingFromSchema(ticketsSchema)
       const includes = extractIncludesFromSchema(ticketsSchema)
 
-      expect(filters).to.deep.equal({
+      assert.deepStrictEqual(filters, {
         eventId: { type: 'number', label: 'Event Id' },
         search: { type: 'string', label: 'Search' },
         description: { type: 'string', label: 'Description' },
@@ -357,11 +358,11 @@ describe('resource-options-to-model', () => {
         },
       })
 
-      expect(sorting).to.deep.equal(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
-      expect(includes).to.deep.equal([])
+      assert.deepStrictEqual(sorting, ['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
+      assert.deepStrictEqual(includes, [])
     })
 
-    it('should work with schemas that have no filters, sorting, or includes', () => {
+    test('should work with schemas that have no filters, sorting, or includes', () => {
       const emptySchema = z.object({
         filter: z.never().optional(),
         sort: z.never().optional(),
@@ -372,9 +373,9 @@ describe('resource-options-to-model', () => {
       const sorting = extractSortingFromSchema(emptySchema)
       const includes = extractIncludesFromSchema(emptySchema)
 
-      expect(filters).to.deep.equal({})
-      expect(sorting).to.deep.equal([])
-      expect(includes).to.deep.equal([])
+      assert.deepStrictEqual(filters, {})
+      assert.deepStrictEqual(sorting, [])
+      assert.deepStrictEqual(includes, [])
     })
   })
 })

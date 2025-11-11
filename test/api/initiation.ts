@@ -1,13 +1,19 @@
+import { describe, test } from 'node:test'
+import assert from 'node:assert'
 import Confetti from '../../src'
-import { expect } from '../helper'
 
-describe('Initiat', function () {
-  it('should initiate a Confetti api instance', function () {
+describe('Initiat', () => {
+  test('should initiate a Confetti api instance', () => {
     new Confetti({ apiKey: 'my-key' })
   })
 
-  it('should fail to call due on Confetti api instance due to missing api key', async function () {
+  test('should fail to call due on Confetti api instance due to missing api key', async () => {
     const confetti = new Confetti()
-    await expect(confetti.events.findAll()).to.be.rejectedWith('missing_api_key')
+    await assert.rejects(
+      () => confetti.events.findAll(),
+      (error: unknown) => {
+        return error instanceof Error && error.message.includes('missing_api_key')
+      },
+    )
   })
 })

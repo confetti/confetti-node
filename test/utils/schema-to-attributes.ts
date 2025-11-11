@@ -1,4 +1,5 @@
-import { expect } from 'chai'
+import { describe, test } from 'node:test'
+import assert from 'node:assert'
 import { z } from 'zod'
 import {
   schemaToAttributes,
@@ -8,7 +9,7 @@ import {
 
 describe('schemaToAttributes()', () => {
   describe('Base attributes (default behavior)', () => {
-    it('should generate attributes from a basic schema without metadata', () => {
+    test('should generate attributes from a basic schema without metadata', () => {
       const schema = z.object({
         id: z.number(),
         name: z.string(),
@@ -18,30 +19,30 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(4)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,4)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'name',
         label: 'Name',
         type: 'string',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'isActive',
         label: 'Is Active',
         type: 'boolean',
       })
-      expect(attributes[3]).to.deep.equal({
+      assert.deepStrictEqual(attributes[3], {
         key: 'createdAt',
         label: 'Created At',
         type: 'date',
       })
     })
 
-    it('should extract custom labels from metadata', () => {
+    test('should extract custom labels from metadata', () => {
       const schema = z.object({
         id: z.number().describe(
           JSON.stringify({
@@ -62,25 +63,25 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(3)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,3)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'firstName',
         label: 'First Name',
         type: 'string',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'email',
         label: 'Email Address',
         type: 'string',
       })
     })
 
-    it('should extract descriptions from metadata', () => {
+    test('should extract descriptions from metadata', () => {
       const schema = z.object({
         id: z.number().describe(
           JSON.stringify({
@@ -103,27 +104,27 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(3)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,3)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
         description: 'Unique identifier for the record.',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'name',
         label: 'Name',
         description: 'The display name of the item.',
         type: 'string',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'status',
         label: 'Status',
         type: 'string',
       })
     })
 
-    it('should handle optional fields correctly', () => {
+    test('should handle optional fields correctly', () => {
       const schema = z.object({
         id: z.number(),
         name: z.string(),
@@ -140,30 +141,30 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(4)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,4)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'name',
         label: 'Name',
         type: 'string',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'deletedAt',
         label: 'Deleted At',
         type: 'date',
       })
-      expect(attributes[3]).to.deep.equal({
+      assert.deepStrictEqual(attributes[3], {
         key: 'metadata',
         label: 'Metadata',
         type: 'object',
       })
     })
 
-    it('should handle record/object types correctly', () => {
+    test('should handle record/object types correctly', () => {
       const schema = z.object({
         id: z.number(),
         settings: z.record(z.string(), z.unknown()).describe(
@@ -177,26 +178,26 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(3)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,3)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'settings',
         label: 'Settings',
         description: 'Configuration settings for the item.',
         type: 'object',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'tags',
         label: 'Tags',
         type: 'object',
       })
     })
 
-    it('should handle mixed metadata and auto-generated labels', () => {
+    test('should handle mixed metadata and auto-generated labels', () => {
       const schema = z.object({
         id: z.number().describe(
           JSON.stringify({
@@ -215,37 +216,37 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(4)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,4)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
         description: 'Unique identifier.',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'name',
         label: 'Name', // Auto-generated
         type: 'string',
       })
-      expect(attributes[2]).to.deep.equal({
+      assert.deepStrictEqual(attributes[2], {
         key: 'email',
         label: 'Email Address',
         type: 'string',
       })
-      expect(attributes[3]).to.deep.equal({
+      assert.deepStrictEqual(attributes[3], {
         key: 'createdAt',
         label: 'Created At', // Auto-generated
         type: 'date',
       })
     })
 
-    it('should handle empty schema', () => {
+    test('should handle empty schema', () => {
       const schema = z.object({})
       const attributes = schemaToBaseAttributes(schema)
-      expect(attributes).to.have.length(0)
+      assert.strictEqual(attributes.length,0)
     })
 
-    it('should handle complex nested optional fields', () => {
+    test('should handle complex nested optional fields', () => {
       const schema = z.object({
         id: z.number(),
         user: z
@@ -264,13 +265,13 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(2)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,2)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'user',
         label: 'User Information',
         description: 'Optional user details.',
@@ -278,7 +279,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle malformed JSON in description gracefully', () => {
+    test('should handle malformed JSON in description gracefully', () => {
       const schema = z.object({
         id: z.number().describe('invalid json'),
         name: z.string().describe(
@@ -290,20 +291,20 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(2)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,2)
+      assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id', // Should fall back to auto-generated
         type: 'number',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'name',
         label: 'Name',
         type: 'string',
       })
     })
 
-    it('should handle all supported Zod types', () => {
+    test('should handle all supported Zod types', () => {
       const schema = z.object({
         stringField: z.string(),
         numberField: z.number(),
@@ -319,7 +320,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      expect(attributes).to.have.length(10)
+      assert.strictEqual(attributes.length,10)
 
       // Check types are correctly identified
       const typeMap = attributes.reduce(
@@ -330,21 +331,21 @@ describe('schemaToAttributes()', () => {
         {} as Record<string, string>,
       )
 
-      expect(typeMap.stringField).to.equal('string')
-      expect(typeMap.numberField).to.equal('number')
-      expect(typeMap.booleanField).to.equal('boolean')
-      expect(typeMap.dateField).to.equal('date')
-      expect(typeMap.objectField).to.equal('object')
-      expect(typeMap.optionalString).to.equal('string')
-      expect(typeMap.optionalNumber).to.equal('number')
-      expect(typeMap.optionalBoolean).to.equal('boolean')
-      expect(typeMap.optionalDate).to.equal('date')
-      expect(typeMap.optionalObject).to.equal('object')
+      assert.strictEqual(typeMap.stringField, 'string')
+      assert.strictEqual(typeMap.numberField, 'number')
+      assert.strictEqual(typeMap.booleanField, 'boolean')
+      assert.strictEqual(typeMap.dateField, 'date')
+      assert.strictEqual(typeMap.objectField, 'object')
+      assert.strictEqual(typeMap.optionalString, 'string')
+      assert.strictEqual(typeMap.optionalNumber, 'number')
+      assert.strictEqual(typeMap.optionalBoolean, 'boolean')
+      assert.strictEqual(typeMap.optionalDate, 'date')
+      assert.strictEqual(typeMap.optionalObject, 'object')
     })
   })
 
   describe('Create attributes', () => {
-    it('should generate create attributes from a basic schema', () => {
+    test('should generate create attributes from a basic schema', () => {
       const schema = z.object({
         name: z.string(),
         email: z.string(),
@@ -354,10 +355,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(4)
+      assert.strictEqual(attributes.length,4)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
-      expect(nameAttr).to.deep.equal({
+      assert.deepStrictEqual(nameAttr, {
         key: 'name',
         label: 'Name',
         type: 'string',
@@ -365,7 +366,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
-      expect(emailAttr).to.deep.equal({
+      assert.deepStrictEqual(emailAttr, {
         key: 'email',
         label: 'Email',
         type: 'string',
@@ -373,7 +374,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const ageAttr = attributes.find((attr) => attr.key === 'age')
-      expect(ageAttr).to.deep.equal({
+      assert.deepStrictEqual(ageAttr, {
         key: 'age',
         label: 'Age',
         type: 'number',
@@ -381,7 +382,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const isActiveAttr = attributes.find((attr) => attr.key === 'isActive')
-      expect(isActiveAttr).to.deep.equal({
+      assert.deepStrictEqual(isActiveAttr, {
         key: 'isActive',
         label: 'Is Active',
         type: 'boolean',
@@ -389,7 +390,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should extract metadata from create schemas', () => {
+    test('should extract metadata from create schemas', () => {
       const schema = z.object({
         email: z.string().describe(
           JSON.stringify({
@@ -416,10 +417,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(3)
+      assert.strictEqual(attributes.length,3)
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
-      expect(emailAttr).to.deep.equal({
+      assert.deepStrictEqual(emailAttr, {
         key: 'email',
         label: 'Email Address',
         type: 'string',
@@ -428,7 +429,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const phoneAttr = attributes.find((attr) => attr.key === 'phone')
-      expect(phoneAttr).to.deep.equal({
+      assert.deepStrictEqual(phoneAttr, {
         key: 'phone',
         label: 'Phone Number',
         type: 'string',
@@ -438,7 +439,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const statusAttr = attributes.find((attr) => attr.key === 'status')
-      expect(statusAttr).to.deep.equal({
+      assert.deepStrictEqual(statusAttr, {
         key: 'status',
         label: 'Account Status',
         type: 'enum',
@@ -447,7 +448,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle enum types correctly', () => {
+    test('should handle enum types correctly', () => {
       const schema = z.object({
         priority: z.enum(['low', 'medium', 'high']),
         category: z.enum(['urgent', 'normal']).optional(),
@@ -455,10 +456,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(2)
+      assert.strictEqual(attributes.length,2)
 
       const priorityAttr = attributes.find((attr) => attr.key === 'priority')
-      expect(priorityAttr).to.deep.equal({
+      assert.deepStrictEqual(priorityAttr, {
         key: 'priority',
         label: 'Priority',
         type: 'enum',
@@ -467,7 +468,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const categoryAttr = attributes.find((attr) => attr.key === 'category')
-      expect(categoryAttr).to.deep.equal({
+      assert.deepStrictEqual(categoryAttr, {
         key: 'category',
         label: 'Category',
         type: 'enum',
@@ -476,7 +477,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle array types correctly', () => {
+    test('should handle array types correctly', () => {
       const schema = z.object({
         tags: z.array(z.string()),
         ids: z.array(z.number()).optional(),
@@ -484,10 +485,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(2)
+      assert.strictEqual(attributes.length,2)
 
       const tagsAttr = attributes.find((attr) => attr.key === 'tags')
-      expect(tagsAttr).to.deep.equal({
+      assert.deepStrictEqual(tagsAttr, {
         key: 'tags',
         label: 'Tags',
         type: 'array',
@@ -495,7 +496,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const idsAttr = attributes.find((attr) => attr.key === 'ids')
-      expect(idsAttr).to.deep.equal({
+      assert.deepStrictEqual(idsAttr, {
         key: 'ids',
         label: 'Ids',
         type: 'array',
@@ -503,7 +504,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle all supported Zod types for create attributes', () => {
+    test('should handle all supported Zod types for create attributes', () => {
       const schema = z.object({
         stringField: z.string(),
         numberField: z.number(),
@@ -523,15 +524,15 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(14)
+      assert.strictEqual(attributes.length,14)
 
       // Check required fields
       const requiredFields = attributes.filter((attr) => attr.required)
-      expect(requiredFields).to.have.length(7) // stringField, numberField, booleanField, dateField, objectField, arrayField, enumField
+      assert.strictEqual(requiredFields.length,7) // stringField, numberField, booleanField, dateField, objectField, arrayField, enumField
 
       // Check optional fields
       const optionalFields = attributes.filter((attr) => !attr.required)
-      expect(optionalFields).to.have.length(7) // All optional* fields
+      assert.strictEqual(optionalFields.length,7) // All optional* fields
 
       // Check types
       const typeMap = attributes.reduce(
@@ -542,29 +543,29 @@ describe('schemaToAttributes()', () => {
         {} as Record<string, string>,
       )
 
-      expect(typeMap.stringField).to.equal('string')
-      expect(typeMap.numberField).to.equal('number')
-      expect(typeMap.booleanField).to.equal('boolean')
-      expect(typeMap.dateField).to.equal('date')
-      expect(typeMap.objectField).to.equal('object')
-      expect(typeMap.arrayField).to.equal('array')
-      expect(typeMap.enumField).to.equal('enum')
-      expect(typeMap.optionalString).to.equal('string')
-      expect(typeMap.optionalNumber).to.equal('number')
-      expect(typeMap.optionalBoolean).to.equal('boolean')
-      expect(typeMap.optionalDate).to.equal('date')
-      expect(typeMap.optionalObject).to.equal('object')
-      expect(typeMap.optionalArray).to.equal('array')
-      expect(typeMap.optionalEnum).to.equal('enum')
+      assert.strictEqual(typeMap.stringField, 'string')
+      assert.strictEqual(typeMap.numberField, 'number')
+      assert.strictEqual(typeMap.booleanField, 'boolean')
+      assert.strictEqual(typeMap.dateField, 'date')
+      assert.strictEqual(typeMap.objectField, 'object')
+      assert.strictEqual(typeMap.arrayField, 'array')
+      assert.strictEqual(typeMap.enumField, 'enum')
+      assert.strictEqual(typeMap.optionalString, 'string')
+      assert.strictEqual(typeMap.optionalNumber, 'number')
+      assert.strictEqual(typeMap.optionalBoolean, 'boolean')
+      assert.strictEqual(typeMap.optionalDate, 'date')
+      assert.strictEqual(typeMap.optionalObject, 'object')
+      assert.strictEqual(typeMap.optionalArray, 'array')
+      assert.strictEqual(typeMap.optionalEnum, 'enum')
     })
 
-    it('should handle empty schema', () => {
+    test('should handle empty schema', () => {
       const schema = z.object({})
       const attributes = schemaToCreateAttributes(schema)
-      expect(attributes).to.have.length(0)
+      assert.strictEqual(attributes.length,0)
     })
 
-    it('should handle malformed JSON in description gracefully', () => {
+    test('should handle malformed JSON in description gracefully', () => {
       const schema = z.object({
         name: z.string().describe('invalid json'),
         email: z.string().describe(
@@ -576,10 +577,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(2)
+      assert.strictEqual(attributes.length,2)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
-      expect(nameAttr).to.deep.equal({
+      assert.deepStrictEqual(nameAttr, {
         key: 'name',
         label: 'Name', // Should fall back to auto-generated
         type: 'string',
@@ -587,7 +588,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
-      expect(emailAttr).to.deep.equal({
+      assert.deepStrictEqual(emailAttr, {
         key: 'email',
         label: 'Email Address',
         type: 'string',
@@ -595,7 +596,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle complex metadata with all properties', () => {
+    test('should handle complex metadata with all properties', () => {
       const schema = z.object({
         field: z.string().describe(
           JSON.stringify({
@@ -610,8 +611,8 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      expect(attributes).to.have.length(1)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,1)
+      assert.deepStrictEqual(attributes[0], {
         key: 'field',
         label: 'Custom Label',
         description: 'Field description',
@@ -625,7 +626,7 @@ describe('schemaToAttributes()', () => {
   })
 
   describe('Unified function with options', () => {
-    it('should generate base attributes by default', () => {
+    test('should generate base attributes by default', () => {
       const schema = z.object({
         name: z.string(),
         age: z.number().optional(),
@@ -633,20 +634,20 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema)
 
-      expect(attributes).to.have.length(2)
-      expect(attributes[0]).to.deep.equal({
+      assert.strictEqual(attributes.length,2)
+      assert.deepStrictEqual(attributes[0], {
         key: 'name',
         label: 'Name',
         type: 'string',
       })
-      expect(attributes[1]).to.deep.equal({
+      assert.deepStrictEqual(attributes[1], {
         key: 'age',
         label: 'Age',
         type: 'number',
       })
     })
 
-    it('should generate create attributes when includeCreateFields is true', () => {
+    test('should generate create attributes when includeCreateFields is true', () => {
       const schema = z.object({
         name: z.string(),
         age: z.number().optional(),
@@ -660,10 +661,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })
 
-      expect(attributes).to.have.length(3)
+      assert.strictEqual(attributes.length,3)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
-      expect(nameAttr).to.deep.equal({
+      assert.deepStrictEqual(nameAttr, {
         key: 'name',
         label: 'Name',
         type: 'string',
@@ -671,7 +672,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const ageAttr = attributes.find((attr) => attr.key === 'age')
-      expect(ageAttr).to.deep.equal({
+      assert.deepStrictEqual(ageAttr, {
         key: 'age',
         label: 'Age',
         type: 'number',
@@ -679,7 +680,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const statusAttr = attributes.find((attr) => attr.key === 'status')
-      expect(statusAttr).to.deep.equal({
+      assert.deepStrictEqual(statusAttr, {
         key: 'status',
         label: 'Status',
         type: 'enum',
@@ -689,7 +690,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should generate attributes with required field when includeRequired is true', () => {
+    test('should generate attributes with required field when includeRequired is true', () => {
       const schema = z.object({
         name: z.string(),
         age: z.number().optional(),
@@ -697,10 +698,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeRequired: true })
 
-      expect(attributes).to.have.length(2)
+      assert.strictEqual(attributes.length,2)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
-      expect(nameAttr).to.deep.equal({
+      assert.deepStrictEqual(nameAttr, {
         key: 'name',
         label: 'Name',
         type: 'string',
@@ -708,7 +709,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const ageAttr = attributes.find((attr) => attr.key === 'age')
-      expect(ageAttr).to.deep.equal({
+      assert.deepStrictEqual(ageAttr, {
         key: 'age',
         label: 'Age',
         type: 'number',
@@ -716,7 +717,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should handle complex metadata with create fields', () => {
+    test('should handle complex metadata with create fields', () => {
       const schema = z.object({
         email: z.string().describe(
           JSON.stringify({
@@ -739,10 +740,10 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })
 
-      expect(attributes).to.have.length(2)
+      assert.strictEqual(attributes.length,2)
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
-      expect(emailAttr).to.deep.equal({
+      assert.deepStrictEqual(emailAttr, {
         key: 'email',
         label: 'Email Address',
         description: 'User email',
@@ -753,7 +754,7 @@ describe('schemaToAttributes()', () => {
       })
 
       const categoryAttr = attributes.find((attr) => attr.key === 'category')
-      expect(categoryAttr).to.deep.equal({
+      assert.deepStrictEqual(categoryAttr, {
         key: 'category',
         label: 'User Category',
         type: 'enum',
@@ -762,7 +763,7 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    it('should maintain backward compatibility with existing function signatures', () => {
+    test('should maintain backward compatibility with existing function signatures', () => {
       const schema = z.object({
         name: z.string(),
         age: z.number().optional(),
@@ -772,16 +773,16 @@ describe('schemaToAttributes()', () => {
       const baseAttributes = schemaToBaseAttributes(schema)
       const createAttributes = schemaToCreateAttributes(schema)
 
-      expect(baseAttributes).to.have.length(2)
-      expect(createAttributes).to.have.length(2)
+      assert.strictEqual(baseAttributes.length,2)
+      assert.strictEqual(createAttributes.length,2)
 
       // Base attributes should not have required field
-      expect(baseAttributes[0]).to.not.have.property('required')
+      assert.ok(!('required' in baseAttributes[0]))
 
       // Create attributes should have required field
-      expect(createAttributes[0]).to.have.property('required')
-      expect(createAttributes[0].required).to.equal(true)
-      expect(createAttributes[1].required).to.equal(false)
+      assert.ok('required' in createAttributes[0])
+      assert.strictEqual(createAttributes[0].required, true)
+      assert.strictEqual(createAttributes[1].required, false)
     })
   })
 })

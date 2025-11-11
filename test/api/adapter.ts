@@ -1,9 +1,10 @@
+import { describe, test, beforeEach, afterEach } from 'node:test'
+import assert from 'node:assert'
 import Confetti from '../../src'
-import { expect } from '../helper'
 import nock from 'nock'
 import { ParameterError, NotFoundError } from '../../src/errors.js'
 
-describe('Adapter', function () {
+describe('Adapter', () => {
   beforeEach(() => {
     nock.cleanAll()
   })
@@ -12,7 +13,7 @@ describe('Adapter', function () {
     nock.cleanAll()
   })
 
-  it('should make a find all request with correct url', async function () {
+  test('should make a find all request with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .get('/events')
       .matchHeader('authorization', 'apikey my-key')
@@ -23,10 +24,10 @@ describe('Adapter', function () {
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.findAll()
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should make a complicated find all request with correct url', async function () {
+  test('should make a complicated find all request with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .get('/events')
       .query({
@@ -49,10 +50,10 @@ describe('Adapter', function () {
       },
     })
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should make a find request with correct url', async function () {
+  test('should make a find request with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .get('/events/3')
       .matchHeader('authorization', 'apikey my-key')
@@ -63,10 +64,10 @@ describe('Adapter', function () {
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.find(3)
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should make a find request with includes with correct url', async function () {
+  test('should make a find request with includes with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .get('/events/3')
       .query({ include: 'categories,pages.blocks' })
@@ -80,20 +81,20 @@ describe('Adapter', function () {
       include: ['categories', 'pages.blocks'],
     })
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should handle a text response', async function () {
+  test('should handle a text response', async () => {
     const scope = nock('https://api.confetti.events').get('/events/1').reply(200, 'foo')
 
     const confetti = new Confetti({ apiKey: 'my-key' })
     const res = await confetti.events.find(1, { raw: true })
 
-    expect(res).to.equal('foo')
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(res, 'foo')
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should handle a json response', async function () {
+  test('should handle a json response', async () => {
     const mockData = { data: { id: '1', type: 'event', attributes: { name: 'Test Event' } } }
 
     const scope = nock('https://api.confetti.events').get('/events/1').reply(200, mockData)
@@ -101,49 +102,49 @@ describe('Adapter', function () {
     const confetti = new Confetti({ apiKey: 'my-key' })
     const res = await confetti.events.find(1)
 
-    expect(res).to.have.property('name', 'Test Event')
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(res.name, 'Test Event')
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should handle a 400 error', async function () {
+  test('should handle a 400 error', async () => {
     const scope = nock('https://api.confetti.events').get('/events/1').reply(400, { message: 'Bad Request' })
 
     const confetti = new Confetti({ apiKey: 'my-key' })
 
     try {
       await confetti.events.find(1)
-      expect.fail('Should have thrown an error')
+      assert.fail('Should have thrown an error')
     } catch (error: unknown) {
       if (!(error instanceof ParameterError)) {
         throw error
       }
-      expect(error.name).to.equal('ParameterError')
-      expect(error.errorType).to.equal('validation')
+      assert.strictEqual(error.name, 'ParameterError')
+      assert.strictEqual(error.errorType, 'validation')
     }
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should handle a 404 error', async function () {
+  test('should handle a 404 error', async () => {
     const scope = nock('https://api.confetti.events').get('/events/1').reply(404, { message: 'Not Found' })
 
     const confetti = new Confetti({ apiKey: 'my-key' })
 
     try {
       await confetti.events.find(1)
-      expect.fail('Should have thrown an error')
+      assert.fail('Should have thrown an error')
     } catch (error: unknown) {
       if (!(error instanceof NotFoundError)) {
         throw error
       }
-      expect(error.name).to.equal('NotFoundError')
-      expect(error.errorType).to.equal('Not Found')
+      assert.strictEqual(error.name, 'NotFoundError')
+      assert.strictEqual(error.errorType, 'Not Found')
     }
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should make a post request with correct url and body', async function () {
+  test('should make a post request with correct url and body', async () => {
     const mockData = { data: { id: '1', type: 'ticket', attributes: { firstName: 'John' } } }
 
     const scope = nock('https://api.confetti.events')
@@ -163,10 +164,10 @@ describe('Adapter', function () {
       sendEmailConfirmation: true,
     })
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should make a delete request with correct url', async function () {
+  test('should make a delete request with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .delete('/webhooks/1')
       .matchHeader('authorization', 'apikey my-key')
@@ -177,10 +178,10 @@ describe('Adapter', function () {
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.webhooks.delete(1)
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should use custom api host', async function () {
+  test('should use custom api host', async () => {
     const scope = nock('https://custom.api.host').get('/events').reply(200, { data: [] })
 
     const confetti = new Confetti({
@@ -189,10 +190,10 @@ describe('Adapter', function () {
     })
     await confetti.events.findAll()
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 
-  it('should use custom api protocol', async function () {
+  test('should use custom api protocol', async () => {
     const scope = nock('http://api.confetti.events').get('/events').reply(200, { data: [] })
 
     const confetti = new Confetti({
@@ -201,6 +202,6 @@ describe('Adapter', function () {
     })
     await confetti.events.findAll()
 
-    expect(scope.isDone()).to.be.true
+    assert.strictEqual(scope.isDone(), true)
   })
 })
