@@ -17,6 +17,7 @@
     "build": "npm run clean && tsc -p tsconfig.json",
     "dev": "tsx watch src/index.ts",
     "test": "node --import=tsx --test test/**/*.ts",
+    "test:watch": "node --import=tsx --test --watch test/**/*.ts",
     "lint": "eslint . && tsc --noEmit",
     "prepublishOnly": "npm run build",
     "preversion": "npm run lint && npm run build && npm test",
