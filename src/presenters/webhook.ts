@@ -17,22 +17,13 @@ export default function ({ presenters, Presenter }: PresenterOptions): WebhookPr
     static plural = 'webhooks' as const
 
     attributes(webhook: WebhookInput): WebhookOutput {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const webhookData = webhook as any
-      if (webhookData.eventId) {
-        webhookData.event = {
-          id: webhookData.eventId,
-        }
-        delete webhookData.eventId
-      }
-      if (webhookData.workspaceId) {
-        webhookData.workspace = {
-          id: webhookData.workspaceId,
-        }
-        delete webhookData.workspaceId
-      }
-      const s = super.attributes?.(webhookData) || webhookData
-      return s as unknown as WebhookOutput
+      const { eventId, workspaceId, ...rest } = webhook
+      const baseResult = super.attributes?.(rest) || rest
+      return {
+        ...baseResult,
+        ...(eventId && { event: { id: eventId } }),
+        ...(workspaceId && { workspace: { id: workspaceId } }),
+      } satisfies WebhookOutput
     }
 
     relationships() {
