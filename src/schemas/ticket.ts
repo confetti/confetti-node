@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import {
-  baseFindAllOptionsSchema as baseFindAllOptionsSchema,
-  staticBaseFindAllOptionsSchema as staticBaseFindAllOptionsSchema,
+  baseFindAllOptionsSchema,
+  staticBaseFindAllOptionsSchema,
   baseOptionsSchema,
   staticBaseFindOptionsSchema,
   findBaseOptionsSchema,
