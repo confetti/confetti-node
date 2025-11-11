@@ -9,10 +9,12 @@ export default function (attributes: Attribute[], additionalConfig: Record<strin
     if (attribute) {
       const transformedAttribute = {
         ...attribute,
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         ...(additionalConfig[key] as Record<string, unknown>),
       }
       res.push(transformedAttribute)
     } else {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       res.push({ key, ...(additionalConfig[key] as Record<string, unknown>) })
     }
     return res

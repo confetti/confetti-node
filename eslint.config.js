@@ -33,20 +33,12 @@ export default [
           caughtErrorsIgnorePattern: '^_',
         },
       ],
-      '@typescript-eslint/consistent-type-assertions': 'error',
-    },
-  },
-  {
-    files: ['src/types/**/*.ts'],
-    rules: {
-      'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-    },
-  },
-  {
-    files: ['test/**/*.ts'],
-    rules: {
-      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/consistent-type-assertions': [
+        'error',
+        {
+          assertionStyle: 'never',
+        },
+      ],
     },
   },
   {

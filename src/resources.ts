@@ -88,7 +88,8 @@ export const ticketsResource = {
     const validatedData = models.ticket.operations.create.schema.parse(json)
 
     return adapter.post<Ticket>({
-      json: validatedData as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
       path: models.ticket.path,
       type: models.ticket.endpoint,
       ...validatedOptions,
@@ -115,7 +116,8 @@ export const contactsResource = {
     const validatedData = models.contact.operations.create.schema.parse(json)
 
     return adapter.post<Contact>({
-      json: validatedData as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
       path: models.contact.path,
       type: models.contact.endpoint,
       ...validatedOptions,
@@ -157,7 +159,8 @@ export const webhooksResource = {
     const validatedData = models.webhook.operations.create.schema.parse(json)
     return adapter.post<Webhook>({
       path: models.webhook.path,
-      json: validatedData as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
       type: models.webhook.endpoint,
       ...validatedOptions,
     })

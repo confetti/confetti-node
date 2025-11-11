@@ -19,21 +19,31 @@ export default function ({ presenters, Presenter }: PresenterOptions): TicketPre
     static plural = 'tickets' as const
 
     attributes(ticket: TicketInput): TicketOutput {
-      const {
-        eventId,
-        ticketBatchId,
-        sendEmailConfirmation,
-        ...rest
-      } = ticket
-      const baseResult = super.attributes?.(rest) || rest
-      return {
-        ...baseResult,
-        ...(eventId && { event: { id: eventId } }),
-        ...(ticketBatchId && { ticketBatch: { id: ticketBatchId } }),
-        ...(sendEmailConfirmation !== undefined && {
-          meta: { sendEmailConfirmation },
-        }),
-      } satisfies TicketOutput
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      const ticketData = ticket as any
+      if (ticketData.eventId) {
+        ticketData.event = {
+          id: ticketData.eventId,
+        }
+        delete ticketData.eventId
+      }
+      if (ticketData.ticketBatchId) {
+        ticketData.ticketBatch = {
+          id: ticketData.ticketBatchId,
+        }
+        delete ticketData.ticketBatchId
+      }
+
+      if (ticketData.sendEmailConfirmation !== undefined) {
+        ticketData.meta = {
+          sendEmailConfirmation: ticketData.sendEmailConfirmation,
+        }
+      }
+      delete ticketData.sendEmailConfirmation
+
+      const s = super.attributes?.(ticketData) || ticketData
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      return s as TicketOutput
     }
 
     relationships() {

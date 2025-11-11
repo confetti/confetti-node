@@ -89,6 +89,7 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
       search: qs.stringify({ filter, sort, page, include: processedInclude }),
     })
     if (json) {
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
       const presented = presenters[type as keyof typeof presenters].render(json) as {
         data?: {
           attributes?: {
@@ -114,11 +115,14 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
       if (contentType.includes('application/json')) {
         const body = await res.json()
         if (raw) {
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           return body as T
         } else {
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
           return store.sync(body) as T
         }
       } else {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         return (await res.text()) as T
       }
     } else {
@@ -132,10 +136,13 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         }
       }
       if (res.status == 400) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         const error = new ParameterError('validation', errorBody as Record<string, unknown>)
         throw error
       } else if (res.status == 404) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         const errorMessage = (errorBody as ApiError)?.message || 'object'
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         const error = new NotFoundError(errorMessage, errorBody as Record<string, unknown>)
         throw error
       } else {

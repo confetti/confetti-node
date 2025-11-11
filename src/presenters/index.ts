@@ -10,6 +10,7 @@ import ticketBatchPresenter from './ticket-batch.js'
 import paymentPresenter from './payment.js'
 
 const { Presenter } = yayson()
+// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 const presenters: PresentersMap = {} as PresentersMap
 
 const WebhookPresenter = webhookPresenter({ presenters, Presenter })

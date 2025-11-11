@@ -53,9 +53,9 @@ export function extractFiltersFromSchema(schema: z.ZodSchema): Record<
         for (const [key, field] of Object.entries(filterFields)) {
           if (field instanceof z.ZodOptional) {
             const innerType = field._def.innerType
-            filters[key] = extractFieldConfig(innerType as z.ZodTypeAny, key)
+            filters[key] = extractFieldConfig(innerType, key)
           } else {
-            const config = extractFieldConfig(field as z.ZodTypeAny, key)
+            const config = extractFieldConfig(field, key)
             filters[key] = { ...config, required: true }
           }
         }
@@ -113,7 +113,7 @@ export function extractIncludesFromSchema(schema: z.ZodSchema): string[] {
 }
 
 function extractFieldConfig(
-  field: z.ZodTypeAny,
+  field: unknown,
   key: string,
 ): {
   type: 'string' | 'number' | 'boolean' | 'array' | 'date' | 'enum'

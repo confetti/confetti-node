@@ -41,6 +41,7 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
       values?: string[]
     } = {}
 
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     const fieldWithDescription = fieldSchema as unknown as { description?: string }
     if (fieldWithDescription.description) {
       try {
@@ -147,9 +148,11 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
 
 // Convenience functions for backward compatibility
 export function schemaToBaseAttributes(schema: z.ZodObject<z.ZodRawShape>): BaseAttribute[] {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return schemaToAttributes(schema) as BaseAttribute[]
 }
 
 export function schemaToCreateAttributes(schema: z.ZodObject<z.ZodRawShape>): CreateAttribute[] {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return schemaToAttributes(schema, { includeCreateFields: true }) as CreateAttribute[]
 }

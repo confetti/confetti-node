@@ -17,15 +17,23 @@ export default function ({ presenters, Presenter }: PresenterOptions): ContactPr
     static plural = 'contacts' as const
 
     attributes(contact: ContactInput): ContactOutput {
-      const { workspaceId, categoryIds, ...rest } = contact
-      const baseResult = super.attributes?.(rest) || rest
-      return {
-        ...baseResult,
-        ...(workspaceId && { workspace: { id: workspaceId } }),
-        ...(categoryIds?.length && {
-          categories: categoryIds.map((id) => ({ id })),
-        }),
-      } satisfies ContactOutput
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      const contactData = contact as any
+      if (contactData.workspaceId) {
+        contactData.workspace = {
+          id: contactData.workspaceId,
+        }
+        delete contactData.workspaceId
+      }
+      if (contactData.categoryIds?.length) {
+        contactData.categories = contactData.categoryIds.map((id: number) => ({
+          id,
+        }))
+        delete contactData.categoryIds
+      }
+      const s = super.attributes?.(contactData) || contactData
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      return s as ContactOutput
     }
 
     relationships() {

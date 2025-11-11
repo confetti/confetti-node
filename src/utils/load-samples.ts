@@ -41,6 +41,7 @@ const samples = {
  * @returns Object containing single and multiple sample data, or default empty structure if no samples exist
  */
 export default function loadSamples(modelName: string) {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   const sample = samples[modelName as keyof typeof samples]
 
   if (!sample) throw new Error(`Sample data for model ${modelName} not found`)
