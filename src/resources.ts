@@ -210,7 +210,7 @@ export const categoriesResource = {
 }
 
 export const ticketBatchesResource = {
-  findAll: (options: TicketBatchesFindAllOptions = {}, adapter: Adapter): Promise<TicketBatch[]> => {
+  findAll: (options: TicketBatchesFindAllOptions, adapter: Adapter): Promise<TicketBatch[]> => {
     const validatedOptions = ticketBatchesFindAllOptionsSchema.parse(options)
     return adapter.get<TicketBatch[]>({
       path: models.ticketBatch.path,

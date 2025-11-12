@@ -234,7 +234,7 @@ class Confetti {
   }
 
   ticketBatches = {
-    findAll: (options: TicketBatchesFindAllOptions = {}) => {
+    findAll: (options: TicketBatchesFindAllOptions) => {
       return ticketBatchesResource.findAll(options, this.adapter)
     },
     find: (id: string | number, options: TicketBatchesFindOptions = {}) => {

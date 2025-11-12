@@ -32,10 +32,11 @@ describe('TicketBatches', () => {
 
       nock('https://api.confetti.events')
         .get('/ticket-batches')
+        .query({ filter: { eventId: 1 } })
         .reply(200, mockData as MockResponseData)
 
       const confetti = new Confetti({ apiKey: 'my-key' })
-      const data = await confetti.ticketBatches.findAll()
+      const data = await confetti.ticketBatches.findAll({ filter: { eventId: 1 } })
 
       assert.deepStrictEqual(data, Confetti.models.ticketBatch.sample.multiple.formatted)
     })
@@ -57,9 +58,10 @@ describe('TicketBatches', () => {
 
       nock('https://api.confetti.events')
         .get('/ticket-batches')
+        .query({ filter: { eventId: 1 } })
         .reply(200, mockData as MockResponseData)
 
-      const data = await Confetti.ticketBatches.findAll({ apiKey: 'my-key' })
+      const data = await Confetti.ticketBatches.findAll({ apiKey: 'my-key', filter: { eventId: 1 } })
       assert.deepStrictEqual(data, Confetti.models.ticketBatch.sample.multiple.formatted)
     })
   })

@@ -70,11 +70,9 @@ export const TicketBatchSchema = z.object({
 })
 
 const ticketBatchesFindAllSchema = {
-  filter: z
-    .object({
-      eventId: z.union([z.string(), z.number()]),
-    })
-    .optional(),
+  filter: z.object({
+    eventId: z.number(),
+  }),
   sort: z.never().optional(),
   include: z.never().optional(),
 }
