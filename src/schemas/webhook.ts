@@ -108,7 +108,7 @@ export const WebhookCreateSchema = z.object({
 const webhooksFindAllSchema = {
   filter: z
     .object({
-      eventId: z.union([z.string(), z.number()]).optional(),
+      eventId: z.number().optional(),
     })
     .optional(),
   sort: z.never().optional(),

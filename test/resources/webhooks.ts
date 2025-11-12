@@ -58,6 +58,20 @@ describe('Webhooks', () => {
       const data = await Confetti.webhooks.findAll({ apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.webhook.sample.multiple.formatted)
     })
+
+    test('should request webhooks with eventId', async () => {
+      const mockData = Confetti.models.webhook.sample.multiple.raw
+
+      nock('https://api.confetti.events')
+        .get('/webhooks')
+        .query({ filter: { eventId: 2 } })
+        .reply(200, mockData)
+
+      const data = await Confetti.webhooks.findAll({ apiKey: 'my-key', filter: { eventId: 2 } })
+
+      assert.deepStrictEqual(data, Confetti.models.webhook.sample.multiple.formatted)
+    })
+
     test('should create a webhook', async () => {
       const mockData = Confetti.models.webhook.sample.single.raw
 
