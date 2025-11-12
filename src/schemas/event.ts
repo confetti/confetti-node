@@ -74,6 +74,26 @@ export const EventSchema = z.object({
       label: 'Email',
     }),
   ),
+  rsvpLimit: z.number().describe(
+    JSON.stringify({
+      label: 'Rsvp Limit',
+    }),
+  ),
+  rsvpLeft: z.number().describe(
+    JSON.stringify({
+      label: 'Rsvp Left',
+    }),
+  ),
+  waitlisted: z.number().describe(
+    JSON.stringify({
+      label: 'Waitlisted',
+    }),
+  ),
+  hasPassed: z.boolean().describe(
+    JSON.stringify({
+      label: 'Has Passed',
+    }),
+  ),
   createdAt: z.date().describe(
     JSON.stringify({
       label: 'Created At',
@@ -84,9 +104,64 @@ export const EventSchema = z.object({
       label: 'Updated At',
     }),
   ),
-  organisationId: z.number().describe(
+  workspaceId: z.number().describe(
     JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Workspace Id',
+    }),
+  ),
+  shareTitle: z.string().describe(
+    JSON.stringify({
+      label: 'ShareTitle',
+    }),
+  ),
+  shareDescription: z.string().describe(
+    JSON.stringify({
+      label: 'Share description',
+    }),
+  ),
+  summary: z.string().describe(
+    JSON.stringify({
+      label: 'Summary',
+    }),
+  ),
+  timeFormat: z.string().describe(
+    JSON.stringify({
+      label: 'Time format',
+    }),
+  ),
+  locale: z.string().describe(
+    JSON.stringify({
+      label: 'Locale',
+    }),
+  ),
+  primaryColor: z.string().describe(
+    JSON.stringify({
+      label: 'Primary color',
+    }),
+  ),
+  contrastColor: z.string().describe(
+    JSON.stringify({
+      label: 'Contrast color',
+    }),
+  ),
+  waitlist: z.string().describe(
+    JSON.stringify({
+      label: 'Has a waitlist',
+    }),
+  ),
+  enableExtraGuests: z.boolean().describe(
+    JSON.stringify({
+      label: 'Are people allowed to bring guests',
+    }),
+  ),
+  maxExtraGuests: z.number().describe(
+    JSON.stringify({
+      label: 'How many extra guests',
+    }),
+  ),
+  location: z.looseObject({}).describe(
+    JSON.stringify({
+      label: 'Location',
     }),
   ),
 })

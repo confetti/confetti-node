@@ -12,29 +12,9 @@ export const TicketBatchSchema = z.object({
       label: 'ID',
     }),
   ),
-  name: z.string().describe(
+  left: z.number().describe(
     JSON.stringify({
-      label: 'Name',
-    }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
-      label: 'Description',
-    }),
-  ),
-  price: z.number().describe(
-    JSON.stringify({
-      label: 'Price',
-    }),
-  ),
-  currency: z.string().describe(
-    JSON.stringify({
-      label: 'Currency',
-    }),
-  ),
-  persons: z.number().describe(
-    JSON.stringify({
-      label: 'Persons',
+      label: 'Left',
     }),
   ),
   status: z.string().describe(
@@ -42,29 +22,109 @@ export const TicketBatchSchema = z.object({
       label: 'Status',
     }),
   ),
+  name: z.string().describe(
+    JSON.stringify({
+      label: 'Name',
+    }),
+  ),
+  order: z.number().describe(
+    JSON.stringify({
+      label: 'Order',
+    }),
+  ),
+  description: z.string().describe(
+    JSON.stringify({
+      label: 'Description',
+    }),
+  ),
+  promoCode: z.string().describe(
+    JSON.stringify({
+      label: 'Promo code',
+    }),
+  ),
+  releasedAt: z.date().describe(
+    JSON.stringify({
+      label: 'Released at',
+    }),
+  ),
+  closedAt: z.date().describe(
+    JSON.stringify({
+      label: 'Closed at',
+    }),
+  ),
+  price: z.string().describe(
+    JSON.stringify({
+      label: 'Price',
+    }),
+  ),
+  useCustomVat: z.boolean().describe(
+    JSON.stringify({
+      label: 'Use custom VAT',
+    }),
+  ),
+  vatPercentage: z.number().describe(
+    JSON.stringify({
+      label: 'VAT percentage',
+    }),
+  ),
+  limit: z.number().describe(
+    JSON.stringify({
+      label: 'Limit',
+    }),
+  ),
+  sold: z.number().describe(
+    JSON.stringify({
+      label: 'Sold',
+    }),
+  ),
+  reserved: z.number().describe(
+    JSON.stringify({
+      label: 'Reserved',
+    }),
+  ),
+  settings: z.looseObject({}).describe(
+    JSON.stringify({
+      label: 'Settings',
+    }),
+  ),
   startDate: z.date().describe(
     JSON.stringify({
-      label: 'Start Date',
+      label: 'Start date',
     }),
   ),
   endDate: z.date().describe(
     JSON.stringify({
-      label: 'End Date',
+      label: 'End date',
     }),
   ),
   createdAt: z.date().describe(
     JSON.stringify({
-      label: 'Created At',
+      label: 'Created at',
     }),
   ),
   updatedAt: z.date().describe(
     JSON.stringify({
-      label: 'Updated At',
+      label: 'Updated at',
     }),
   ),
-  organisationId: z.number().describe(
+  eventId: z.number().describe(
     JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Event Id',
+    }),
+  ),
+  linkedTicketBatchId: z.number().describe(
+    JSON.stringify({
+      label: 'Linked ticket batch Id',
+    }),
+  ),
+  formId: z.number().describe(
+    JSON.stringify({
+      label: 'Form Id',
+    }),
+  ),
+  payoutId: z.number().describe(
+    JSON.stringify({
+      label: 'Payout Id',
     }),
   ),
 })

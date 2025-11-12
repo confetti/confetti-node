@@ -84,22 +84,16 @@ export const TicketSchema = z.object({
       label: 'Email Status',
     }),
   ),
-  checkinAt: z
-    .date()
-    .optional()
-    .describe(
-      JSON.stringify({
-        label: 'Checkin At',
-      }),
-    ),
-  waitlistAt: z
-    .date()
-    .optional()
-    .describe(
-      JSON.stringify({
-        label: 'Waitlist At',
-      }),
-    ),
+  checkinAt: z.date().describe(
+    JSON.stringify({
+      label: 'Checkin At',
+    }),
+  ),
+  waitlistAt: z.date().describe(
+    JSON.stringify({
+      label: 'Waitlist At',
+    }),
+  ),
   startDate: z.date().describe(
     JSON.stringify({
       label: 'Start Date',
@@ -108,6 +102,31 @@ export const TicketSchema = z.object({
   endDate: z.date().describe(
     JSON.stringify({
       label: 'End Date',
+    }),
+  ),
+  values: z.looseObject({}).describe(
+    JSON.stringify({
+      label: 'Values',
+    }),
+  ),
+  comment: z.string().describe(
+    JSON.stringify({
+      label: 'Comment',
+    }),
+  ),
+  guests: z.number().describe(
+    JSON.stringify({
+      label: 'Guests',
+    }),
+  ),
+  termsAcceptedAt: z.date().describe(
+    JSON.stringify({
+      label: 'Terms Accepted At',
+    }),
+  ),
+  deletionRequestedAt: z.date().describe(
+    JSON.stringify({
+      label: 'Deletion Requested At',
     }),
   ),
   createdAt: z.date().describe(
@@ -120,9 +139,24 @@ export const TicketSchema = z.object({
       label: 'Updated At',
     }),
   ),
-  organisationId: z.number().describe(
+  ticketBatchId: z.number().describe(
     JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Ticket Batch Id',
+    }),
+  ),
+  paymentId: z.number().describe(
+    JSON.stringify({
+      label: 'Payment Id',
+    }),
+  ),
+  eventId: z.number().describe(
+    JSON.stringify({
+      label: 'Event Id',
+    }),
+  ),
+  contactId: z.number().describe(
+    JSON.stringify({
+      label: 'Contact Id',
     }),
   ),
 })
@@ -166,16 +200,9 @@ export const TicketCreateSchema = z.object({
   status: z.enum(['attending', 'invited']).describe(
     JSON.stringify({
       label: 'Status',
+      values: ['attending', 'invited'],
     }),
   ),
-  company: z
-    .string()
-    .optional()
-    .describe(
-      JSON.stringify({
-        label: 'Company',
-      }),
-    ),
   phone: z
     .string()
     .optional()
@@ -184,6 +211,14 @@ export const TicketCreateSchema = z.object({
         label: 'Phone',
         placeholder: '+46 12 345 67 89',
         helpText: 'Mobile phone number with country code. Example: +46701234567',
+      }),
+    ),
+  company: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Company',
       }),
     ),
   comment: z

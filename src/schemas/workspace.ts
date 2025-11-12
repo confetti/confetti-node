@@ -54,9 +54,24 @@ export const WorkspaceSchema = z.object({
       label: 'Updated At',
     }),
   ),
-  organisationId: z.number().describe(
+  shareTitle: z.string().describe(
     JSON.stringify({
-      label: 'Organisation Id',
+      label: 'ShareTitle',
+    }),
+  ),
+  shareDescription: z.string().describe(
+    JSON.stringify({
+      label: 'Share description',
+    }),
+  ),
+  summary: z.string().describe(
+    JSON.stringify({
+      label: 'Summary',
+    }),
+  ),
+  primaryColor: z.string().describe(
+    JSON.stringify({
+      label: 'Primary color',
     }),
   ),
 })

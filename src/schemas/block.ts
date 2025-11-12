@@ -21,19 +21,9 @@ export const BlockSchema = z.object({
       label: 'Order',
     }),
   ),
-  createdAt: z.date().describe(
+  status: z.string().describe(
     JSON.stringify({
-      label: 'Created At',
-    }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
-      label: 'Updated At',
-    }),
-  ),
-  organisationId: z.number().describe(
-    JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Status',
     }),
   ),
 })

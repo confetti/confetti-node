@@ -44,19 +44,6 @@ export const WebhookSchema = z.object({
       label: 'Updated At',
     }),
   ),
-  workspaceId: z.number().describe(
-    JSON.stringify({
-      label: 'Workspace Id',
-    }),
-  ),
-  eventId: z
-    .number()
-    .nullable()
-    .describe(
-      JSON.stringify({
-        label: 'Event Id',
-      }),
-    ),
 })
 
 export const WebhookCreateSchema = z.object({

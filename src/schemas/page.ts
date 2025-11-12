@@ -6,9 +6,9 @@ export const PageSchema = z.object({
       label: 'ID',
     }),
   ),
-  title: z.string().describe(
+  name: z.string().describe(
     JSON.stringify({
-      label: 'Title',
+      label: 'Name',
     }),
   ),
   slug: z.string().describe(
@@ -16,29 +16,14 @@ export const PageSchema = z.object({
       label: 'Slug',
     }),
   ),
-  content: z.string().describe(
+  order: z.number().describe(
     JSON.stringify({
-      label: 'Content',
+      label: 'Order',
     }),
   ),
-  status: z.string().describe(
+  settings: z.looseObject({}).describe(
     JSON.stringify({
-      label: 'Status',
-    }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
-      label: 'Created At',
-    }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
-      label: 'Updated At',
-    }),
-  ),
-  organisationId: z.number().describe(
-    JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Settings',
     }),
   ),
 })
