@@ -1,6 +1,6 @@
 import { describe, test, beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert'
-import Confetti from '../../../src'
+import Confetti from '../../src'
 import nock from 'nock'
 
 type MockResponseData = Record<string, unknown>
@@ -45,9 +45,7 @@ describe('Webhooks', () => {
     test('should request one webhook', async () => {
       const mockData = Confetti.models.webhook.sample.single.raw
 
-      nock('https://api.confetti.events')
-        .get('/webhooks/1')
-        .reply(200, mockData as MockResponseData)
+      nock('https://api.confetti.events').get('/webhooks/1').reply(200, mockData)
 
       const data = await Confetti.webhooks.find(1, { apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.webhook.sample.single.formatted)
@@ -55,9 +53,7 @@ describe('Webhooks', () => {
     test('should request multiple webhooks', async () => {
       const mockData = Confetti.models.webhook.sample.multiple.raw
 
-      nock('https://api.confetti.events')
-        .get('/webhooks')
-        .reply(200, mockData as MockResponseData)
+      nock('https://api.confetti.events').get('/webhooks').reply(200, mockData)
 
       const data = await Confetti.webhooks.findAll({ apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.webhook.sample.multiple.formatted)
@@ -88,4 +84,3 @@ describe('Webhooks', () => {
     })
   })
 })
-

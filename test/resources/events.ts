@@ -1,6 +1,6 @@
 import { describe, test, beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert'
-import Confetti from '../../../src'
+import Confetti from '../../src'
 import nock from 'nock'
 
 type MockResponseData = Record<string, unknown>
@@ -64,4 +64,3 @@ describe('Events', () => {
     })
   })
 })
-
