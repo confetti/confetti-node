@@ -197,12 +197,23 @@ export const TicketCreateSchema = z.object({
       label: 'Email',
     }),
   ),
-  status: z.enum(['attending', 'invited']).describe(
-    JSON.stringify({
-      label: 'Status',
-      values: ['attending', 'invited'],
-    }),
-  ),
+  status: z
+    .union([
+      z.string().refine(
+        (val) => {
+          const values = val.split(',').map((v) => v.trim())
+          return values.every((v) => v === 'attending' || v === 'invited')
+        },
+        { message: 'Status must be "attending", "invited", or a comma-separated list of these values' },
+      ),
+      z.array(z.enum(['attending', 'invited'])),
+    ])
+    .describe(
+      JSON.stringify({
+        label: 'Status',
+        values: ['attending', 'invited'],
+      }),
+    ),
   phone: z
     .string()
     .optional()
@@ -244,58 +255,68 @@ const ticketsFindAllSchema = {
     description: z.string().optional(),
     checkedIn: z.boolean().optional(),
     status: z
-      .array(
-        z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
-          JSON.stringify({
-            label: 'Ticket Status',
-            description: 'Filter tickets by status',
-            values: [
-              {
-                label: 'Attending',
-                description: 'Tickets for attendees',
-                type: 'string',
-                key: 'attending',
-                value: 'attending',
-              },
-              {
-                label: 'Waitlist',
-                description: 'Tickets on waitlist',
-                type: 'string',
-                key: 'waitlist',
-                value: 'waitlist',
-              },
-              {
-                label: 'Declined',
-                description: 'Declined tickets',
-                type: 'string',
-                key: 'declined',
-                value: 'declined',
-              },
-              {
-                label: 'Invited',
-                description: 'Invited tickets',
-                type: 'string',
-                key: 'invited',
-                value: 'invited',
-              },
-              {
-                label: 'Consumed',
-                description: 'Consumed tickets',
-                type: 'string',
-                key: 'consumed',
-                value: 'consumed',
-              },
-              {
-                label: 'Deletion Requested',
-                description: 'Tickets with deletion requested',
-                type: 'string',
-                key: 'deletion-requested',
-                value: 'deletion-requested',
-              },
-            ],
-          }),
+      .union([
+        z.array(
+          z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
+            JSON.stringify({
+              label: 'Ticket Status',
+              description: 'Filter tickets by status',
+              values: [
+                {
+                  label: 'Attending',
+                  description: 'Tickets for attendees',
+                  type: 'string',
+                  key: 'attending',
+                  value: 'attending',
+                },
+                {
+                  label: 'Waitlist',
+                  description: 'Tickets on waitlist',
+                  type: 'string',
+                  key: 'waitlist',
+                  value: 'waitlist',
+                },
+                {
+                  label: 'Declined',
+                  description: 'Declined tickets',
+                  type: 'string',
+                  key: 'declined',
+                  value: 'declined',
+                },
+                {
+                  label: 'Invited',
+                  description: 'Invited tickets',
+                  type: 'string',
+                  key: 'invited',
+                  value: 'invited',
+                },
+                {
+                  label: 'Consumed',
+                  description: 'Consumed tickets',
+                  type: 'string',
+                  key: 'consumed',
+                  value: 'consumed',
+                },
+                {
+                  label: 'Deletion Requested',
+                  description: 'Tickets with deletion requested',
+                  type: 'string',
+                  key: 'deletion-requested',
+                  value: 'deletion-requested',
+                },
+              ],
+            }),
+          ),
         ),
-      )
+        z.string().refine(
+          (val) => {
+            const validStatuses = ['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']
+            const values = val.split(',').map((v) => v.trim())
+            return values.every((v) => validStatuses.includes(v))
+          },
+          { message: 'Status must be a valid status or a comma-separated list of valid statuses' },
+        ),
+      ])
       .optional(),
   }),
   sort: z

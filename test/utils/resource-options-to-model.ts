@@ -327,7 +327,75 @@ describe('resource-options-to-model', () => {
             description: z.string().optional(),
             checkedIn: z.boolean().optional(),
             status: z
-              .array(z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']))
+              .union([
+                z.array(
+                  z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
+                    JSON.stringify({
+                      label: 'Ticket Status',
+                      description: 'Filter tickets by status',
+                      values: [
+                        {
+                          label: 'Attending',
+                          description: 'Tickets for attendees',
+                          type: 'string',
+                          key: 'attending',
+                          value: 'attending',
+                        },
+                        {
+                          label: 'Waitlist',
+                          description: 'Tickets on waitlist',
+                          type: 'string',
+                          key: 'waitlist',
+                          value: 'waitlist',
+                        },
+                        {
+                          label: 'Declined',
+                          description: 'Declined tickets',
+                          type: 'string',
+                          key: 'declined',
+                          value: 'declined',
+                        },
+                        {
+                          label: 'Invited',
+                          description: 'Invited tickets',
+                          type: 'string',
+                          key: 'invited',
+                          value: 'invited',
+                        },
+                        {
+                          label: 'Consumed',
+                          description: 'Consumed tickets',
+                          type: 'string',
+                          key: 'consumed',
+                          value: 'consumed',
+                        },
+                        {
+                          label: 'Deletion Requested',
+                          description: 'Tickets with deletion requested',
+                          type: 'string',
+                          key: 'deletion-requested',
+                          value: 'deletion-requested',
+                        },
+                      ],
+                    }),
+                  ),
+                ),
+                z.string().refine(
+                  (val) => {
+                    const validStatuses = [
+                      'attending',
+                      'waitlist',
+                      'declined',
+                      'invited',
+                      'consumed',
+                      'deletion-requested',
+                    ]
+                    const values = val.split(',').map((v) => v.trim())
+                    return values.every((v) => validStatuses.includes(v))
+                  },
+                  { message: 'Status must be a valid status or a comma-separated list of valid statuses' },
+                ),
+              ])
               .optional(),
           })
           .optional(),
@@ -339,6 +407,7 @@ describe('resource-options-to-model', () => {
       const sorting = extractSortingFromSchema(ticketsSchema)
       const includes = extractIncludesFromSchema(ticketsSchema)
 
+      console.log(filters)
       assert.deepStrictEqual(filters, {
         eventId: { type: 'number', label: 'Event Id' },
         search: { type: 'string', label: 'Search' },
@@ -347,13 +416,31 @@ describe('resource-options-to-model', () => {
         status: {
           type: 'array',
           label: 'Status',
-          options: [
-            { value: 'attending', label: 'Attending' },
-            { value: 'waitlist', label: 'Waitlist' },
-            { value: 'declined', label: 'Declined' },
-            { value: 'invited', label: 'Invited' },
-            { value: 'consumed', label: 'Consumed' },
-            { value: 'deletion-requested', label: 'Deletion Requested' },
+          values: [
+            {
+              key: 'attending',
+              value: 'attending',
+              label: 'Attending',
+              type: 'string',
+              description: 'Tickets for attendees',
+            },
+            {
+              key: 'waitlist',
+              value: 'waitlist',
+              label: 'Waitlist',
+              type: 'string',
+              description: 'Tickets on waitlist',
+            },
+            { key: 'declined', value: 'declined', label: 'Declined', type: 'string', description: 'Declined tickets' },
+            { key: 'invited', value: 'invited', label: 'Invited', type: 'string', description: 'Invited tickets' },
+            { key: 'consumed', value: 'consumed', label: 'Consumed', type: 'string', description: 'Consumed tickets' },
+            {
+              key: 'deletion-requested',
+              value: 'deletion-requested',
+              label: 'Deletion Requested',
+              type: 'string',
+              description: 'Tickets with deletion requested',
+            },
           ],
         },
       })

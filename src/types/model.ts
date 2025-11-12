@@ -6,13 +6,15 @@ export interface BaseFilter {
   required?: boolean
   default?: string | number | boolean
   options?: Array<{ value: string; label: string }>
-  values?: Array<{
-    label: string
-    description: string
-    type: string
-    key: string
-    value: string
-  }>
+  values?:
+    | Array<{ value: string; label: string }>
+    | Array<{
+        label: string
+        description: string
+        type: string
+        key: string
+        value: string
+      }>
 }
 
 export type FilterConfig = Record<string, BaseFilter>

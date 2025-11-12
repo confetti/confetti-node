@@ -83,6 +83,33 @@ describe('Tickets', () => {
       const data = await Confetti.tickets.findAll({ apiKey: 'my-key', filter: { eventId: 1 } })
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.multiple.formatted)
     })
+
+    test('should request multiple tickets with status array', async () => {
+      const mockData = Confetti.models.ticket.sample.multiple.raw
+      nock('https://api.confetti.events')
+        .get('/tickets')
+        .query({ filter: { eventId: 1, status: ['attending', 'invited'] } })
+        .reply(200, mockData as MockResponseData)
+      const data = await Confetti.tickets.findAll({
+        apiKey: 'my-key',
+        filter: { eventId: 1, status: ['attending', 'invited'] },
+      })
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.multiple.formatted)
+    })
+
+    test('should request multiple tickets with comma separated status string', async () => {
+      const mockData = Confetti.models.ticket.sample.multiple.raw
+      nock('https://api.confetti.events')
+        .get('/tickets')
+        .query({ filter: { eventId: 1, status: 'attending,invited' } })
+        .reply(200, mockData as MockResponseData)
+      const data = await Confetti.tickets.findAll({
+        apiKey: 'my-key',
+        filter: { eventId: 1, status: 'attending,invited' },
+      })
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.multiple.formatted)
+    })
+
     test('should create a ticket', async () => {
       const mockData = Confetti.models.ticket.sample.single.raw
 
