@@ -1,0 +1,31 @@
+import { z } from 'zod'
+
+export const BlockSchema = z.object({
+  id: z.number().describe(
+    JSON.stringify({
+      label: 'ID',
+    }),
+  ),
+  type: z.string().describe(
+    JSON.stringify({
+      label: 'Type',
+    }),
+  ),
+  content: z.json().describe(
+    JSON.stringify({
+      label: 'Content',
+    }),
+  ),
+  order: z.number().describe(
+    JSON.stringify({
+      label: 'Order',
+    }),
+  ),
+  status: z.string().describe(
+    JSON.stringify({
+      label: 'Status',
+    }),
+  ),
+})
+
+export type Block = z.infer<typeof BlockSchema>

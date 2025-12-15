@@ -1,0 +1,62 @@
+import loadSamples from '../utils/load-samples.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import { ContactSchema, ContactCreateSchema } from '../schemas/contact.js'
+import { ModelDefinition } from '../types/model.js'
+import {
+  extractFiltersFromSchema,
+  extractSortingFromSchema,
+  extractIncludesFromSchema,
+} from '../utils/resource-options-to-model.js'
+import { contactsFindAllOptionsSchema } from '../schemas/contact.js'
+
+export default function ContactModel(): ModelDefinition {
+  return {
+    key: 'contact',
+    endpoint: 'contacts',
+    path: 'contacts',
+    name: 'Contact',
+    sample: loadSamples('contact'),
+    sorting: extractSortingFromSchema(contactsFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(contactsFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(contactsFindAllOptionsSchema),
+    operations: {
+      read: {
+        schema: ContactSchema,
+        attributes: schemaToAttributes(ContactSchema),
+      },
+      create: {
+        schema: ContactCreateSchema,
+        attributes: schemaToCreateAttributes(ContactCreateSchema),
+      },
+    },
+    webhooks: [
+      {
+        type: 'contact.created',
+        label: 'Created',
+        description: 'Triggers when a contacts is created.',
+        important: true,
+      },
+      {
+        type: 'contact.updated',
+        label: 'Updated',
+        description: 'Triggers when a contact is updated.',
+        important: true,
+      },
+      {
+        type: 'contact.unsubscribed',
+        label: 'Unsubscribed',
+        description: 'Triggers when a contact is unsubscribed.',
+      },
+      {
+        type: 'contact.deletion-requested',
+        label: 'Deletion Requested',
+        description: 'Triggers when someone has requested to be deleted.',
+      },
+      {
+        type: 'contact.deleted',
+        label: 'Deleted',
+        description: 'Triggers when a contact is deleted.',
+      },
+    ],
+  }
+}

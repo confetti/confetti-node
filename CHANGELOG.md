@@ -1,3 +1,12 @@
+# 3.0.0 - 2025-09-15
+
+- `model.attributes` are now found in `model.operations.read.attributes`
+- Zod schemas are now included in all models
+- Data and options is validated with Zod before being sent to the server
+- Entire library rewritten to TypeScript and now provides types
+- Drop support for Node 14, 16 & 18.
+- ESM only
+
 # 2.0.6 - 2025-01-27
 
 - Fix: removes company field from create attributes in ticket model

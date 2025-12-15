@@ -1,0 +1,31 @@
+import { z } from 'zod'
+
+export const PageSchema = z.object({
+  id: z.number().describe(
+    JSON.stringify({
+      label: 'ID',
+    }),
+  ),
+  name: z.string().describe(
+    JSON.stringify({
+      label: 'Name',
+    }),
+  ),
+  slug: z.string().describe(
+    JSON.stringify({
+      label: 'Slug',
+    }),
+  ),
+  order: z.number().describe(
+    JSON.stringify({
+      label: 'Order',
+    }),
+  ),
+  settings: z.looseObject({}).describe(
+    JSON.stringify({
+      label: 'Settings',
+    }),
+  ),
+})
+
+export type Page = z.infer<typeof PageSchema>

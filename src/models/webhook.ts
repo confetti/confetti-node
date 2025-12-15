@@ -1,0 +1,34 @@
+import loadSamples from '../utils/load-samples.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import { WebhookSchema, WebhookCreateSchema } from '../schemas/webhook.js'
+import { ModelDefinition } from '../types/model.js'
+import {
+  extractFiltersFromSchema,
+  extractSortingFromSchema,
+  extractIncludesFromSchema,
+} from '../utils/resource-options-to-model.js'
+import { webhooksFindAllOptionsSchema } from '../schemas/webhook.js'
+
+export default function WebhookModel(): ModelDefinition {
+  return {
+    key: 'webhook',
+    endpoint: 'webhooks',
+    path: 'webhooks',
+    name: 'Webhook',
+    sample: loadSamples('webhook'),
+    sorting: extractSortingFromSchema(webhooksFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(webhooksFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(webhooksFindAllOptionsSchema),
+    operations: {
+      read: {
+        schema: WebhookSchema,
+        attributes: schemaToAttributes(WebhookSchema),
+      },
+      create: {
+        schema: WebhookCreateSchema,
+        attributes: schemaToCreateAttributes(WebhookCreateSchema),
+      },
+    },
+    webhooks: [],
+  }
+}

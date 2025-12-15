@@ -1,0 +1,48 @@
+import { PresenterOptions, WebhookPresenter } from '../types/presenters.js'
+import { Webhook } from '../types/models.js'
+
+type WebhookInput = Webhook & {
+  eventId?: number
+  workspaceId?: number
+}
+
+type WebhookOutput = Webhook & {
+  event?: { id: number }
+  workspace?: { id: number }
+}
+
+export default function ({ presenters, Presenter }: PresenterOptions): WebhookPresenter {
+  class WebhookPresenterClass extends Presenter {
+    static type = 'webhook' as const
+    static plural = 'webhooks' as const
+
+    attributes(webhook: WebhookInput): WebhookOutput {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      const webhookData = webhook as any
+      if (webhookData.eventId) {
+        webhookData.event = {
+          id: webhookData.eventId,
+        }
+        delete webhookData.eventId
+      }
+      if (webhookData.workspaceId) {
+        webhookData.workspace = {
+          id: webhookData.workspaceId,
+        }
+        delete webhookData.workspaceId
+      }
+      const s = super.attributes?.(webhookData) || webhookData
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+      return s as WebhookOutput
+    }
+
+    relationships() {
+      return {
+        event: presenters.EventPresenter,
+        workspace: presenters.WorkspacePresenter,
+      }
+    }
+  }
+
+  return WebhookPresenterClass
+}
