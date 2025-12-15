@@ -5,6 +5,7 @@ import {
   staticBaseFindAllOptionsSchema,
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
+import { decimalStringSchema } from '../utils/zod.js'
 
 export const PaymentSchema = z.object({
   id: z.number().describe(
@@ -43,6 +44,21 @@ export const PaymentSchema = z.object({
       label: 'Vat %',
     }),
   ),
+  commission: decimalStringSchema().describe(
+    JSON.stringify({
+      label: 'Commission',
+    }),
+  ),
+  commissionVat: decimalStringSchema().describe(
+    JSON.stringify({
+      label: 'Commission VAT',
+    }),
+  ),
+  customer: z.looseObject({}).describe(
+    JSON.stringify({
+      label: 'Customer',
+    }),
+  ),
   token: z.string().describe(
     JSON.stringify({
       label: 'Token',
@@ -58,19 +74,9 @@ export const PaymentSchema = z.object({
       label: 'Status',
     }),
   ),
-  createdAt: z.date().describe(
+  paidAt: z.date().describe(
     JSON.stringify({
-      label: 'Created At',
-    }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
-      label: 'Updated At',
-    }),
-  ),
-  organisationId: z.number().describe(
-    JSON.stringify({
-      label: 'Organisation Id',
+      label: 'Paid At',
     }),
   ),
 })

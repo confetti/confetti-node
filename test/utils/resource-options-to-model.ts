@@ -407,7 +407,6 @@ describe('resource-options-to-model', () => {
       const sorting = extractSortingFromSchema(ticketsSchema)
       const includes = extractIncludesFromSchema(ticketsSchema)
 
-      console.log(filters)
       assert.deepStrictEqual(filters, {
         eventId: { type: 'number', label: 'Event Id' },
         search: { type: 'string', label: 'Search' },
