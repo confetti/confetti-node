@@ -19,7 +19,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,4)
+      assert.strictEqual(attributes.length, 4)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
@@ -63,7 +63,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,3)
+      assert.strictEqual(attributes.length, 3)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
@@ -104,7 +104,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,3)
+      assert.strictEqual(attributes.length, 3)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
@@ -141,7 +141,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,4)
+      assert.strictEqual(attributes.length, 4)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
@@ -178,7 +178,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,3)
+      assert.strictEqual(attributes.length, 3)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
@@ -216,7 +216,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,4)
+      assert.strictEqual(attributes.length, 4)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'ID',
@@ -243,7 +243,7 @@ describe('schemaToAttributes()', () => {
     test('should handle empty schema', () => {
       const schema = z.object({})
       const attributes = schemaToBaseAttributes(schema)
-      assert.strictEqual(attributes.length,0)
+      assert.strictEqual(attributes.length, 0)
     })
 
     test('should handle complex nested optional fields', () => {
@@ -265,7 +265,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id',
@@ -291,7 +291,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
       assert.deepStrictEqual(attributes[0], {
         key: 'id',
         label: 'Id', // Should fall back to auto-generated
@@ -320,7 +320,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToBaseAttributes(schema)
 
-      assert.strictEqual(attributes.length,10)
+      assert.strictEqual(attributes.length, 10)
 
       // Check types are correctly identified
       const typeMap = attributes.reduce(
@@ -355,7 +355,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,4)
+      assert.strictEqual(attributes.length, 4)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
       assert.deepStrictEqual(nameAttr, {
@@ -417,7 +417,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,3)
+      assert.strictEqual(attributes.length, 3)
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
       assert.deepStrictEqual(emailAttr, {
@@ -456,7 +456,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
 
       const priorityAttr = attributes.find((attr) => attr.key === 'priority')
       assert.deepStrictEqual(priorityAttr, {
@@ -485,7 +485,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
 
       const tagsAttr = attributes.find((attr) => attr.key === 'tags')
       assert.deepStrictEqual(tagsAttr, {
@@ -524,15 +524,15 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,14)
+      assert.strictEqual(attributes.length, 14)
 
       // Check required fields
       const requiredFields = attributes.filter((attr) => attr.required)
-      assert.strictEqual(requiredFields.length,7) // stringField, numberField, booleanField, dateField, objectField, arrayField, enumField
+      assert.strictEqual(requiredFields.length, 7) // stringField, numberField, booleanField, dateField, objectField, arrayField, enumField
 
       // Check optional fields
       const optionalFields = attributes.filter((attr) => !attr.required)
-      assert.strictEqual(optionalFields.length,7) // All optional* fields
+      assert.strictEqual(optionalFields.length, 7) // All optional* fields
 
       // Check types
       const typeMap = attributes.reduce(
@@ -562,7 +562,7 @@ describe('schemaToAttributes()', () => {
     test('should handle empty schema', () => {
       const schema = z.object({})
       const attributes = schemaToCreateAttributes(schema)
-      assert.strictEqual(attributes.length,0)
+      assert.strictEqual(attributes.length, 0)
     })
 
     test('should handle malformed JSON in description gracefully', () => {
@@ -577,7 +577,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
       assert.deepStrictEqual(nameAttr, {
@@ -611,7 +611,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(attributes.length,1)
+      assert.strictEqual(attributes.length, 1)
       assert.deepStrictEqual(attributes[0], {
         key: 'field',
         label: 'Custom Label',
@@ -634,7 +634,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema)
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
       assert.deepStrictEqual(attributes[0], {
         key: 'name',
         label: 'Name',
@@ -661,7 +661,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })
 
-      assert.strictEqual(attributes.length,3)
+      assert.strictEqual(attributes.length, 3)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
       assert.deepStrictEqual(nameAttr, {
@@ -698,7 +698,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeRequired: true })
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
 
       const nameAttr = attributes.find((attr) => attr.key === 'name')
       assert.deepStrictEqual(nameAttr, {
@@ -740,7 +740,7 @@ describe('schemaToAttributes()', () => {
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })
 
-      assert.strictEqual(attributes.length,2)
+      assert.strictEqual(attributes.length, 2)
 
       const emailAttr = attributes.find((attr) => attr.key === 'email')
       assert.deepStrictEqual(emailAttr, {
@@ -773,8 +773,8 @@ describe('schemaToAttributes()', () => {
       const baseAttributes = schemaToBaseAttributes(schema)
       const createAttributes = schemaToCreateAttributes(schema)
 
-      assert.strictEqual(baseAttributes.length,2)
-      assert.strictEqual(createAttributes.length,2)
+      assert.strictEqual(baseAttributes.length, 2)
+      assert.strictEqual(createAttributes.length, 2)
 
       // Base attributes should not have required field
       assert.ok(!('required' in baseAttributes[0]))

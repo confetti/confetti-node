@@ -20,6 +20,10 @@ import ticketBatchRaw from '../models/samples/ticket-batch/raw.js'
 import ticketBatchFormatted from '../models/samples/ticket-batch/formatted.js'
 import pageRaw from '../models/samples/page/raw.js'
 import pageFormatted from '../models/samples/page/formatted.js'
+import scheduleItemRaw from '../models/samples/schedule-item/raw.js'
+import scheduleItemFormatted from '../models/samples/schedule-item/formatted.js'
+import speakerRaw from '../models/samples/speaker/raw.js'
+import speakerFormatted from '../models/samples/speaker/formatted.js'
 
 const samples = {
   block: { raw: blockRaw, formatted: blockFormatted },
@@ -33,6 +37,8 @@ const samples = {
   webhook: { raw: webhookRaw, formatted: webhookFormatted },
   workspace: { raw: workspaceRaw, formatted: workspaceFormatted },
   ticketBatch: { raw: ticketBatchRaw, formatted: ticketBatchFormatted },
+  scheduleItem: { raw: scheduleItemRaw, formatted: scheduleItemFormatted },
+  speaker: { raw: speakerRaw, formatted: speakerFormatted },
 }
 
 /**

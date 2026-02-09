@@ -224,42 +224,73 @@ const eventsFindAllSchema = {
   sort: z.never().optional(),
   include: z
     .array(
-      z.enum(['categories', 'pages', 'pages.blocks', 'pages.blocks.images']).describe(
-        JSON.stringify({
-          label: 'Include Relations',
-          description: 'Include related data',
-          values: [
-            {
-              label: 'Categories',
-              description: 'Event categories',
-              type: 'string',
-              key: 'categories',
-              value: 'categories',
-            },
-            {
-              label: 'Pages',
-              description: 'Event pages',
-              type: 'string',
-              key: 'pages',
-              value: 'pages',
-            },
-            {
-              label: 'Pages Blocks',
-              description: 'Page content blocks',
-              type: 'string',
-              key: 'pages.blocks',
-              value: 'pages.blocks',
-            },
-            {
-              label: 'Pages Blocks Images',
-              description: 'Block images',
-              type: 'string',
-              key: 'pages.blocks.images',
-              value: 'pages.blocks.images',
-            },
-          ],
-        }),
-      ),
+      z
+        .enum([
+          'categories',
+          'pages',
+          'pages.blocks',
+          'pages.blocks.images',
+          'schedule-items',
+          'speakers',
+          'speakers.image',
+        ])
+        .describe(
+          JSON.stringify({
+            label: 'Include Relations',
+            description: 'Include related data',
+            values: [
+              {
+                label: 'Categories',
+                description: 'Event categories',
+                type: 'string',
+                key: 'categories',
+                value: 'categories',
+              },
+              {
+                label: 'Pages',
+                description: 'Event pages',
+                type: 'string',
+                key: 'pages',
+                value: 'pages',
+              },
+              {
+                label: 'Pages Blocks',
+                description: 'Page content blocks',
+                type: 'string',
+                key: 'pages.blocks',
+                value: 'pages.blocks',
+              },
+              {
+                label: 'Pages Blocks Images',
+                description: 'Block images',
+                type: 'string',
+                key: 'pages.blocks.images',
+                value: 'pages.blocks.images',
+              },
+              {
+                label: 'Schedule Items',
+                description: 'Event schedule items',
+                type: 'string',
+                key: 'schedule-items',
+                value: 'schedule-items',
+              },
+              {
+                label: 'Speakers',
+                description: 'Event speakers',
+                type: 'string',
+                key: 'speakers',
+                value: 'speakers',
+              },
+              {
+                label: 'Speakers Image',
+                description: 'Speakers image',
+                type: 'string',
+                key: 'speakers.image',
+                value: 'speakers.image',
+              },
+            ],
+          }),
+        ),
     )
     .optional(),
 }

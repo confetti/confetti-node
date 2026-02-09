@@ -9,6 +9,8 @@ import ticket from './ticket.js'
 import webhook from './webhook.js'
 import workspace from './workspace.js'
 import ticketBatch from './ticket-batch.js'
+import scheduleItem from './schedule-item.js'
+import speaker from './speaker.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
@@ -21,6 +23,8 @@ export type { TicketBatch } from '../schemas/ticket-batch.js'
 export type { Block } from '../schemas/block.js'
 export type { Image } from '../schemas/image.js'
 export type { Page } from '../schemas/page.js'
+export type { ScheduleItem } from '../schemas/schedule-item.js'
+export type { Speaker } from '../schemas/speaker.js'
 
 export default {
   block: block(),
@@ -34,4 +38,6 @@ export default {
   webhook: webhook(),
   workspace: workspace(),
   ticketBatch: ticketBatch(),
+  scheduleItem: scheduleItem(),
+  speaker: speaker(),
 }

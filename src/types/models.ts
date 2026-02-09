@@ -11,6 +11,8 @@ import type { TicketBatch } from '../schemas/ticket-batch.js'
 import type { Block } from '../schemas/block.js'
 import type { Image } from '../schemas/image.js'
 import type { Page } from '../schemas/page.js'
+import type { ScheduleItem } from '../schemas/schedule-item.js'
+import type { Speaker } from '../schemas/speaker.js'
 
 // Re-export all model types
 export type {
@@ -28,6 +30,8 @@ export type {
   Block,
   Image,
   Page,
+  ScheduleItem,
+  Speaker,
 }
 
 // Union type for all models
@@ -43,3 +47,5 @@ export type ConfettiModel =
   | Block
   | Image
   | Page
+  | ScheduleItem
+  | Speaker

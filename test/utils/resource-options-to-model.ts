@@ -228,12 +228,21 @@ describe('resource-options-to-model', () => {
   describe('extractIncludesFromSchema', () => {
     test('should extract includes from array of enum values', () => {
       const schema = z.object({
-        include: z.array(z.enum(['categories', 'pages', 'pages.blocks'])),
+        include: z.array(
+          z.enum(['categories', 'pages', 'pages.blocks', 'schedule-items', 'speakers', 'speakers.image']),
+        ),
       })
 
       const result = extractIncludesFromSchema(schema)
 
-      assert.deepStrictEqual(result, ['categories', 'pages', 'pages.blocks'])
+      assert.deepStrictEqual(result, [
+        'categories',
+        'pages',
+        'pages.blocks',
+        'schedule-items',
+        'speakers',
+        'speakers.image',
+      ])
     })
 
     test('should return empty array when no include field exists', () => {
@@ -288,7 +297,19 @@ describe('resource-options-to-model', () => {
           })
           .optional(),
         sort: z.never().optional(),
-        include: z.array(z.enum(['categories', 'pages', 'pages.blocks', 'pages.blocks.images'])).optional(),
+        include: z
+          .array(
+            z.enum([
+              'categories',
+              'pages',
+              'pages.blocks',
+              'pages.blocks.images',
+              'schedule-items',
+              'speakers',
+              'speakers.image',
+            ]),
+          )
+          .optional(),
       })
 
       const filters = extractFiltersFromSchema(eventsSchema)
@@ -315,7 +336,15 @@ describe('resource-options-to-model', () => {
       })
 
       assert.deepStrictEqual(sorting, [])
-      assert.deepStrictEqual(includes, ['categories', 'pages', 'pages.blocks', 'pages.blocks.images'])
+      assert.deepStrictEqual(includes, [
+        'categories',
+        'pages',
+        'pages.blocks',
+        'pages.blocks.images',
+        'schedule-items',
+        'speakers',
+        'speakers.image',
+      ])
     })
 
     test('should work with ticketsResourceOptionsSchema structure', () => {
