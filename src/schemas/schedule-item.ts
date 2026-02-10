@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { SpeakerSchema } from './speaker.js'
 
 const speakerSettingSchema = z.object({
   id: z.number(),
@@ -63,6 +64,12 @@ export const ScheduleItemSchema = z.object({
   updatedAt: z.date().describe(
     JSON.stringify({
       label: 'Updated at',
+    }),
+  ),
+  speakers: z.array(SpeakerSchema).describe(
+    JSON.stringify({
+      label: 'Speakers',
+      description: 'Speakers of the schedule item',
     }),
   ),
 })
