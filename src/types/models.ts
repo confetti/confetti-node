@@ -13,6 +13,7 @@ import type { Image } from '../schemas/image.js'
 import type { Page } from '../schemas/page.js'
 import type { ScheduleItem } from '../schemas/schedule-item.js'
 import type { Speaker } from '../schemas/speaker.js'
+import type { Organiser } from '../schemas/organiser.js'
 
 // Re-export all model types
 export type {
@@ -32,6 +33,7 @@ export type {
   Page,
   ScheduleItem,
   Speaker,
+  Organiser,
 }
 
 // Union type for all models
@@ -49,3 +51,4 @@ export type ConfettiModel =
   | Page
   | ScheduleItem
   | Speaker
+  | Organiser

@@ -12,6 +12,7 @@ export * from './page.js'
 export * from './block.js'
 export * from './schedule-item.js'
 export * from './speaker.js'
+export * from './organiser.js'
 
 // Resource option schemas
 export * from './resource-options.js'

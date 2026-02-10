@@ -233,6 +233,8 @@ const eventsFindAllSchema = {
           'schedule-items',
           'speakers',
           'speakers.image',
+          'organisers',
+          'organisers.image',
         ])
         .describe(
           JSON.stringify({
@@ -287,6 +289,20 @@ const eventsFindAllSchema = {
                 type: 'string',
                 key: 'speakers.image',
                 value: 'speakers.image',
+              },
+              {
+                label: 'Organisers',
+                description: 'Event organisers',
+                type: 'string',
+                key: 'organisers',
+                value: 'organisers',
+              },
+              {
+                label: 'Organisers Image',
+                description: 'Organisers image',
+                type: 'string',
+                key: 'organisers.image',
+                value: 'organisers.image',
               },
             ],
           }),

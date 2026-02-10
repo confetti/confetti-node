@@ -24,6 +24,8 @@ import scheduleItemRaw from '../models/samples/schedule-item/raw.js'
 import scheduleItemFormatted from '../models/samples/schedule-item/formatted.js'
 import speakerRaw from '../models/samples/speaker/raw.js'
 import speakerFormatted from '../models/samples/speaker/formatted.js'
+import organiserRaw from '../models/samples/organiser/raw.js'
+import organiserFormatted from '../models/samples/organiser/formatted.js'
 
 const samples = {
   block: { raw: blockRaw, formatted: blockFormatted },
@@ -39,6 +41,7 @@ const samples = {
   ticketBatch: { raw: ticketBatchRaw, formatted: ticketBatchFormatted },
   scheduleItem: { raw: scheduleItemRaw, formatted: scheduleItemFormatted },
   speaker: { raw: speakerRaw, formatted: speakerFormatted },
+  organiser: { raw: organiserRaw, formatted: organiserFormatted },
 }
 
 /**

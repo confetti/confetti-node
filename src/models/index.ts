@@ -11,6 +11,7 @@ import workspace from './workspace.js'
 import ticketBatch from './ticket-batch.js'
 import scheduleItem from './schedule-item.js'
 import speaker from './speaker.js'
+import organiser from './organiser.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
@@ -25,6 +26,7 @@ export type { Image } from '../schemas/image.js'
 export type { Page } from '../schemas/page.js'
 export type { ScheduleItem } from '../schemas/schedule-item.js'
 export type { Speaker } from '../schemas/speaker.js'
+export type { Organiser } from '../schemas/organiser.js'
 
 export default {
   block: block(),
@@ -40,4 +42,5 @@ export default {
   ticketBatch: ticketBatch(),
   scheduleItem: scheduleItem(),
   speaker: speaker(),
+  organiser: organiser(),
 }
