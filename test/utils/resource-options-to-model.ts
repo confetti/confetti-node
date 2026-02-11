@@ -429,7 +429,7 @@ describe('resource-options-to-model', () => {
           })
           .optional(),
         sort: z.enum(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt']).optional(),
-        include: z.never().optional(),
+        include: z.array(z.enum(['addons'])).optional(),
       })
 
       const filters = extractFiltersFromSchema(ticketsSchema)
@@ -474,7 +474,7 @@ describe('resource-options-to-model', () => {
       })
 
       assert.deepStrictEqual(sorting, ['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
-      assert.deepStrictEqual(includes, [])
+      assert.deepStrictEqual(includes, ['addons'])
     })
 
     test('should work with schemas that have no filters, sorting, or includes', () => {

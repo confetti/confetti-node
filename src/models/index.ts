@@ -12,6 +12,7 @@ import ticketBatch from './ticket-batch.js'
 import scheduleItem from './schedule-item.js'
 import speaker from './speaker.js'
 import organiser from './organiser.js'
+import addon from './addon.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
@@ -27,6 +28,7 @@ export type { Page } from '../schemas/page.js'
 export type { ScheduleItem } from '../schemas/schedule-item.js'
 export type { Speaker } from '../schemas/speaker.js'
 export type { Organiser } from '../schemas/organiser.js'
+export type { Addon } from '../schemas/addon.js'
 
 export default {
   block: block(),
@@ -43,4 +45,5 @@ export default {
   scheduleItem: scheduleItem(),
   speaker: speaker(),
   organiser: organiser(),
+  addon: addon(),
 }
