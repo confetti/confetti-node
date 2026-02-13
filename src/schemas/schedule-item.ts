@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { SpeakerSchema } from './speaker.js'
 
 const speakerSettingSchema = z.object({
   id: z.number(),
