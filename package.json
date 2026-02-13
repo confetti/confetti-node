@@ -1,6 +1,6 @@
 {
   "name": "confetti",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "A Node wrapper for the Confetti API.",
   "type": "module",
   "exports": {
