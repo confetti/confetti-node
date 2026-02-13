@@ -66,12 +66,6 @@ export const ScheduleItemSchema = z.object({
       label: 'Updated at',
     }),
   ),
-  speakers: z.array(SpeakerSchema).describe(
-    JSON.stringify({
-      label: 'Speakers',
-      description: 'Speakers of the schedule item',
-    }),
-  ),
 })
 
 export type ScheduleItem = z.infer<typeof ScheduleItemSchema>
