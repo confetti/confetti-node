@@ -10,6 +10,7 @@ type TicketInput = Ticket & {
 type TicketOutput = Ticket & {
   event?: { id: number }
   ticketBatch?: { id: number }
+  addons?: { id: number }[]
   meta?: { sendEmailConfirmation: boolean }
 }
 
@@ -50,6 +51,7 @@ export default function ({ presenters, Presenter }: PresenterOptions): TicketPre
       return {
         event: presenters.EventPresenter,
         ticketBatch: presenters.TicketBatchPresenter,
+        addons: presenters.AddonPresenter,
       }
     }
   }

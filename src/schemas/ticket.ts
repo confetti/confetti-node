@@ -379,7 +379,25 @@ const ticketsFindAllSchema = {
       }),
     )
     .optional(),
-  include: z.never().optional(),
+  include: z
+    .array(
+      z.enum(['addons']).describe(
+        JSON.stringify({
+          label: 'Include Relations',
+          description: 'Include related data',
+          values: [
+            {
+              label: 'Addons',
+              description: 'Ticket addons',
+              type: 'string',
+              key: 'addons',
+              value: 'addons',
+            },
+          ],
+        }),
+      ),
+    )
+    .optional(),
 }
 
 export const ticketsFindAllOptionsSchema = baseFindAllOptionsSchema.extend(ticketsFindAllSchema)
