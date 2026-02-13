@@ -15,6 +15,7 @@ export const AddonSchema = z.object({
   status: z.string().describe(
     JSON.stringify({
       label: 'Status',
+      description: 'Status of the addon. attending, declined, cancelled or refunded',
     }),
   ),
   hashid: z.string().describe(
