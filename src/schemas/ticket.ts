@@ -3,6 +3,7 @@ import {
   baseFindAllOptionsSchema,
   staticBaseFindAllOptionsSchema,
   baseOptionsSchema,
+  staticBaseOptionsSchema,
   staticBaseFindOptionsSchema,
   findBaseOptionsSchema,
 } from './resource-options.js'
@@ -159,6 +160,86 @@ export const TicketSchema = z.object({
       label: 'Contact Id',
     }),
   ),
+})
+
+export const TicketUpdateSchema = z.object({
+  firstName: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'First name',
+      }),
+    ),
+  lastName: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Last name',
+      }),
+    ),
+  email: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Email',
+      }),
+    ),
+  status: z
+    .union([
+      z.string().refine(
+        (val) => {
+          const values = val.split(',').map((v) => v.trim())
+          return values.every((v) => v === 'attending' || v === 'invited' || v === 'declined' || v === 'waitlist')
+        },
+        { message: 'Status must be "attending", "invited", "declined", "waitlist", or a comma-separated list of these values' },
+      ),
+      z.array(z.enum(['attending', 'invited', 'declined', 'waitlist'])),
+    ])
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Status',
+        values: ['attending', 'invited', 'declined', 'waitlist'],
+      }),
+    ),
+  phone: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Phone',
+        placeholder: '+46 12 345 67 89',
+        helpText: 'Mobile phone number with country code. Example: +46701234567',
+      }),
+    ),
+  company: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Company',
+      }),
+    ),
+  comment: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Comment',
+      }),
+    ),
+  sendEmailConfirmation: z
+    .boolean()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Send email confirmation',
+        helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
+      }),
+    ),
 })
 
 export const TicketCreateSchema = z.object({
@@ -406,13 +487,18 @@ export const ticketsFindOptionsSchema = findBaseOptionsSchema.extend({})
 export const staticTicketsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketsFindAllSchema)
 export const staticTicketsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticTicketsUpdateOptionsSchema = staticBaseOptionsSchema.extend({})
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
 export type TicketCreateData = z.infer<typeof TicketCreateSchema>
+export type TicketUpdate = z.infer<typeof TicketUpdateSchema>
+export type TicketUpdateData = z.infer<typeof TicketUpdateSchema>
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type TicketsUpdateOptions = z.infer<typeof baseOptionsSchema>
 export type StaticTicketsFindAllOptions = z.infer<typeof staticTicketsFindAllOptionsSchema>
 export type StaticTicketsFindOptions = z.infer<typeof staticTicketsFindOptionsSchema>
 export type StaticTicketsCreateOptions = z.infer<typeof staticTicketsCreateOptionsSchema>
+export type StaticTicketsUpdateOptions = z.infer<typeof staticTicketsUpdateOptionsSchema>

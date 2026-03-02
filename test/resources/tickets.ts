@@ -59,6 +59,23 @@ describe('Tickets', () => {
 
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
     })
+
+    test('should update a ticket', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1')
+        .reply(200, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.update(1, {
+        firstName: 'Jane',
+        lastName: 'Doe',
+        email: 'jane@doe.se',
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
   })
 
   describe('Static', () => {
@@ -126,6 +143,26 @@ describe('Tickets', () => {
           email: 'john@doe.se',
           company: 'Company AB',
           sendEmailConfirmation: true,
+        },
+        { apiKey: 'my-key' },
+      )
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
+
+    test('should update a ticket', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1')
+        .reply(200, mockData as MockResponseData)
+
+      const data = await Confetti.tickets.update(
+        1,
+        {
+          firstName: 'Jane',
+          lastName: 'Doe',
+          email: 'jane@doe.se',
+          status: 'attending',
         },
         { apiKey: 'my-key' },
       )
