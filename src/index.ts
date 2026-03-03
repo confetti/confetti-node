@@ -47,10 +47,13 @@ import type {
   TicketsFindAllOptions,
   TicketsFindOptions,
   TicketsCreateOptions,
+  TicketsUpdateOptions,
   StaticTicketsFindAllOptions,
   StaticTicketsFindOptions,
   StaticTicketsCreateOptions,
+  StaticTicketsUpdateOptions,
   TicketCreateData,
+  TicketUpdateData,
 } from './schemas/ticket.js'
 import type {
   WebhooksFindAllOptions,
@@ -117,6 +120,9 @@ class Confetti {
     create: (json: TicketCreateData, options: TicketsCreateOptions = {}) => {
       return ticketsResource.create(json, options, this.adapter)
     },
+    update: (id: string | number, json: TicketUpdateData, options: TicketsUpdateOptions = {}) => {
+      return ticketsResource.update(id, json, options, this.adapter)
+    },
   }
   static tickets = {
     findAll: (options: StaticTicketsFindAllOptions) => {
@@ -127,6 +133,9 @@ class Confetti {
     },
     create: (json: TicketCreateData, options: StaticTicketsCreateOptions) => {
       return ticketsResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: TicketUpdateData, options: StaticTicketsUpdateOptions) => {
+      return ticketsResource.update(id, json, options, adapter(options))
     },
   }
 
