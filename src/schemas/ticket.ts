@@ -231,6 +231,15 @@ export const TicketUpdateSchema = z.object({
         label: 'Comment',
       }),
     ),
+  values: z
+    .looseObject({})
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Values',
+        helpText: 'Custom field values for the ticket.',
+      }),
+    ),
   sendEmailConfirmation: z
     .boolean()
     .optional()
