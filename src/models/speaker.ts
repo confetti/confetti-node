@@ -1,0 +1,24 @@
+import loadSamples from '../utils/load-samples.js'
+import { schemaToAttributes } from '../utils/schema-to-attributes.js'
+import { SpeakerSchema } from '../schemas/speaker.js'
+import { ModelDefinition } from '../types/model.js'
+
+export default function SpeakerModel(): ModelDefinition {
+  return {
+    key: 'speaker',
+    endpoint: 'speakers',
+    path: 'speakers',
+    name: 'Speaker',
+    sample: loadSamples('speaker'),
+    sorting: [],
+    filters: {},
+    includes: [],
+    operations: {
+      read: {
+        schema: SpeakerSchema,
+        attributes: schemaToAttributes(SpeakerSchema),
+      },
+    },
+    webhooks: [],
+  }
+}

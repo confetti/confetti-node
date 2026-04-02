@@ -33,7 +33,7 @@ describe('Adapter', () => {
       .query({
         'page[limit]': '1',
         'page[offset]': '10',
-        include: 'categories,pages.blocks',
+        include: 'categories,pages.blocks,speakers.image',
       })
       .matchHeader('authorization', 'apikey my-key')
       .matchHeader('content-type', 'application/json')
@@ -43,7 +43,7 @@ describe('Adapter', () => {
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.findAll({
       filter: {},
-      include: ['categories', 'pages.blocks'],
+      include: ['categories', 'pages.blocks', 'speakers.image'],
       page: {
         limit: 1,
         offset: 10,
@@ -70,7 +70,7 @@ describe('Adapter', () => {
   test('should make a find request with includes with correct url', async () => {
     const scope = nock('https://api.confetti.events')
       .get('/events/3')
-      .query({ include: 'categories,pages.blocks' })
+      .query({ include: 'categories,pages.blocks,speakers.image' })
       .matchHeader('authorization', 'apikey my-key')
       .matchHeader('content-type', 'application/json')
       .matchHeader('accept-encoding', 'gzip')
@@ -78,7 +78,7 @@ describe('Adapter', () => {
 
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.find(3, {
-      include: ['categories', 'pages.blocks'],
+      include: ['categories', 'pages.blocks', 'speakers.image'],
     })
 
     assert.strictEqual(scope.isDone(), true)

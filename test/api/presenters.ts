@@ -79,6 +79,7 @@ describe('Presenters', () => {
           relationships: {
             event: { data: { id: '2', type: 'event' } },
             ticketBatch: { data: { id: '57', type: 'ticketBatch' } },
+            addons: { data: null },
           },
         },
         included: [
@@ -105,6 +106,7 @@ describe('Presenters', () => {
           relationships: {
             event: { data: { id: '2', type: 'event' } },
             ticketBatch: { data: null },
+            addons: { data: null },
           },
         },
         included: [{ id: '2', type: 'event', attributes: {} }],
@@ -132,6 +134,7 @@ describe('Presenters', () => {
           relationships: {
             event: { data: { id: '2', type: 'event' } },
             ticketBatch: { data: null },
+            addons: { data: null },
           },
         },
         included: [{ id: '2', type: 'event', attributes: {} }],

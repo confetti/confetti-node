@@ -37,6 +37,7 @@ export interface PresentersMap {
   ContactPresenter: ContactPresenter
   TicketPresenter: TicketPresenter
   CategoryPresenter: CategoryPresenter
+  AddonPresenter: AddonPresenter
   TicketBatchPresenter: TicketBatchPresenter
   PaymentPresenter: PaymentPresenter
 }
@@ -72,6 +73,11 @@ export interface EventPresenter extends BasePresenter {
   plural: 'events'
 }
 
+export interface AddonPresenter extends BasePresenter {
+  type: 'addon'
+  plural: 'addons'
+}
+
 export interface TicketPresenter extends BasePresenter {
   type: 'ticket'
   plural: 'tickets'
@@ -90,6 +96,7 @@ export interface TicketPresenter extends BasePresenter {
     relationships(): {
       event: EventPresenter
       ticketBatch: TicketBatchPresenter
+      addons: AddonPresenter
     }
   }
 }
@@ -139,4 +146,5 @@ export interface Presenters {
   ticketBatches: TicketBatchPresenter
   categories: CategoryPresenter
   payments: PaymentPresenter
+  addons: AddonPresenter
 }
