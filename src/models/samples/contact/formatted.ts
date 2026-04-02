@@ -1,3 +1,5 @@
+import { TYPE, META } from 'yayson/utils'
+
 export default {
   id: '588032',
   firstName: 'Jonny',
@@ -12,6 +14,6 @@ export default {
   updatedAt: '2022-01-05T15:33:13.171Z',
   organisationId: 57,
   company: 'Company AB',
-  type: 'contact',
-  meta: { webhookType: 'contact.created' },
+  [TYPE]: 'contact',
+  [META]: { webhookType: 'contact.created' },
 }

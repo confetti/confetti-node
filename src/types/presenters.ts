@@ -1,10 +1,10 @@
 // Presenter types for Confetti API
 
-import type { Presenter } from 'yayson'
+import type { YaysonResult } from 'yayson'
 import { Contact, Ticket, Webhook } from './models.js'
 
 // Base presenter class type from yayson
-export type YaysonPresenter = typeof Presenter
+export type YaysonPresenter = YaysonResult['Presenter']
 
 // Base presenter interface - describes a constructor type with static properties and methods
 export interface BasePresenter {

@@ -1,3 +1,5 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   left: 20,
   status: 'available',
@@ -23,5 +25,5 @@ export default {
   linkedTicketBatchId: null,
   formId: null,
   payoutId: null,
-  type: 'ticketBatch',
+  [TYPE]: 'ticketBatch',
 }

@@ -1,4 +1,7 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
+  [TYPE]: 'webhook',
   type: 'ticket.attending',
   url: 'http://foo.com/bar',
   provider: 'zapier',

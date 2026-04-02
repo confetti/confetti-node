@@ -1,3 +1,5 @@
+import { TYPE, META } from 'yayson/utils'
+
 export default {
   name: 'Foo Bar',
   email: 'foo@bar.com',
@@ -13,6 +15,6 @@ export default {
   commissionVat: '1.13',
   customer: { other: 'Extra information' },
   id: '288298',
-  type: 'payment',
-  meta: { webhookType: 'payment.paid' },
+  [TYPE]: 'payment',
+  [META]: { webhookType: 'payment.paid' },
 }

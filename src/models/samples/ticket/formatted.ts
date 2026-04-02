@@ -1,3 +1,5 @@
+import { TYPE, META } from 'yayson/utils'
+
 export default {
   persons: 1,
   hashid: 'g265xg',
@@ -29,6 +31,6 @@ export default {
   eventId: 16969,
   contactId: 112395,
   id: '3344691',
-  type: 'ticket',
-  meta: { webhookType: 'ticket.attending' },
+  [TYPE]: 'ticket',
+  [META]: { webhookType: 'ticket.attending' },
 }

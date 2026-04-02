@@ -1,3 +1,5 @@
+import { TYPE, META } from 'yayson/utils'
+
 export default {
   name: 'My first event',
   startDate: '2020-09-19T16:00:00.000Z',
@@ -23,7 +25,7 @@ export default {
   waitlist: true,
   location: { url: 'http://www.google.com/maps?q=undefined' },
   id: '16500',
-  type: 'event',
+  [TYPE]: 'event',
   images: null,
-  meta: { webhookType: 'event.updated' },
+  [META]: { webhookType: 'event.updated' },
 }

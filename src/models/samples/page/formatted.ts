@@ -1,6 +1,8 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   id: '26074',
-  type: 'page',
+  [TYPE]: 'page',
   name: 'Start',
   slug: null,
   order: 1,

@@ -1,3 +1,4 @@
+import { TYPE, META } from 'yayson/utils'
 import blockRaw from '../models/samples/block/raw.js'
 import blockFormatted from '../models/samples/block/formatted.js'
 import categoryRaw from '../models/samples/category/raw.js'
@@ -50,11 +51,11 @@ export default function loadSamples(modelName: string) {
 
   // Create multiple samples by duplicating the single sample
   const rawMultiple = { data: [raw.data, raw.data] }
-  const formattedMultiple = [JSON.parse(JSON.stringify(formatted)), JSON.parse(JSON.stringify(formatted))]
+  const formattedMultiple = [{ ...formatted }, { ...formatted }]
 
-  // Remove meta from multiple formatted samples to match current behavior
-  delete formattedMultiple[0].meta
-  delete formattedMultiple[1].meta
+  // Remove document-level meta from multiple formatted samples to match current behavior
+  delete formattedMultiple[0][META]
+  delete formattedMultiple[1][META]
 
   return {
     single: {

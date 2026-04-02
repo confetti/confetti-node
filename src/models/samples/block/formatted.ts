@@ -1,6 +1,8 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   id: '210645',
-  type: 'block',
+  [TYPE]: 'block',
   blockType: 'text',
   status: 'published',
   order: 2,

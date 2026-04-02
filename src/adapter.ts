@@ -1,7 +1,7 @@
 import url from 'url'
 import qs from 'qs'
 import { ParameterError, NotFoundError } from './errors.js'
-import yayson from 'yayson'
+import yayson, { type JsonApiDocument } from 'yayson'
 import presenters from './presenters/index.js'
 import { ConfettiModel, ApiError } from './types/index.js'
 import nodeFetch from 'node-fetch'
@@ -119,7 +119,7 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
           return body as T
         } else {
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          return store.sync(body) as T
+          return store.sync(body as JsonApiDocument) as T
         }
       } else {
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions

@@ -59,7 +59,7 @@ describe('Adapter', () => {
       .matchHeader('authorization', 'apikey my-key')
       .matchHeader('content-type', 'application/json')
       .matchHeader('accept-encoding', 'gzip')
-      .reply(200, { data: {} })
+      .reply(200, { data: { id: '3', type: 'event' } })
 
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.find(3)
@@ -74,7 +74,7 @@ describe('Adapter', () => {
       .matchHeader('authorization', 'apikey my-key')
       .matchHeader('content-type', 'application/json')
       .matchHeader('accept-encoding', 'gzip')
-      .reply(200, { data: {} })
+      .reply(200, { data: { id: '3', type: 'event' } })
 
     const confetti = new Confetti({ apiKey: 'my-key' })
     await confetti.events.find(3, {
