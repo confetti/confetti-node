@@ -1,4 +1,0 @@
-export * from './index.js'
-
-// Hack to make require('confetti') return the default export
-export { default as 'module.exports' } from './index.js'
