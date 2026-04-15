@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- TYPE is required at the value level so TypeScript can reference the symbol in the inferred return type of loadSamples
 import { TYPE, META } from 'yayson/utils'
 import blockRaw from '../models/samples/block/raw.js'
 import blockFormatted from '../models/samples/block/formatted.js'
@@ -63,7 +64,7 @@ export default function loadSamples(modelName: string) {
 
   // Create multiple samples by duplicating the single sample
   const rawMultiple = { data: [raw.data, raw.data] }
-  const formattedMultiple = [{ ...formatted }, { ...formatted }]
+  const formattedMultiple: Record<symbol, unknown>[] = [{ ...formatted }, { ...formatted }]
 
   // Remove document-level meta from multiple formatted samples to match current behavior
   delete formattedMultiple[0][META]
