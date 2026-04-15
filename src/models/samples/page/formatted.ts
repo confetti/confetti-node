@@ -11,4 +11,5 @@ export default {
     access: 'all',
     menuDisplay: 'show',
   },
+  blocks: [null, null, null, null, null],
 }

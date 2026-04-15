@@ -1,7 +1,17 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { BlockSchema } from '../schemas/block.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import {
+  BlockSchema,
+  BlockCreateSchema,
+  BlockUpdateSchema,
+  blocksFindAllOptionsSchema,
+} from '../schemas/block.js'
 import { ModelDefinition } from '../types/model.js'
+import {
+  extractFiltersFromSchema,
+  extractSortingFromSchema,
+  extractIncludesFromSchema,
+} from '../utils/resource-options-to-model.js'
 
 export default function BlockModel(): ModelDefinition {
   return {
@@ -10,13 +20,21 @@ export default function BlockModel(): ModelDefinition {
     path: 'blocks',
     name: 'Block',
     sample: loadSamples('block'),
-    sorting: [],
-    filters: {},
-    includes: [],
+    sorting: extractSortingFromSchema(blocksFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(blocksFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(blocksFindAllOptionsSchema),
     operations: {
       read: {
         schema: BlockSchema,
         attributes: schemaToAttributes(BlockSchema),
+      },
+      create: {
+        schema: BlockCreateSchema,
+        attributes: schemaToCreateAttributes(BlockCreateSchema),
+      },
+      update: {
+        schema: BlockUpdateSchema,
+        attributes: schemaToCreateAttributes(BlockUpdateSchema),
       },
     },
     webhooks: [],

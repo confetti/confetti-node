@@ -9,6 +9,9 @@ import {
   workspacesResource,
   categoriesResource,
   ticketBatchesResource,
+  pagesResource,
+  blocksResource,
+  imagesResource,
 } from './resources.js'
 import type {
   CategoriesFindAllOptions,
@@ -28,8 +31,14 @@ import type {
 import type {
   EventsFindAllOptions,
   EventsFindOptions,
+  EventsCreateOptions,
+  EventsUpdateOptions,
   StaticEventsFindAllOptions,
   StaticEventsFindOptions,
+  StaticEventsCreateOptions,
+  StaticEventsUpdateOptions,
+  EventCreateData,
+  EventUpdateData,
 } from './schemas/event.js'
 import type {
   PaymentsFindAllOptions,
@@ -67,6 +76,43 @@ import type {
   StaticWorkspacesFindOptions,
   WorkspacesFindOptions,
 } from './schemas/workspace.js'
+import type {
+  PagesFindAllOptions,
+  PagesFindOptions,
+  PagesCreateOptions,
+  PagesUpdateOptions,
+  StaticPagesFindAllOptions,
+  StaticPagesFindOptions,
+  StaticPagesCreateOptions,
+  StaticPagesUpdateOptions,
+  PageCreateData,
+  PageUpdateData,
+} from './schemas/page.js'
+import type {
+  Block,
+  BlocksFindAllOptions,
+  BlocksFindOptions,
+  BlocksCreateOptions,
+  BlocksUpdateOptions,
+  StaticBlocksFindAllOptions,
+  StaticBlocksFindOptions,
+  StaticBlocksCreateOptions,
+  StaticBlocksUpdateOptions,
+  BlockCreateData,
+  BlockUpdateData,
+} from './schemas/block.js'
+import type {
+  ImagesFindAllOptions,
+  ImagesFindOptions,
+  ImagesCreateOptions,
+  ImagesUpdateOptions,
+  StaticImagesFindAllOptions,
+  StaticImagesFindOptions,
+  StaticImagesCreateOptions,
+  StaticImagesUpdateOptions,
+  ImageCreateData,
+  ImageUpdateData,
+} from './schemas/image.js'
 
 export interface ConfettiSettings {
   apiKey?: string
@@ -97,6 +143,12 @@ class Confetti {
     find: (id: string | number, options: EventsFindOptions = {}) => {
       return eventsResource.find(id, options, this.adapter)
     },
+    create: (json: EventCreateData, options: EventsCreateOptions = {}) => {
+      return eventsResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: EventUpdateData, options: EventsUpdateOptions = {}) => {
+      return eventsResource.update(id, json, options, this.adapter)
+    },
   }
   static events = {
     findAll: (options: StaticEventsFindAllOptions) => {
@@ -104,6 +156,12 @@ class Confetti {
     },
     find: (id: string | number, options: StaticEventsFindOptions) => {
       return eventsResource.find(id, options, adapter(options))
+    },
+    create: (json: EventCreateData, options: StaticEventsCreateOptions) => {
+      return eventsResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: EventUpdateData, options: StaticEventsUpdateOptions) => {
+      return eventsResource.update(id, json, options, adapter(options))
     },
   }
 
@@ -247,6 +305,119 @@ class Confetti {
     },
     find: (id: string | number, options: StaticTicketBatchesFindOptions) => {
       return ticketBatchesResource.find(id, options, adapter(options))
+    },
+  }
+
+  pages = {
+    findAll: (options: PagesFindAllOptions = {}) => {
+      return pagesResource.findAll(options, this.adapter)
+    },
+    find: (id: string | number, options: PagesFindOptions = {}) => {
+      return pagesResource.find(id, options, this.adapter)
+    },
+    create: (json: PageCreateData, options: PagesCreateOptions = {}) => {
+      return pagesResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: PageUpdateData, options: PagesUpdateOptions = {}) => {
+      return pagesResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: PagesFindOptions = {}) => {
+      return pagesResource.delete(id, options, this.adapter)
+    },
+  }
+  static pages = {
+    findAll: (options: StaticPagesFindAllOptions) => {
+      return pagesResource.findAll(options, adapter(options))
+    },
+    find: (id: string | number, options: StaticPagesFindOptions) => {
+      return pagesResource.find(id, options, adapter(options))
+    },
+    create: (json: PageCreateData, options: StaticPagesCreateOptions) => {
+      return pagesResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: PageUpdateData, options: StaticPagesUpdateOptions) => {
+      return pagesResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticPagesFindOptions) => {
+      return pagesResource.delete(id, options, adapter(options))
+    },
+  }
+
+  blocks = {
+    findAll: (options: BlocksFindAllOptions = {}): Promise<Block[]> => {
+      return blocksResource.findAll(options, this.adapter)
+    },
+    find: (id: string | number, options: BlocksFindOptions = {}): Promise<Block> => {
+      return blocksResource.find(id, options, this.adapter)
+    },
+    create: (json: BlockCreateData, options: BlocksCreateOptions = {}): Promise<Block> => {
+      return blocksResource.create(json, options, this.adapter)
+    },
+    update: (
+      id: string | number,
+      json: BlockUpdateData,
+      options: BlocksUpdateOptions = {},
+    ): Promise<Block> => {
+      return blocksResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: BlocksFindOptions = {}): Promise<void> => {
+      return blocksResource.delete(id, options, this.adapter)
+    },
+  }
+  static blocks = {
+    findAll: (options: StaticBlocksFindAllOptions): Promise<Block[]> => {
+      return blocksResource.findAll(options, adapter(options))
+    },
+    find: (id: string | number, options: StaticBlocksFindOptions): Promise<Block> => {
+      return blocksResource.find(id, options, adapter(options))
+    },
+    create: (json: BlockCreateData, options: StaticBlocksCreateOptions): Promise<Block> => {
+      return blocksResource.create(json, options, adapter(options))
+    },
+    update: (
+      id: string | number,
+      json: BlockUpdateData,
+      options: StaticBlocksUpdateOptions,
+    ): Promise<Block> => {
+      return blocksResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticBlocksFindOptions): Promise<void> => {
+      return blocksResource.delete(id, options, adapter(options))
+    },
+  }
+
+  images = {
+    findAll: (options: ImagesFindAllOptions = {}) => {
+      return imagesResource.findAll(options, this.adapter)
+    },
+    find: (id: string | number, options: ImagesFindOptions = {}) => {
+      return imagesResource.find(id, options, this.adapter)
+    },
+    create: (json: ImageCreateData, options: ImagesCreateOptions = {}) => {
+      return imagesResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: ImageUpdateData, options: ImagesUpdateOptions = {}) => {
+      return imagesResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: ImagesFindOptions = {}) => {
+      return imagesResource.delete(id, options, this.adapter)
+    },
+  }
+  static images = {
+    findAll: (options: StaticImagesFindAllOptions) => {
+      return imagesResource.findAll(options, adapter(options))
+    },
+    find: (id: string | number, options: StaticImagesFindOptions) => {
+      return imagesResource.find(id, options, adapter(options))
+    },
+    create: (json: ImageCreateData, options: StaticImagesCreateOptions) => {
+      return imagesResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: ImageUpdateData, options: StaticImagesUpdateOptions) => {
+      return imagesResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticImagesFindOptions) => {
+      return imagesResource.delete(id, options, adapter(options))
     },
   }
 }

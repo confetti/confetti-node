@@ -1,7 +1,7 @@
 // Presenter types for Confetti API
 
 import type { YaysonResult } from 'yayson'
-import { Contact, Ticket, Webhook } from './models.js'
+import { Block, Contact, Image, Page, Ticket, Webhook } from './models.js'
 
 // Base presenter class type from yayson
 export type YaysonPresenter = YaysonResult['Presenter']
@@ -40,6 +40,9 @@ export interface PresentersMap {
   AddonPresenter: AddonPresenter
   TicketBatchPresenter: TicketBatchPresenter
   PaymentPresenter: PaymentPresenter
+  PagePresenter: PagePresenter
+  BlockPresenter: BlockPresenter
+  ImagePresenter: ImagePresenter
 }
 
 // Specific presenter types
@@ -136,6 +139,78 @@ export interface PaymentPresenter extends BasePresenter {
   plural: 'payments'
 }
 
+export interface PagePresenter extends BasePresenter {
+  type: 'page'
+  plural: 'pages'
+  new (): {
+    attributes(
+      _page: Page & {
+        eventId?: number
+        workspaceId?: number
+      },
+    ): Page & {
+      event?: { id: number }
+      workspace?: { id: number }
+    }
+    relationships(): {
+      event: EventPresenter
+      workspace: WorkspacePresenter
+    }
+  }
+}
+
+export interface BlockPresenter extends BasePresenter {
+  type: 'block'
+  plural: 'blocks'
+  new (): {
+    attributes(
+      _block: Block & {
+        blockType?: string
+        pageId?: number
+        eventId?: number
+        workspaceId?: number
+        categoryIds?: number[]
+      },
+    ): Block & {
+      page?: { id: number }
+      event?: { id: number }
+      workspace?: { id: number }
+      categories?: { id: number }[]
+    }
+    relationships(): {
+      page: PagePresenter
+      event: EventPresenter
+      workspace: WorkspacePresenter
+      images: ImagePresenter
+      categories: CategoryPresenter
+    }
+  }
+}
+
+export interface ImagePresenter extends BasePresenter {
+  type: 'image'
+  plural: 'images'
+  new (): {
+    attributes(
+      _image: Image & {
+        imageType?: string
+        blockId?: number
+        eventId?: number
+        workspaceId?: number
+      },
+    ): Image & {
+      block?: { id: number }
+      event?: { id: number }
+      workspace?: { id: number }
+    }
+    relationships(): {
+      block: BlockPresenter
+      event: EventPresenter
+      workspace: WorkspacePresenter
+    }
+  }
+}
+
 // Presenters collection type
 export interface Presenters {
   webhooks: WebhookPresenter
@@ -147,4 +222,7 @@ export interface Presenters {
   categories: CategoryPresenter
   payments: PaymentPresenter
   addons: AddonPresenter
+  pages: PagePresenter
+  blocks: BlockPresenter
+  images: ImagePresenter
 }

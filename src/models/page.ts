@@ -1,7 +1,17 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { PageSchema } from '../schemas/page.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import {
+  PageSchema,
+  PageCreateSchema,
+  PageUpdateSchema,
+  pagesFindAllOptionsSchema,
+} from '../schemas/page.js'
 import { ModelDefinition } from '../types/model.js'
+import {
+  extractFiltersFromSchema,
+  extractSortingFromSchema,
+  extractIncludesFromSchema,
+} from '../utils/resource-options-to-model.js'
 
 export default function PageModel(): ModelDefinition {
   return {
@@ -10,13 +20,21 @@ export default function PageModel(): ModelDefinition {
     path: 'pages',
     name: 'Page',
     sample: loadSamples('page'),
-    sorting: [],
-    filters: {},
-    includes: [],
+    sorting: extractSortingFromSchema(pagesFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(pagesFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(pagesFindAllOptionsSchema),
     operations: {
       read: {
         schema: PageSchema,
         attributes: schemaToAttributes(PageSchema),
+      },
+      create: {
+        schema: PageCreateSchema,
+        attributes: schemaToCreateAttributes(PageCreateSchema),
+      },
+      update: {
+        schema: PageUpdateSchema,
+        attributes: schemaToCreateAttributes(PageUpdateSchema),
       },
     },
     webhooks: [],

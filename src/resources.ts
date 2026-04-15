@@ -3,6 +3,10 @@ import {
   eventsFindOptionsSchema,
   type EventsFindAllOptions,
   type EventsFindOptions,
+  type EventsCreateOptions,
+  type EventsUpdateOptions,
+  type EventCreateData,
+  type EventUpdateData,
 } from './schemas/event.js'
 import {
   contactsFindOptionsSchema,
@@ -52,10 +56,52 @@ import {
   type TicketBatchesFindAllOptions,
   type TicketBatchesFindOptions,
 } from './schemas/ticket-batch.js'
+import {
+  pagesFindAllOptionsSchema,
+  pagesFindOptionsSchema,
+  type PagesFindAllOptions,
+  type PagesFindOptions,
+  type PagesCreateOptions,
+  type PagesUpdateOptions,
+  type PageCreateData,
+  type PageUpdateData,
+} from './schemas/page.js'
+import {
+  blocksFindAllOptionsSchema,
+  blocksFindOptionsSchema,
+  type BlocksFindAllOptions,
+  type BlocksFindOptions,
+  type BlocksCreateOptions,
+  type BlocksUpdateOptions,
+  type BlockCreateData,
+  type BlockUpdateData,
+} from './schemas/block.js'
+import {
+  imagesFindAllOptionsSchema,
+  imagesFindOptionsSchema,
+  type ImagesFindAllOptions,
+  type ImagesFindOptions,
+  type ImagesCreateOptions,
+  type ImagesUpdateOptions,
+  type ImageCreateData,
+  type ImageUpdateData,
+} from './schemas/image.js'
 import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
-import { Event, Contact, Ticket, Payment, Webhook, Workspace, Category, TicketBatch } from './types/models.js'
+import {
+  Event,
+  Contact,
+  Ticket,
+  Payment,
+  Webhook,
+  Workspace,
+  Category,
+  TicketBatch,
+  Page,
+  Block,
+  Image,
+} from './types/models.js'
 import models from './models/index.js'
 
 export const eventsResource = {
@@ -66,6 +112,35 @@ export const eventsResource = {
   find: (id: string | number, options: EventsFindOptions = {}, adapter: Adapter): Promise<Event> => {
     const validatedOptions = eventsFindOptionsSchema.parse(options)
     return adapter.get<Event>({ path: `${models.event.path}/${id}`, type: models.event.endpoint, ...validatedOptions })
+  },
+  create: (json: EventCreateData, options: EventsCreateOptions = {}, adapter: Adapter): Promise<Event> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.event.operations.create) throw new Error('Event create operation not found')
+    const validatedData = models.event.operations.create.schema.parse(json)
+    return adapter.post<Event>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: models.event.path,
+      type: models.event.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: EventUpdateData,
+    options: EventsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Event> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.event.operations.update) throw new Error('Event update operation not found')
+    const validatedData = models.event.operations.update.schema.parse(json)
+    return adapter.put<Event>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: `${models.event.path}/${id}`,
+      type: models.event.endpoint,
+      ...validatedOptions,
+    })
   },
 }
 
@@ -223,6 +298,162 @@ export const ticketBatchesResource = {
     return adapter.get<TicketBatch>({
       path: `${models.ticketBatch.path}/${id}`,
       type: models.ticketBatch.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const pagesResource = {
+  findAll: (options: PagesFindAllOptions = {}, adapter: Adapter): Promise<Page[]> => {
+    const validatedOptions = pagesFindAllOptionsSchema.parse(options)
+    return adapter.get<Page[]>({ path: models.page.path, type: models.page.endpoint, ...validatedOptions })
+  },
+  find: (id: string | number, options: PagesFindOptions = {}, adapter: Adapter): Promise<Page> => {
+    const validatedOptions = pagesFindOptionsSchema.parse(options)
+    return adapter.get<Page>({
+      path: `${models.page.path}/${id}`,
+      type: models.page.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: PageCreateData, options: PagesCreateOptions = {}, adapter: Adapter): Promise<Page> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.page.operations.create) throw new Error('Page create operation not found')
+    const validatedData = models.page.operations.create.schema.parse(json)
+    return adapter.post<Page>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: models.page.path,
+      type: models.page.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: PageUpdateData,
+    options: PagesUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Page> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.page.operations.update) throw new Error('Page update operation not found')
+    const validatedData = models.page.operations.update.schema.parse(json)
+    return adapter.put<Page>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: `${models.page.path}/${id}`,
+      type: models.page.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: PagesFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = pagesFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.page.path}/${id}`,
+      type: models.page.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const blocksResource = {
+  findAll: (options: BlocksFindAllOptions = {}, adapter: Adapter): Promise<Block[]> => {
+    const validatedOptions = blocksFindAllOptionsSchema.parse(options)
+    return adapter.get<Block[]>({ path: models.block.path, type: models.block.endpoint, ...validatedOptions })
+  },
+  find: (id: string | number, options: BlocksFindOptions = {}, adapter: Adapter): Promise<Block> => {
+    const validatedOptions = blocksFindOptionsSchema.parse(options)
+    return adapter.get<Block>({
+      path: `${models.block.path}/${id}`,
+      type: models.block.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: BlockCreateData, options: BlocksCreateOptions = {}, adapter: Adapter): Promise<Block> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.block.operations.create) throw new Error('Block create operation not found')
+    const validatedData = models.block.operations.create.schema.parse(json)
+    return adapter.post<Block>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: models.block.path,
+      type: models.block.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: BlockUpdateData,
+    options: BlocksUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Block> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.block.operations.update) throw new Error('Block update operation not found')
+    const validatedData = models.block.operations.update.schema.parse(json)
+    return adapter.put<Block>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: `${models.block.path}/${id}`,
+      type: models.block.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: BlocksFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = blocksFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.block.path}/${id}`,
+      type: models.block.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const imagesResource = {
+  findAll: (options: ImagesFindAllOptions = {}, adapter: Adapter): Promise<Image[]> => {
+    const validatedOptions = imagesFindAllOptionsSchema.parse(options)
+    return adapter.get<Image[]>({ path: models.image.path, type: models.image.endpoint, ...validatedOptions })
+  },
+  find: (id: string | number, options: ImagesFindOptions = {}, adapter: Adapter): Promise<Image> => {
+    const validatedOptions = imagesFindOptionsSchema.parse(options)
+    return adapter.get<Image>({
+      path: `${models.image.path}/${id}`,
+      type: models.image.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: ImageCreateData, options: ImagesCreateOptions = {}, adapter: Adapter): Promise<Image> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.image.operations.create) throw new Error('Image create operation not found')
+    const validatedData = models.image.operations.create.schema.parse(json)
+    return adapter.post<Image>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: models.image.path,
+      type: models.image.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: ImageUpdateData,
+    options: ImagesUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Image> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.image.operations.update) throw new Error('Image update operation not found')
+    const validatedData = models.image.operations.update.schema.parse(json)
+    return adapter.put<Image>({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
+      json: validatedData as any,
+      path: `${models.image.path}/${id}`,
+      type: models.image.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: ImagesFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = imagesFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.image.path}/${id}`,
+      type: models.image.endpoint,
       ...validatedOptions,
     })
   },

@@ -4,6 +4,7 @@ export default {
   id: '210645',
   [TYPE]: 'block',
   blockType: 'text',
+  type: 'text',
   status: 'published',
   order: 2,
   content: {
@@ -11,4 +12,5 @@ export default {
     showSocial: true,
     showRsvpButton: false,
   },
+  images: null,
 }

@@ -1,7 +1,17 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { ImageSchema } from '../schemas/image.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import {
+  ImageSchema,
+  ImageCreateSchema,
+  ImageUpdateSchema,
+  imagesFindAllOptionsSchema,
+} from '../schemas/image.js'
 import { ModelDefinition } from '../types/model.js'
+import {
+  extractFiltersFromSchema,
+  extractSortingFromSchema,
+  extractIncludesFromSchema,
+} from '../utils/resource-options-to-model.js'
 
 export default function ImageModel(): ModelDefinition {
   return {
@@ -10,13 +20,21 @@ export default function ImageModel(): ModelDefinition {
     path: 'images',
     name: 'Image',
     sample: loadSamples('image'),
-    sorting: [],
-    filters: {},
-    includes: [],
+    sorting: extractSortingFromSchema(imagesFindAllOptionsSchema),
+    filters: extractFiltersFromSchema(imagesFindAllOptionsSchema),
+    includes: extractIncludesFromSchema(imagesFindAllOptionsSchema),
     operations: {
       read: {
         schema: ImageSchema,
         attributes: schemaToAttributes(ImageSchema),
+      },
+      create: {
+        schema: ImageCreateSchema,
+        attributes: schemaToCreateAttributes(ImageCreateSchema),
+      },
+      update: {
+        schema: ImageUpdateSchema,
+        attributes: schemaToCreateAttributes(ImageUpdateSchema),
       },
     },
     webhooks: [],

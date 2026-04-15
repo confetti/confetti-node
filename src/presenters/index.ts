@@ -9,6 +9,9 @@ import categoryPresenter from './category.js'
 import ticketBatchPresenter from './ticket-batch.js'
 import paymentPresenter from './payment.js'
 import addonPresenter from './addon.js'
+import pagePresenter from './page.js'
+import blockPresenter from './block.js'
+import imagePresenter from './image.js'
 
 const { Presenter } = yayson()
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -40,6 +43,10 @@ const AddonPresenter = addonPresenter({
   Presenter,
 })
 
+const PagePresenter = pagePresenter({ presenters, Presenter })
+const BlockPresenter = blockPresenter({ presenters, Presenter })
+const ImagePresenter = imagePresenter({ presenters, Presenter })
+
 presenters.WebhookPresenter = WebhookPresenter
 presenters.EventPresenter = EventPresenter
 presenters.WorkspacePresenter = WorkspacePresenter
@@ -49,6 +56,9 @@ presenters.CategoryPresenter = CategoryPresenter
 presenters.TicketBatchPresenter = TicketBatchPresenter
 presenters.PaymentPresenter = PaymentPresenter
 presenters.AddonPresenter = AddonPresenter
+presenters.PagePresenter = PagePresenter
+presenters.BlockPresenter = BlockPresenter
+presenters.ImagePresenter = ImagePresenter
 
 const presentersCollection: Presenters = {
   webhooks: WebhookPresenter,
@@ -60,6 +70,9 @@ const presentersCollection: Presenters = {
   categories: CategoryPresenter,
   payments: PaymentPresenter,
   addons: AddonPresenter,
+  pages: PagePresenter,
+  blocks: BlockPresenter,
+  images: ImagePresenter,
 }
 
 export default presentersCollection

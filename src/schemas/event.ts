@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import {
   baseFindAllOptionsSchema,
+  baseOptionsSchema,
   findBaseOptionsSchema,
   staticBaseFindAllOptionsSchema,
   staticBaseFindOptionsSchema,
@@ -166,6 +167,57 @@ export const EventSchema = z.object({
   ),
 })
 
+// Core + copy fields a client can send when creating/updating an event.
+// Excludes feature-level, financial, settings and password/otp fields.
+export const EventCreateSchema = z.object({
+  name: z.string().describe(JSON.stringify({ label: 'Name' })),
+  startDate: z
+    .union([z.date(), z.string()])
+    .describe(JSON.stringify({ label: 'Start Date' })),
+  endDate: z
+    .union([z.date(), z.string()])
+    .optional()
+    .describe(JSON.stringify({ label: 'End Date' })),
+  status: z.string().optional().describe(JSON.stringify({ label: 'Status' })),
+  signupType: z
+    .enum(['rsvp', 'tickets'])
+    .optional()
+    .describe(JSON.stringify({ label: 'Signup Type' })),
+  signupStartAt: z
+    .union([z.date(), z.string()])
+    .optional()
+    .describe(JSON.stringify({ label: 'Signup Start At' })),
+  signupEndAt: z
+    .union([z.date(), z.string()])
+    .optional()
+    .describe(JSON.stringify({ label: 'Signup End At' })),
+  rsvpLimit: z.number().optional().describe(JSON.stringify({ label: 'Rsvp Limit' })),
+  email: z.string().optional().describe(JSON.stringify({ label: 'Email' })),
+  website: z.string().optional().describe(JSON.stringify({ label: 'Website' })),
+  timeZone: z.string().optional().describe(JSON.stringify({ label: 'Time Zone' })),
+  continuous: z.boolean().optional().describe(JSON.stringify({ label: 'Continuous' })),
+  slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
+  // copy fields (branding/customisation)
+  primaryColor: z.string().optional().describe(JSON.stringify({ label: 'Primary color' })),
+  contrastColor: z.string().optional().describe(JSON.stringify({ label: 'Contrast color' })),
+  shareTitle: z.string().optional().describe(JSON.stringify({ label: 'Share title' })),
+  shareDescription: z.string().optional().describe(JSON.stringify({ label: 'Share description' })),
+  summary: z.string().optional().describe(JSON.stringify({ label: 'Summary' })),
+  smsSenderName: z.string().optional().describe(JSON.stringify({ label: 'SMS sender name' })),
+  ticketsPerPurchase: z
+    .number()
+    .optional()
+    .describe(JSON.stringify({ label: 'Tickets per purchase' })),
+  locationName: z.string().optional().describe(JSON.stringify({ label: 'Location name' })),
+  workspaceId: z
+    .number()
+    .optional()
+    .describe(JSON.stringify({ label: 'Workspace Id' })),
+})
+
+// All fields are optional on update; you only patch what changed.
+export const EventUpdateSchema = EventCreateSchema.partial()
+
 const eventsFindAllSchema = {
   filter: z
     .object({
@@ -316,9 +368,19 @@ export const eventsFindOptionsSchema = findBaseOptionsSchema.extend({})
 
 export const staticEventsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(eventsFindAllSchema)
 export const staticEventsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
+export const staticEventsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticEventsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Event = z.infer<typeof EventSchema>
+export type EventCreate = z.infer<typeof EventCreateSchema>
+export type EventCreateData = z.infer<typeof EventCreateSchema>
+export type EventUpdate = z.infer<typeof EventUpdateSchema>
+export type EventUpdateData = z.infer<typeof EventUpdateSchema>
 export type EventsFindAllOptions = z.infer<typeof eventsFindAllOptionsSchema>
 export type EventsFindOptions = z.infer<typeof eventsFindOptionsSchema>
+export type EventsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type EventsUpdateOptions = z.infer<typeof baseOptionsSchema>
 export type StaticEventsFindAllOptions = z.infer<typeof staticEventsFindAllOptionsSchema>
 export type StaticEventsFindOptions = z.infer<typeof staticEventsFindOptionsSchema>
+export type StaticEventsCreateOptions = z.infer<typeof staticEventsCreateOptionsSchema>
+export type StaticEventsUpdateOptions = z.infer<typeof staticEventsUpdateOptionsSchema>

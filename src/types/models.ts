@@ -2,15 +2,15 @@
 
 import type { Category } from '../schemas/category.js'
 import type { Contact, ContactCreate } from '../schemas/contact.js'
-import type { Event } from '../schemas/event.js'
+import type { Event, EventCreate, EventUpdate } from '../schemas/event.js'
 import type { Ticket, TicketCreate } from '../schemas/ticket.js'
 import type { Payment } from '../schemas/payment.js'
 import type { Webhook, WebhookCreate } from '../schemas/webhook.js'
 import type { Workspace } from '../schemas/workspace.js'
 import type { TicketBatch } from '../schemas/ticket-batch.js'
-import type { Block } from '../schemas/block.js'
-import type { Image } from '../schemas/image.js'
-import type { Page } from '../schemas/page.js'
+import type { Block, BlockCreate, BlockUpdate } from '../schemas/block.js'
+import type { Image, ImageCreate, ImageUpdate } from '../schemas/image.js'
+import type { Page, PageCreate, PageUpdate } from '../schemas/page.js'
 import type { ScheduleItem } from '../schemas/schedule-item.js'
 import type { Speaker } from '../schemas/speaker.js'
 import type { Organiser } from '../schemas/organiser.js'
@@ -22,6 +22,8 @@ export type {
   Contact,
   ContactCreate,
   Event,
+  EventCreate,
+  EventUpdate,
   Ticket,
   TicketCreate,
   Payment,
@@ -30,8 +32,14 @@ export type {
   Workspace,
   TicketBatch,
   Block,
+  BlockCreate,
+  BlockUpdate,
   Image,
+  ImageCreate,
+  ImageUpdate,
   Page,
+  PageCreate,
+  PageUpdate,
   ScheduleItem,
   Speaker,
   Organiser,
