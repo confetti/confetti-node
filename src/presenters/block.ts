@@ -1,15 +1,12 @@
 import { PresenterOptions, BlockPresenter } from '../types/presenters.js'
 import { Block } from '../types/models.js'
 
-type BlockInput = Block & {
+type BlockData = Block & {
   blockType?: string
   pageId?: number
   eventId?: number
   workspaceId?: number
   categoryIds?: number[]
-}
-
-type BlockOutput = Block & {
   page?: { id: number }
   event?: { id: number }
   workspace?: { id: number }
@@ -21,35 +18,31 @@ export default function ({ presenters, Presenter }: PresenterOptions): BlockPres
     static type = 'block' as const
     static plural = 'blocks' as const
 
-    attributes(block: BlockInput): BlockOutput {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      const data = block as any
+    attributes(block: BlockData): Record<string, unknown> {
       // The public API exposes the block kind as `blockType` (because `type`
       // collides with the JSON:API resource type). The admin API expects it
       // back under `type`.
-      if (data.blockType !== undefined) {
-        data.type = data.blockType
-        delete data.blockType
+      if (block.blockType !== undefined) {
+        block.type = block.blockType
+        delete block.blockType
       }
-      if (data.pageId) {
-        data.page = { id: data.pageId }
-        delete data.pageId
+      if (block.pageId != null) {
+        block.page = { id: block.pageId }
+        delete block.pageId
       }
-      if (data.eventId) {
-        data.event = { id: data.eventId }
-        delete data.eventId
+      if (block.eventId != null) {
+        block.event = { id: block.eventId }
+        delete block.eventId
       }
-      if (data.workspaceId) {
-        data.workspace = { id: data.workspaceId }
-        delete data.workspaceId
+      if (block.workspaceId != null) {
+        block.workspace = { id: block.workspaceId }
+        delete block.workspaceId
       }
-      if (data.categoryIds?.length) {
-        data.categories = data.categoryIds.map((id: number) => ({ id }))
-        delete data.categoryIds
+      if (block.categoryIds?.length) {
+        block.categories = block.categoryIds.map((id) => ({ id }))
+        delete block.categoryIds
       }
-      const s = super.attributes?.(data) || data
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      return s as BlockOutput
+      return super.attributes?.(block) ?? block
     }
 
     relationships() {

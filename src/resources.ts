@@ -118,8 +118,7 @@ export const eventsResource = {
     if (!models.event.operations.create) throw new Error('Event create operation not found')
     const validatedData = models.event.operations.create.schema.parse(json)
     return adapter.post<Event>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.event.path,
       type: models.event.endpoint,
       ...validatedOptions,
@@ -135,8 +134,7 @@ export const eventsResource = {
     if (!models.event.operations.update) throw new Error('Event update operation not found')
     const validatedData = models.event.operations.update.schema.parse(json)
     return adapter.put<Event>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: `${models.event.path}/${id}`,
       type: models.event.endpoint,
       ...validatedOptions,
@@ -163,8 +161,7 @@ export const ticketsResource = {
     const validatedData = models.ticket.operations.create.schema.parse(json)
 
     return adapter.post<Ticket>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.ticket.path,
       type: models.ticket.endpoint,
       ...validatedOptions,
@@ -191,8 +188,7 @@ export const contactsResource = {
     const validatedData = models.contact.operations.create.schema.parse(json)
 
     return adapter.post<Contact>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.contact.path,
       type: models.contact.endpoint,
       ...validatedOptions,
@@ -234,8 +230,7 @@ export const webhooksResource = {
     const validatedData = models.webhook.operations.create.schema.parse(json)
     return adapter.post<Webhook>({
       path: models.webhook.path,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       type: models.webhook.endpoint,
       ...validatedOptions,
     })
@@ -321,8 +316,7 @@ export const pagesResource = {
     if (!models.page.operations.create) throw new Error('Page create operation not found')
     const validatedData = models.page.operations.create.schema.parse(json)
     return adapter.post<Page>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.page.path,
       type: models.page.endpoint,
       ...validatedOptions,
@@ -338,8 +332,7 @@ export const pagesResource = {
     if (!models.page.operations.update) throw new Error('Page update operation not found')
     const validatedData = models.page.operations.update.schema.parse(json)
     return adapter.put<Page>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: `${models.page.path}/${id}`,
       type: models.page.endpoint,
       ...validatedOptions,
@@ -373,8 +366,7 @@ export const blocksResource = {
     if (!models.block.operations.create) throw new Error('Block create operation not found')
     const validatedData = models.block.operations.create.schema.parse(json)
     return adapter.post<Block>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.block.path,
       type: models.block.endpoint,
       ...validatedOptions,
@@ -390,8 +382,7 @@ export const blocksResource = {
     if (!models.block.operations.update) throw new Error('Block update operation not found')
     const validatedData = models.block.operations.update.schema.parse(json)
     return adapter.put<Block>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: `${models.block.path}/${id}`,
       type: models.block.endpoint,
       ...validatedOptions,
@@ -425,8 +416,7 @@ export const imagesResource = {
     if (!models.image.operations.create) throw new Error('Image create operation not found')
     const validatedData = models.image.operations.create.schema.parse(json)
     return adapter.post<Image>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: models.image.path,
       type: models.image.endpoint,
       ...validatedOptions,
@@ -442,8 +432,7 @@ export const imagesResource = {
     if (!models.image.operations.update) throw new Error('Image update operation not found')
     const validatedData = models.image.operations.update.schema.parse(json)
     return adapter.put<Image>({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      json: validatedData as any,
+      json: validatedData,
       path: `${models.image.path}/${id}`,
       type: models.image.endpoint,
       ...validatedOptions,

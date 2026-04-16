@@ -51,7 +51,7 @@ export interface WebhookConfig {
 }
 
 export interface OperationConfig {
-  schema: z.ZodSchema
+  schema: z.ZodType<Record<string, unknown>>
   attributes: unknown[]
 }
 

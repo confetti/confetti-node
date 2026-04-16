@@ -1,12 +1,9 @@
 import { PresenterOptions, PagePresenter } from '../types/presenters.js'
 import { Page } from '../types/models.js'
 
-type PageInput = Page & {
+type PageData = Page & {
   eventId?: number
   workspaceId?: number
-}
-
-type PageOutput = Page & {
   event?: { id: number }
   workspace?: { id: number }
 }
@@ -16,20 +13,16 @@ export default function ({ presenters, Presenter }: PresenterOptions): PagePrese
     static type = 'page' as const
     static plural = 'pages' as const
 
-    attributes(page: PageInput): PageOutput {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      const data = page as any
-      if (data.eventId) {
-        data.event = { id: data.eventId }
-        delete data.eventId
+    attributes(page: PageData): Record<string, unknown> {
+      if (page.eventId != null) {
+        page.event = { id: page.eventId }
+        delete page.eventId
       }
-      if (data.workspaceId) {
-        data.workspace = { id: data.workspaceId }
-        delete data.workspaceId
+      if (page.workspaceId != null) {
+        page.workspace = { id: page.workspaceId }
+        delete page.workspaceId
       }
-      const s = super.attributes?.(data) || data
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      return s as PageOutput
+      return super.attributes?.(page) ?? page
     }
 
     relationships() {

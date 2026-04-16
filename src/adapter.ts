@@ -33,9 +33,9 @@ export interface PageOptions {
   limit?: number
 }
 
-export interface HttpRequestOptions<T = ConfettiModel> {
+export interface HttpRequestOptions {
   path: string
-  json?: T | T[]
+  json?: Record<string, unknown>
   filter?: FilterOptions
   include?: string | string[]
   sort?: string
@@ -48,14 +48,14 @@ export interface HttpRequestOptions<T = ConfettiModel> {
 }
 
 export interface Adapter {
-  put<T = ConfettiModel>(options: HttpRequestOptions<T>): Promise<T>
-  post<T = ConfettiModel>(options: HttpRequestOptions<T>): Promise<T>
-  get<T = ConfettiModel>(options: HttpRequestOptions<T>): Promise<T>
-  delete<T = ConfettiModel>(options: HttpRequestOptions<T>): Promise<T>
+  put<T = ConfettiModel>(options: HttpRequestOptions): Promise<T>
+  post<T = ConfettiModel>(options: HttpRequestOptions): Promise<T>
+  get<T = ConfettiModel>(options: HttpRequestOptions): Promise<T>
+  delete<T = ConfettiModel>(options: HttpRequestOptions): Promise<T>
 }
 
 export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}): Adapter {
-  const httpRequest = async function <T = ConfettiModel>(method: string, options: HttpRequestOptions<T>): Promise<T> {
+  const httpRequest = async function <T = ConfettiModel>(method: string, options: HttpRequestOptions): Promise<T> {
     const { path, json, filter, include, sort, page, raw, type } = options
 
     const API_HOST = options.apiHost || apiHost || process.env['CONFETTI_API_HOST'] || 'api.confetti.events'
@@ -152,19 +152,19 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
   }
 
   const adapter: Adapter = {
-    async put<T = ConfettiModel>(options: HttpRequestOptions<T>) {
+    async put<T = ConfettiModel>(options: HttpRequestOptions) {
       return await httpRequest<T>('put', options)
     },
 
-    async post<T = ConfettiModel>(options: HttpRequestOptions<T>) {
+    async post<T = ConfettiModel>(options: HttpRequestOptions) {
       return await httpRequest<T>('post', options)
     },
 
-    async get<T = ConfettiModel>(options: HttpRequestOptions<T>) {
+    async get<T = ConfettiModel>(options: HttpRequestOptions) {
       return await httpRequest<T>('get', options)
     },
 
-    async delete<T = ConfettiModel>(options: HttpRequestOptions<T>) {
+    async delete<T = ConfettiModel>(options: HttpRequestOptions) {
       return await httpRequest<T>('delete', options)
     },
   }
