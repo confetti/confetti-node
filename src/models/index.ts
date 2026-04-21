@@ -28,7 +28,7 @@ export type { Page, PageCreate, PageUpdate } from '../schemas/page.js'
 export type { ScheduleItem } from '../schemas/schedule-item.js'
 export type { Speaker } from '../schemas/speaker.js'
 export type { Organiser } from '../schemas/organiser.js'
-export type { Addon } from '../schemas/addon.js'
+export type { Addon, AddonCreate } from '../schemas/addon.js'
 
 export default {
   block: block(),

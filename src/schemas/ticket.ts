@@ -192,7 +192,7 @@ export const TicketCreateSchema = z.object({
         label: 'Last name',
       }),
     ),
-  email: z.string().describe(
+  email: z.string().email().describe(
     JSON.stringify({
       label: 'Email',
     }),

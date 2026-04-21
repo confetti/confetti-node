@@ -192,8 +192,8 @@ export const EventCreateSchema = z.object({
     .optional()
     .describe(JSON.stringify({ label: 'Signup End At' })),
   rsvpLimit: z.number().optional().describe(JSON.stringify({ label: 'Rsvp Limit' })),
-  email: z.string().optional().describe(JSON.stringify({ label: 'Email' })),
-  website: z.string().optional().describe(JSON.stringify({ label: 'Website' })),
+  email: z.string().email().optional().describe(JSON.stringify({ label: 'Email' })),
+  website: z.string().url().optional().describe(JSON.stringify({ label: 'Website' })),
   timeZone: z.string().optional().describe(JSON.stringify({ label: 'Time Zone' })),
   continuous: z.boolean().optional().describe(JSON.stringify({ label: 'Continuous' })),
   slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),

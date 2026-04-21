@@ -110,4 +110,12 @@ export const AddonSchema = z.object({
   ),
 })
 
+export const AddonCreateSchema = z.object({
+  ticketId: z.number().describe(JSON.stringify({ label: 'Ticket Id' })),
+  addonBatchId: z.number().describe(JSON.stringify({ label: 'Addon Batch Id' })),
+  values: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Values' })),
+  checkinAt: z.string().optional().describe(JSON.stringify({ label: 'Checkin At' })),
+})
+
 export type Addon = z.infer<typeof AddonSchema>
+export type AddonCreate = z.infer<typeof AddonCreateSchema>

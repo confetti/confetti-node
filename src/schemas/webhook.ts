@@ -52,7 +52,7 @@ export const WebhookCreateSchema = z.object({
       label: 'Type',
     }),
   ),
-  url: z.string().describe(
+  url: z.string().url().describe(
     JSON.stringify({
       label: 'URL',
     }),

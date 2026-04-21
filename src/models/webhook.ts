@@ -30,5 +30,9 @@ export default function WebhookModel(): ModelDefinition {
       },
     },
     webhooks: [],
+    relationships: [
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+    ],
   }
 }
