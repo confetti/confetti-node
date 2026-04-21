@@ -37,6 +37,12 @@ export default function BlockModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(BlockUpdateSchema),
       },
     },
+    relationships: [
+      { field: 'pageId', relationship: 'page', type: 'belongsTo' },
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+      { field: 'categoryIds', relationship: 'categories', type: 'hasMany' },
+    ],
     webhooks: [],
   }
 }

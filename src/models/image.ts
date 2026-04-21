@@ -37,6 +37,11 @@ export default function ImageModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(ImageUpdateSchema),
       },
     },
+    relationships: [
+      { field: 'blockId', relationship: 'block', type: 'belongsTo' },
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+    ],
     webhooks: [],
   }
 }

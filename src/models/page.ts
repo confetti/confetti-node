@@ -37,6 +37,10 @@ export default function PageModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(PageUpdateSchema),
       },
     },
+    relationships: [
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+    ],
     webhooks: [],
   }
 }

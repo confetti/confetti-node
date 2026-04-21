@@ -29,6 +29,10 @@ export default function ContactModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(ContactCreateSchema),
       },
     },
+    relationships: [
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+      { field: 'categoryIds', relationship: 'categories', type: 'hasMany' },
+    ],
     webhooks: [
       {
         type: 'contact.created',

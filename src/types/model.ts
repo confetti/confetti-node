@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { Attribute } from '../utils/schema-to-attributes.js'
 
 export interface BaseFilter {
   type: 'string' | 'number' | 'boolean' | 'array' | 'date' | 'enum'
@@ -52,7 +53,7 @@ export interface WebhookConfig {
 
 export interface OperationConfig {
   schema: z.ZodType<Record<string, unknown>>
-  attributes: unknown[]
+  attributes: Attribute[]
 }
 
 export interface OperationsConfig {
@@ -67,6 +68,17 @@ export type SampleData = {
   multiple: { formatted: object[]; raw: { data: object[] } }
 }
 
+export interface RelationshipAnnotation {
+  field: string
+  relationship: string
+  type: 'belongsTo' | 'hasMany'
+}
+
+export interface MetaAnnotation {
+  field: string
+  key: string
+}
+
 export interface ModelDefinition {
   key: string
   endpoint: string
@@ -78,4 +90,6 @@ export interface ModelDefinition {
   includes: IncludesConfig
   operations: OperationsConfig
   webhooks: WebhookConfig[]
+  relationships?: RelationshipAnnotation[]
+  meta?: MetaAnnotation[]
 }

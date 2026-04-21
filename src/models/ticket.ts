@@ -29,6 +29,11 @@ export default function TicketModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(TicketCreateSchema),
       },
     },
+    relationships: [
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'ticketBatchId', relationship: 'ticketBatch', type: 'belongsTo' },
+    ],
+    meta: [{ field: 'sendEmailConfirmation', key: 'sendEmailConfirmation' }],
     webhooks: [
       {
         type: 'ticket.attending',
