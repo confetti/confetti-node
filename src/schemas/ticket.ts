@@ -114,6 +114,7 @@ export const TicketSchema = z.object({
   comment: z.string().describe(
     JSON.stringify({
       label: 'Comment',
+      description: 'Internal note visible only to workspace teammates in Confetti. Not shown to attendees.',
     }),
   ),
   guests: z.number().describe(
@@ -250,6 +251,7 @@ export const TicketCreateSchema = z.object({
     .describe(
       JSON.stringify({
         label: 'Comment',
+        description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
       }),
     ),
   sendEmailConfirmation: z.boolean().describe(
@@ -284,7 +286,15 @@ export const TicketUpdateSchema = z.object({
     ),
   phone: z.string().optional().describe(JSON.stringify({ label: 'Phone' })),
   company: z.string().optional().describe(JSON.stringify({ label: 'Company' })),
-  comment: z.string().optional().describe(JSON.stringify({ label: 'Comment' })),
+  comment: z
+    .string()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Comment',
+        description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
+      }),
+    ),
   guests: z.number().optional().describe(JSON.stringify({ label: 'Guests' })),
   values: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Values' })),
   checkinAt: z
