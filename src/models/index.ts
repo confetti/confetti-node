@@ -13,11 +13,13 @@ import scheduleItem from './schedule-item.js'
 import speaker from './speaker.js'
 import organiser from './organiser.js'
 import addon from './addon.js'
+import form from './form.js'
+import formField from './form-field.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
 export type { Event, EventCreate, EventUpdate } from '../schemas/event.js'
-export type { Ticket, TicketCreate } from '../schemas/ticket.js'
+export type { Ticket, TicketCreate, TicketUpdate } from '../schemas/ticket.js'
 export type { Payment } from '../schemas/payment.js'
 export type { Webhook, WebhookCreate } from '../schemas/webhook.js'
 export type { Workspace } from '../schemas/workspace.js'
@@ -29,6 +31,8 @@ export type { ScheduleItem } from '../schemas/schedule-item.js'
 export type { Speaker } from '../schemas/speaker.js'
 export type { Organiser } from '../schemas/organiser.js'
 export type { Addon, AddonCreate } from '../schemas/addon.js'
+export type { Form } from '../schemas/form.js'
+export type { FormField } from '../schemas/form-field.js'
 
 export default {
   block: block(),
@@ -46,4 +50,6 @@ export default {
   speaker: speaker(),
   organiser: organiser(),
   addon: addon(),
+  form: form(),
+  formField: formField(),
 }

@@ -86,6 +86,18 @@ import {
   type ImageCreateData,
   type ImageUpdateData,
 } from './schemas/image.js'
+import {
+  formsFindAllOptionsSchema,
+  formsFindOptionsSchema,
+  type FormsFindAllOptions,
+  type FormsFindOptions,
+} from './schemas/form.js'
+import {
+  formFieldsFindAllOptionsSchema,
+  formFieldsFindOptionsSchema,
+  type FormFieldsFindAllOptions,
+  type FormFieldsFindOptions,
+} from './schemas/form-field.js'
 import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
@@ -101,6 +113,8 @@ import {
   Page,
   Block,
   Image,
+  Form,
+  FormField,
 } from './types/models.js'
 import models from './models/index.js'
 
@@ -443,6 +457,40 @@ export const imagesResource = {
     return adapter.delete<void>({
       path: `${models.image.path}/${id}`,
       type: models.image.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const formsResource = {
+  findAll: (options: FormsFindAllOptions, adapter: Adapter): Promise<Form[]> => {
+    const validatedOptions = formsFindAllOptionsSchema.parse(options)
+    return adapter.get<Form[]>({ path: models.form.path, type: models.form.endpoint, ...validatedOptions })
+  },
+  find: (id: string | number, options: FormsFindOptions = {}, adapter: Adapter): Promise<Form> => {
+    const validatedOptions = formsFindOptionsSchema.parse(options)
+    return adapter.get<Form>({
+      path: `${models.form.path}/${id}`,
+      type: models.form.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const formFieldsResource = {
+  findAll: (options: FormFieldsFindAllOptions, adapter: Adapter): Promise<FormField[]> => {
+    const validatedOptions = formFieldsFindAllOptionsSchema.parse(options)
+    return adapter.get<FormField[]>({
+      path: models.formField.path,
+      type: models.formField.endpoint,
+      ...validatedOptions,
+    })
+  },
+  find: (id: string | number, options: FormFieldsFindOptions = {}, adapter: Adapter): Promise<FormField> => {
+    const validatedOptions = formFieldsFindOptionsSchema.parse(options)
+    return adapter.get<FormField>({
+      path: `${models.formField.path}/${id}`,
+      type: models.formField.endpoint,
       ...validatedOptions,
     })
   },

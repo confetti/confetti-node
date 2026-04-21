@@ -26,5 +26,6 @@ export default function TicketBatchModel(): ModelDefinition {
       },
     },
     webhooks: [],
+    relationships: [{ field: 'formId', relationship: 'form', type: 'belongsTo' }],
   }
 }

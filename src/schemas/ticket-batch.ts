@@ -134,7 +134,27 @@ const ticketBatchesFindAllSchema = {
     eventId: z.number(),
   }),
   sort: z.never().optional(),
-  include: z.never().optional(),
+  include: z
+    .array(
+      z
+        .enum(['form'])
+        .describe(
+          JSON.stringify({
+            label: 'Include Relations',
+            description: 'Include related data',
+            values: [
+              {
+                label: 'Form',
+                description: 'Signup form for this ticket batch',
+                type: 'string',
+                key: 'form',
+                value: 'form',
+              },
+            ],
+          }),
+        ),
+    )
+    .optional(),
 }
 
 export const ticketBatchesFindAllOptionsSchema = baseFindAllOptionsSchema.extend(ticketBatchesFindAllSchema)

@@ -12,6 +12,8 @@ import addonPresenter from './addon.js'
 import pagePresenter from './page.js'
 import blockPresenter from './block.js'
 import imagePresenter from './image.js'
+import formPresenter from './form.js'
+import formFieldPresenter from './form-field.js'
 
 const { Presenter } = yayson()
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -46,6 +48,8 @@ const AddonPresenter = addonPresenter({
 const PagePresenter = pagePresenter({ presenters, Presenter })
 const BlockPresenter = blockPresenter({ presenters, Presenter })
 const ImagePresenter = imagePresenter({ presenters, Presenter })
+const FormPresenter = formPresenter({ presenters, Presenter })
+const FormFieldPresenter = formFieldPresenter({ presenters, Presenter })
 
 presenters.WebhookPresenter = WebhookPresenter
 presenters.EventPresenter = EventPresenter
@@ -59,6 +63,8 @@ presenters.AddonPresenter = AddonPresenter
 presenters.PagePresenter = PagePresenter
 presenters.BlockPresenter = BlockPresenter
 presenters.ImagePresenter = ImagePresenter
+presenters.FormPresenter = FormPresenter
+presenters.FormFieldPresenter = FormFieldPresenter
 
 const presentersCollection: Presenters = {
   webhooks: WebhookPresenter,
@@ -73,6 +79,8 @@ const presentersCollection: Presenters = {
   pages: PagePresenter,
   blocks: BlockPresenter,
   images: ImagePresenter,
+  forms: FormPresenter,
+  formFields: FormFieldPresenter,
 }
 
 export default presentersCollection

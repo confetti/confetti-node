@@ -15,6 +15,8 @@ import type { ScheduleItem } from '../schemas/schedule-item.js'
 import type { Speaker } from '../schemas/speaker.js'
 import type { Organiser } from '../schemas/organiser.js'
 import type { Addon } from '../schemas/addon.js'
+import type { Form } from '../schemas/form.js'
+import type { FormField } from '../schemas/form-field.js'
 
 // Re-export all model types
 export type {
@@ -44,6 +46,8 @@ export type {
   Speaker,
   Organiser,
   Addon,
+  Form,
+  FormField,
 }
 
 // Union type for all models
@@ -63,3 +67,5 @@ export type ConfettiModel =
   | Speaker
   | Organiser
   | Addon
+  | Form
+  | FormField

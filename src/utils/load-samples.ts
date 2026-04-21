@@ -30,6 +30,10 @@ import organiserRaw from '../models/samples/organiser/raw.js'
 import organiserFormatted from '../models/samples/organiser/formatted.js'
 import addonRaw from '../models/samples/addon/raw.js'
 import addonFormatted from '../models/samples/addon/formatted.js'
+import formRaw from '../models/samples/form/raw.js'
+import formFormatted from '../models/samples/form/formatted.js'
+import formFieldRaw from '../models/samples/form-field/raw.js'
+import formFieldFormatted from '../models/samples/form-field/formatted.js'
 
 const samples = {
   block: { raw: blockRaw, formatted: blockFormatted },
@@ -47,6 +51,8 @@ const samples = {
   speaker: { raw: speakerRaw, formatted: speakerFormatted },
   organiser: { raw: organiserRaw, formatted: organiserFormatted },
   addon: { raw: addonRaw, formatted: addonFormatted },
+  form: { raw: formRaw, formatted: formFormatted },
+  formField: { raw: formFieldRaw, formatted: formFieldFormatted },
 }
 
 /**

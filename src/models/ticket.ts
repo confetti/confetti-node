@@ -1,6 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import { TicketSchema, TicketCreateSchema } from '../schemas/ticket.js'
+import { TicketSchema, TicketCreateSchema, TicketUpdateSchema } from '../schemas/ticket.js'
 import { ModelDefinition } from '../types/model.js'
 import {
   extractFiltersFromSchema,
@@ -27,6 +27,10 @@ export default function TicketModel(): ModelDefinition {
       create: {
         schema: TicketCreateSchema,
         attributes: schemaToCreateAttributes(TicketCreateSchema),
+      },
+      update: {
+        schema: TicketUpdateSchema,
+        attributes: schemaToCreateAttributes(TicketUpdateSchema),
       },
     },
     relationships: [

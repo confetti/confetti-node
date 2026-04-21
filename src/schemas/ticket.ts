@@ -107,6 +107,8 @@ export const TicketSchema = z.object({
   values: z.looseObject({}).describe(
     JSON.stringify({
       label: 'Values',
+      description:
+        'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
     }),
   ),
   comment: z.string().describe(
@@ -159,6 +161,16 @@ export const TicketSchema = z.object({
       label: 'Contact Id',
     }),
   ),
+  formattedValues: z
+    .array(z.looseObject({}))
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Formatted Values',
+        description:
+          'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
+      }),
+    ),
 })
 
 export const TicketCreateSchema = z.object({
@@ -246,6 +258,49 @@ export const TicketCreateSchema = z.object({
       helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
     }),
   ),
+})
+
+export const TicketUpdateSchema = z.object({
+  firstName: z.string().optional().describe(JSON.stringify({ label: 'First name' })),
+  lastName: z.string().optional().describe(JSON.stringify({ label: 'Last name' })),
+  email: z
+    .string()
+    .email({ message: 'Email is not a valid email' })
+    .optional()
+    .describe(JSON.stringify({ label: 'Email' })),
+  status: z
+    .string()
+    .superRefine((val, ctx) => {
+      if (!['invited', 'attending'].includes(val)) {
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: `${val} is not included in the list` })
+      }
+    })
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Status',
+        values: ['attending', 'invited'],
+      }),
+    ),
+  phone: z.string().optional().describe(JSON.stringify({ label: 'Phone' })),
+  company: z.string().optional().describe(JSON.stringify({ label: 'Company' })),
+  comment: z.string().optional().describe(JSON.stringify({ label: 'Comment' })),
+  guests: z.number().optional().describe(JSON.stringify({ label: 'Guests' })),
+  values: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Values' })),
+  checkinAt: z
+    .union([z.date(), z.string(), z.null()])
+    .optional()
+    .describe(JSON.stringify({ label: 'Checkin At' })),
+  ticketBatchId: z.number().optional().describe(JSON.stringify({ label: 'Ticket Batch Id' })),
+  sendEmailConfirmation: z
+    .boolean()
+    .optional()
+    .describe(
+      JSON.stringify({
+        label: 'Send email confirmation',
+        helpText: 'If set to true, an email confirmation will be sent to the attendee.',
+      }),
+    ),
 })
 
 const ticketsFindAllSchema = {
@@ -381,7 +436,7 @@ const ticketsFindAllSchema = {
     .optional(),
   include: z
     .array(
-      z.enum(['addons']).describe(
+      z.enum(['addons', 'formattedValues']).describe(
         JSON.stringify({
           label: 'Include Relations',
           description: 'Include related data',
@@ -392,6 +447,14 @@ const ticketsFindAllSchema = {
               type: 'string',
               key: 'addons',
               value: 'addons',
+            },
+            {
+              label: 'Formatted Values',
+              description:
+                'Form field answers with question titles — unlike raw values which only contain answers keyed by field name',
+              type: 'string',
+              key: 'formattedValues',
+              value: 'formattedValues',
             },
           ],
         }),
@@ -410,6 +473,8 @@ export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.e
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
 export type TicketCreateData = z.infer<typeof TicketCreateSchema>
+export type TicketUpdate = z.infer<typeof TicketUpdateSchema>
+export type TicketUpdateData = z.infer<typeof TicketUpdateSchema>
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>

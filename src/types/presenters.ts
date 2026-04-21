@@ -43,6 +43,8 @@ export interface PresentersMap {
   PagePresenter: PagePresenter
   BlockPresenter: BlockPresenter
   ImagePresenter: ImagePresenter
+  FormPresenter: FormPresenter
+  FormFieldPresenter: FormFieldPresenter
 }
 
 // Specific presenter types
@@ -154,6 +156,16 @@ export interface ImagePresenter extends BasePresenter {
   plural: 'images'
 }
 
+export interface FormPresenter extends BasePresenter {
+  type: 'form'
+  plural: 'forms'
+}
+
+export interface FormFieldPresenter extends BasePresenter {
+  type: 'formField'
+  plural: 'formFields'
+}
+
 // Presenters collection type
 export interface Presenters {
   webhooks: WebhookPresenter
@@ -168,4 +180,6 @@ export interface Presenters {
   pages: PagePresenter
   blocks: BlockPresenter
   images: ImagePresenter
+  forms: FormPresenter
+  formFields: FormFieldPresenter
 }

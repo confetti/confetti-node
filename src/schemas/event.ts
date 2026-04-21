@@ -287,6 +287,8 @@ const eventsFindAllSchema = {
           'speakers.image',
           'organisers',
           'organisers.image',
+          'forms',
+          'forms.formFields',
         ])
         .describe(
           JSON.stringify({
@@ -355,6 +357,20 @@ const eventsFindAllSchema = {
                 type: 'string',
                 key: 'organisers.image',
                 value: 'organisers.image',
+              },
+              {
+                label: 'Forms',
+                description: 'Event forms',
+                type: 'string',
+                key: 'forms',
+                value: 'forms',
+              },
+              {
+                label: 'Forms Form Fields',
+                description: 'Form fields belonging to event forms',
+                type: 'string',
+                key: 'forms.formFields',
+                value: 'forms.formFields',
               },
             ],
           }),
