@@ -117,8 +117,14 @@ import type {
 import type {
   FormFieldsFindAllOptions,
   FormFieldsFindOptions,
+  FormFieldsCreateOptions,
+  FormFieldsUpdateOptions,
   StaticFormFieldsFindAllOptions,
   StaticFormFieldsFindOptions,
+  StaticFormFieldsCreateOptions,
+  StaticFormFieldsUpdateOptions,
+  FormFieldCreateData,
+  FormFieldUpdateData,
 } from './schemas/form-field.js'
 import type {
   ImagesFindAllOptions,
@@ -506,6 +512,15 @@ class Confetti {
     find: (id: string | number, options: FormFieldsFindOptions = {}) => {
       return formFieldsResource.find(id, options, this.adapter)
     },
+    create: (json: FormFieldCreateData, options: FormFieldsCreateOptions = {}) => {
+      return formFieldsResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: FormFieldUpdateData, options: FormFieldsUpdateOptions = {}) => {
+      return formFieldsResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: FormFieldsFindOptions = {}) => {
+      return formFieldsResource.delete(id, options, this.adapter)
+    },
   }
   static formFields = {
     findAll: (options: StaticFormFieldsFindAllOptions) => {
@@ -513,6 +528,15 @@ class Confetti {
     },
     find: (id: string | number, options: StaticFormFieldsFindOptions) => {
       return formFieldsResource.find(id, options, adapter(options))
+    },
+    create: (json: FormFieldCreateData, options: StaticFormFieldsCreateOptions) => {
+      return formFieldsResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: FormFieldUpdateData, options: StaticFormFieldsUpdateOptions) => {
+      return formFieldsResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticFormFieldsFindOptions) => {
+      return formFieldsResource.delete(id, options, adapter(options))
     },
   }
 
