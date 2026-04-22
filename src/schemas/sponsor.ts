@@ -8,33 +8,33 @@ import {
 
 export const SponsorSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the sponsor.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the sponsor.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   website: z.string().meta({
-      label: 'Website',
-    }),
+    label: 'Website',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   sponsorLevelId: z.number().meta({
-      label: 'Sponsor Level Id',
-    }),
+    label: 'Sponsor Level Id',
+  }),
   imageId: z.number().meta({
-      label: 'Image Id',
-    }),
+    label: 'Image Id',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
 })
 
 export const SponsorCreateSchema = z.object({

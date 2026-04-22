@@ -1,11 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import {
-  ImageSchema,
-  ImageCreateSchema,
-  ImageUpdateSchema,
-  imagesFindAllOptionsSchema,
-} from '../schemas/image.js'
+import { ImageSchema, ImageCreateSchema, ImageUpdateSchema, imagesFindAllOptionsSchema } from '../schemas/image.js'
 import { ModelDefinition } from '../types/model.js'
 import {
   extractFiltersFromSchema,

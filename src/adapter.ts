@@ -136,18 +136,20 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         }
       }
       // Only pass plain objects to error constructors (Object.assign with a string spreads characters)
-      const errorOptions: Record<string, unknown> = typeof errorBody === 'object' && errorBody !== null
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        ? errorBody as Record<string, unknown>
-        : {}
+      const errorOptions: Record<string, unknown> =
+        typeof errorBody === 'object' && errorBody !== null
+          ? // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            (errorBody as Record<string, unknown>)
+          : {}
       const errorText = typeof errorBody === 'string' ? errorBody : undefined
       if (res.status == 400) {
         const error = new ParameterError(errorText || 'validation', errorOptions)
         throw error
       } else if (res.status == 404) {
-        const message = ('message' in errorOptions && typeof errorOptions.message === 'string')
-          ? errorOptions.message
-          : (errorText || 'Not found')
+        const message =
+          'message' in errorOptions && typeof errorOptions.message === 'string'
+            ? errorOptions.message
+            : errorText || 'Not found'
         const error = new NotFoundError(message, errorOptions)
         throw error
       } else {

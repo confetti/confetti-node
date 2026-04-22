@@ -22,10 +22,7 @@ const typeMap: Record<string, string> = {
 
 const metaKeysToStrip = ['label', 'helpText', 'placeholder', 'values']
 
-export function schemaToJsonSchema(
-  schema: z.ZodType,
-  options?: { stripFields?: string[] },
-): Record<string, unknown> {
+export function schemaToJsonSchema(schema: z.ZodType, options?: { stripFields?: string[] }): Record<string, unknown> {
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
   const raw = z.toJSONSchema(schema as any, {
     unrepresentable: 'any',

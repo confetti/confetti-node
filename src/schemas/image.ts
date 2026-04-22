@@ -9,57 +9,57 @@ import {
 
 export const ImageSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the image.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the image.',
+  }),
   type: z.string().meta({
-      label: 'Type',
-    }),
+    label: 'Type',
+  }),
   order: z.string().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   original: z.string().meta({
-      label: 'Original',
-    }),
+    label: 'Original',
+  }),
   url30: z.string().meta({
-      label: 'Url30',
-    }),
+    label: 'Url30',
+  }),
   url50: z.string().meta({
-      label: 'Url50',
-    }),
+    label: 'Url50',
+  }),
   url75: z.string().meta({
-      label: 'Url75',
-    }),
+    label: 'Url75',
+  }),
   url100: z.string().meta({
-      label: 'Url100',
-    }),
+    label: 'Url100',
+  }),
   url300: z.string().meta({
-      label: 'Url300',
-    }),
+    label: 'Url300',
+  }),
   url500: z.string().meta({
-      label: 'Url500',
-    }),
+    label: 'Url500',
+  }),
   url500x500: z.string().meta({
-      label: 'Url500x500',
-    }),
+    label: 'Url500x500',
+  }),
   url1000: z.string().meta({
-      label: 'Url1000',
-    }),
+    label: 'Url1000',
+  }),
   url2000: z.string().meta({
-      label: 'Url2000',
-    }),
+    label: 'Url2000',
+  }),
   urlMax2000: z.string().meta({
-      label: 'UrlMax2000',
-    }),
+    label: 'UrlMax2000',
+  }),
   title: z.string().meta({
-      label: 'Title',
-    }),
+    label: 'Title',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   link: z.string().meta({
-      label: 'Link',
-    }),
+    label: 'Link',
+  }),
 })
 
 // Image uses `imageType` instead of `type` to avoid colliding with the

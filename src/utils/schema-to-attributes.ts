@@ -33,7 +33,10 @@ function extractObjectChildren(zodObj: z.ZodObject<z.ZodRawShape>): CreateAttrib
 }
 
 // Get array element type info, recursing into object elements
-function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): { itemType: string; children?: CreateAttribute[] } {
+function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): {
+  itemType: string
+  children?: CreateAttribute[]
+} {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
   const element = (arraySchema as any)._def.element ?? (arraySchema as any).element
   if (element instanceof z.ZodObject) {
@@ -49,7 +52,12 @@ function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): { itemType:
 
 // Extract type info from a resolved (non-optional) Zod schema
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveTypeInfo(schema: any): { type: string; values?: string[]; children?: CreateAttribute[]; itemType?: string } {
+function resolveTypeInfo(schema: any): {
+  type: string
+  values?: string[]
+  children?: CreateAttribute[]
+  itemType?: string
+} {
   if (schema instanceof z.ZodNumber) return { type: 'number' }
   if (schema instanceof z.ZodDate) return { type: 'date' }
   if (schema instanceof z.ZodBoolean) return { type: 'boolean' }
@@ -93,8 +101,8 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     } = {}
 
     // Try outer schema first, then inner type (for .partial() wrapping)
-    const meta = getMeta(fieldSchema) ??
-      (fieldSchema instanceof z.ZodOptional ? getMeta(fieldSchema._def.innerType) : undefined)
+    const meta =
+      getMeta(fieldSchema) ?? (fieldSchema instanceof z.ZodOptional ? getMeta(fieldSchema._def.innerType) : undefined)
     if (meta) {
       metadata = {
         label: meta.label,

@@ -8,22 +8,22 @@ import {
 
 export const CategorySchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the category.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the category.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-      description: 'Category name.',
-    }),
+    label: 'Name',
+    description: 'Category name.',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
   organisationId: z.number().meta({
-      label: 'Organisation Id',
-    }),
+    label: 'Organisation Id',
+  }),
 })
 
 const categoriesFindAllSchema = {

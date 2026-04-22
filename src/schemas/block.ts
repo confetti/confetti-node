@@ -9,20 +9,20 @@ import {
 
 export const BlockSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-    }),
+    label: 'ID',
+  }),
   type: z.string().meta({
-      label: 'Type',
-    }),
+    label: 'Type',
+  }),
   content: z.json().meta({
-      label: 'Content',
-    }),
+    label: 'Content',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
 })
 
 // Block uses `blockType` instead of `type` to avoid collision with the
@@ -79,9 +79,7 @@ export const BlockCreateSchema = z.object({
   blockType: z
     .enum(blockTypes)
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z
-    .enum(blockStatuses)
-    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  status: z.enum(blockStatuses).meta({ label: 'Status', description: 'Block visibility status.' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
   order: z.number().optional().meta({ label: 'Order' }),
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
@@ -89,10 +87,7 @@ export const BlockCreateSchema = z.object({
   pageId: z.number().optional().meta({ label: 'Page Id' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z
-    .array(z.number())
-    .optional()
-    .meta({ label: 'Categories' }),
+  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
 })
 
 export const BlockUpdateSchema = z.object({
@@ -100,10 +95,7 @@ export const BlockUpdateSchema = z.object({
     .enum(blockTypes)
     .optional()
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z
-    .enum(blockStatuses)
-    .optional()
-    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  status: z.enum(blockStatuses).optional().meta({ label: 'Status', description: 'Block visibility status.' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
   order: z.number().optional().meta({ label: 'Order' }),
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
@@ -111,10 +103,7 @@ export const BlockUpdateSchema = z.object({
   pageId: z.number().optional().meta({ label: 'Page Id' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z
-    .array(z.number())
-    .optional()
-    .meta({ label: 'Categories' }),
+  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
 })
 
 const blocksFindAllSchema = {
@@ -125,9 +114,7 @@ const blocksFindAllSchema = {
     })
     .optional(),
   sort: z.never().optional(),
-  include: z
-    .array(z.enum(['images']))
-    .optional(),
+  include: z.array(z.enum(['images'])).optional(),
 }
 
 export const blocksFindAllOptionsSchema = baseFindAllOptionsSchema.extend(blocksFindAllSchema)

@@ -77,10 +77,7 @@ describe('Sponsors', () => {
         .post('/sponsors')
         .reply(201, mockData as MockResponseData)
 
-      const data = await Confetti.sponsors.create(
-        { name: 'Acme', sponsorLevelId: 1 },
-        { apiKey: 'my-key' },
-      )
+      const data = await Confetti.sponsors.create({ name: 'Acme', sponsorLevelId: 1 }, { apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.sponsor.sample.single.formatted)
     })
     test('should update a sponsor', async () => {

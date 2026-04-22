@@ -634,11 +634,7 @@ export const organisersResource = {
 }
 
 export const scheduleItemsResource = {
-  find: (
-    id: string | number,
-    options: ScheduleItemsFindOptions = {},
-    adapter: Adapter,
-  ): Promise<ScheduleItem> => {
+  find: (id: string | number, options: ScheduleItemsFindOptions = {}, adapter: Adapter): Promise<ScheduleItem> => {
     const validatedOptions = scheduleItemsFindOptionsSchema.parse(options)
     return adapter.get<ScheduleItem>({
       path: `${models.scheduleItem.path}/${id}`,
@@ -734,11 +730,7 @@ export const sponsorsResource = {
 }
 
 export const sponsorLevelsResource = {
-  find: (
-    id: string | number,
-    options: SponsorLevelsFindOptions = {},
-    adapter: Adapter,
-  ): Promise<SponsorLevel> => {
+  find: (id: string | number, options: SponsorLevelsFindOptions = {}, adapter: Adapter): Promise<SponsorLevel> => {
     const validatedOptions = sponsorLevelsFindOptionsSchema.parse(options)
     return adapter.get<SponsorLevel>({
       path: `${models.sponsorLevel.path}/${id}`,

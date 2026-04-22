@@ -1,11 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import {
-  BlockSchema,
-  BlockCreateSchema,
-  BlockUpdateSchema,
-  blocksFindAllOptionsSchema,
-} from '../schemas/block.js'
+import { BlockSchema, BlockCreateSchema, BlockUpdateSchema, blocksFindAllOptionsSchema } from '../schemas/block.js'
 import { ModelDefinition } from '../types/model.js'
 import {
   extractFiltersFromSchema,

@@ -224,11 +224,9 @@ export const EventCreateSchema = z.object({
   locationName: z.string().optional().meta({ label: 'Location name' }),
   locationPlace: z
     .object({
-      formatted_address: z
-        .string()
-        .meta({
-          description: 'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden").',
-        }),
+      formatted_address: z.string().meta({
+        description: 'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden").',
+      }),
       geometry: z
         .object({
           location: z.object({

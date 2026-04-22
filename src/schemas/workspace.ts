@@ -8,46 +8,46 @@ import {
 
 export const WorkspaceSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the workspace.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the workspace.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-      description: 'Workspace name.',
-    }),
+    label: 'Name',
+    description: 'Workspace name.',
+  }),
   timeZone: z.string().meta({
-      label: 'Time Zone',
-    }),
+    label: 'Time Zone',
+  }),
   slug: z.string().meta({
-      label: 'Slug',
-    }),
+    label: 'Slug',
+  }),
   featureLevel: z.string().meta({
-      label: 'Feature Level',
-    }),
+    label: 'Feature Level',
+  }),
   website: z.string().meta({
-      label: 'Website',
-    }),
+    label: 'Website',
+  }),
   email: z.string().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
   shareTitle: z.string().meta({
-      label: 'ShareTitle',
-    }),
+    label: 'ShareTitle',
+  }),
   shareDescription: z.string().meta({
-      label: 'Share description',
-    }),
+    label: 'Share description',
+  }),
   summary: z.string().meta({
-      label: 'Summary',
-    }),
+    label: 'Summary',
+  }),
   primaryColor: z.string().meta({
-      label: 'Primary color',
-    }),
+    label: 'Primary color',
+  }),
 })
 
 const workspacesFindAllSchema = {

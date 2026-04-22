@@ -8,77 +8,77 @@ import {
 
 export const TicketBatchSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-    }),
+    label: 'ID',
+  }),
   left: z.number().meta({
-      label: 'Left',
-    }),
+    label: 'Left',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   promoCode: z.string().meta({
-      label: 'Promo code',
-    }),
+    label: 'Promo code',
+  }),
   releasedAt: z.date().meta({
-      label: 'Released at',
-    }),
+    label: 'Released at',
+  }),
   closedAt: z.date().meta({
-      label: 'Closed at',
-    }),
+    label: 'Closed at',
+  }),
   price: z.string().meta({
-      label: 'Price',
-    }),
+    label: 'Price',
+  }),
   useCustomVat: z.boolean().meta({
-      label: 'Use custom VAT',
-    }),
+    label: 'Use custom VAT',
+  }),
   vatPercentage: z.number().meta({
-      label: 'VAT percentage',
-    }),
+    label: 'VAT percentage',
+  }),
   limit: z.number().meta({
-      label: 'Limit',
-    }),
+    label: 'Limit',
+  }),
   sold: z.number().meta({
-      label: 'Sold',
-    }),
+    label: 'Sold',
+  }),
   reserved: z.number().meta({
-      label: 'Reserved',
-    }),
+    label: 'Reserved',
+  }),
   settings: z.looseObject({}).meta({
-      label: 'Settings',
-    }),
+    label: 'Settings',
+  }),
   startDate: z.date().meta({
-      label: 'Start date',
-    }),
+    label: 'Start date',
+  }),
   endDate: z.date().meta({
-      label: 'End date',
-    }),
+    label: 'End date',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   linkedTicketBatchId: z.number().meta({
-      label: 'Linked ticket batch Id',
-    }),
+    label: 'Linked ticket batch Id',
+  }),
   formId: z.number().meta({
-      label: 'Form Id',
-    }),
+    label: 'Form Id',
+  }),
   payoutId: z.number().meta({
-      label: 'Payout Id',
-    }),
+    label: 'Payout Id',
+  }),
 })
 
 const ticketBatchesFindAllSchema = {
@@ -88,21 +88,19 @@ const ticketBatchesFindAllSchema = {
   sort: z.never().optional(),
   include: z
     .array(
-      z
-        .enum(['form'])
-        .meta({
-            label: 'Include Relations',
-            description: 'Include related data',
-            values: [
-              {
-                label: 'Form',
-                description: 'Signup form for this ticket batch',
-                type: 'string',
-                key: 'form',
-                value: 'form',
-              },
-            ],
-          }),
+      z.enum(['form']).meta({
+        label: 'Include Relations',
+        description: 'Include related data',
+        values: [
+          {
+            label: 'Form',
+            description: 'Signup form for this ticket batch',
+            type: 'string',
+            key: 'form',
+            value: 'form',
+          },
+        ],
+      }),
     )
     .optional(),
 }

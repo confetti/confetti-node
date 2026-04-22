@@ -1,11 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import {
-  PageSchema,
-  PageCreateSchema,
-  PageUpdateSchema,
-  pagesFindAllOptionsSchema,
-} from '../schemas/page.js'
+import { PageSchema, PageCreateSchema, PageUpdateSchema, pagesFindAllOptionsSchema } from '../schemas/page.js'
 import { ModelDefinition } from '../types/model.js'
 import {
   extractFiltersFromSchema,

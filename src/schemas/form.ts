@@ -8,24 +8,24 @@ import {
 
 export const FormSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the form.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the form.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-      description: 'Form name.',
-    }),
+    label: 'Name',
+    description: 'Form name.',
+  }),
   type: z.enum(['signup', 'feedback', 'addon']).meta({
-      label: 'Type',
-      description: 'The type of form.',
-    }),
+    label: 'Type',
+    description: 'The type of form.',
+  }),
   default: z.boolean().meta({
-      label: 'Default',
-      description: 'Whether this is the default form.',
-    }),
+    label: 'Default',
+    description: 'Whether this is the default form.',
+  }),
   settings: z.looseObject({}).meta({
-      label: 'Settings',
-    }),
+    label: 'Settings',
+  }),
 })
 
 const formsFindAllSchema = {
@@ -35,21 +35,19 @@ const formsFindAllSchema = {
   sort: z.never().optional(),
   include: z
     .array(
-      z
-        .enum(['formFields'])
-        .meta({
-            label: 'Include Relations',
-            description: 'Include related data',
-            values: [
-              {
-                label: 'Form Fields',
-                description: 'Form fields belonging to this form',
-                type: 'string',
-                key: 'formFields',
-                value: 'formFields',
-              },
-            ],
-          }),
+      z.enum(['formFields']).meta({
+        label: 'Include Relations',
+        description: 'Include related data',
+        values: [
+          {
+            label: 'Form Fields',
+            description: 'Form fields belonging to this form',
+            type: 'string',
+            key: 'formFields',
+            value: 'formFields',
+          },
+        ],
+      }),
     )
     .optional(),
 }

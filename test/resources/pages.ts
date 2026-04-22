@@ -90,10 +90,7 @@ describe('Pages', () => {
         .post('/pages')
         .reply(201, mockData as MockResponseData)
 
-      const data = await Confetti.pages.create(
-        { name: 'Home', eventId: 1 },
-        { apiKey: 'my-key' },
-      )
+      const data = await Confetti.pages.create({ name: 'Home', eventId: 1 }, { apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.page.sample.single.formatted)
     })
     test('should update a page', async () => {
