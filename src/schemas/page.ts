@@ -8,45 +8,35 @@ import {
 } from './resource-options.js'
 
 export const PageSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  slug: z.string().describe(
-    JSON.stringify({
+  slug: z.string().meta({
       label: 'Slug',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  settings: z.looseObject({}).describe(
-    JSON.stringify({
+  settings: z.looseObject({}).meta({
       label: 'Settings',
     }),
-  ),
 })
 
 export const PageCreateSchema = z.object({
-  name: z.string().describe(JSON.stringify({ label: 'Name' })),
-  slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
-  status: z.string().optional().describe(JSON.stringify({ label: 'Status' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  settings: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Settings' })),
+  name: z.string().meta({ label: 'Name' }),
+  slug: z.string().optional().meta({ label: 'Slug' }),
+  status: z.string().optional().meta({ label: 'Status' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  settings: z.looseObject({}).optional().meta({ label: 'Settings' }),
   prefillBlocks: z
     .boolean()
     .optional()
-    .describe(JSON.stringify({ label: 'Prefill Blocks' })),
-  eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
-  workspaceId: z.number().optional().describe(JSON.stringify({ label: 'Workspace Id' })),
+    .meta({ label: 'Prefill Blocks' }),
+  eventId: z.number().optional().meta({ label: 'Event Id' }),
+  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
 
 export const PageUpdateSchema = PageCreateSchema.partial()

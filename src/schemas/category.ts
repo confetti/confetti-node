@@ -7,33 +7,23 @@ import {
 } from './resource-options.js'
 
 export const CategorySchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the category.',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
       description: 'Category name.',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created At',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated At',
     }),
-  ),
-  organisationId: z.number().describe(
-    JSON.stringify({
+  organisationId: z.number().meta({
       label: 'Organisation Id',
     }),
-  ),
 })
 
 const categoriesFindAllSchema = {

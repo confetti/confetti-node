@@ -8,113 +8,79 @@ import {
 } from './resource-options.js'
 
 export const ImageSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the image.',
     }),
-  ),
-  type: z.string().describe(
-    JSON.stringify({
+  type: z.string().meta({
       label: 'Type',
     }),
-  ),
-  order: z.string().describe(
-    JSON.stringify({
+  order: z.string().meta({
       label: 'Order',
     }),
-  ),
-  original: z.string().describe(
-    JSON.stringify({
+  original: z.string().meta({
       label: 'Original',
     }),
-  ),
-  url30: z.string().describe(
-    JSON.stringify({
+  url30: z.string().meta({
       label: 'Url30',
     }),
-  ),
-  url50: z.string().describe(
-    JSON.stringify({
+  url50: z.string().meta({
       label: 'Url50',
     }),
-  ),
-  url75: z.string().describe(
-    JSON.stringify({
+  url75: z.string().meta({
       label: 'Url75',
     }),
-  ),
-  url100: z.string().describe(
-    JSON.stringify({
+  url100: z.string().meta({
       label: 'Url100',
     }),
-  ),
-  url300: z.string().describe(
-    JSON.stringify({
+  url300: z.string().meta({
       label: 'Url300',
     }),
-  ),
-  url500: z.string().describe(
-    JSON.stringify({
+  url500: z.string().meta({
       label: 'Url500',
     }),
-  ),
-  url500x500: z.string().describe(
-    JSON.stringify({
+  url500x500: z.string().meta({
       label: 'Url500x500',
     }),
-  ),
-  url1000: z.string().describe(
-    JSON.stringify({
+  url1000: z.string().meta({
       label: 'Url1000',
     }),
-  ),
-  url2000: z.string().describe(
-    JSON.stringify({
+  url2000: z.string().meta({
       label: 'Url2000',
     }),
-  ),
-  urlMax2000: z.string().describe(
-    JSON.stringify({
+  urlMax2000: z.string().meta({
       label: 'UrlMax2000',
     }),
-  ),
-  title: z.string().describe(
-    JSON.stringify({
+  title: z.string().meta({
       label: 'Title',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  link: z.string().describe(
-    JSON.stringify({
+  link: z.string().meta({
       label: 'Link',
     }),
-  ),
 })
 
 // Image uses `imageType` instead of `type` to avoid colliding with the
 // JSON:API resource type. Provider is fixed to S3 (default), and the asset
 // can be supplied via `url` or `base64`.
 export const ImageCreateSchema = z.object({
-  imageType: z.string().describe(JSON.stringify({ label: 'Image Type' })),
-  url: z.string().optional().describe(JSON.stringify({ label: 'Url' })),
-  base64: z.string().optional().describe(JSON.stringify({ label: 'Base64' })),
-  description: z.string().optional().describe(JSON.stringify({ label: 'Description' })),
-  title: z.string().optional().describe(JSON.stringify({ label: 'Title' })),
-  link: z.string().optional().describe(JSON.stringify({ label: 'Link' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  width: z.number().optional().describe(JSON.stringify({ label: 'Width' })),
-  height: z.number().optional().describe(JSON.stringify({ label: 'Height' })),
-  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content' })),
-  blockId: z.number().optional().describe(JSON.stringify({ label: 'Block Id' })),
-  blockStyleId: z.number().optional().describe(JSON.stringify({ label: 'Block Style Id' })),
-  themeId: z.number().optional().describe(JSON.stringify({ label: 'Theme Id' })),
-  eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
-  workspaceId: z.number().optional().describe(JSON.stringify({ label: 'Workspace Id' })),
+  imageType: z.string().meta({ label: 'Image Type' }),
+  url: z.string().optional().meta({ label: 'Url' }),
+  base64: z.string().optional().meta({ label: 'Base64' }),
+  description: z.string().optional().meta({ label: 'Description' }),
+  title: z.string().optional().meta({ label: 'Title' }),
+  link: z.string().optional().meta({ label: 'Link' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  width: z.number().optional().meta({ label: 'Width' }),
+  height: z.number().optional().meta({ label: 'Height' }),
+  content: z.looseObject({}).optional().meta({ label: 'Content' }),
+  blockId: z.number().optional().meta({ label: 'Block Id' }),
+  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
+  themeId: z.number().optional().meta({ label: 'Theme Id' }),
+  eventId: z.number().optional().meta({ label: 'Event Id' }),
+  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
 
 export const ImageUpdateSchema = ImageCreateSchema.partial()

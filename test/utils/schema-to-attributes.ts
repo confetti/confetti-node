@@ -44,21 +44,15 @@ describe('schemaToAttributes()', () => {
 
     test('should extract custom labels from metadata', () => {
       const schema = z.object({
-        id: z.number().describe(
-          JSON.stringify({
+        id: z.number().meta({
             label: 'ID',
           }),
-        ),
-        firstName: z.string().describe(
-          JSON.stringify({
+        firstName: z.string().meta({
             label: 'First Name',
           }),
-        ),
-        email: z.string().describe(
-          JSON.stringify({
+        email: z.string().meta({
             label: 'Email Address',
           }),
-        ),
       })
 
       const attributes = schemaToBaseAttributes(schema)
@@ -83,23 +77,17 @@ describe('schemaToAttributes()', () => {
 
     test('should extract descriptions from metadata', () => {
       const schema = z.object({
-        id: z.number().describe(
-          JSON.stringify({
+        id: z.number().meta({
             label: 'ID',
             description: 'Unique identifier for the record.',
           }),
-        ),
-        name: z.string().describe(
-          JSON.stringify({
+        name: z.string().meta({
             label: 'Name',
             description: 'The display name of the item.',
           }),
-        ),
-        status: z.string().describe(
-          JSON.stringify({
+        status: z.string().meta({
             label: 'Status',
           }),
-        ),
       })
 
       const attributes = schemaToBaseAttributes(schema)
@@ -131,11 +119,9 @@ describe('schemaToAttributes()', () => {
         deletedAt: z
           .date()
           .optional()
-          .describe(
-            JSON.stringify({
+          .meta({
               label: 'Deleted At',
             }),
-          ),
         metadata: z.record(z.string(), z.unknown()).optional(),
       })
 
@@ -167,12 +153,10 @@ describe('schemaToAttributes()', () => {
     test('should handle record/object types correctly', () => {
       const schema = z.object({
         id: z.number(),
-        settings: z.record(z.string(), z.unknown()).describe(
-          JSON.stringify({
+        settings: z.record(z.string(), z.unknown()).meta({
             label: 'Settings',
             description: 'Configuration settings for the item.',
           }),
-        ),
         tags: z.record(z.string(), z.string()),
       })
 
@@ -199,18 +183,14 @@ describe('schemaToAttributes()', () => {
 
     test('should handle mixed metadata and auto-generated labels', () => {
       const schema = z.object({
-        id: z.number().describe(
-          JSON.stringify({
+        id: z.number().meta({
             label: 'ID',
             description: 'Unique identifier.',
           }),
-        ),
         name: z.string(), // No metadata - should auto-generate
-        email: z.string().describe(
-          JSON.stringify({
+        email: z.string().meta({
             label: 'Email Address',
           }),
-        ),
         createdAt: z.date(), // No metadata - should auto-generate
       })
 
@@ -255,12 +235,10 @@ describe('schemaToAttributes()', () => {
             email: z.string(),
           })
           .optional()
-          .describe(
-            JSON.stringify({
+          .meta({
               label: 'User Information',
               description: 'Optional user details.',
             }),
-          ),
       })
 
       const attributes = schemaToBaseAttributes(schema)
@@ -279,14 +257,12 @@ describe('schemaToAttributes()', () => {
       })
     })
 
-    test('should handle malformed JSON in description gracefully', () => {
+    test('should handle fields with no .meta() gracefully', () => {
       const schema = z.object({
-        id: z.number().describe('invalid json'),
-        name: z.string().describe(
-          JSON.stringify({
+        id: z.number(),
+        name: z.string().meta({
             label: 'Name',
           }),
-        ),
       })
 
       const attributes = schemaToBaseAttributes(schema)
@@ -392,27 +368,21 @@ describe('schemaToAttributes()', () => {
 
     test('should extract metadata from create schemas', () => {
       const schema = z.object({
-        email: z.string().describe(
-          JSON.stringify({
+        email: z.string().meta({
             label: 'Email Address',
             helpText: 'Enter a valid email address',
           }),
-        ),
         phone: z
           .string()
           .optional()
-          .describe(
-            JSON.stringify({
+          .meta({
               label: 'Phone Number',
               placeholder: '+1 (555) 123-4567',
               helpText: 'Include country code',
             }),
-          ),
-        status: z.enum(['active', 'inactive']).describe(
-          JSON.stringify({
+        status: z.enum(['active', 'inactive']).meta({
             label: 'Account Status',
           }),
-        ),
       })
 
       const attributes = schemaToCreateAttributes(schema)
@@ -567,14 +537,12 @@ describe('schemaToAttributes()', () => {
       assert.strictEqual(attributes.length, 0)
     })
 
-    test('should handle malformed JSON in description gracefully', () => {
+    test('should handle fields with no .meta() gracefully', () => {
       const schema = z.object({
-        name: z.string().describe('invalid json'),
-        email: z.string().describe(
-          JSON.stringify({
+        name: z.string(),
+        email: z.string().meta({
             label: 'Email Address',
           }),
-        ),
       })
 
       const attributes = schemaToCreateAttributes(schema)
@@ -600,15 +568,13 @@ describe('schemaToAttributes()', () => {
 
     test('should handle complex metadata with all properties', () => {
       const schema = z.object({
-        field: z.string().describe(
-          JSON.stringify({
+        field: z.string().meta({
             label: 'Custom Label',
             description: 'Field description',
             placeholder: 'Enter value here',
             helpText: 'This is helpful text',
             values: ['option1', 'option2'],
           }),
-        ),
       })
 
       const attributes = schemaToCreateAttributes(schema)
@@ -653,12 +619,10 @@ describe('schemaToAttributes()', () => {
       const schema = z.object({
         name: z.string(),
         age: z.number().optional(),
-        status: z.enum(['active', 'inactive']).describe(
-          JSON.stringify({
+        status: z.enum(['active', 'inactive']).meta({
             label: 'Status',
             helpText: 'Current status',
           }),
-        ),
       })
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })
@@ -721,23 +685,19 @@ describe('schemaToAttributes()', () => {
 
     test('should handle complex metadata with create fields', () => {
       const schema = z.object({
-        email: z.string().describe(
-          JSON.stringify({
+        email: z.string().meta({
             label: 'Email Address',
             description: 'User email',
             placeholder: 'user@example.com',
             helpText: 'Must be a valid email',
           }),
-        ),
         category: z
           .enum(['premium', 'basic'])
           .optional()
-          .describe(
-            JSON.stringify({
+          .meta({
               label: 'User Category',
               values: ['Premium', 'Basic'],
             }),
-          ),
       })
 
       const attributes = schemaToAttributes(schema, { includeCreateFields: true })

@@ -8,77 +8,49 @@ import {
 import { decimalStringSchema } from '../utils/zod.js'
 
 export const PaymentSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the payment.',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  email: z.string().describe(
-    JSON.stringify({
+  email: z.string().meta({
       label: 'Email',
     }),
-  ),
-  company: z.string().describe(
-    JSON.stringify({
+  company: z.string().meta({
       label: 'Company',
     }),
-  ),
-  amount: z.number().describe(
-    JSON.stringify({
+  amount: z.number().meta({
       label: 'Amount',
     }),
-  ),
-  vat: z.number().describe(
-    JSON.stringify({
+  vat: z.number().meta({
       label: 'VAT',
     }),
-  ),
-  vatPercentage: z.number().describe(
-    JSON.stringify({
+  vatPercentage: z.number().meta({
       label: 'Vat %',
     }),
-  ),
-  commission: decimalStringSchema().describe(
-    JSON.stringify({
+  commission: decimalStringSchema().meta({
       label: 'Commission',
     }),
-  ),
-  commissionVat: decimalStringSchema().describe(
-    JSON.stringify({
+  commissionVat: decimalStringSchema().meta({
       label: 'Commission VAT',
     }),
-  ),
-  customer: z.looseObject({}).describe(
-    JSON.stringify({
+  customer: z.looseObject({}).meta({
       label: 'Customer',
     }),
-  ),
-  token: z.string().describe(
-    JSON.stringify({
+  token: z.string().meta({
       label: 'Token',
     }),
-  ),
-  currency: z.string().describe(
-    JSON.stringify({
+  currency: z.string().meta({
       label: 'Currency',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  paidAt: z.date().describe(
-    JSON.stringify({
+  paidAt: z.date().meta({
       label: 'Paid At',
     }),
-  ),
 })
 
 const paymentsFindAllSchema = {
@@ -86,8 +58,7 @@ const paymentsFindAllSchema = {
     eventId: z.number(),
     status: z
       .array(
-        z.enum(['paid', 'refunded', 'pending-invoice', 'sent-invoice', 'paid-invoice', 'cancelled-invoice']).describe(
-          JSON.stringify({
+        z.enum(['paid', 'refunded', 'pending-invoice', 'sent-invoice', 'paid-invoice', 'cancelled-invoice']).meta({
             label: 'Payment Status',
             description: 'Filter payments by status',
             values: [
@@ -135,7 +106,6 @@ const paymentsFindAllSchema = {
               },
             ],
           }),
-        ),
       )
       .optional(),
   }),

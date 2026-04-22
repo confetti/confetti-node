@@ -1,120 +1,78 @@
 import { number, z } from 'zod'
 
 export const AddonSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the addon.',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
       description: 'Status of the addon. attending, declined, cancelled or refunded',
     }),
-  ),
-  hashid: z.string().describe(
-    JSON.stringify({
+  hashid: z.string().meta({
       label: 'Hashid',
     }),
-  ),
-  startDate: z.date().describe(
-    JSON.stringify({
+  startDate: z.date().meta({
       label: 'Start Date',
     }),
-  ),
-  endDate: z.date().describe(
-    JSON.stringify({
+  endDate: z.date().meta({
       label: 'End date',
     }),
-  ),
-  checkinAt: z.date().describe(
-    JSON.stringify({
+  checkinAt: z.date().meta({
       label: 'Checkin at',
     }),
-  ),
-  price: number().describe(
-    JSON.stringify({
+  price: number().meta({
       label: 'Price',
     }),
-  ),
-  vat: number().describe(
-    JSON.stringify({
+  vat: number().meta({
       label: 'VAT',
     }),
-  ),
-  originalPrice: number().describe(
-    JSON.stringify({
+  originalPrice: number().meta({
       label: 'Original Price',
     }),
-  ),
-  originalVat: number().describe(
-    JSON.stringify({
+  originalVat: number().meta({
       label: 'Original VAT',
     }),
-  ),
-  discount: number().describe(
-    JSON.stringify({
+  discount: number().meta({
       label: 'Discount',
     }),
-  ),
-  vatPercentage: number().describe(
-    JSON.stringify({
+  vatPercentage: number().meta({
       label: 'VAT %',
     }),
-  ),
-  currency: z.string().describe(
-    JSON.stringify({
+  currency: z.string().meta({
       label: 'Currency',
     }),
-  ),
-  values: z.looseObject({}).describe(
-    JSON.stringify({
+  values: z.looseObject({}).meta({
       label: 'Values',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
-  ticketId: z.number().describe(
-    JSON.stringify({
+  ticketId: z.number().meta({
       label: 'Ticket Id',
     }),
-  ),
-  paymentId: z.number().describe(
-    JSON.stringify({
+  paymentId: z.number().meta({
       label: 'Payment Id',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  addonBatchId: z.number().describe(
-    JSON.stringify({
+  addonBatchId: z.number().meta({
       label: 'Addon Batch Id',
     }),
-  ),
 })
 
 export const AddonCreateSchema = z.object({
-  ticketId: z.number().describe(JSON.stringify({ label: 'Ticket Id' })),
-  addonBatchId: z.number().describe(JSON.stringify({ label: 'Addon Batch Id' })),
-  values: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Values' })),
-  checkinAt: z.string().optional().describe(JSON.stringify({ label: 'Checkin At' })),
+  ticketId: z.number().meta({ label: 'Ticket Id' }),
+  addonBatchId: z.number().meta({ label: 'Addon Batch Id' }),
+  values: z.looseObject({}).optional().meta({ label: 'Values' }),
+  checkinAt: z.string().optional().meta({ label: 'Checkin At' }),
 })
 
 export type Addon = z.infer<typeof AddonSchema>

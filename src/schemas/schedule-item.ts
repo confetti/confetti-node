@@ -18,70 +18,50 @@ export const ScheduleItemSettingsSchema = z.object({
 })
 
 export const ScheduleItemSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the schedule item.',
     }),
-  ),
-  title: z.string().describe(
-    JSON.stringify({
+  title: z.string().meta({
       label: 'Title',
     }),
-  ),
-  location: z.string().describe(
-    JSON.stringify({
+  location: z.string().meta({
       label: 'Location',
     }),
-  ),
-  start: z.date().describe(
-    JSON.stringify({
+  start: z.date().meta({
       label: 'Start',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
       description: 'HTML description of the schedule item',
     }),
-  ),
-  duration: z.number().describe(
-    JSON.stringify({
+  duration: z.number().meta({
       label: 'Duration',
       description: 'Duration in minutes',
     }),
-  ),
-  settings: ScheduleItemSettingsSchema.describe(
-    JSON.stringify({
+  settings: ScheduleItemSettingsSchema.meta({
       label: 'Settings',
       description: 'Item settings including speakerIds and order',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
 })
 
 export const ScheduleItemCreateSchema = z.object({
-  title: z.string().describe(JSON.stringify({ label: 'Title' })),
-  eventId: z.number().describe(JSON.stringify({ label: 'Event Id' })),
-  start: z.coerce.date().optional().describe(JSON.stringify({ label: 'Start' })),
-  location: z.string().optional().describe(JSON.stringify({ label: 'Location' })),
-  description: z.string().optional().describe(JSON.stringify({ label: 'Description' })),
-  duration: z.number().optional().describe(JSON.stringify({ label: 'Duration' })),
-  settings: ScheduleItemSettingsSchema.optional().describe(JSON.stringify({ label: 'Settings' })),
+  title: z.string().meta({ label: 'Title' }),
+  eventId: z.number().meta({ label: 'Event Id' }),
+  start: z.coerce.date().optional().meta({ label: 'Start' }),
+  location: z.string().optional().meta({ label: 'Location' }),
+  description: z.string().optional().meta({ label: 'Description' }),
+  duration: z.number().optional().meta({ label: 'Duration' }),
+  settings: ScheduleItemSettingsSchema.optional().meta({ label: 'Settings' }),
 })
 
 export const ScheduleItemUpdateSchema = ScheduleItemCreateSchema.partial()

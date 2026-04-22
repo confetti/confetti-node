@@ -11,85 +11,59 @@ export const OrganiserSettingsSchema = z.object({
 })
 
 export const OrganiserSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the organiser.',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  email: z.string().describe(
-    JSON.stringify({
+  email: z.string().meta({
       label: 'Email',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  twitter: z.string().describe(
-    JSON.stringify({
+  twitter: z.string().meta({
       label: 'Twitter',
     }),
-  ),
-  instagram: z.string().describe(
-    JSON.stringify({
+  instagram: z.string().meta({
       label: 'Instagram',
     }),
-  ),
-  url: z.string().describe(
-    JSON.stringify({
+  url: z.string().meta({
       label: 'Website URL',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  settings: OrganiserSettingsSchema.describe(
-    JSON.stringify({
+  settings: OrganiserSettingsSchema.meta({
       label: 'Settings',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  imageId: z.number().describe(
-    JSON.stringify({
+  imageId: z.number().meta({
       label: 'Image Id',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
 })
 
 export const OrganiserCreateSchema = z.object({
-  name: z.string().describe(JSON.stringify({ label: 'Name' })),
-  eventId: z.number().describe(JSON.stringify({ label: 'Event Id' })),
-  email: z.string().optional().describe(JSON.stringify({ label: 'Email' })),
-  description: z.string().optional().describe(JSON.stringify({ label: 'Description' })),
-  twitter: z.string().optional().describe(JSON.stringify({ label: 'Twitter' })),
-  instagram: z.string().optional().describe(JSON.stringify({ label: 'Instagram' })),
-  url: z.string().optional().describe(JSON.stringify({ label: 'Website URL' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  settings: OrganiserSettingsSchema.optional().describe(JSON.stringify({ label: 'Settings' })),
-  imageId: z.number().optional().describe(JSON.stringify({ label: 'Image Id' })),
+  name: z.string().meta({ label: 'Name' }),
+  eventId: z.number().meta({ label: 'Event Id' }),
+  email: z.string().optional().meta({ label: 'Email' }),
+  description: z.string().optional().meta({ label: 'Description' }),
+  twitter: z.string().optional().meta({ label: 'Twitter' }),
+  instagram: z.string().optional().meta({ label: 'Instagram' }),
+  url: z.string().optional().meta({ label: 'Website URL' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  settings: OrganiserSettingsSchema.optional().meta({ label: 'Settings' }),
+  imageId: z.number().optional().meta({ label: 'Image Id' }),
 })
 
 export const OrganiserUpdateSchema = OrganiserCreateSchema.partial()

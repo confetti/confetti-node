@@ -3,7 +3,7 @@ import qs from 'qs'
 import { ParameterError, NotFoundError } from './errors.js'
 import yayson, { type JsonApiDocument } from 'yayson'
 import presenters from './presenters/index.js'
-import { ConfettiModel, ApiError } from './types/index.js'
+import { ConfettiModel } from './types/index.js'
 import nodeFetch from 'node-fetch'
 
 interface HttpOptions {
@@ -136,7 +136,8 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         }
       }
       // Only pass plain objects to error constructors (Object.assign with a string spreads characters)
-      const errorOptions = typeof errorBody === 'object' && errorBody !== null
+      const errorOptions: Record<string, unknown> = typeof errorBody === 'object' && errorBody !== null
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
         ? errorBody as Record<string, unknown>
         : {}
       const errorText = typeof errorBody === 'string' ? errorBody : undefined
@@ -144,7 +145,9 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         const error = new ParameterError(errorText || 'validation', errorOptions)
         throw error
       } else if (res.status == 404) {
-        const message = (errorOptions as unknown as ApiError)?.message || errorText || 'Not found'
+        const message = ('message' in errorOptions && typeof errorOptions.message === 'string')
+          ? errorOptions.message
+          : (errorText || 'Not found')
         const error = new NotFoundError(message, errorOptions)
         throw error
       } else {

@@ -7,35 +7,25 @@ import {
 } from './resource-options.js'
 
 export const FormSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the form.',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
       description: 'Form name.',
     }),
-  ),
-  type: z.enum(['signup', 'feedback', 'addon']).describe(
-    JSON.stringify({
+  type: z.enum(['signup', 'feedback', 'addon']).meta({
       label: 'Type',
       description: 'The type of form.',
     }),
-  ),
-  default: z.boolean().describe(
-    JSON.stringify({
+  default: z.boolean().meta({
       label: 'Default',
       description: 'Whether this is the default form.',
     }),
-  ),
-  settings: z.looseObject({}).describe(
-    JSON.stringify({
+  settings: z.looseObject({}).meta({
       label: 'Settings',
     }),
-  ),
 })
 
 const formsFindAllSchema = {
@@ -47,8 +37,7 @@ const formsFindAllSchema = {
     .array(
       z
         .enum(['formFields'])
-        .describe(
-          JSON.stringify({
+        .meta({
             label: 'Include Relations',
             description: 'Include related data',
             values: [
@@ -61,7 +50,6 @@ const formsFindAllSchema = {
               },
             ],
           }),
-        ),
     )
     .optional(),
 }

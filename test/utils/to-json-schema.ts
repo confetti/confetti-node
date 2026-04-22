@@ -1,9 +1,9 @@
 import { describe, test } from 'node:test'
 import assert from 'node:assert'
+import { z } from 'zod'
 import Ajv from 'ajv'
-import { attributeToJsonSchema, filterToJsonSchema } from '../../src/utils/to-json-schema.js'
+import { schemaToJsonSchema, filterToJsonSchema } from '../../src/utils/to-json-schema.js'
 import type { JsonSchemaProperty } from '../../src/utils/to-json-schema.js'
-import type { CreateAttribute } from '../../src/utils/schema-to-attributes.js'
 import type { BaseFilter } from '../../src/types/model.js'
 
 const ajv = new Ajv()
@@ -17,112 +17,137 @@ function assertValidSchema(property: JsonSchemaProperty) {
   assert.ok(valid, `Invalid JSON Schema: ${JSON.stringify(ajv.errors)}`)
 }
 
-describe('attributeToJsonSchema()', () => {
-  test('should convert a string attribute', () => {
-    const attr: CreateAttribute = { key: 'name', label: 'Name', type: 'string', required: true }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'string' })
-    assertValidSchema(result)
-  })
-
-  test('should convert a number attribute', () => {
-    const attr: CreateAttribute = { key: 'age', label: 'Age', type: 'number', required: true }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'number' })
-    assertValidSchema(result)
-  })
-
-  test('should convert a boolean attribute', () => {
-    const attr: CreateAttribute = { key: 'active', label: 'Active', type: 'boolean', required: false }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'boolean' })
-    assertValidSchema(result)
-  })
-
-  test('should convert a date attribute to string type', () => {
-    const attr: CreateAttribute = { key: 'startDate', label: 'Start Date', type: 'date', required: true }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'string' })
-    assertValidSchema(result)
-  })
-
-  test('should convert an enum attribute with values', () => {
-    const attr: CreateAttribute = {
-      key: 'status',
-      label: 'Status',
-      type: 'enum',
-      required: true,
-      values: ['attending', 'invited'],
-    }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, {
-      type: 'string',
-      enum: ['attending', 'invited'],
+describe('schemaToJsonSchema()', () => {
+  test('should convert basic types correctly', () => {
+    const schema = z.object({
+      name: z.string().meta({ label: 'Name', description: 'The name' }),
+      age: z.number(),
+      active: z.boolean(),
     })
-    assertValidSchema(result)
+
+    const result = schemaToJsonSchema(schema)
+
+    assert.strictEqual(result.type, 'object')
+    assert.ok(!('$schema' in result))
+
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.strictEqual(props.name.type, 'string')
+    assert.strictEqual(props.name.description, 'The name')
+    assert.ok(!('label' in props.name))
+    assert.strictEqual(props.age.type, 'number')
+    assert.strictEqual(props.active.type, 'boolean')
+
+    const required = result.required as string[]
+    assert.ok(required.includes('name'))
+    assert.ok(required.includes('age'))
+    assert.ok(required.includes('active'))
   })
 
-  test('should convert an array attribute with items', () => {
-    const attr: CreateAttribute = { key: 'tags', label: 'Tags', type: 'array', required: false }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'array', items: { type: 'string' } })
-    assertValidSchema(result)
-  })
-
-  test('should convert an object attribute', () => {
-    const attr: CreateAttribute = { key: 'settings', label: 'Settings', type: 'object', required: false }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, { type: 'object' })
-    assertValidSchema(result)
-  })
-
-  test('should include description from attribute description', () => {
-    const attr: CreateAttribute = {
-      key: 'email',
-      label: 'Email',
-      type: 'string',
-      required: true,
-      description: 'Email address of the attendee',
-    }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, {
-      type: 'string',
-      description: 'Email address of the attendee',
+  test('should convert z.date() to string with date-time format', () => {
+    const schema = z.object({
+      startDate: z.date(),
     })
-    assertValidSchema(result)
+
+    const result = schemaToJsonSchema(schema)
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.strictEqual(props.startDate.type, 'string')
+    assert.strictEqual(props.startDate.format, 'date-time')
   })
 
-  test('should fall back to helpText when description is missing', () => {
-    const attr: CreateAttribute = {
-      key: 'phone',
-      label: 'Phone',
-      type: 'string',
-      required: false,
-      helpText: 'Include country code',
-    }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, {
-      type: 'string',
-      description: 'Include country code',
+  test('should convert z.enum() correctly', () => {
+    const schema = z.object({
+      status: z.enum(['active', 'inactive']),
     })
-    assertValidSchema(result)
+
+    const result = schemaToJsonSchema(schema)
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.strictEqual(props.status.type, 'string')
+    assert.deepStrictEqual(props.status.enum, ['active', 'inactive'])
   })
 
-  test('should prefer description over helpText', () => {
-    const attr: CreateAttribute = {
-      key: 'phone',
-      label: 'Phone',
-      type: 'string',
-      required: false,
-      description: 'Phone number',
-      helpText: 'Include country code',
-    }
-    const result = attributeToJsonSchema(attr)
-    assert.deepStrictEqual(result, {
-      type: 'string',
-      description: 'Phone number',
+  test('should handle email format', () => {
+    const schema = z.object({
+      email: z.string().email(),
     })
-    assertValidSchema(result)
+
+    const result = schemaToJsonSchema(schema)
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.strictEqual(props.email.type, 'string')
+    assert.strictEqual(props.email.format, 'email')
+  })
+
+  test('should handle optional fields (not in required)', () => {
+    const schema = z.object({
+      name: z.string(),
+      nickname: z.string().optional(),
+    })
+
+    const result = schemaToJsonSchema(schema)
+    const required = result.required as string[]
+    assert.ok(required.includes('name'))
+    assert.ok(!required.includes('nickname'))
+
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.ok('nickname' in props)
+  })
+
+  test('should strip non-standard .meta() keys', () => {
+    const schema = z.object({
+      phone: z.string().meta({
+        label: 'Phone',
+        description: 'Contact number',
+        placeholder: '+1 555-1234',
+        helpText: 'Include country code',
+        values: ['a', 'b'],
+      }),
+    })
+
+    const result = schemaToJsonSchema(schema)
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.strictEqual(props.phone.description, 'Contact number')
+    assert.ok(!('label' in props.phone))
+    assert.ok(!('placeholder' in props.phone))
+    assert.ok(!('helpText' in props.phone))
+    assert.ok(!('values' in props.phone))
+  })
+
+  test('should strip specified fields with stripFields option', () => {
+    const schema = z.object({
+      name: z.string(),
+      eventId: z.number(),
+      workspaceId: z.number().optional(),
+    })
+
+    const result = schemaToJsonSchema(schema, { stripFields: ['eventId', 'workspaceId'] })
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.ok('name' in props)
+    assert.ok(!('eventId' in props))
+    assert.ok(!('workspaceId' in props))
+
+    const required = result.required as string[]
+    assert.ok(!required.includes('eventId'))
+  })
+
+  test('should handle .partial() schemas', () => {
+    const base = z.object({
+      name: z.string().meta({ label: 'Name' }),
+      age: z.number(),
+    })
+    const partial = base.partial()
+
+    const result = schemaToJsonSchema(partial)
+    assert.strictEqual(result.type, 'object')
+    assert.ok(!result.required || (result.required as string[]).length === 0)
+
+    const props = result.properties as Record<string, Record<string, unknown>>
+    assert.ok('name' in props)
+    assert.ok('age' in props)
+  })
+
+  test('should remove $schema key', () => {
+    const schema = z.object({ name: z.string() })
+    const result = schemaToJsonSchema(schema)
+    assert.ok(!('$schema' in result))
   })
 })
 

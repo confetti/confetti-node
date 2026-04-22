@@ -7,126 +7,78 @@ import {
 } from './resource-options.js'
 
 export const TicketBatchSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
     }),
-  ),
-  left: z.number().describe(
-    JSON.stringify({
+  left: z.number().meta({
       label: 'Left',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  promoCode: z.string().describe(
-    JSON.stringify({
+  promoCode: z.string().meta({
       label: 'Promo code',
     }),
-  ),
-  releasedAt: z.date().describe(
-    JSON.stringify({
+  releasedAt: z.date().meta({
       label: 'Released at',
     }),
-  ),
-  closedAt: z.date().describe(
-    JSON.stringify({
+  closedAt: z.date().meta({
       label: 'Closed at',
     }),
-  ),
-  price: z.string().describe(
-    JSON.stringify({
+  price: z.string().meta({
       label: 'Price',
     }),
-  ),
-  useCustomVat: z.boolean().describe(
-    JSON.stringify({
+  useCustomVat: z.boolean().meta({
       label: 'Use custom VAT',
     }),
-  ),
-  vatPercentage: z.number().describe(
-    JSON.stringify({
+  vatPercentage: z.number().meta({
       label: 'VAT percentage',
     }),
-  ),
-  limit: z.number().describe(
-    JSON.stringify({
+  limit: z.number().meta({
       label: 'Limit',
     }),
-  ),
-  sold: z.number().describe(
-    JSON.stringify({
+  sold: z.number().meta({
       label: 'Sold',
     }),
-  ),
-  reserved: z.number().describe(
-    JSON.stringify({
+  reserved: z.number().meta({
       label: 'Reserved',
     }),
-  ),
-  settings: z.looseObject({}).describe(
-    JSON.stringify({
+  settings: z.looseObject({}).meta({
       label: 'Settings',
     }),
-  ),
-  startDate: z.date().describe(
-    JSON.stringify({
+  startDate: z.date().meta({
       label: 'Start date',
     }),
-  ),
-  endDate: z.date().describe(
-    JSON.stringify({
+  endDate: z.date().meta({
       label: 'End date',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  linkedTicketBatchId: z.number().describe(
-    JSON.stringify({
+  linkedTicketBatchId: z.number().meta({
       label: 'Linked ticket batch Id',
     }),
-  ),
-  formId: z.number().describe(
-    JSON.stringify({
+  formId: z.number().meta({
       label: 'Form Id',
     }),
-  ),
-  payoutId: z.number().describe(
-    JSON.stringify({
+  payoutId: z.number().meta({
       label: 'Payout Id',
     }),
-  ),
 })
 
 const ticketBatchesFindAllSchema = {
@@ -138,8 +90,7 @@ const ticketBatchesFindAllSchema = {
     .array(
       z
         .enum(['form'])
-        .describe(
-          JSON.stringify({
+        .meta({
             label: 'Include Relations',
             description: 'Include related data',
             values: [
@@ -152,7 +103,6 @@ const ticketBatchesFindAllSchema = {
               },
             ],
           }),
-        ),
     )
     .optional(),
 }

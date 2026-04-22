@@ -8,208 +8,136 @@ import {
 } from './resource-options.js'
 
 export const TicketSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the ticket.',
     }),
-  ),
-  persons: z.number().describe(
-    JSON.stringify({
+  persons: z.number().meta({
       label: 'Persons',
     }),
-  ),
-  hashid: z.string().describe(
-    JSON.stringify({
+  hashid: z.string().meta({
       label: 'Hashid',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  price: z.number().describe(
-    JSON.stringify({
+  price: z.number().meta({
       label: 'Price',
     }),
-  ),
-  currency: z.string().describe(
-    JSON.stringify({
+  currency: z.string().meta({
       label: 'Currency',
     }),
-  ),
-  firstName: z.string().describe(
-    JSON.stringify({
+  firstName: z.string().meta({
       label: 'First name',
     }),
-  ),
-  lastName: z.string().describe(
-    JSON.stringify({
+  lastName: z.string().meta({
       label: 'Last name',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  email: z.string().describe(
-    JSON.stringify({
+  email: z.string().meta({
       label: 'Email',
     }),
-  ),
-  phone: z.string().describe(
-    JSON.stringify({
+  phone: z.string().meta({
       label: 'Phone',
     }),
-  ),
-  company: z.string().describe(
-    JSON.stringify({
+  company: z.string().meta({
       label: 'Company',
     }),
-  ),
-  token: z.string().describe(
-    JSON.stringify({
+  token: z.string().meta({
       label: 'Token',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  emailStatus: z.string().describe(
-    JSON.stringify({
+  emailStatus: z.string().meta({
       label: 'Email Status',
     }),
-  ),
-  checkinAt: z.date().describe(
-    JSON.stringify({
+  checkinAt: z.date().meta({
       label: 'Checkin At',
     }),
-  ),
-  waitlistAt: z.date().describe(
-    JSON.stringify({
+  waitlistAt: z.date().meta({
       label: 'Waitlist At',
     }),
-  ),
-  startDate: z.date().describe(
-    JSON.stringify({
+  startDate: z.date().meta({
       label: 'Start Date',
     }),
-  ),
-  endDate: z.date().describe(
-    JSON.stringify({
+  endDate: z.date().meta({
       label: 'End Date',
     }),
-  ),
-  values: z.looseObject({}).describe(
-    JSON.stringify({
+  values: z.looseObject({}).meta({
       label: 'Values',
       description:
         'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
     }),
-  ),
-  comment: z.string().describe(
-    JSON.stringify({
+  comment: z.string().meta({
       label: 'Comment',
       description: 'Internal note visible only to workspace teammates in Confetti. Not shown to attendees.',
     }),
-  ),
-  guests: z.number().describe(
-    JSON.stringify({
+  guests: z.number().meta({
       label: 'Guests',
     }),
-  ),
-  termsAcceptedAt: z.date().describe(
-    JSON.stringify({
+  termsAcceptedAt: z.date().meta({
       label: 'Terms Accepted At',
     }),
-  ),
-  deletionRequestedAt: z.date().describe(
-    JSON.stringify({
+  deletionRequestedAt: z.date().meta({
       label: 'Deletion Requested At',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created At',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated At',
     }),
-  ),
-  ticketBatchId: z.number().describe(
-    JSON.stringify({
+  ticketBatchId: z.number().meta({
       label: 'Ticket Batch Id',
     }),
-  ),
-  paymentId: z.number().describe(
-    JSON.stringify({
+  paymentId: z.number().meta({
       label: 'Payment Id',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  contactId: z.number().describe(
-    JSON.stringify({
+  contactId: z.number().meta({
       label: 'Contact Id',
     }),
-  ),
   formattedValues: z
     .array(z.looseObject({}))
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Formatted Values',
         description:
           'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
       }),
-    ),
 })
 
 export const TicketCreateSchema = z.object({
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
   ticketBatchId: z
     .number()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Ticket Batch Id',
         helpText: 'Required for ticket events',
       }),
-    ),
   firstName: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'First name',
       }),
-    ),
   lastName: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Last name',
       }),
-    ),
-  email: z.string().email().describe(
-    JSON.stringify({
+  email: z.string().email().meta({
       label: 'Email',
     }),
-  ),
   status: z
     .union([
       z.string().refine(
@@ -221,55 +149,45 @@ export const TicketCreateSchema = z.object({
       ),
       z.array(z.enum(['attending', 'invited'])),
     ])
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Status',
         values: ['attending', 'invited'],
       }),
-    ),
   phone: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Phone',
         placeholder: '+46 12 345 67 89',
         helpText: 'Mobile phone number with country code. Example: +46701234567',
       }),
-    ),
   company: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Company',
       }),
-    ),
   comment: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Comment',
         description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
       }),
-    ),
-  sendEmailConfirmation: z.boolean().describe(
-    JSON.stringify({
+  sendEmailConfirmation: z.boolean().meta({
       label: 'Send email confirmation',
       helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
     }),
-  ),
 })
 
 export const TicketUpdateSchema = z.object({
-  firstName: z.string().optional().describe(JSON.stringify({ label: 'First name' })),
-  lastName: z.string().optional().describe(JSON.stringify({ label: 'Last name' })),
+  firstName: z.string().optional().meta({ label: 'First name' }),
+  lastName: z.string().optional().meta({ label: 'Last name' }),
   email: z
     .string()
     .email({ message: 'Email is not a valid email' })
     .optional()
-    .describe(JSON.stringify({ label: 'Email' })),
+    .meta({ label: 'Email' }),
   status: z
     .string()
     .superRefine((val, ctx) => {
@@ -278,39 +196,33 @@ export const TicketUpdateSchema = z.object({
       }
     })
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Status',
         values: ['attending', 'invited'],
       }),
-    ),
-  phone: z.string().optional().describe(JSON.stringify({ label: 'Phone' })),
-  company: z.string().optional().describe(JSON.stringify({ label: 'Company' })),
+  phone: z.string().optional().meta({ label: 'Phone' }),
+  company: z.string().optional().meta({ label: 'Company' }),
   comment: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Comment',
         description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
       }),
-    ),
-  guests: z.number().optional().describe(JSON.stringify({ label: 'Guests' })),
-  values: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Values' })),
+  guests: z.number().optional().meta({ label: 'Guests' }),
+  values: z.looseObject({}).optional().meta({ label: 'Values' }),
   checkinAt: z
     .union([z.date(), z.string(), z.null()])
     .optional()
-    .describe(JSON.stringify({ label: 'Checkin At' })),
-  ticketBatchId: z.number().optional().describe(JSON.stringify({ label: 'Ticket Batch Id' })),
+    .meta({ label: 'Checkin At' }),
+  ticketBatchId: z.number().optional().meta({ label: 'Ticket Batch Id' }),
   sendEmailConfirmation: z
     .boolean()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Send email confirmation',
         helpText: 'If set to true, an email confirmation will be sent to the attendee.',
       }),
-    ),
 })
 
 const ticketsFindAllSchema = {
@@ -322,8 +234,7 @@ const ticketsFindAllSchema = {
     status: z
       .union([
         z.array(
-          z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
-            JSON.stringify({
+          z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).meta({
               label: 'Ticket Status',
               description: 'Filter tickets by status',
               values: [
@@ -371,7 +282,6 @@ const ticketsFindAllSchema = {
                 },
               ],
             }),
-          ),
         ),
         z.string().refine(
           (val) => {
@@ -386,8 +296,7 @@ const ticketsFindAllSchema = {
   }),
   sort: z
     .enum(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Sort By',
         description: 'Sort tickets by field',
         values: [
@@ -441,13 +350,11 @@ const ticketsFindAllSchema = {
             value: 'checkinAt',
           },
         ],
-      }),
-    )
+      })
     .optional(),
   include: z
     .array(
-      z.enum(['addons', 'formattedValues']).describe(
-        JSON.stringify({
+      z.enum(['addons', 'formattedValues']).meta({
           label: 'Include Relations',
           description: 'Include related data',
           values: [
@@ -468,7 +375,6 @@ const ticketsFindAllSchema = {
             },
           ],
         }),
-      ),
     )
     .optional(),
 }

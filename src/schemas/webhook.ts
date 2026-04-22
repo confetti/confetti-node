@@ -8,88 +8,62 @@ import {
 } from './resource-options.js'
 
 export const WebhookSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the webhook.',
     }),
-  ),
-  type: z.string().describe(
-    JSON.stringify({
+  type: z.string().meta({
       label: 'Type',
     }),
-  ),
-  url: z.string().describe(
-    JSON.stringify({
+  url: z.string().meta({
       label: 'URL',
     }),
-  ),
-  provider: z.string().describe(
-    JSON.stringify({
+  provider: z.string().meta({
       label: 'Provider',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created At',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated At',
     }),
-  ),
 })
 
 export const WebhookCreateSchema = z.object({
-  type: z.string().describe(
-    JSON.stringify({
+  type: z.string().meta({
       label: 'Type',
     }),
-  ),
-  url: z.string().url().describe(
-    JSON.stringify({
+  url: z.string().url().meta({
       label: 'URL',
     }),
-  ),
   provider: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Provider',
       }),
-    ),
   status: z
     .enum(['active', 'inactive'])
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Status',
       }),
-    ),
   workspaceId: z
     .number()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Workspace Id',
       }),
-    ),
   eventId: z
     .number()
     .nullable()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Event Id',
       }),
-    ),
 })
 
 const webhooksFindAllSchema = {

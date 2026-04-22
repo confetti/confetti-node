@@ -7,50 +7,36 @@ import {
 } from './resource-options.js'
 
 export const SponsorLevelSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the sponsor level.',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  style: z.string().describe(
-    JSON.stringify({
+  style: z.string().meta({
       label: 'Style',
       description: 'Visual style: large, medium, or small',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
 })
 
 export const SponsorLevelCreateSchema = z.object({
-  name: z.string().describe(JSON.stringify({ label: 'Name' })),
-  eventId: z.number().describe(JSON.stringify({ label: 'Event Id' })),
-  style: z.enum(['large', 'medium', 'small']).optional().describe(JSON.stringify({ label: 'Style' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
+  name: z.string().meta({ label: 'Name' }),
+  eventId: z.number().meta({ label: 'Event Id' }),
+  style: z.enum(['large', 'medium', 'small']).optional().meta({ label: 'Style' }),
+  order: z.number().optional().meta({ label: 'Order' }),
 })
 
 export const SponsorLevelUpdateSchema = SponsorLevelCreateSchema.partial()

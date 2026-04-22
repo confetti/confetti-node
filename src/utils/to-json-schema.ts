@@ -1,5 +1,5 @@
+import { z } from 'zod'
 import { BaseFilter } from '../types/model.js'
-import { CreateAttribute } from './schema-to-attributes.js'
 
 export interface JsonSchemaProperty {
   type: string
@@ -20,46 +20,48 @@ const typeMap: Record<string, string> = {
   object: 'object',
 }
 
-export function attributeToJsonSchema(attr: CreateAttribute): JsonSchemaProperty {
-  const schema: JsonSchemaProperty = {
-    type: typeMap[attr.type] ?? 'string',
-  }
+const metaKeysToStrip = ['label', 'helpText', 'placeholder', 'values']
 
-  const description = attr.description ?? attr.helpText
-  if (description) {
-    schema.description = description
-  }
-
-  if (attr.values?.length) {
-    schema.enum = attr.values
-  }
-
-  if (attr.type === 'object' && attr.children?.length) {
-    const properties: Record<string, JsonSchemaProperty> = {}
-    const required: string[] = []
-    for (const child of attr.children) {
-      properties[child.key] = attributeToJsonSchema(child)
-      if (child.required) required.push(child.key)
-    }
-    schema.properties = properties
-    if (required.length > 0) schema.required = required
-  }
-
-  if (attr.type === 'array') {
-    if (attr.children?.length) {
-      const properties: Record<string, JsonSchemaProperty> = {}
-      const required: string[] = []
-      for (const child of attr.children) {
-        properties[child.key] = attributeToJsonSchema(child)
-        if (child.required) required.push(child.key)
+export function schemaToJsonSchema(
+  schema: z.ZodType,
+  options?: { stripFields?: string[] },
+): Record<string, unknown> {
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
+  const raw = z.toJSONSchema(schema as any, {
+    unrepresentable: 'any',
+    override: (ctx) => {
+      // Convert z.date() → { type: 'string', format: 'date-time' }
+      if (ctx.zodSchema instanceof z.ZodDate) {
+        ctx.jsonSchema.type = 'string'
+        ctx.jsonSchema.format = 'date-time'
       }
-      schema.items = { type: 'object', properties, ...(required.length > 0 ? { required } : {}) }
-    } else {
-      schema.items = { type: attr.itemType ?? 'string' }
+      // Strip non-standard .meta() keys from JSON Schema output
+      const js: Record<string, unknown> = ctx.jsonSchema
+      for (const key of metaKeysToStrip) delete js[key]
+    },
+  })
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  const result = raw as Record<string, unknown>
+
+  // Remove $schema key
+  delete result.$schema
+
+  // Strip specified relationship fields from properties
+  if (options?.stripFields?.length && result.properties) {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const props = result.properties as Record<string, unknown>
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const required = result.required as string[] | undefined
+    for (const field of options.stripFields) {
+      delete props[field]
+      if (required) {
+        const idx = required.indexOf(field)
+        if (idx >= 0) required.splice(idx, 1)
+      }
     }
   }
 
-  return schema
+  return result
 }
 
 export function filterToJsonSchema(filter: BaseFilter): JsonSchemaProperty {

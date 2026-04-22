@@ -8,144 +8,100 @@ import {
 } from './resource-options.js'
 
 export const ContactSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the contact.',
     }),
-  ),
-  firstName: z.string().describe(
-    JSON.stringify({
+  firstName: z.string().meta({
       label: 'First Name',
     }),
-  ),
-  lastName: z.string().describe(
-    JSON.stringify({
+  lastName: z.string().meta({
       label: 'Last Name',
     }),
-  ),
-  email: z.string().describe(
-    JSON.stringify({
+  email: z.string().meta({
       label: 'Email',
     }),
-  ),
-  phone: z.string().describe(
-    JSON.stringify({
+  phone: z.string().meta({
       label: 'Phone',
     }),
-  ),
-  token: z.string().describe(
-    JSON.stringify({
+  token: z.string().meta({
       label: 'Token',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  comment: z.string().describe(
-    JSON.stringify({
+  comment: z.string().meta({
       label: 'Comment',
     }),
-  ),
-  lastSeen: z.date().describe(
-    JSON.stringify({
+  lastSeen: z.date().meta({
       label: 'Last Seen',
     }),
-  ),
   deletionRequestedAt: z
     .date()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Deletion Requested At',
       }),
-    ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created At',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated At',
     }),
-  ),
-  organisationId: z.number().describe(
-    JSON.stringify({
+  organisationId: z.number().meta({
       label: 'Organisation Id',
     }),
-  ),
-  company: z.string().describe(
-    JSON.stringify({
+  company: z.string().meta({
       label: 'Company',
     }),
-  ),
 })
 
 export const ContactCreateSchema = z.object({
   firstName: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'First Name',
       }),
-    ),
   lastName: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Last Name',
       }),
-    ),
-  email: z.string().email().describe(
-    JSON.stringify({
+  email: z.string().email().meta({
       label: 'Email',
     }),
-  ),
   phone: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Phone',
         placeholder: '+46 12 345 67 89',
         helpText: 'Mobile phone number with country code. Example: +46701234567',
       }),
-    ),
   comment: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Comment',
       }),
-    ),
   company: z
     .string()
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Company',
       }),
-    ),
   categoryIds: z
     .array(z.number())
     .optional()
-    .describe(
-      JSON.stringify({
+    .meta({
         label: 'Categories',
         helpText: 'Attach categories to your contact.',
       }),
-    ),
-  workspaceId: z.number().describe(
-    JSON.stringify({
+  workspaceId: z.number().meta({
       label: 'Workspace Id',
     }),
-  ),
 })
 
 const contactsFindAllSchema = {

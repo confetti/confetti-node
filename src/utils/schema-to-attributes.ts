@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { getMeta } from './schema-meta.js'
 
 export interface AttributeOptions {
   includeRequired?: boolean
@@ -33,7 +34,7 @@ function extractObjectChildren(zodObj: z.ZodObject<z.ZodRawShape>): CreateAttrib
 
 // Get array element type info, recursing into object elements
 function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): { itemType: string; children?: CreateAttribute[] } {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
   const element = (arraySchema as any)._def.element ?? (arraySchema as any).element
   if (element instanceof z.ZodObject) {
     const children = extractObjectChildren(element)
@@ -58,7 +59,7 @@ function resolveTypeInfo(schema: any): { type: string; values?: string[]; childr
     return { type: 'object', ...(children.length > 0 ? { children } : {}) }
   }
   if (schema instanceof z.ZodArray) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
     const { itemType, children } = getArrayElementInfo(schema as any)
     return { type: 'array', itemType, ...(children ? { children } : {}) }
   }
@@ -82,7 +83,7 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     let children: CreateAttribute[] | undefined
     let itemType: string | undefined
 
-    // Extract metadata from Zod schema
+    // Extract metadata from Zod schema .meta()
     let metadata: {
       label?: string
       description?: string
@@ -91,14 +92,16 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
       values?: string[]
     } = {}
 
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const fieldWithDescription = fieldSchema as unknown as { description?: string }
-    if (fieldWithDescription.description) {
-      try {
-        metadata = JSON.parse(fieldWithDescription.description)
-      } catch (_error) {
-        // If JSON parsing fails, use empty metadata
-        metadata = {}
+    // Try outer schema first, then inner type (for .partial() wrapping)
+    const meta = getMeta(fieldSchema) ??
+      (fieldSchema instanceof z.ZodOptional ? getMeta(fieldSchema._def.innerType) : undefined)
+    if (meta) {
+      metadata = {
+        label: meta.label,
+        description: meta.description,
+        placeholder: meta.placeholder,
+        helpText: meta.helpText,
+        values: meta.values?.map(String),
       }
     }
 

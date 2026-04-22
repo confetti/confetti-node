@@ -8,31 +8,21 @@ import {
 } from './resource-options.js'
 
 export const BlockSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
     }),
-  ),
-  type: z.string().describe(
-    JSON.stringify({
+  type: z.string().meta({
       label: 'Type',
     }),
-  ),
-  content: z.json().describe(
-    JSON.stringify({
+  content: z.json().meta({
       label: 'Content',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
 })
 
 // Block uses `blockType` instead of `type` to avoid collision with the
@@ -88,43 +78,43 @@ const blockContentDescription = [
 export const BlockCreateSchema = z.object({
   blockType: z
     .enum(blockTypes)
-    .describe(JSON.stringify({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' })),
+    .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
   status: z
     .enum(blockStatuses)
-    .describe(JSON.stringify({ label: 'Status', description: 'Block visibility status.' })),
-  slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content', description: blockContentDescription })),
-  blockStyleId: z.number().optional().describe(JSON.stringify({ label: 'Block Style Id' })),
-  pageId: z.number().optional().describe(JSON.stringify({ label: 'Page Id' })),
-  eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
-  workspaceId: z.number().optional().describe(JSON.stringify({ label: 'Workspace Id' })),
+    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  slug: z.string().optional().meta({ label: 'Slug' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
+  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
+  pageId: z.number().optional().meta({ label: 'Page Id' }),
+  eventId: z.number().optional().meta({ label: 'Event Id' }),
+  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
   categoryIds: z
     .array(z.number())
     .optional()
-    .describe(JSON.stringify({ label: 'Categories' })),
+    .meta({ label: 'Categories' }),
 })
 
 export const BlockUpdateSchema = z.object({
   blockType: z
     .enum(blockTypes)
     .optional()
-    .describe(JSON.stringify({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' })),
+    .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
   status: z
     .enum(blockStatuses)
     .optional()
-    .describe(JSON.stringify({ label: 'Status', description: 'Block visibility status.' })),
-  slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content', description: blockContentDescription })),
-  blockStyleId: z.number().optional().describe(JSON.stringify({ label: 'Block Style Id' })),
-  pageId: z.number().optional().describe(JSON.stringify({ label: 'Page Id' })),
-  eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
-  workspaceId: z.number().optional().describe(JSON.stringify({ label: 'Workspace Id' })),
+    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  slug: z.string().optional().meta({ label: 'Slug' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
+  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
+  pageId: z.number().optional().meta({ label: 'Page Id' }),
+  eventId: z.number().optional().meta({ label: 'Event Id' }),
+  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
   categoryIds: z
     .array(z.number())
     .optional()
-    .describe(JSON.stringify({ label: 'Categories' })),
+    .meta({ label: 'Categories' }),
 })
 
 const blocksFindAllSchema = {

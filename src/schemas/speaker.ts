@@ -19,91 +19,63 @@ export const SpeakerSettingsSchema = z.object({
 })
 
 export const SpeakerSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the speaker.',
     }),
-  ),
-  isAnnounced: z.boolean().describe(
-    JSON.stringify({
+  isAnnounced: z.boolean().meta({
       label: 'Announced',
     }),
-  ),
-  isHidden: z.boolean().describe(
-    JSON.stringify({
+  isHidden: z.boolean().meta({
       label: 'Hidden',
     }),
-  ),
-  firstName: z.string().describe(
-    JSON.stringify({
+  firstName: z.string().meta({
       label: 'First name',
     }),
-  ),
-  lastName: z.string().describe(
-    JSON.stringify({
+  lastName: z.string().meta({
       label: 'Last name',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  occupation: z.string().describe(
-    JSON.stringify({
+  occupation: z.string().meta({
       label: 'Occupation',
     }),
-  ),
-  bio: z.string().describe(
-    JSON.stringify({
+  bio: z.string().meta({
       label: 'Bio',
       description: 'HTML biography of the speaker',
     }),
-  ),
-  status: z.string().describe(
-    JSON.stringify({
+  status: z.string().meta({
       label: 'Status',
     }),
-  ),
-  settings: SpeakerSettingsSchema.describe(
-    JSON.stringify({
+  settings: SpeakerSettingsSchema.meta({
       label: 'Settings',
       description: 'Speaker settings including social media',
     }),
-  ),
-  eventId: z.number().describe(
-    JSON.stringify({
+  eventId: z.number().meta({
       label: 'Event Id',
     }),
-  ),
-  imageId: z.number().describe(
-    JSON.stringify({
+  imageId: z.number().meta({
       label: 'Image Id',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
 })
 
 export const SpeakerCreateSchema = z.object({
-  firstName: z.string().describe(JSON.stringify({ label: 'First name' })),
-  eventId: z.number().describe(JSON.stringify({ label: 'Event Id' })),
-  lastName: z.string().optional().describe(JSON.stringify({ label: 'Last name' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  occupation: z.string().optional().describe(JSON.stringify({ label: 'Occupation' })),
-  bio: z.string().optional().describe(JSON.stringify({ label: 'Bio' })),
-  status: z.enum(['announced', 'hidden']).optional().describe(JSON.stringify({ label: 'Status' })),
-  settings: SpeakerSettingsSchema.optional().describe(JSON.stringify({ label: 'Settings' })),
-  imageId: z.number().optional().describe(JSON.stringify({ label: 'Image Id' })),
+  firstName: z.string().meta({ label: 'First name' }),
+  eventId: z.number().meta({ label: 'Event Id' }),
+  lastName: z.string().optional().meta({ label: 'Last name' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  occupation: z.string().optional().meta({ label: 'Occupation' }),
+  bio: z.string().optional().meta({ label: 'Bio' }),
+  status: z.enum(['announced', 'hidden']).optional().meta({ label: 'Status' }),
+  settings: SpeakerSettingsSchema.optional().meta({ label: 'Settings' }),
+  imageId: z.number().optional().meta({ label: 'Image Id' }),
 })
 
 export const SpeakerUpdateSchema = SpeakerCreateSchema.partial()

@@ -358,8 +358,7 @@ describe('resource-options-to-model', () => {
             status: z
               .union([
                 z.array(
-                  z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).describe(
-                    JSON.stringify({
+                  z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).meta({
                       label: 'Ticket Status',
                       description: 'Filter tickets by status',
                       values: [
@@ -407,7 +406,6 @@ describe('resource-options-to-model', () => {
                         },
                       ],
                     }),
-                  ),
                 ),
                 z.string().refine(
                   (val) => {

@@ -7,61 +7,43 @@ import {
 } from './resource-options.js'
 
 export const SponsorSchema = z.object({
-  id: z.number().describe(
-    JSON.stringify({
+  id: z.number().meta({
       label: 'ID',
       description: 'Identifier of the sponsor.',
     }),
-  ),
-  name: z.string().describe(
-    JSON.stringify({
+  name: z.string().meta({
       label: 'Name',
     }),
-  ),
-  description: z.string().describe(
-    JSON.stringify({
+  description: z.string().meta({
       label: 'Description',
     }),
-  ),
-  website: z.string().describe(
-    JSON.stringify({
+  website: z.string().meta({
       label: 'Website',
     }),
-  ),
-  order: z.number().describe(
-    JSON.stringify({
+  order: z.number().meta({
       label: 'Order',
     }),
-  ),
-  sponsorLevelId: z.number().describe(
-    JSON.stringify({
+  sponsorLevelId: z.number().meta({
       label: 'Sponsor Level Id',
     }),
-  ),
-  imageId: z.number().describe(
-    JSON.stringify({
+  imageId: z.number().meta({
       label: 'Image Id',
     }),
-  ),
-  createdAt: z.date().describe(
-    JSON.stringify({
+  createdAt: z.date().meta({
       label: 'Created at',
     }),
-  ),
-  updatedAt: z.date().describe(
-    JSON.stringify({
+  updatedAt: z.date().meta({
       label: 'Updated at',
     }),
-  ),
 })
 
 export const SponsorCreateSchema = z.object({
-  name: z.string().describe(JSON.stringify({ label: 'Name' })),
-  sponsorLevelId: z.number().describe(JSON.stringify({ label: 'Sponsor Level Id' })),
-  description: z.string().optional().describe(JSON.stringify({ label: 'Description' })),
-  website: z.string().optional().describe(JSON.stringify({ label: 'Website' })),
-  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  imageId: z.number().optional().describe(JSON.stringify({ label: 'Image Id' })),
+  name: z.string().meta({ label: 'Name' }),
+  sponsorLevelId: z.number().meta({ label: 'Sponsor Level Id' }),
+  description: z.string().optional().meta({ label: 'Description' }),
+  website: z.string().optional().meta({ label: 'Website' }),
+  order: z.number().optional().meta({ label: 'Order' }),
+  imageId: z.number().optional().meta({ label: 'Image Id' }),
 })
 
 export const SponsorUpdateSchema = SponsorCreateSchema.partial()

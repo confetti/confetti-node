@@ -1,4 +1,9 @@
 import { z } from 'zod'
+import { getMeta } from './schema-meta.js'
+
+type FilterValues =
+  | Array<{ value: string; label: string }>
+  | Array<{ label: string; description: string; type: string; key: string; value: string }>
 
 export function extractFiltersFromSchema(schema: z.ZodSchema): Record<
   string,
@@ -159,20 +164,14 @@ function extractFieldConfig(
       if (option instanceof z.ZodArray) {
         const elementType = option.element
         if (elementType instanceof z.ZodEnum) {
-          // Check if the enum has enhanced descriptions
-          const description = elementType.description
-          if (description) {
-            try {
-              const parsed = JSON.parse(description)
-              if (parsed.values && Array.isArray(parsed.values)) {
-                return {
-                  type: 'array',
-                  label, // Use key-based label for filter fields
-                  values: parsed.values,
-                }
-              }
-            } catch (_e) {
-              // Fall back to default behavior if parsing fails
+          // Check if the enum has enhanced metadata
+          const meta = getMeta(elementType)
+          if (meta?.values && Array.isArray(meta.values)) {
+            return {
+              type: 'array',
+              label, // Use key-based label for filter fields
+              // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+              values: meta.values as FilterValues,
             }
           }
           return {
@@ -189,21 +188,15 @@ function extractFieldConfig(
         return { type: 'array', label }
       }
       if (option instanceof z.ZodEnum) {
-        // Check if the enum has enhanced descriptions
-        const description = option.description
-        if (description) {
-          try {
-            const parsed = JSON.parse(description)
-            if (parsed.values && Array.isArray(parsed.values)) {
-              return {
-                type: 'enum',
-                label: parsed.label || label,
-                default: '',
-                values: parsed.values,
-              }
-            }
-          } catch (_e) {
-            // Fall back to default behavior if parsing fails
+        // Check if the enum has enhanced metadata
+        const meta = getMeta(option)
+        if (meta?.values && Array.isArray(meta.values)) {
+          return {
+            type: 'enum',
+            label: meta.label || label,
+            default: '',
+            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+            values: meta.values as FilterValues,
           }
         }
         return {
@@ -225,20 +218,14 @@ function extractFieldConfig(
   if (field instanceof z.ZodArray) {
     const elementType = field.element
     if (elementType instanceof z.ZodEnum) {
-      // Check if the enum has enhanced descriptions
-      const description = elementType.description
-      if (description) {
-        try {
-          const parsed = JSON.parse(description)
-          if (parsed.values && Array.isArray(parsed.values)) {
-            return {
-              type: 'array',
-              label: parsed.label || label,
-              values: parsed.values,
-            }
-          }
-        } catch (_e) {
-          // Fall back to default behavior if parsing fails
+      // Check if the enum has enhanced metadata
+      const meta = getMeta(elementType)
+      if (meta?.values && Array.isArray(meta.values)) {
+        return {
+          type: 'array',
+          label: meta.label || label,
+          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+          values: meta.values as FilterValues,
         }
       }
       return {
@@ -256,21 +243,15 @@ function extractFieldConfig(
   }
 
   if (field instanceof z.ZodEnum) {
-    // Check if the enum has enhanced descriptions
-    const description = field.description
-    if (description) {
-      try {
-        const parsed = JSON.parse(description)
-        if (parsed.values && Array.isArray(parsed.values)) {
-          return {
-            type: 'enum',
-            label: parsed.label || label,
-            default: '',
-            values: parsed.values,
-          }
-        }
-      } catch (_e) {
-        // Fall back to default behavior if parsing fails
+    // Check if the enum has enhanced metadata
+    const meta = getMeta(field)
+    if (meta?.values && Array.isArray(meta.values)) {
+      return {
+        type: 'enum',
+        label: meta.label || label,
+        default: '',
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+        values: meta.values as FilterValues,
       }
     }
 
