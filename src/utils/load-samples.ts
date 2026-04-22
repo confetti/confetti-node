@@ -34,6 +34,10 @@ import formRaw from '../models/samples/form/raw.js'
 import formFormatted from '../models/samples/form/formatted.js'
 import formFieldRaw from '../models/samples/form-field/raw.js'
 import formFieldFormatted from '../models/samples/form-field/formatted.js'
+import sponsorRaw from '../models/samples/sponsor/raw.js'
+import sponsorFormatted from '../models/samples/sponsor/formatted.js'
+import sponsorLevelRaw from '../models/samples/sponsor-level/raw.js'
+import sponsorLevelFormatted from '../models/samples/sponsor-level/formatted.js'
 
 const samples = {
   block: { raw: blockRaw, formatted: blockFormatted },
@@ -53,6 +57,8 @@ const samples = {
   addon: { raw: addonRaw, formatted: addonFormatted },
   form: { raw: formRaw, formatted: formFormatted },
   formField: { raw: formFieldRaw, formatted: formFieldFormatted },
+  sponsor: { raw: sponsorRaw, formatted: sponsorFormatted },
+  sponsorLevel: { raw: sponsorLevelRaw, formatted: sponsorLevelFormatted },
 }
 
 /**

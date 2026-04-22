@@ -1,6 +1,8 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   id: '112',
-  type: 'organiser',
+  [TYPE]: 'organiser',
   description: null,
   email: 'john@doe.se',
   name: 'John Doe',

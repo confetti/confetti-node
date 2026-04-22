@@ -1,6 +1,8 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   id: '173',
-  type: 'scheduleItem',
+  [TYPE]: 'scheduleItem',
   title: 'Boosting Web Performance in 2026',
   location: 'Stage B3',
   start: '2026-03-26T13:30:00.000Z',

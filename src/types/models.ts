@@ -11,12 +11,14 @@ import type { TicketBatch } from '../schemas/ticket-batch.js'
 import type { Block, BlockCreate, BlockUpdate } from '../schemas/block.js'
 import type { Image, ImageCreate, ImageUpdate } from '../schemas/image.js'
 import type { Page, PageCreate, PageUpdate } from '../schemas/page.js'
-import type { ScheduleItem } from '../schemas/schedule-item.js'
-import type { Speaker } from '../schemas/speaker.js'
-import type { Organiser } from '../schemas/organiser.js'
+import type { ScheduleItem, ScheduleItemCreate, ScheduleItemUpdate } from '../schemas/schedule-item.js'
+import type { Speaker, SpeakerCreate, SpeakerUpdate } from '../schemas/speaker.js'
+import type { Organiser, OrganiserCreate, OrganiserUpdate } from '../schemas/organiser.js'
 import type { Addon } from '../schemas/addon.js'
 import type { Form } from '../schemas/form.js'
 import type { FormField } from '../schemas/form-field.js'
+import type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
+import type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
 
 // Re-export all model types
 export type {
@@ -43,11 +45,23 @@ export type {
   PageCreate,
   PageUpdate,
   ScheduleItem,
+  ScheduleItemCreate,
+  ScheduleItemUpdate,
   Speaker,
+  SpeakerCreate,
+  SpeakerUpdate,
   Organiser,
+  OrganiserCreate,
+  OrganiserUpdate,
   Addon,
   Form,
   FormField,
+  Sponsor,
+  SponsorCreate,
+  SponsorUpdate,
+  SponsorLevel,
+  SponsorLevelCreate,
+  SponsorLevelUpdate,
 }
 
 // Union type for all models
@@ -69,3 +83,5 @@ export type ConfettiModel =
   | Addon
   | Form
   | FormField
+  | Sponsor
+  | SponsorLevel

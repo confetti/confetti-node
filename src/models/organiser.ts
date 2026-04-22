@@ -1,6 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { OrganiserSchema } from '../schemas/organiser.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import { OrganiserSchema, OrganiserCreateSchema, OrganiserUpdateSchema } from '../schemas/organiser.js'
 import { ModelDefinition } from '../types/model.js'
 
 export default function OrganiserModel(): ModelDefinition {
@@ -18,7 +18,19 @@ export default function OrganiserModel(): ModelDefinition {
         schema: OrganiserSchema,
         attributes: schemaToAttributes(OrganiserSchema),
       },
+      create: {
+        schema: OrganiserCreateSchema,
+        attributes: schemaToCreateAttributes(OrganiserCreateSchema),
+      },
+      update: {
+        schema: OrganiserUpdateSchema,
+        attributes: schemaToCreateAttributes(OrganiserUpdateSchema),
+      },
     },
+    relationships: [
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'imageId', relationship: 'image', type: 'belongsTo' },
+    ],
     webhooks: [],
   }
 }

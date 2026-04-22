@@ -14,6 +14,11 @@ import blockPresenter from './block.js'
 import imagePresenter from './image.js'
 import formPresenter from './form.js'
 import formFieldPresenter from './form-field.js'
+import speakerPresenter from './speaker.js'
+import organiserPresenter from './organiser.js'
+import scheduleItemPresenter from './schedule-item.js'
+import sponsorPresenter from './sponsor.js'
+import sponsorLevelPresenter from './sponsor-level.js'
 
 const { Presenter } = yayson()
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -50,6 +55,11 @@ const BlockPresenter = blockPresenter({ presenters, Presenter })
 const ImagePresenter = imagePresenter({ presenters, Presenter })
 const FormPresenter = formPresenter({ presenters, Presenter })
 const FormFieldPresenter = formFieldPresenter({ presenters, Presenter })
+const SpeakerPresenter = speakerPresenter({ presenters, Presenter })
+const OrganiserPresenter = organiserPresenter({ presenters, Presenter })
+const ScheduleItemPresenter = scheduleItemPresenter({ presenters, Presenter })
+const SponsorLevelPresenter = sponsorLevelPresenter({ presenters, Presenter })
+const SponsorPresenter = sponsorPresenter({ presenters, Presenter })
 
 presenters.WebhookPresenter = WebhookPresenter
 presenters.EventPresenter = EventPresenter
@@ -65,6 +75,11 @@ presenters.BlockPresenter = BlockPresenter
 presenters.ImagePresenter = ImagePresenter
 presenters.FormPresenter = FormPresenter
 presenters.FormFieldPresenter = FormFieldPresenter
+presenters.SpeakerPresenter = SpeakerPresenter
+presenters.OrganiserPresenter = OrganiserPresenter
+presenters.ScheduleItemPresenter = ScheduleItemPresenter
+presenters.SponsorLevelPresenter = SponsorLevelPresenter
+presenters.SponsorPresenter = SponsorPresenter
 
 const presentersCollection: Presenters = {
   webhooks: WebhookPresenter,
@@ -81,6 +96,11 @@ const presentersCollection: Presenters = {
   images: ImagePresenter,
   forms: FormPresenter,
   formFields: FormFieldPresenter,
+  speakers: SpeakerPresenter,
+  organisers: OrganiserPresenter,
+  scheduleItems: ScheduleItemPresenter,
+  sponsors: SponsorPresenter,
+  sponsorLevels: SponsorLevelPresenter,
 }
 
 export default presentersCollection

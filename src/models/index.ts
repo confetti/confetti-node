@@ -15,6 +15,8 @@ import organiser from './organiser.js'
 import addon from './addon.js'
 import form from './form.js'
 import formField from './form-field.js'
+import sponsor from './sponsor.js'
+import sponsorLevel from './sponsor-level.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
@@ -27,12 +29,14 @@ export type { TicketBatch } from '../schemas/ticket-batch.js'
 export type { Block, BlockCreate, BlockUpdate } from '../schemas/block.js'
 export type { Image, ImageCreate, ImageUpdate } from '../schemas/image.js'
 export type { Page, PageCreate, PageUpdate } from '../schemas/page.js'
-export type { ScheduleItem } from '../schemas/schedule-item.js'
-export type { Speaker } from '../schemas/speaker.js'
-export type { Organiser } from '../schemas/organiser.js'
+export type { ScheduleItem, ScheduleItemCreate, ScheduleItemUpdate } from '../schemas/schedule-item.js'
+export type { Speaker, SpeakerCreate, SpeakerUpdate } from '../schemas/speaker.js'
+export type { Organiser, OrganiserCreate, OrganiserUpdate } from '../schemas/organiser.js'
 export type { Addon, AddonCreate } from '../schemas/addon.js'
 export type { Form } from '../schemas/form.js'
 export type { FormField } from '../schemas/form-field.js'
+export type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
+export type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
 
 export default {
   block: block(),
@@ -52,4 +56,6 @@ export default {
   addon: addon(),
   form: form(),
   formField: formField(),
+  sponsor: sponsor(),
+  sponsorLevel: sponsorLevel(),
 }
