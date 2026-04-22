@@ -45,6 +45,11 @@ export interface PresentersMap {
   ImagePresenter: ImagePresenter
   FormPresenter: FormPresenter
   FormFieldPresenter: FormFieldPresenter
+  SpeakerPresenter: SpeakerPresenter
+  OrganiserPresenter: OrganiserPresenter
+  ScheduleItemPresenter: ScheduleItemPresenter
+  SponsorPresenter: SponsorPresenter
+  SponsorLevelPresenter: SponsorLevelPresenter
 }
 
 // Specific presenter types
@@ -166,6 +171,31 @@ export interface FormFieldPresenter extends BasePresenter {
   plural: 'formFields'
 }
 
+export interface SpeakerPresenter extends BasePresenter {
+  type: 'speaker'
+  plural: 'speakers'
+}
+
+export interface OrganiserPresenter extends BasePresenter {
+  type: 'organiser'
+  plural: 'organisers'
+}
+
+export interface ScheduleItemPresenter extends BasePresenter {
+  type: 'scheduleItem'
+  plural: 'scheduleItems'
+}
+
+export interface SponsorPresenter extends BasePresenter {
+  type: 'sponsor'
+  plural: 'sponsors'
+}
+
+export interface SponsorLevelPresenter extends BasePresenter {
+  type: 'sponsorLevel'
+  plural: 'sponsorLevels'
+}
+
 // Presenters collection type
 export interface Presenters {
   webhooks: WebhookPresenter
@@ -182,4 +212,9 @@ export interface Presenters {
   images: ImagePresenter
   forms: FormPresenter
   formFields: FormFieldPresenter
+  speakers: SpeakerPresenter
+  organisers: OrganiserPresenter
+  scheduleItems: ScheduleItemPresenter
+  sponsors: SponsorPresenter
+  sponsorLevels: SponsorLevelPresenter
 }

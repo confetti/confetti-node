@@ -1,6 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { SpeakerSchema } from '../schemas/speaker.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import { SpeakerSchema, SpeakerCreateSchema, SpeakerUpdateSchema } from '../schemas/speaker.js'
 import { ModelDefinition } from '../types/model.js'
 
 export default function SpeakerModel(): ModelDefinition {
@@ -17,6 +17,14 @@ export default function SpeakerModel(): ModelDefinition {
       read: {
         schema: SpeakerSchema,
         attributes: schemaToAttributes(SpeakerSchema),
+      },
+      create: {
+        schema: SpeakerCreateSchema,
+        attributes: schemaToCreateAttributes(SpeakerCreateSchema),
+      },
+      update: {
+        schema: SpeakerUpdateSchema,
+        attributes: schemaToCreateAttributes(SpeakerUpdateSchema),
       },
     },
     webhooks: [],

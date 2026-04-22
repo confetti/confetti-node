@@ -1,4 +1,10 @@
 import { z } from 'zod'
+import {
+  baseOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 const socialMediaButtonSchema = z.object({
   url: z.string(),
@@ -88,5 +94,35 @@ export const SpeakerSchema = z.object({
   ),
 })
 
+export const SpeakerCreateSchema = z.object({
+  firstName: z.string().describe(JSON.stringify({ label: 'First name' })),
+  eventId: z.number().describe(JSON.stringify({ label: 'Event Id' })),
+  lastName: z.string().optional().describe(JSON.stringify({ label: 'Last name' })),
+  order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
+  occupation: z.string().optional().describe(JSON.stringify({ label: 'Occupation' })),
+  bio: z.string().optional().describe(JSON.stringify({ label: 'Bio' })),
+  status: z.enum(['announced', 'hidden']).optional().describe(JSON.stringify({ label: 'Status' })),
+  settings: SpeakerSettingsSchema.optional().describe(JSON.stringify({ label: 'Settings' })),
+  imageId: z.number().optional().describe(JSON.stringify({ label: 'Image Id' })),
+})
+
+export const SpeakerUpdateSchema = SpeakerCreateSchema.partial()
+
+export const speakersFindOptionsSchema = findBaseOptionsSchema.extend({})
+
+export const staticSpeakersFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
+export const staticSpeakersCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticSpeakersUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+
 export type Speaker = z.infer<typeof SpeakerSchema>
 export type SpeakerSettings = z.infer<typeof SpeakerSettingsSchema>
+export type SpeakerCreate = z.infer<typeof SpeakerCreateSchema>
+export type SpeakerCreateData = z.infer<typeof SpeakerCreateSchema>
+export type SpeakerUpdate = z.infer<typeof SpeakerUpdateSchema>
+export type SpeakerUpdateData = z.infer<typeof SpeakerUpdateSchema>
+export type SpeakersFindOptions = z.infer<typeof speakersFindOptionsSchema>
+export type SpeakersCreateOptions = z.infer<typeof baseOptionsSchema>
+export type SpeakersUpdateOptions = z.infer<typeof baseOptionsSchema>
+export type StaticSpeakersFindOptions = z.infer<typeof staticSpeakersFindOptionsSchema>
+export type StaticSpeakersCreateOptions = z.infer<typeof staticSpeakersCreateOptionsSchema>
+export type StaticSpeakersUpdateOptions = z.infer<typeof staticSpeakersUpdateOptionsSchema>

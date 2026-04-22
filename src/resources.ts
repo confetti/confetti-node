@@ -98,6 +98,46 @@ import {
   type FormFieldsFindAllOptions,
   type FormFieldsFindOptions,
 } from './schemas/form-field.js'
+import {
+  speakersFindOptionsSchema,
+  type SpeakersFindOptions,
+  type SpeakersCreateOptions,
+  type SpeakersUpdateOptions,
+  type SpeakerCreateData,
+  type SpeakerUpdateData,
+} from './schemas/speaker.js'
+import {
+  organisersFindOptionsSchema,
+  type OrganisersFindOptions,
+  type OrganisersCreateOptions,
+  type OrganisersUpdateOptions,
+  type OrganiserCreateData,
+  type OrganiserUpdateData,
+} from './schemas/organiser.js'
+import {
+  scheduleItemsFindOptionsSchema,
+  type ScheduleItemsFindOptions,
+  type ScheduleItemsCreateOptions,
+  type ScheduleItemsUpdateOptions,
+  type ScheduleItemCreateData,
+  type ScheduleItemUpdateData,
+} from './schemas/schedule-item.js'
+import {
+  sponsorsFindOptionsSchema,
+  type SponsorsFindOptions,
+  type SponsorsCreateOptions,
+  type SponsorsUpdateOptions,
+  type SponsorCreateData,
+  type SponsorUpdateData,
+} from './schemas/sponsor.js'
+import {
+  sponsorLevelsFindOptionsSchema,
+  type SponsorLevelsFindOptions,
+  type SponsorLevelsCreateOptions,
+  type SponsorLevelsUpdateOptions,
+  type SponsorLevelCreateData,
+  type SponsorLevelUpdateData,
+} from './schemas/sponsor-level.js'
 import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
@@ -115,6 +155,11 @@ import {
   Image,
   Form,
   FormField,
+  Speaker,
+  Organiser,
+  ScheduleItem,
+  Sponsor,
+  SponsorLevel,
 } from './types/models.js'
 import models from './models/index.js'
 
@@ -477,6 +522,52 @@ export const formsResource = {
   },
 }
 
+export const speakersResource = {
+  find: (id: string | number, options: SpeakersFindOptions = {}, adapter: Adapter): Promise<Speaker> => {
+    const validatedOptions = speakersFindOptionsSchema.parse(options)
+    return adapter.get<Speaker>({
+      path: `${models.speaker.path}/${id}`,
+      type: models.speaker.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: SpeakerCreateData, options: SpeakersCreateOptions = {}, adapter: Adapter): Promise<Speaker> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.speaker.operations.create) throw new Error('Speaker create operation not found')
+    const validatedData = models.speaker.operations.create.schema.parse(json)
+    return adapter.post<Speaker>({
+      json: validatedData,
+      path: models.speaker.path,
+      type: models.speaker.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: SpeakerUpdateData,
+    options: SpeakersUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Speaker> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.speaker.operations.update) throw new Error('Speaker update operation not found')
+    const validatedData = models.speaker.operations.update.schema.parse(json)
+    return adapter.put<Speaker>({
+      json: validatedData,
+      path: `${models.speaker.path}/${id}`,
+      type: models.speaker.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: SpeakersFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = speakersFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.speaker.path}/${id}`,
+      type: models.speaker.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
 export const formFieldsResource = {
   findAll: (options: FormFieldsFindAllOptions, adapter: Adapter): Promise<FormField[]> => {
     const validatedOptions = formFieldsFindAllOptionsSchema.parse(options)
@@ -491,6 +582,206 @@ export const formFieldsResource = {
     return adapter.get<FormField>({
       path: `${models.formField.path}/${id}`,
       type: models.formField.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const organisersResource = {
+  find: (id: string | number, options: OrganisersFindOptions = {}, adapter: Adapter): Promise<Organiser> => {
+    const validatedOptions = organisersFindOptionsSchema.parse(options)
+    return adapter.get<Organiser>({
+      path: `${models.organiser.path}/${id}`,
+      type: models.organiser.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: OrganiserCreateData, options: OrganisersCreateOptions = {}, adapter: Adapter): Promise<Organiser> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.organiser.operations.create) throw new Error('Organiser create operation not found')
+    const validatedData = models.organiser.operations.create.schema.parse(json)
+    return adapter.post<Organiser>({
+      json: validatedData,
+      path: models.organiser.path,
+      type: models.organiser.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: OrganiserUpdateData,
+    options: OrganisersUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Organiser> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.organiser.operations.update) throw new Error('Organiser update operation not found')
+    const validatedData = models.organiser.operations.update.schema.parse(json)
+    return adapter.put<Organiser>({
+      json: validatedData,
+      path: `${models.organiser.path}/${id}`,
+      type: models.organiser.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: OrganisersFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = organisersFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.organiser.path}/${id}`,
+      type: models.organiser.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const scheduleItemsResource = {
+  find: (
+    id: string | number,
+    options: ScheduleItemsFindOptions = {},
+    adapter: Adapter,
+  ): Promise<ScheduleItem> => {
+    const validatedOptions = scheduleItemsFindOptionsSchema.parse(options)
+    return adapter.get<ScheduleItem>({
+      path: `${models.scheduleItem.path}/${id}`,
+      type: models.scheduleItem.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (
+    json: ScheduleItemCreateData,
+    options: ScheduleItemsCreateOptions = {},
+    adapter: Adapter,
+  ): Promise<ScheduleItem> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.scheduleItem.operations.create) throw new Error('ScheduleItem create operation not found')
+    const validatedData = models.scheduleItem.operations.create.schema.parse(json)
+    return adapter.post<ScheduleItem>({
+      json: validatedData,
+      path: models.scheduleItem.path,
+      type: models.scheduleItem.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: ScheduleItemUpdateData,
+    options: ScheduleItemsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<ScheduleItem> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.scheduleItem.operations.update) throw new Error('ScheduleItem update operation not found')
+    const validatedData = models.scheduleItem.operations.update.schema.parse(json)
+    return adapter.put<ScheduleItem>({
+      json: validatedData,
+      path: `${models.scheduleItem.path}/${id}`,
+      type: models.scheduleItem.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: ScheduleItemsFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = scheduleItemsFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.scheduleItem.path}/${id}`,
+      type: models.scheduleItem.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const sponsorsResource = {
+  find: (id: string | number, options: SponsorsFindOptions = {}, adapter: Adapter): Promise<Sponsor> => {
+    const validatedOptions = sponsorsFindOptionsSchema.parse(options)
+    return adapter.get<Sponsor>({
+      path: `${models.sponsor.path}/${id}`,
+      type: models.sponsor.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: SponsorCreateData, options: SponsorsCreateOptions = {}, adapter: Adapter): Promise<Sponsor> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.sponsor.operations.create) throw new Error('Sponsor create operation not found')
+    const validatedData = models.sponsor.operations.create.schema.parse(json)
+    return adapter.post<Sponsor>({
+      json: validatedData,
+      path: models.sponsor.path,
+      type: models.sponsor.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: SponsorUpdateData,
+    options: SponsorsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Sponsor> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.sponsor.operations.update) throw new Error('Sponsor update operation not found')
+    const validatedData = models.sponsor.operations.update.schema.parse(json)
+    return adapter.put<Sponsor>({
+      json: validatedData,
+      path: `${models.sponsor.path}/${id}`,
+      type: models.sponsor.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: SponsorsFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = sponsorsFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.sponsor.path}/${id}`,
+      type: models.sponsor.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const sponsorLevelsResource = {
+  find: (
+    id: string | number,
+    options: SponsorLevelsFindOptions = {},
+    adapter: Adapter,
+  ): Promise<SponsorLevel> => {
+    const validatedOptions = sponsorLevelsFindOptionsSchema.parse(options)
+    return adapter.get<SponsorLevel>({
+      path: `${models.sponsorLevel.path}/${id}`,
+      type: models.sponsorLevel.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (
+    json: SponsorLevelCreateData,
+    options: SponsorLevelsCreateOptions = {},
+    adapter: Adapter,
+  ): Promise<SponsorLevel> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.sponsorLevel.operations.create) throw new Error('SponsorLevel create operation not found')
+    const validatedData = models.sponsorLevel.operations.create.schema.parse(json)
+    return adapter.post<SponsorLevel>({
+      json: validatedData,
+      path: models.sponsorLevel.path,
+      type: models.sponsorLevel.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: SponsorLevelUpdateData,
+    options: SponsorLevelsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<SponsorLevel> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.sponsorLevel.operations.update) throw new Error('SponsorLevel update operation not found')
+    const validatedData = models.sponsorLevel.operations.update.schema.parse(json)
+    return adapter.put<SponsorLevel>({
+      json: validatedData,
+      path: `${models.sponsorLevel.path}/${id}`,
+      type: models.sponsorLevel.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: SponsorLevelsFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = sponsorLevelsFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.sponsorLevel.path}/${id}`,
+      type: models.sponsorLevel.endpoint,
       ...validatedOptions,
     })
   },

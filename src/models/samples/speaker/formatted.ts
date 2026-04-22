@@ -1,6 +1,8 @@
+import { TYPE } from 'yayson/utils'
+
 export default {
   id: '107634',
-  type: 'speaker',
+  [TYPE]: 'speaker',
   isAnnounced: true,
   isHidden: false,
   firstName: 'John',

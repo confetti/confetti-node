@@ -14,6 +14,11 @@ import {
   imagesResource,
   formsResource,
   formFieldsResource,
+  speakersResource,
+  organisersResource,
+  scheduleItemsResource,
+  sponsorsResource,
+  sponsorLevelsResource,
 } from './resources.js'
 import type {
   CategoriesFindAllOptions,
@@ -127,6 +132,56 @@ import type {
   ImageCreateData,
   ImageUpdateData,
 } from './schemas/image.js'
+import type {
+  SpeakersFindOptions,
+  SpeakersCreateOptions,
+  SpeakersUpdateOptions,
+  StaticSpeakersFindOptions,
+  StaticSpeakersCreateOptions,
+  StaticSpeakersUpdateOptions,
+  SpeakerCreateData,
+  SpeakerUpdateData,
+} from './schemas/speaker.js'
+import type {
+  OrganisersFindOptions,
+  OrganisersCreateOptions,
+  OrganisersUpdateOptions,
+  StaticOrganisersFindOptions,
+  StaticOrganisersCreateOptions,
+  StaticOrganisersUpdateOptions,
+  OrganiserCreateData,
+  OrganiserUpdateData,
+} from './schemas/organiser.js'
+import type {
+  ScheduleItemsFindOptions,
+  ScheduleItemsCreateOptions,
+  ScheduleItemsUpdateOptions,
+  StaticScheduleItemsFindOptions,
+  StaticScheduleItemsCreateOptions,
+  StaticScheduleItemsUpdateOptions,
+  ScheduleItemCreateData,
+  ScheduleItemUpdateData,
+} from './schemas/schedule-item.js'
+import type {
+  SponsorsFindOptions,
+  SponsorsCreateOptions,
+  SponsorsUpdateOptions,
+  StaticSponsorsFindOptions,
+  StaticSponsorsCreateOptions,
+  StaticSponsorsUpdateOptions,
+  SponsorCreateData,
+  SponsorUpdateData,
+} from './schemas/sponsor.js'
+import type {
+  SponsorLevelsFindOptions,
+  SponsorLevelsCreateOptions,
+  SponsorLevelsUpdateOptions,
+  StaticSponsorLevelsFindOptions,
+  StaticSponsorLevelsCreateOptions,
+  StaticSponsorLevelsUpdateOptions,
+  SponsorLevelCreateData,
+  SponsorLevelUpdateData,
+} from './schemas/sponsor-level.js'
 
 export interface ConfettiSettings {
   apiKey?: string
@@ -466,6 +521,159 @@ class Confetti {
     },
     find: (id: string | number, options: StaticFormFieldsFindOptions) => {
       return formFieldsResource.find(id, options, adapter(options))
+    },
+  }
+
+  speakers = {
+    find: (id: string | number, options: SpeakersFindOptions = {}) => {
+      return speakersResource.find(id, options, this.adapter)
+    },
+    create: (json: SpeakerCreateData, options: SpeakersCreateOptions = {}) => {
+      return speakersResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: SpeakerUpdateData, options: SpeakersUpdateOptions = {}) => {
+      return speakersResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: SpeakersFindOptions = {}) => {
+      return speakersResource.delete(id, options, this.adapter)
+    },
+  }
+  static speakers = {
+    find: (id: string | number, options: StaticSpeakersFindOptions) => {
+      return speakersResource.find(id, options, adapter(options))
+    },
+    create: (json: SpeakerCreateData, options: StaticSpeakersCreateOptions) => {
+      return speakersResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: SpeakerUpdateData, options: StaticSpeakersUpdateOptions) => {
+      return speakersResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticSpeakersFindOptions) => {
+      return speakersResource.delete(id, options, adapter(options))
+    },
+  }
+
+  organisers = {
+    find: (id: string | number, options: OrganisersFindOptions = {}) => {
+      return organisersResource.find(id, options, this.adapter)
+    },
+    create: (json: OrganiserCreateData, options: OrganisersCreateOptions = {}) => {
+      return organisersResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: OrganiserUpdateData, options: OrganisersUpdateOptions = {}) => {
+      return organisersResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: OrganisersFindOptions = {}) => {
+      return organisersResource.delete(id, options, this.adapter)
+    },
+  }
+  static organisers = {
+    find: (id: string | number, options: StaticOrganisersFindOptions) => {
+      return organisersResource.find(id, options, adapter(options))
+    },
+    create: (json: OrganiserCreateData, options: StaticOrganisersCreateOptions) => {
+      return organisersResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: OrganiserUpdateData, options: StaticOrganisersUpdateOptions) => {
+      return organisersResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticOrganisersFindOptions) => {
+      return organisersResource.delete(id, options, adapter(options))
+    },
+  }
+
+  scheduleItems = {
+    find: (id: string | number, options: ScheduleItemsFindOptions = {}) => {
+      return scheduleItemsResource.find(id, options, this.adapter)
+    },
+    create: (json: ScheduleItemCreateData, options: ScheduleItemsCreateOptions = {}) => {
+      return scheduleItemsResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: ScheduleItemUpdateData, options: ScheduleItemsUpdateOptions = {}) => {
+      return scheduleItemsResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: ScheduleItemsFindOptions = {}) => {
+      return scheduleItemsResource.delete(id, options, this.adapter)
+    },
+  }
+  static scheduleItems = {
+    find: (id: string | number, options: StaticScheduleItemsFindOptions) => {
+      return scheduleItemsResource.find(id, options, adapter(options))
+    },
+    create: (json: ScheduleItemCreateData, options: StaticScheduleItemsCreateOptions) => {
+      return scheduleItemsResource.create(json, options, adapter(options))
+    },
+    update: (
+      id: string | number,
+      json: ScheduleItemUpdateData,
+      options: StaticScheduleItemsUpdateOptions,
+    ) => {
+      return scheduleItemsResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticScheduleItemsFindOptions) => {
+      return scheduleItemsResource.delete(id, options, adapter(options))
+    },
+  }
+
+  sponsors = {
+    find: (id: string | number, options: SponsorsFindOptions = {}) => {
+      return sponsorsResource.find(id, options, this.adapter)
+    },
+    create: (json: SponsorCreateData, options: SponsorsCreateOptions = {}) => {
+      return sponsorsResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: SponsorUpdateData, options: SponsorsUpdateOptions = {}) => {
+      return sponsorsResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: SponsorsFindOptions = {}) => {
+      return sponsorsResource.delete(id, options, this.adapter)
+    },
+  }
+  static sponsors = {
+    find: (id: string | number, options: StaticSponsorsFindOptions) => {
+      return sponsorsResource.find(id, options, adapter(options))
+    },
+    create: (json: SponsorCreateData, options: StaticSponsorsCreateOptions) => {
+      return sponsorsResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: SponsorUpdateData, options: StaticSponsorsUpdateOptions) => {
+      return sponsorsResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticSponsorsFindOptions) => {
+      return sponsorsResource.delete(id, options, adapter(options))
+    },
+  }
+
+  sponsorLevels = {
+    find: (id: string | number, options: SponsorLevelsFindOptions = {}) => {
+      return sponsorLevelsResource.find(id, options, this.adapter)
+    },
+    create: (json: SponsorLevelCreateData, options: SponsorLevelsCreateOptions = {}) => {
+      return sponsorLevelsResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: SponsorLevelUpdateData, options: SponsorLevelsUpdateOptions = {}) => {
+      return sponsorLevelsResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: SponsorLevelsFindOptions = {}) => {
+      return sponsorLevelsResource.delete(id, options, this.adapter)
+    },
+  }
+  static sponsorLevels = {
+    find: (id: string | number, options: StaticSponsorLevelsFindOptions) => {
+      return sponsorLevelsResource.find(id, options, adapter(options))
+    },
+    create: (json: SponsorLevelCreateData, options: StaticSponsorLevelsCreateOptions) => {
+      return sponsorLevelsResource.create(json, options, adapter(options))
+    },
+    update: (
+      id: string | number,
+      json: SponsorLevelUpdateData,
+      options: StaticSponsorLevelsUpdateOptions,
+    ) => {
+      return sponsorLevelsResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticSponsorLevelsFindOptions) => {
+      return sponsorLevelsResource.delete(id, options, adapter(options))
     },
   }
 }
