@@ -116,6 +116,10 @@ export const EventSchema = z.object({
   fontHeadingCategory: z.string().meta({ label: 'Heading font category' }),
   fontHeadingVariant: z.string().meta({ label: 'Heading font variant' }),
   buttonBorderRadius: z.number().meta({ label: 'Button border radius' }),
+  customCss: z.string().meta({
+    label: 'Custom CSS',
+    description: 'Custom CSS included on all pages for the event.',
+  }),
   waitlist: z.string().meta({
       label: 'Has a waitlist',
     }),
@@ -212,6 +216,10 @@ export const EventCreateSchema = z.object({
   buttonBorderRadius: z.number().optional().meta({
     label: 'Button border radius',
     description: 'Button corner radius in pixels (e.g. 4 for square, 35 for rounded).',
+  }),
+  customCss: z.string().optional().meta({
+    label: 'Custom CSS',
+    description: 'Custom CSS included on all pages for the event. Use this to override default styles or add custom styling.',
   }),
   shareTitle: z.string().optional().meta({ label: 'Share title' }),
   shareDescription: z.string().optional().meta({ label: 'Share description' }),
