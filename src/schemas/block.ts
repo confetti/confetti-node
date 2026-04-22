@@ -38,12 +38,63 @@ export const BlockSchema = z.object({
 // Block uses `blockType` instead of `type` to avoid collision with the
 // JSON:API resource `type` field. The presenter renames it back when sending
 // to the API.
+const blockTypes = [
+  'text',
+  'header',
+  'gallery',
+  'video',
+  'speakers',
+  'schedule',
+  'sponsors',
+  'organisers',
+  'location',
+  'countdown',
+  'mailinglist',
+  'live',
+  'custom',
+  'organisation-events',
+  'menu-organisation',
+  'link',
+  'message-text',
+  'message-image',
+] as const
+
+const blockStatuses = ['published', 'preview', 'deleted', 'hidden'] as const
+
+const blockContentDescription = [
+  'Block content object. ONLY use fields listed for the specific blockType — unknown fields are silently stripped.',
+  '',
+  'Shared fields (all types): name, cssClassName, theme (primary|inverted|secondary|custom), style (spacing object with spacing/spacingTop/spacingBottom each: small|medium|large|custom), blockStyleSettings (colors/fonts/css/effects), includeTickets (bool), filterTicketBatches (number[]), url.',
+  '',
+  'Type-specific fields:',
+  '- text, message-text: html, textLayout (text-only|image-left|image-right|image-top|image-background|custom), showSocial, showRsvpButton, ctaText, ctaUrl',
+  '- header: title, headerStyle (text|logo|none), logoSize, coverStyle (fullscreen|poster|compact), shadowStyle (gradient|grid|none), shadowOpacity, headerTextColor, ctaText, ctaUrl',
+  '- gallery: title, html, galleryLayout (standard|grid|info|custom)',
+  '- video: videoEmbedId, videoEmbedType (youtube|vimeo|vimeo-event|facebook|twitch), videoEmbedVimeoChat, videoLayout (block|block-large|theater)',
+  '- speakers: title, speakersLayout (standard|grid|full|preview|custom), speakersShowSelected, speakersSettings ({id, order, show, isAnnounced?}[]), focusOn (speaker|talk), speakersPagePath, schedulePagePath',
+  '- schedule: title, speakersPagePath',
+  '- organisers: title, organisersLayout (standard|minimal)',
+  '- location: html, showMap, showRsvpButton',
+  '- countdown: title, countdownType (custom|event-start-date), countdownTo (ISO date string)',
+  '- mailinglist: title, showPublicCategories, categoriesTitle',
+  '- live: liveStreamId, liveStreamMode (block|theater)',
+  '- custom: html',
+  '- organisation-events: title, organisationEventsLayout (standard|grid-layout), organisationEventsSelection (all|upcoming|past)',
+  '- sponsors, menu-organisation, link, message-image: shared fields only',
+  '',
+  'When updating, provide the complete content object — partial content replaces the entire content.',
+].join('\n')
+
 export const BlockCreateSchema = z.object({
-  blockType: z.string().describe(JSON.stringify({ label: 'Block Type' })),
-  status: z.string().describe(JSON.stringify({ label: 'Status' })),
+  blockType: z
+    .enum(blockTypes)
+    .describe(JSON.stringify({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' })),
+  status: z
+    .enum(blockStatuses)
+    .describe(JSON.stringify({ label: 'Status', description: 'Block visibility status.' })),
   slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
   order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content' })),
+  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content', description: blockContentDescription })),
   blockStyleId: z.number().optional().describe(JSON.stringify({ label: 'Block Style Id' })),
   pageId: z.number().optional().describe(JSON.stringify({ label: 'Page Id' })),
   eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
@@ -55,11 +106,17 @@ export const BlockCreateSchema = z.object({
 })
 
 export const BlockUpdateSchema = z.object({
-  blockType: z.string().optional().describe(JSON.stringify({ label: 'Block Type' })),
-  status: z.string().optional().describe(JSON.stringify({ label: 'Status' })),
+  blockType: z
+    .enum(blockTypes)
+    .optional()
+    .describe(JSON.stringify({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' })),
+  status: z
+    .enum(blockStatuses)
+    .optional()
+    .describe(JSON.stringify({ label: 'Status', description: 'Block visibility status.' })),
   slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
   order: z.number().optional().describe(JSON.stringify({ label: 'Order' })),
-  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content' })),
+  content: z.looseObject({}).optional().describe(JSON.stringify({ label: 'Content', description: blockContentDescription })),
   blockStyleId: z.number().optional().describe(JSON.stringify({ label: 'Block Style Id' })),
   pageId: z.number().optional().describe(JSON.stringify({ label: 'Page Id' })),
   eventId: z.number().optional().describe(JSON.stringify({ label: 'Event Id' })),
