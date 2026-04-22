@@ -33,6 +33,9 @@ export default function EventModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(EventUpdateSchema),
       },
     },
+    relationships: [
+      { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
+    ],
     webhooks: [
       {
         type: 'event.created',
