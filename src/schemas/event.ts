@@ -138,13 +138,38 @@ export const EventSchema = z.object({
   primaryColor: z.string().describe(
     JSON.stringify({
       label: 'Primary color',
+      description: 'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
     }),
   ),
   contrastColor: z.string().describe(
     JSON.stringify({
       label: 'Contrast color',
+      description: 'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
     }),
   ),
+  signupColor: z.string().describe(JSON.stringify({
+    label: 'Signup color',
+    description: 'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
+  })),
+  textColor: z.string().describe(JSON.stringify({
+    label: 'Text color',
+    description: 'Default body text color (hex). Must contrast against contrastColor (background).',
+  })),
+  secondaryContrastColor: z.string().describe(JSON.stringify({
+    label: 'Secondary contrast color',
+    description: 'Secondary background color (hex). Used for alternate sections. Must contrast against primaryColor.',
+  })),
+  hasAdvancedColors: z.boolean().describe(JSON.stringify({
+    label: 'Has advanced colors',
+    description: 'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
+  })),
+  fontNormal: z.string().describe(JSON.stringify({ label: 'Body font' })),
+  fontNormalCategory: z.string().describe(JSON.stringify({ label: 'Body font category' })),
+  fontNormalVariant: z.string().describe(JSON.stringify({ label: 'Body font variant' })),
+  fontHeading: z.string().describe(JSON.stringify({ label: 'Heading font' })),
+  fontHeadingCategory: z.string().describe(JSON.stringify({ label: 'Heading font category' })),
+  fontHeadingVariant: z.string().describe(JSON.stringify({ label: 'Heading font variant' })),
+  buttonBorderRadius: z.number().describe(JSON.stringify({ label: 'Button border radius' })),
   waitlist: z.string().describe(
     JSON.stringify({
       label: 'Has a waitlist',
@@ -198,8 +223,58 @@ export const EventCreateSchema = z.object({
   continuous: z.boolean().optional().describe(JSON.stringify({ label: 'Continuous' })),
   slug: z.string().optional().describe(JSON.stringify({ label: 'Slug' })),
   // copy fields (branding/customisation)
-  primaryColor: z.string().optional().describe(JSON.stringify({ label: 'Primary color' })),
-  contrastColor: z.string().optional().describe(JSON.stringify({ label: 'Contrast color' })),
+  primaryColor: z.string().optional().describe(JSON.stringify({
+    label: 'Primary color',
+    description: 'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
+  })),
+  contrastColor: z.string().optional().describe(JSON.stringify({
+    label: 'Contrast color',
+    description: 'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
+  })),
+  signupColor: z.string().optional().describe(JSON.stringify({
+    label: 'Signup color',
+    description: 'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
+  })),
+  textColor: z.string().optional().describe(JSON.stringify({
+    label: 'Text color',
+    description: 'Default body text color (hex). Must contrast against contrastColor (background).',
+  })),
+  secondaryContrastColor: z.string().optional().describe(JSON.stringify({
+    label: 'Secondary contrast color',
+    description: 'Secondary background color (hex). Used for alternate sections. Must contrast against primaryColor.',
+  })),
+  hasAdvancedColors: z.boolean().optional().describe(JSON.stringify({
+    label: 'Has advanced colors',
+    description: 'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
+  })),
+  fontNormal: z.string().optional().describe(JSON.stringify({
+    label: 'Body font',
+    description: 'Google Fonts font family for body text (e.g. "Inter").',
+  })),
+  fontNormalCategory: z.string().optional().describe(JSON.stringify({
+    label: 'Body font category',
+    description: 'CSS font category: sans-serif, serif, or monospace.',
+  })),
+  fontNormalVariant: z.string().optional().describe(JSON.stringify({
+    label: 'Body font variant',
+    description: 'Font variant/weight (e.g. "400", "600").',
+  })),
+  fontHeading: z.string().optional().describe(JSON.stringify({
+    label: 'Heading font',
+    description: 'Google Fonts font family for headings (e.g. "Playfair Display").',
+  })),
+  fontHeadingCategory: z.string().optional().describe(JSON.stringify({
+    label: 'Heading font category',
+    description: 'CSS font category: sans-serif, serif, or monospace.',
+  })),
+  fontHeadingVariant: z.string().optional().describe(JSON.stringify({
+    label: 'Heading font variant',
+    description: 'Font weight and style (e.g. "700", "600italic").',
+  })),
+  buttonBorderRadius: z.number().optional().describe(JSON.stringify({
+    label: 'Button border radius',
+    description: 'Button corner radius in pixels (e.g. 4 for square, 35 for rounded).',
+  })),
   shareTitle: z.string().optional().describe(JSON.stringify({ label: 'Share title' })),
   shareDescription: z.string().optional().describe(JSON.stringify({ label: 'Share description' })),
   summary: z.string().optional().describe(JSON.stringify({ label: 'Summary' })),

@@ -59,7 +59,7 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
       type = 'date'
     } else if (fieldSchema instanceof z.ZodBoolean) {
       type = 'boolean'
-    } else if (fieldSchema instanceof z.ZodRecord) {
+    } else if (fieldSchema instanceof z.ZodRecord || fieldSchema instanceof z.ZodObject) {
       type = 'object'
     } else if (fieldSchema instanceof z.ZodArray) {
       type = 'array'
@@ -77,7 +77,7 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
         type = 'date'
       } else if (innerSchema instanceof z.ZodBoolean) {
         type = 'boolean'
-      } else if (innerSchema instanceof z.ZodRecord) {
+      } else if (innerSchema instanceof z.ZodRecord || innerSchema instanceof z.ZodObject) {
         type = 'object'
       } else if (innerSchema instanceof z.ZodArray) {
         type = 'array'

@@ -126,7 +126,7 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
         return (await res.text()) as T
       }
     } else {
-      let errorBody
+      let errorBody: unknown
       if (res.status >= 400 && res.status < 499) {
         const contentType = res.headers.get('content-type') || ''
         if (contentType.includes('application/json')) {
@@ -135,18 +135,20 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
           errorBody = await res.text()
         }
       }
+      // Only pass plain objects to error constructors (Object.assign with a string spreads characters)
+      const errorOptions = typeof errorBody === 'object' && errorBody !== null
+        ? errorBody as Record<string, unknown>
+        : {}
+      const errorText = typeof errorBody === 'string' ? errorBody : undefined
       if (res.status == 400) {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        const error = new ParameterError('validation', errorBody as Record<string, unknown>)
+        const error = new ParameterError(errorText || 'validation', errorOptions)
         throw error
       } else if (res.status == 404) {
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        const errorMessage = (errorBody as ApiError)?.message || 'object'
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        const error = new NotFoundError(errorMessage, errorBody as Record<string, unknown>)
+        const message = (errorOptions as unknown as ApiError)?.message || errorText || 'Not found'
+        const error = new NotFoundError(message, errorOptions)
         throw error
       } else {
-        throw new Error()
+        throw new Error(errorText || `HTTP ${res.status}`)
       }
     }
   }
