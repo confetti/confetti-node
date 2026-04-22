@@ -222,6 +222,33 @@ export const EventCreateSchema = z.object({
     .optional()
     .meta({ label: 'Tickets per purchase' }),
   locationName: z.string().optional().meta({ label: 'Location name' }),
+  locationPlace: z
+    .object({
+      formatted_address: z.string().meta({ description: 'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden").' }),
+      geometry: z
+        .object({
+          location: z.object({
+            lat: z.number().meta({ description: 'Latitude.' }),
+            lng: z.number().meta({ description: 'Longitude.' }),
+          }),
+        })
+        .optional()
+        .meta({ description: 'Coordinates for map centering. When provided with linkToPosition=true, the map links directly to these coordinates.' }),
+      address_components: z
+        .array(
+          z.object({
+            long_name: z.string(),
+            short_name: z.string(),
+            types: z.array(z.string()),
+          }),
+        )
+        .optional()
+        .meta({ description: 'Structured address parts (Google Places format). Used to extract city, country, postal code.' }),
+      linkToPosition: z.boolean().optional().meta({ description: 'When true, the map link uses lat/lng coordinates instead of the formatted address.' }),
+      adr_address: z.string().optional().meta({ description: 'HTML-formatted address (microformat adr). Used for display when available.' }),
+    })
+    .optional()
+    .meta({ label: 'Location place', description: 'Location/venue details for maps. At minimum, set formatted_address for the map to work.' }),
   workspaceId: z
     .number()
     .optional()
