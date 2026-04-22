@@ -275,7 +275,7 @@ describe('schemaToAttributes()', () => {
         key: 'user',
         label: 'User Information',
         description: 'Optional user details.',
-        type: 'string', // Nested objects are treated as strings by the current implementation
+        type: 'object',
       })
     })
 
@@ -493,6 +493,7 @@ describe('schemaToAttributes()', () => {
         label: 'Tags',
         type: 'array',
         required: true,
+        itemType: 'string',
       })
 
       const idsAttr = attributes.find((attr) => attr.key === 'ids')
@@ -501,6 +502,7 @@ describe('schemaToAttributes()', () => {
         label: 'Ids',
         type: 'array',
         required: false,
+        itemType: 'number',
       })
     })
 

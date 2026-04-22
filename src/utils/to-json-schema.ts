@@ -5,7 +5,9 @@ export interface JsonSchemaProperty {
   type: string
   description?: string
   enum?: string[]
-  items?: { type: string }
+  items?: JsonSchemaProperty
+  properties?: Record<string, JsonSchemaProperty>
+  required?: string[]
 }
 
 const typeMap: Record<string, string> = {
@@ -32,8 +34,29 @@ export function attributeToJsonSchema(attr: CreateAttribute): JsonSchemaProperty
     schema.enum = attr.values
   }
 
+  if (attr.type === 'object' && attr.children?.length) {
+    const properties: Record<string, JsonSchemaProperty> = {}
+    const required: string[] = []
+    for (const child of attr.children) {
+      properties[child.key] = attributeToJsonSchema(child)
+      if (child.required) required.push(child.key)
+    }
+    schema.properties = properties
+    if (required.length > 0) schema.required = required
+  }
+
   if (attr.type === 'array') {
-    schema.items = { type: 'string' }
+    if (attr.children?.length) {
+      const properties: Record<string, JsonSchemaProperty> = {}
+      const required: string[] = []
+      for (const child of attr.children) {
+        properties[child.key] = attributeToJsonSchema(child)
+        if (child.required) required.push(child.key)
+      }
+      schema.items = { type: 'object', properties, ...(required.length > 0 ? { required } : {}) }
+    } else {
+      schema.items = { type: attr.itemType ?? 'string' }
+    }
   }
 
   return schema

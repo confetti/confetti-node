@@ -17,9 +17,57 @@ export interface CreateAttribute extends BaseAttribute {
   placeholder?: string
   helpText?: string
   values?: string[]
+  children?: CreateAttribute[]
+  itemType?: string
 }
 
 export type Attribute = BaseAttribute | CreateAttribute
+
+// Extract children from a ZodObject's shape (recursive)
+function extractObjectChildren(zodObj: z.ZodObject<z.ZodRawShape>): CreateAttribute[] {
+  const shape = zodObj.shape
+  if (!shape || Object.keys(shape).length === 0) return []
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+  return schemaToAttributes(zodObj, { includeCreateFields: true }) as CreateAttribute[]
+}
+
+// Get array element type info, recursing into object elements
+function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): { itemType: string; children?: CreateAttribute[] } {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const element = (arraySchema as any)._def.element ?? (arraySchema as any).element
+  if (element instanceof z.ZodObject) {
+    const children = extractObjectChildren(element)
+    return { itemType: 'object', ...(children.length > 0 ? { children } : {}) }
+  } else if (element instanceof z.ZodNumber) {
+    return { itemType: 'number' }
+  } else if (element instanceof z.ZodBoolean) {
+    return { itemType: 'boolean' }
+  }
+  return { itemType: 'string' }
+}
+
+// Extract type info from a resolved (non-optional) Zod schema
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function resolveTypeInfo(schema: any): { type: string; values?: string[]; children?: CreateAttribute[]; itemType?: string } {
+  if (schema instanceof z.ZodNumber) return { type: 'number' }
+  if (schema instanceof z.ZodDate) return { type: 'date' }
+  if (schema instanceof z.ZodBoolean) return { type: 'boolean' }
+  if (schema instanceof z.ZodRecord) return { type: 'object' }
+  if (schema instanceof z.ZodObject) {
+    const children = extractObjectChildren(schema)
+    return { type: 'object', ...(children.length > 0 ? { children } : {}) }
+  }
+  if (schema instanceof z.ZodArray) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { itemType, children } = getArrayElementInfo(schema as any)
+    return { type: 'array', itemType, ...(children ? { children } : {}) }
+  }
+  if (schema instanceof z.ZodEnum) {
+    return { type: 'enum', values: schema.options.map(String) }
+  }
+  if (schema instanceof z.ZodString) return { type: 'string' }
+  return { type: 'string' }
+}
 
 export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: AttributeOptions = {}): Attribute[] {
   const { includeRequired = false, includeCreateFields = false } = options
@@ -31,6 +79,8 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     let type = 'string'
     let required = true
     let values: string[] | undefined
+    let children: CreateAttribute[] | undefined
+    let itemType: string | undefined
 
     // Extract metadata from Zod schema
     let metadata: {
@@ -53,40 +103,20 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     }
 
     // Determine type and required status from Zod schema
-    if (fieldSchema instanceof z.ZodNumber) {
-      type = 'number'
-    } else if (fieldSchema instanceof z.ZodDate) {
-      type = 'date'
-    } else if (fieldSchema instanceof z.ZodBoolean) {
-      type = 'boolean'
-    } else if (fieldSchema instanceof z.ZodRecord || fieldSchema instanceof z.ZodObject) {
-      type = 'object'
-    } else if (fieldSchema instanceof z.ZodArray) {
-      type = 'array'
-    } else if (fieldSchema instanceof z.ZodEnum) {
-      type = 'enum'
-      values = fieldSchema.options.map(String)
-    } else if (fieldSchema instanceof z.ZodOptional) {
-      // Handle optional fields - get the inner type
-      const innerSchema = fieldSchema._def.innerType
+    if (fieldSchema instanceof z.ZodOptional) {
+      const inner = fieldSchema._def.innerType
       required = false
-
-      if (innerSchema instanceof z.ZodNumber) {
-        type = 'number'
-      } else if (innerSchema instanceof z.ZodDate) {
-        type = 'date'
-      } else if (innerSchema instanceof z.ZodBoolean) {
-        type = 'boolean'
-      } else if (innerSchema instanceof z.ZodRecord || innerSchema instanceof z.ZodObject) {
-        type = 'object'
-      } else if (innerSchema instanceof z.ZodArray) {
-        type = 'array'
-      } else if (innerSchema instanceof z.ZodEnum) {
-        type = 'enum'
-        values = innerSchema.options.map(String)
-      }
-    } else if (fieldSchema instanceof z.ZodString) {
-      type = 'string'
+      const info = resolveTypeInfo(inner)
+      type = info.type
+      values = info.values
+      children = info.children
+      itemType = info.itemType
+    } else {
+      const info = resolveTypeInfo(fieldSchema)
+      type = info.type
+      values = info.values
+      children = info.children
+      itemType = info.itemType
     }
 
     // Use metadata label if available, otherwise generate from key
@@ -128,6 +158,8 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
       } else if (values) {
         createAttribute.values = values
       }
+      if (children) createAttribute.children = children
+      if (itemType) createAttribute.itemType = itemType
 
       attributes.push(createAttribute)
     } else if (includeRequired) {
