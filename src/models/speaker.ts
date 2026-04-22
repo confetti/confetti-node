@@ -27,6 +27,7 @@ export default function SpeakerModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(SpeakerUpdateSchema),
       },
     },
+    relationships: [{ field: 'eventId', relationship: 'event', type: 'belongsTo' }],
     webhooks: [],
   }
 }

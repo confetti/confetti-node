@@ -27,6 +27,7 @@ export default function OrganiserModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(OrganiserUpdateSchema),
       },
     },
+    relationships: [{ field: 'eventId', relationship: 'event', type: 'belongsTo' }],
     webhooks: [],
   }
 }

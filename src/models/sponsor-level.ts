@@ -27,6 +27,7 @@ export default function SponsorLevelModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(SponsorLevelUpdateSchema),
       },
     },
+    relationships: [{ field: 'eventId', relationship: 'event', type: 'belongsTo' }],
     webhooks: [],
   }
 }

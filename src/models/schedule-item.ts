@@ -31,6 +31,7 @@ export default function ScheduleItemModel(): ModelDefinition {
         attributes: schemaToCreateAttributes(ScheduleItemUpdateSchema),
       },
     },
+    relationships: [{ field: 'eventId', relationship: 'event', type: 'belongsTo' }],
     webhooks: [],
   }
 }
