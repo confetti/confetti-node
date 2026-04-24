@@ -22,7 +22,9 @@ import {
   type TicketsFindAllOptions,
   type TicketsFindOptions,
   type TicketsCreateOptions,
+  type TicketsUpdateOptions,
   type TicketCreateData,
+  type TicketUpdateData,
 } from './schemas/ticket.js'
 import {
   paymentsFindAllOptionsSchema,
@@ -222,6 +224,22 @@ export const ticketsResource = {
     return adapter.post<Ticket>({
       json: validatedData,
       path: models.ticket.path,
+      type: models.ticket.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: TicketUpdateData,
+    options: TicketsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Ticket> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.ticket.operations.update) throw new Error('Ticket update operation not found')
+    const validatedData = models.ticket.operations.update.schema.parse(json)
+    return adapter.put<Ticket>({
+      json: validatedData,
+      path: `${models.ticket.path}/${id}`,
       type: models.ticket.endpoint,
       ...validatedOptions,
     })
@@ -634,11 +652,7 @@ export const organisersResource = {
 }
 
 export const scheduleItemsResource = {
-  find: (
-    id: string | number,
-    options: ScheduleItemsFindOptions = {},
-    adapter: Adapter,
-  ): Promise<ScheduleItem> => {
+  find: (id: string | number, options: ScheduleItemsFindOptions = {}, adapter: Adapter): Promise<ScheduleItem> => {
     const validatedOptions = scheduleItemsFindOptionsSchema.parse(options)
     return adapter.get<ScheduleItem>({
       path: `${models.scheduleItem.path}/${id}`,
@@ -734,11 +748,7 @@ export const sponsorsResource = {
 }
 
 export const sponsorLevelsResource = {
-  find: (
-    id: string | number,
-    options: SponsorLevelsFindOptions = {},
-    adapter: Adapter,
-  ): Promise<SponsorLevel> => {
+  find: (id: string | number, options: SponsorLevelsFindOptions = {}, adapter: Adapter): Promise<SponsorLevel> => {
     const validatedOptions = sponsorLevelsFindOptionsSchema.parse(options)
     return adapter.get<SponsorLevel>({
       path: `${models.sponsorLevel.path}/${id}`,

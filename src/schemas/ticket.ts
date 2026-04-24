@@ -9,135 +9,123 @@ import {
 
 export const TicketSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the ticket.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the ticket.',
+  }),
   persons: z.number().meta({
-      label: 'Persons',
-    }),
+    label: 'Persons',
+  }),
   hashid: z.string().meta({
-      label: 'Hashid',
-    }),
+    label: 'Hashid',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   price: z.number().meta({
-      label: 'Price',
-    }),
+    label: 'Price',
+  }),
   currency: z.string().meta({
-      label: 'Currency',
-    }),
+    label: 'Currency',
+  }),
   firstName: z.string().meta({
-      label: 'First name',
-    }),
+    label: 'First name',
+  }),
   lastName: z.string().meta({
-      label: 'Last name',
-    }),
+    label: 'Last name',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   email: z.string().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   phone: z.string().meta({
-      label: 'Phone',
-    }),
+    label: 'Phone',
+  }),
   company: z.string().meta({
-      label: 'Company',
-    }),
+    label: 'Company',
+  }),
   token: z.string().meta({
-      label: 'Token',
-    }),
+    label: 'Token',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   emailStatus: z.string().meta({
-      label: 'Email Status',
-    }),
+    label: 'Email Status',
+  }),
   checkinAt: z.date().meta({
-      label: 'Checkin At',
-    }),
+    label: 'Checkin At',
+  }),
   waitlistAt: z.date().meta({
-      label: 'Waitlist At',
-    }),
+    label: 'Waitlist At',
+  }),
   startDate: z.date().meta({
-      label: 'Start Date',
-    }),
+    label: 'Start Date',
+  }),
   endDate: z.date().meta({
-      label: 'End Date',
-    }),
+    label: 'End Date',
+  }),
   values: z.looseObject({}).meta({
-      label: 'Values',
-      description:
-        'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
-    }),
+    label: 'Values',
+    description:
+      'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
+  }),
   comment: z.string().meta({
-      label: 'Comment',
-      description: 'Internal note visible only to workspace teammates in Confetti. Not shown to attendees.',
-    }),
+    label: 'Comment',
+    description: 'Internal note visible only to workspace teammates in Confetti. Not shown to attendees.',
+  }),
   guests: z.number().meta({
-      label: 'Guests',
-    }),
+    label: 'Guests',
+  }),
   termsAcceptedAt: z.date().meta({
-      label: 'Terms Accepted At',
-    }),
+    label: 'Terms Accepted At',
+  }),
   deletionRequestedAt: z.date().meta({
-      label: 'Deletion Requested At',
-    }),
+    label: 'Deletion Requested At',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
   ticketBatchId: z.number().meta({
-      label: 'Ticket Batch Id',
-    }),
+    label: 'Ticket Batch Id',
+  }),
   paymentId: z.number().meta({
-      label: 'Payment Id',
-    }),
+    label: 'Payment Id',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   contactId: z.number().meta({
-      label: 'Contact Id',
-    }),
-  formattedValues: z
-    .array(z.looseObject({}))
-    .optional()
-    .meta({
-        label: 'Formatted Values',
-        description:
-          'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
-      }),
+    label: 'Contact Id',
+  }),
+  formattedValues: z.array(z.looseObject({})).optional().meta({
+    label: 'Formatted Values',
+    description:
+      'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
+  }),
 })
 
 export const TicketCreateSchema = z.object({
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
-  ticketBatchId: z
-    .number()
-    .optional()
-    .meta({
-        label: 'Ticket Batch Id',
-        helpText: 'Required for ticket events',
-      }),
-  firstName: z
-    .string()
-    .optional()
-    .meta({
-        label: 'First name',
-      }),
-  lastName: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Last name',
-      }),
+    label: 'Event Id',
+  }),
+  ticketBatchId: z.number().optional().meta({
+    label: 'Ticket Batch Id',
+    helpText: 'Required for ticket events',
+  }),
+  firstName: z.string().optional().meta({
+    label: 'First name',
+  }),
+  lastName: z.string().optional().meta({
+    label: 'Last name',
+  }),
   email: z.string().email().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   status: z
     .union([
       z.string().refine(
@@ -150,44 +138,36 @@ export const TicketCreateSchema = z.object({
       z.array(z.enum(['attending', 'invited'])),
     ])
     .meta({
-        label: 'Status',
-        values: ['attending', 'invited'],
-      }),
-  phone: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Phone',
-        placeholder: '+46 12 345 67 89',
-        helpText: 'Mobile phone number with country code. Example: +46701234567',
-      }),
-  company: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Company',
-      }),
-  comment: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Comment',
-        description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
-      }),
-  sendEmailConfirmation: z.boolean().meta({
-      label: 'Send email confirmation',
-      helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
+      label: 'Status',
+      values: ['attending', 'invited'],
     }),
+  phone: z.string().optional().meta({
+    label: 'Phone',
+    placeholder: '+46 12 345 67 89',
+    helpText: 'Mobile phone number with country code. Example: +46701234567',
+  }),
+  company: z.string().optional().meta({
+    label: 'Company',
+  }),
+  comment: z.string().optional().meta({
+    label: 'Comment',
+    description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
+  }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description:
+      'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
+  }),
+  sendEmailConfirmation: z.boolean().meta({
+    label: 'Send email confirmation',
+    helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
+  }),
 })
 
 export const TicketUpdateSchema = z.object({
   firstName: z.string().optional().meta({ label: 'First name' }),
   lastName: z.string().optional().meta({ label: 'Last name' }),
-  email: z
-    .string()
-    .email({ message: 'Email is not a valid email' })
-    .optional()
-    .meta({ label: 'Email' }),
+  email: z.string().email({ message: 'Email is not a valid email' }).optional().meta({ label: 'Email' }),
   status: z
     .string()
     .superRefine((val, ctx) => {
@@ -197,32 +177,23 @@ export const TicketUpdateSchema = z.object({
     })
     .optional()
     .meta({
-        label: 'Status',
-        values: ['attending', 'invited'],
-      }),
+      label: 'Status',
+      values: ['attending', 'invited'],
+    }),
   phone: z.string().optional().meta({ label: 'Phone' }),
   company: z.string().optional().meta({ label: 'Company' }),
-  comment: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Comment',
-        description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
-      }),
+  comment: z.string().optional().meta({
+    label: 'Comment',
+    description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
+  }),
   guests: z.number().optional().meta({ label: 'Guests' }),
   values: z.looseObject({}).optional().meta({ label: 'Values' }),
-  checkinAt: z
-    .union([z.date(), z.string(), z.null()])
-    .optional()
-    .meta({ label: 'Checkin At' }),
+  checkinAt: z.union([z.date(), z.string(), z.null()]).optional().meta({ label: 'Checkin At' }),
   ticketBatchId: z.number().optional().meta({ label: 'Ticket Batch Id' }),
-  sendEmailConfirmation: z
-    .boolean()
-    .optional()
-    .meta({
-        label: 'Send email confirmation',
-        helpText: 'If set to true, an email confirmation will be sent to the attendee.',
-      }),
+  sendEmailConfirmation: z.boolean().optional().meta({
+    label: 'Send email confirmation',
+    helpText: 'If set to true, an email confirmation will be sent to the attendee.',
+  }),
 })
 
 const ticketsFindAllSchema = {
@@ -235,53 +206,53 @@ const ticketsFindAllSchema = {
       .union([
         z.array(
           z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).meta({
-              label: 'Ticket Status',
-              description: 'Filter tickets by status',
-              values: [
-                {
-                  label: 'Attending',
-                  description: 'Tickets for attendees',
-                  type: 'string',
-                  key: 'attending',
-                  value: 'attending',
-                },
-                {
-                  label: 'Waitlist',
-                  description: 'Tickets on waitlist',
-                  type: 'string',
-                  key: 'waitlist',
-                  value: 'waitlist',
-                },
-                {
-                  label: 'Declined',
-                  description: 'Declined tickets',
-                  type: 'string',
-                  key: 'declined',
-                  value: 'declined',
-                },
-                {
-                  label: 'Invited',
-                  description: 'Invited tickets',
-                  type: 'string',
-                  key: 'invited',
-                  value: 'invited',
-                },
-                {
-                  label: 'Consumed',
-                  description: 'Consumed tickets',
-                  type: 'string',
-                  key: 'consumed',
-                  value: 'consumed',
-                },
-                {
-                  label: 'Deletion Requested',
-                  description: 'Tickets with deletion requested',
-                  type: 'string',
-                  key: 'deletion-requested',
-                  value: 'deletion-requested',
-                },
-              ],
-            }),
+            label: 'Ticket Status',
+            description: 'Filter tickets by status',
+            values: [
+              {
+                label: 'Attending',
+                description: 'Tickets for attendees',
+                type: 'string',
+                key: 'attending',
+                value: 'attending',
+              },
+              {
+                label: 'Waitlist',
+                description: 'Tickets on waitlist',
+                type: 'string',
+                key: 'waitlist',
+                value: 'waitlist',
+              },
+              {
+                label: 'Declined',
+                description: 'Declined tickets',
+                type: 'string',
+                key: 'declined',
+                value: 'declined',
+              },
+              {
+                label: 'Invited',
+                description: 'Invited tickets',
+                type: 'string',
+                key: 'invited',
+                value: 'invited',
+              },
+              {
+                label: 'Consumed',
+                description: 'Consumed tickets',
+                type: 'string',
+                key: 'consumed',
+                value: 'consumed',
+              },
+              {
+                label: 'Deletion Requested',
+                description: 'Tickets with deletion requested',
+                type: 'string',
+                key: 'deletion-requested',
+                value: 'deletion-requested',
+              },
+            ],
+          }),
         ),
         z.string().refine(
           (val) => {
@@ -297,84 +268,84 @@ const ticketsFindAllSchema = {
   sort: z
     .enum(['name', 'createdAt', 'description', 'hashid', 'email', 'status', 'checkinAt'])
     .meta({
-        label: 'Sort By',
-        description: 'Sort tickets by field',
-        values: [
-          {
-            label: 'Name',
-            description: 'Sort by ticket holder name',
-            type: 'string',
-            key: 'name',
-            value: 'name',
-          },
-          {
-            label: 'Created At',
-            description: 'Sort by creation date',
-            type: 'string',
-            key: 'createdAt',
-            value: 'createdAt',
-          },
-          {
-            label: 'Description',
-            description: 'Sort by description',
-            type: 'string',
-            key: 'description',
-            value: 'description',
-          },
-          {
-            label: 'Hash ID',
-            description: 'Sort by hash ID',
-            type: 'string',
-            key: 'hashid',
-            value: 'hashid',
-          },
-          {
-            label: 'Email',
-            description: 'Sort by email address',
-            type: 'string',
-            key: 'email',
-            value: 'email',
-          },
-          {
-            label: 'Status',
-            description: 'Sort by ticket status',
-            type: 'string',
-            key: 'status',
-            value: 'status',
-          },
-          {
-            label: 'Check-in At',
-            description: 'Sort by check-in time',
-            type: 'string',
-            key: 'checkinAt',
-            value: 'checkinAt',
-          },
-        ],
-      })
+      label: 'Sort By',
+      description: 'Sort tickets by field',
+      values: [
+        {
+          label: 'Name',
+          description: 'Sort by ticket holder name',
+          type: 'string',
+          key: 'name',
+          value: 'name',
+        },
+        {
+          label: 'Created At',
+          description: 'Sort by creation date',
+          type: 'string',
+          key: 'createdAt',
+          value: 'createdAt',
+        },
+        {
+          label: 'Description',
+          description: 'Sort by description',
+          type: 'string',
+          key: 'description',
+          value: 'description',
+        },
+        {
+          label: 'Hash ID',
+          description: 'Sort by hash ID',
+          type: 'string',
+          key: 'hashid',
+          value: 'hashid',
+        },
+        {
+          label: 'Email',
+          description: 'Sort by email address',
+          type: 'string',
+          key: 'email',
+          value: 'email',
+        },
+        {
+          label: 'Status',
+          description: 'Sort by ticket status',
+          type: 'string',
+          key: 'status',
+          value: 'status',
+        },
+        {
+          label: 'Check-in At',
+          description: 'Sort by check-in time',
+          type: 'string',
+          key: 'checkinAt',
+          value: 'checkinAt',
+        },
+      ],
+    })
     .optional(),
   include: z
     .array(
       z.enum(['addons', 'formattedValues']).meta({
-          label: 'Include Relations',
-          description: 'Include related data',
-          values: [
-            {
-              label: 'Addons',
-              description: 'Ticket addons',
-              type: 'string',
-              key: 'addons',
-              value: 'addons',
-            },
-            {
-              label: 'Formatted Values',
-              description:
-                'Form field answers with question titles — unlike raw values which only contain answers keyed by field name',
-              type: 'string',
-              key: 'formattedValues',
-              value: 'formattedValues',
-            },
-          ],
-        }),
+        label: 'Include Relations',
+        description: 'Include related data',
+        values: [
+          {
+            label: 'Addons',
+            description: 'Ticket addons',
+            type: 'string',
+            key: 'addons',
+            value: 'addons',
+          },
+          {
+            label: 'Formatted Values',
+            description:
+              'Form field answers with question titles — unlike raw values which only contain answers keyed by field name',
+            type: 'string',
+            key: 'formattedValues',
+            value: 'formattedValues',
+          },
+        ],
+      }),
     )
     .optional(),
 }
@@ -385,6 +356,7 @@ export const ticketsFindOptionsSchema = findBaseOptionsSchema.extend({})
 export const staticTicketsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketsFindAllSchema)
 export const staticTicketsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticTicketsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
@@ -394,6 +366,8 @@ export type TicketUpdateData = z.infer<typeof TicketUpdateSchema>
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type TicketsUpdateOptions = z.infer<typeof baseOptionsSchema>
 export type StaticTicketsFindAllOptions = z.infer<typeof staticTicketsFindAllOptionsSchema>
 export type StaticTicketsFindOptions = z.infer<typeof staticTicketsFindOptionsSchema>
 export type StaticTicketsCreateOptions = z.infer<typeof staticTicketsCreateOptionsSchema>
+export type StaticTicketsUpdateOptions = z.infer<typeof staticTicketsUpdateOptionsSchema>
