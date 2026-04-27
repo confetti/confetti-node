@@ -1,7 +1,7 @@
 // Presenter types for Confetti API
 
 import type { YaysonResult } from 'yayson'
-import { Contact, Ticket, Webhook } from './models.js'
+import { Ticket, Webhook } from './models.js'
 
 // Base presenter class type from yayson
 export type YaysonPresenter = YaysonResult['Presenter']

@@ -17,6 +17,7 @@ import form from './form.js'
 import formField from './form-field.js'
 import imageUpload from './image-upload.js'
 import sponsor from './sponsor.js'
+import previewToken from './preview-token.js'
 import sponsorLevel from './sponsor-level.js'
 
 export type { Category } from '../schemas/category.js'
@@ -38,6 +39,7 @@ export type { Addon, AddonCreate } from '../schemas/addon.js'
 export type { Form } from '../schemas/form.js'
 export type { FormField } from '../schemas/form-field.js'
 export type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
+export type { PreviewToken, PreviewTokenCreate } from '../schemas/preview-token.js'
 export type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
 
 export default {
@@ -59,6 +61,7 @@ export default {
   addon: addon(),
   form: form(),
   formField: formField(),
+  previewToken: previewToken(),
   sponsor: sponsor(),
   sponsorLevel: sponsorLevel(),
 }
