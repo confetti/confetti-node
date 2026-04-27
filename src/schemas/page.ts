@@ -58,9 +58,9 @@ export const staticPagesUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ext
 
 export type Page = z.infer<typeof PageSchema>
 export type PageCreate = z.infer<typeof PageCreateSchema>
-export type PageCreateData = z.infer<typeof PageCreateSchema>
+export type PageCreateData = PageCreate
 export type PageUpdate = z.infer<typeof PageUpdateSchema>
-export type PageUpdateData = z.infer<typeof PageUpdateSchema>
+export type PageUpdateData = PageUpdate
 export type PagesFindAllOptions = z.infer<typeof pagesFindAllOptionsSchema>
 export type PagesFindOptions = z.infer<typeof pagesFindOptionsSchema>
 export type PagesCreateOptions = z.infer<typeof baseOptionsSchema>

@@ -98,7 +98,7 @@ export const staticContactsCreateOptionsSchema = staticBaseFindAllOptionsSchema.
 
 export type Contact = z.infer<typeof ContactSchema>
 export type ContactCreate = z.infer<typeof ContactCreateSchema>
-export type ContactCreateData = z.infer<typeof ContactCreateSchema>
+export type ContactCreateData = ContactCreate
 export type ContactsFindAllOptions = z.infer<typeof contactsFindAllOptionsSchema>
 export type ContactsFindOptions = z.infer<typeof contactsFindOptionsSchema>
 export type ContactsCreateOptions = z.infer<typeof baseOptionsSchema>

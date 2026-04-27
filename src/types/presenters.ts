@@ -62,15 +62,7 @@ export interface ContactPresenter extends BasePresenter {
   type: 'contact'
   plural: 'contacts'
   new (): {
-    attributes(
-      _contact: Contact & {
-        workspaceId?: number
-        categoryIds?: number[]
-      },
-    ): Contact & {
-      workspace?: { id: number }
-      categories?: { id: number }[]
-    }
+    attributes(_contact: Record<string, unknown>): Record<string, unknown>
     relationships(): {
       workspace: WorkspacePresenter
       categories: CategoryPresenter

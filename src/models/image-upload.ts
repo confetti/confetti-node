@@ -1,6 +1,7 @@
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
 import { ImageUploadSchema, ImageUploadCreateSchema, ImageUploadUpdateSchema } from '../schemas/image-upload.js'
 import { ModelDefinition } from '../types/model.js'
+import loadSamples from '../utils/load-samples.js'
 
 export default function ImageUploadModel(): ModelDefinition {
   return {
@@ -8,10 +9,7 @@ export default function ImageUploadModel(): ModelDefinition {
     endpoint: 'image-uploads',
     path: 'image-uploads',
     name: 'Image Upload',
-    sample: {
-      single: { formatted: {}, raw: {} },
-      multiple: { formatted: [], raw: { data: [] } },
-    },
+    sample: loadSamples('imageUpload'),
     sorting: [],
     filters: {},
     includes: [],

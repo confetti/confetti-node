@@ -73,7 +73,7 @@ export const staticWebhooksCreateOptionsSchema = staticBaseFindAllOptionsSchema.
 
 export type Webhook = z.infer<typeof WebhookSchema>
 export type WebhookCreate = z.infer<typeof WebhookCreateSchema>
-export type WebhookCreateData = z.infer<typeof WebhookCreateSchema>
+export type WebhookCreateData = WebhookCreate
 export type WebhooksFindAllOptions = z.infer<typeof webhooksFindAllOptionsSchema>
 export type WebhooksFindOptions = z.infer<typeof webhooksFindOptionsSchema>
 export type WebhooksCreateOptions = z.infer<typeof baseOptionsSchema>

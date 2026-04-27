@@ -56,9 +56,9 @@ export const staticSponsorsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.
 
 export type Sponsor = z.infer<typeof SponsorSchema>
 export type SponsorCreate = z.infer<typeof SponsorCreateSchema>
-export type SponsorCreateData = z.infer<typeof SponsorCreateSchema>
+export type SponsorCreateData = SponsorCreate
 export type SponsorUpdate = z.infer<typeof SponsorUpdateSchema>
-export type SponsorUpdateData = z.infer<typeof SponsorUpdateSchema>
+export type SponsorUpdateData = SponsorUpdate
 export type SponsorsFindOptions = z.infer<typeof sponsorsFindOptionsSchema>
 export type SponsorsCreateOptions = z.infer<typeof baseOptionsSchema>
 export type SponsorsUpdateOptions = z.infer<typeof baseOptionsSchema>

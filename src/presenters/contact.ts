@@ -1,12 +1,9 @@
 import { PresenterOptions, ContactPresenter } from '../types/presenters.js'
 import { Contact } from '../types/models.js'
 
-type ContactInput = Contact & {
+type ContactData = Contact & {
   workspaceId?: number
   categoryIds?: number[]
-}
-
-type ContactOutput = Contact & {
   workspace?: { id: number }
   categories?: { id: number }[]
 }
@@ -16,24 +13,16 @@ export default function ({ presenters, Presenter }: PresenterOptions): ContactPr
     static type = 'contact' as const
     static plural = 'contacts' as const
 
-    attributes(contact: ContactInput): ContactOutput {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-      const contactData = contact as any
-      if (contactData.workspaceId) {
-        contactData.workspace = {
-          id: contactData.workspaceId,
-        }
-        delete contactData.workspaceId
+    attributes(contact: ContactData): Record<string, unknown> {
+      if (contact.workspaceId != null) {
+        contact.workspace = { id: contact.workspaceId }
+        delete contact.workspaceId
       }
-      if (contactData.categoryIds?.length) {
-        contactData.categories = contactData.categoryIds.map((id: number) => ({
-          id,
-        }))
-        delete contactData.categoryIds
+      if (contact.categoryIds?.length) {
+        contact.categories = contact.categoryIds.map((id) => ({ id }))
+        delete contact.categoryIds
       }
-      const s = super.attributes?.(contactData) || contactData
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      return s as ContactOutput
+      return super.attributes?.(contact) ?? contact
     }
 
     relationships() {

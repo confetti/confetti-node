@@ -354,9 +354,9 @@ export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.e
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
-export type TicketCreateData = z.infer<typeof TicketCreateSchema>
+export type TicketCreateData = TicketCreate
 export type TicketUpdate = z.infer<typeof TicketUpdateSchema>
-export type TicketUpdateData = z.infer<typeof TicketUpdateSchema>
+export type TicketUpdateData = TicketUpdate
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>

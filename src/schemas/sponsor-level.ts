@@ -49,9 +49,9 @@ export const staticSponsorLevelsUpdateOptionsSchema = staticBaseFindAllOptionsSc
 
 export type SponsorLevel = z.infer<typeof SponsorLevelSchema>
 export type SponsorLevelCreate = z.infer<typeof SponsorLevelCreateSchema>
-export type SponsorLevelCreateData = z.infer<typeof SponsorLevelCreateSchema>
+export type SponsorLevelCreateData = SponsorLevelCreate
 export type SponsorLevelUpdate = z.infer<typeof SponsorLevelUpdateSchema>
-export type SponsorLevelUpdateData = z.infer<typeof SponsorLevelUpdateSchema>
+export type SponsorLevelUpdateData = SponsorLevelUpdate
 export type SponsorLevelsFindOptions = z.infer<typeof sponsorLevelsFindOptionsSchema>
 export type SponsorLevelsCreateOptions = z.infer<typeof baseOptionsSchema>
 export type SponsorLevelsUpdateOptions = z.infer<typeof baseOptionsSchema>

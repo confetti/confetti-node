@@ -90,7 +90,7 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
     })
     if (json) {
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-      const presented = presenters[type as keyof typeof presenters].render(json) as {
+      const presented = presenters[type as keyof typeof presenters].render({ ...json }) as {
         data?: {
           attributes?: {
             meta?: unknown

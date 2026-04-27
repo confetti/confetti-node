@@ -433,9 +433,9 @@ export const staticEventsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Event = z.infer<typeof EventSchema>
 export type EventCreate = z.infer<typeof EventCreateSchema>
-export type EventCreateData = z.infer<typeof EventCreateSchema>
+export type EventCreateData = EventCreate
 export type EventUpdate = z.infer<typeof EventUpdateSchema>
-export type EventUpdateData = z.infer<typeof EventUpdateSchema>
+export type EventUpdateData = EventUpdate
 export type EventsFindAllOptions = z.infer<typeof eventsFindAllOptionsSchema>
 export type EventsFindOptions = z.infer<typeof eventsFindOptionsSchema>
 export type EventsCreateOptions = z.infer<typeof baseOptionsSchema>

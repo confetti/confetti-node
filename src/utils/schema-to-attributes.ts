@@ -37,8 +37,7 @@ function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): {
   itemType: string
   children?: CreateAttribute[]
 } {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-  const element = (arraySchema as any)._def.element ?? (arraySchema as any).element
+  const element = arraySchema.element
   if (element instanceof z.ZodObject) {
     const children = extractObjectChildren(element)
     return { itemType: 'object', ...(children.length > 0 ? { children } : {}) }
@@ -67,8 +66,8 @@ function resolveTypeInfo(schema: any): {
     return { type: 'object', ...(children.length > 0 ? { children } : {}) }
   }
   if (schema instanceof z.ZodArray) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/consistent-type-assertions
-    const { itemType, children } = getArrayElementInfo(schema as any)
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+    const { itemType, children } = getArrayElementInfo(schema as z.ZodArray<z.ZodTypeAny>)
     return { type: 'array', itemType, ...(children ? { children } : {}) }
   }
   if (schema instanceof z.ZodEnum) {

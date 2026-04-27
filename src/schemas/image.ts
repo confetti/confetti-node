@@ -108,9 +108,9 @@ export const staticImagesUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Image = z.infer<typeof ImageSchema>
 export type ImageCreate = z.infer<typeof ImageCreateSchema>
-export type ImageCreateData = z.infer<typeof ImageCreateSchema>
+export type ImageCreateData = ImageCreate
 export type ImageUpdate = z.infer<typeof ImageUpdateSchema>
-export type ImageUpdateData = z.infer<typeof ImageUpdateSchema>
+export type ImageUpdateData = ImageUpdate
 export type ImagesFindAllOptions = z.infer<typeof imagesFindAllOptionsSchema>
 export type ImagesFindOptions = z.infer<typeof imagesFindOptionsSchema>
 export type ImagesCreateOptions = z.infer<typeof baseOptionsSchema>

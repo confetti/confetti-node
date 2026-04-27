@@ -127,9 +127,9 @@ export const staticBlocksUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Block = z.infer<typeof BlockSchema>
 export type BlockCreate = z.infer<typeof BlockCreateSchema>
-export type BlockCreateData = z.infer<typeof BlockCreateSchema>
+export type BlockCreateData = BlockCreate
 export type BlockUpdate = z.infer<typeof BlockUpdateSchema>
-export type BlockUpdateData = z.infer<typeof BlockUpdateSchema>
+export type BlockUpdateData = BlockUpdate
 export type BlocksFindAllOptions = z.infer<typeof blocksFindAllOptionsSchema>
 export type BlocksFindOptions = z.infer<typeof blocksFindOptionsSchema>
 export type BlocksCreateOptions = z.infer<typeof baseOptionsSchema>

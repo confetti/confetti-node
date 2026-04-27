@@ -76,9 +76,9 @@ export const staticOrganisersUpdateOptionsSchema = staticBaseFindAllOptionsSchem
 
 export type Organiser = z.infer<typeof OrganiserSchema>
 export type OrganiserCreate = z.infer<typeof OrganiserCreateSchema>
-export type OrganiserCreateData = z.infer<typeof OrganiserCreateSchema>
+export type OrganiserCreateData = OrganiserCreate
 export type OrganiserUpdate = z.infer<typeof OrganiserUpdateSchema>
-export type OrganiserUpdateData = z.infer<typeof OrganiserUpdateSchema>
+export type OrganiserUpdateData = OrganiserUpdate
 export type OrganisersFindOptions = z.infer<typeof organisersFindOptionsSchema>
 export type OrganisersCreateOptions = z.infer<typeof baseOptionsSchema>
 export type OrganisersUpdateOptions = z.infer<typeof baseOptionsSchema>

@@ -129,9 +129,9 @@ export const staticFormFieldsUpdateOptionsSchema = staticBaseFindAllOptionsSchem
 
 export type FormField = z.infer<typeof FormFieldSchema>
 export type FormFieldCreate = z.infer<typeof FormFieldCreateSchema>
-export type FormFieldCreateData = z.infer<typeof FormFieldCreateSchema>
+export type FormFieldCreateData = FormFieldCreate
 export type FormFieldUpdate = z.infer<typeof FormFieldUpdateSchema>
-export type FormFieldUpdateData = z.infer<typeof FormFieldUpdateSchema>
+export type FormFieldUpdateData = FormFieldUpdate
 export type FormFieldsFindAllOptions = z.infer<typeof formFieldsFindAllOptionsSchema>
 export type FormFieldsFindOptions = z.infer<typeof formFieldsFindOptionsSchema>
 export type FormFieldsCreateOptions = z.infer<typeof baseOptionsSchema>
