@@ -15,6 +15,7 @@ import organiser from './organiser.js'
 import addon from './addon.js'
 import form from './form.js'
 import formField from './form-field.js'
+import imageUpload from './image-upload.js'
 import sponsor from './sponsor.js'
 import sponsorLevel from './sponsor-level.js'
 
@@ -28,6 +29,7 @@ export type { Workspace } from '../schemas/workspace.js'
 export type { TicketBatch } from '../schemas/ticket-batch.js'
 export type { Block, BlockCreate, BlockUpdate } from '../schemas/block.js'
 export type { Image, ImageCreate, ImageUpdate } from '../schemas/image.js'
+export type { ImageUpload, ImageUploadCreate, ImageUploadUpdate } from '../schemas/image-upload.js'
 export type { Page, PageCreate, PageUpdate } from '../schemas/page.js'
 export type { ScheduleItem, ScheduleItemCreate, ScheduleItemUpdate } from '../schemas/schedule-item.js'
 export type { Speaker, SpeakerCreate, SpeakerUpdate } from '../schemas/speaker.js'
@@ -44,6 +46,7 @@ export default {
   contact: contact(),
   event: event(),
   image: image(),
+  imageUpload: imageUpload(),
   page: page(),
   payment: payment(),
   ticket: ticket(),

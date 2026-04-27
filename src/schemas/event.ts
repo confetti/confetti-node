@@ -225,7 +225,8 @@ export const EventCreateSchema = z.object({
   locationPlace: z
     .object({
       formatted_address: z.string().meta({
-        description: 'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden").',
+        description:
+          'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden"). Used as display text and Google Maps link — but not sufficient alone for map rendering; geometry.location is also required.',
       }),
       geometry: z
         .object({
@@ -237,7 +238,7 @@ export const EventCreateSchema = z.object({
         .optional()
         .meta({
           description:
-            'Coordinates for map centering. When provided with linkToPosition=true, the map links directly to these coordinates.',
+            'Coordinates required for the map tile image to render correctly. Without lat/lng the map will be broken. When linkToPosition is true, the map also links to these coordinates.',
         }),
       address_components: z
         .array(
@@ -254,7 +255,10 @@ export const EventCreateSchema = z.object({
       linkToPosition: z
         .boolean()
         .optional()
-        .meta({ description: 'When true, the map link uses lat/lng coordinates instead of the formatted address.' }),
+        .meta({
+          description:
+            'When true, the Google Maps link uses lat/lng coordinates instead of the formatted address. Recommended when geometry.location is provided.',
+        }),
       adr_address: z
         .string()
         .optional()
@@ -263,7 +267,8 @@ export const EventCreateSchema = z.object({
     .optional()
     .meta({
       label: 'Location place',
-      description: 'Location/venue details for maps. At minimum, set formatted_address for the map to work.',
+      description:
+        'Location/venue details. Both formatted_address and geometry.location (lat/lng) are needed for the map to render. Without coordinates the map image will be broken.',
     }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
@@ -336,8 +341,7 @@ const eventsFindAllSchema = {
           'speakers.image',
           'organisers',
           'organisers.image',
-          'forms',
-          'forms.formFields',
+          'forms.form-fields',
         ])
         .meta({
           label: 'Include Relations',
@@ -407,18 +411,11 @@ const eventsFindAllSchema = {
               value: 'organisers.image',
             },
             {
-              label: 'Forms',
-              description: 'Event forms',
+              label: 'Forms with Form Fields',
+              description: 'Event forms and their form fields',
               type: 'string',
-              key: 'forms',
-              value: 'forms',
-            },
-            {
-              label: 'Forms Form Fields',
-              description: 'Form fields belonging to event forms',
-              type: 'string',
-              key: 'forms.formFields',
-              value: 'forms.formFields',
+              key: 'forms.form-fields',
+              value: 'forms.form-fields',
             },
           ],
         }),
