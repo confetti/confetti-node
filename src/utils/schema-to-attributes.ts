@@ -28,12 +28,11 @@ export type Attribute = BaseAttribute | CreateAttribute
 function extractObjectChildren(zodObj: z.ZodObject<z.ZodRawShape>): CreateAttribute[] {
   const shape = zodObj.shape
   if (!shape || Object.keys(shape).length === 0) return []
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return schemaToAttributes(zodObj, { includeCreateFields: true }) as CreateAttribute[]
+  return schemaToAttributes(zodObj, { includeCreateFields: true })
 }
 
 // Get array element type info, recursing into object elements
-function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): {
+function getArrayElementInfo(arraySchema: z.ZodArray): {
   itemType: string
   children?: CreateAttribute[]
 } {
@@ -50,8 +49,7 @@ function getArrayElementInfo(arraySchema: z.ZodArray<z.ZodTypeAny>): {
 }
 
 // Extract type info from a resolved (non-optional) Zod schema
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function resolveTypeInfo(schema: any): {
+function resolveTypeInfo(schema: unknown): {
   type: string
   values?: string[]
   children?: CreateAttribute[]
@@ -66,8 +64,7 @@ function resolveTypeInfo(schema: any): {
     return { type: 'object', ...(children.length > 0 ? { children } : {}) }
   }
   if (schema instanceof z.ZodArray) {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const { itemType, children } = getArrayElementInfo(schema as z.ZodArray<z.ZodTypeAny>)
+    const { itemType, children } = getArrayElementInfo(schema)
     return { type: 'array', itemType, ...(children ? { children } : {}) }
   }
   if (schema instanceof z.ZodEnum) {
@@ -77,6 +74,11 @@ function resolveTypeInfo(schema: any): {
   return { type: 'string' }
 }
 
+export function schemaToAttributes(
+  schema: z.ZodObject<z.ZodRawShape>,
+  options: { includeCreateFields: true } & AttributeOptions,
+): CreateAttribute[]
+export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options?: AttributeOptions): BaseAttribute[]
 export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: AttributeOptions = {}): Attribute[] {
   const { includeRequired = false, includeCreateFields = false } = options
   const attributes: Attribute[] = []
@@ -190,11 +192,9 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
 
 // Convenience functions for backward compatibility
 export function schemaToBaseAttributes(schema: z.ZodObject<z.ZodRawShape>): BaseAttribute[] {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return schemaToAttributes(schema) as BaseAttribute[]
+  return schemaToAttributes(schema)
 }
 
 export function schemaToCreateAttributes(schema: z.ZodObject<z.ZodRawShape>): CreateAttribute[] {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  return schemaToAttributes(schema, { includeCreateFields: true }) as CreateAttribute[]
+  return schemaToAttributes(schema, { includeCreateFields: true })
 }

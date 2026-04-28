@@ -1,48 +1,17 @@
 import { z } from 'zod'
-import { getMeta } from './schema-meta.js'
+import { getMeta, type MetaValues } from './schema-meta.js'
 
-type FilterValues =
-  | Array<{ value: string; label: string }>
-  | Array<{ label: string; description: string; type: string; key: string; value: string }>
+type FilterEntry = {
+  type: 'string' | 'number' | 'boolean' | 'array' | 'date' | 'enum'
+  label: string
+  required?: boolean
+  default?: string | number | boolean
+  options?: Array<{ value: string; label: string }>
+  values?: MetaValues
+}
 
-export function extractFiltersFromSchema(schema: z.ZodSchema): Record<
-  string,
-  {
-    type: 'string' | 'number' | 'boolean' | 'array' | 'date' | 'enum'
-    label: string
-    required?: boolean
-    default?: string | number | boolean
-    options?: Array<{ value: string; label: string }>
-    values?:
-      | Array<{ value: string; label: string }>
-      | Array<{
-          label: string
-          description: string
-          type: string
-          key: string
-          value: string
-        }>
-  }
-> {
-  const filters: Record<
-    string,
-    {
-      type: 'string' | 'number' | 'boolean' | 'array' | 'date' | 'enum'
-      label: string
-      required?: boolean
-      default?: string | number | boolean
-      options?: Array<{ value: string; label: string }>
-      values?:
-        | Array<{ value: string; label: string }>
-        | Array<{
-            label: string
-            description: string
-            type: string
-            key: string
-            value: string
-          }>
-    }
-  > = {}
+export function extractFiltersFromSchema(schema: z.ZodSchema): Record<string, FilterEntry> {
+  const filters: Record<string, FilterEntry> = {}
 
   if (schema instanceof z.ZodObject) {
     const shape = schema.shape
@@ -170,8 +139,7 @@ function extractFieldConfig(
             return {
               type: 'array',
               label, // Use key-based label for filter fields
-              // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-              values: meta.values as FilterValues,
+              values: meta.values,
             }
           }
           return {
@@ -195,8 +163,7 @@ function extractFieldConfig(
             type: 'enum',
             label: meta.label || label,
             default: '',
-            // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-            values: meta.values as FilterValues,
+            values: meta.values,
           }
         }
         return {
@@ -224,8 +191,7 @@ function extractFieldConfig(
         return {
           type: 'array',
           label: meta.label || label,
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-          values: meta.values as FilterValues,
+          values: meta.values,
         }
       }
       return {
@@ -250,8 +216,7 @@ function extractFieldConfig(
         type: 'enum',
         label: meta.label || label,
         default: '',
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-        values: meta.values as FilterValues,
+        values: meta.values,
       }
     }
 
