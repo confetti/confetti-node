@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { JSONSchema } from 'zod/v4/core'
 import { BaseFilter } from '../types/model.js'
 
 export interface JsonSchemaProperty {
@@ -22,9 +23,11 @@ const typeMap: Record<string, string> = {
 
 const metaKeysToStrip = ['label', 'helpText', 'placeholder', 'values']
 
-export function schemaToJsonSchema(schema: z.ZodType, options?: { stripFields?: string[] }): Record<string, unknown> {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions, @typescript-eslint/no-explicit-any
-  const raw = z.toJSONSchema(schema as any, {
+export function schemaToJsonSchema(
+  schema: z.core.$ZodType,
+  options?: { stripFields?: string[] },
+): JSONSchema.JSONSchema {
+  const result = z.toJSONSchema(schema, {
     unrepresentable: 'any',
     override: (ctx) => {
       // Convert z.date() → { type: 'string', format: 'date-time' }
@@ -33,27 +36,20 @@ export function schemaToJsonSchema(schema: z.ZodType, options?: { stripFields?: 
         ctx.jsonSchema.format = 'date-time'
       }
       // Strip non-standard .meta() keys from JSON Schema output
-      const js: Record<string, unknown> = ctx.jsonSchema
-      for (const key of metaKeysToStrip) delete js[key]
+      for (const key of metaKeysToStrip) delete ctx.jsonSchema[key]
     },
   })
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const result = raw as Record<string, unknown>
 
   // Remove $schema key
   delete result.$schema
 
   // Strip specified relationship fields from properties
   if (options?.stripFields?.length && result.properties) {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const props = result.properties as Record<string, unknown>
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    const required = result.required as string[] | undefined
     for (const field of options.stripFields) {
-      delete props[field]
-      if (required) {
-        const idx = required.indexOf(field)
-        if (idx >= 0) required.splice(idx, 1)
+      delete result.properties[field]
+      if (result.required) {
+        const idx = result.required.indexOf(field)
+        if (idx >= 0) result.required.splice(idx, 1)
       }
     }
   }
