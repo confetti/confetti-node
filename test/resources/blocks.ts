@@ -49,7 +49,7 @@ describe('Blocks', () => {
 
       const confetti = new Confetti({ apiKey: 'my-key' })
       const data = await confetti.blocks.create({
-        blockType: 'text',
+        type: 'text',
         status: 'published',
         pageId: 1,
         eventId: 1,
@@ -96,7 +96,7 @@ describe('Blocks', () => {
         .reply(201, mockData as MockResponseData)
 
       const data = await Confetti.blocks.create(
-        { blockType: 'text', status: 'published', pageId: 1, eventId: 1 },
+        { type: 'text', status: 'published', pageId: 1, eventId: 1 },
         { apiKey: 'my-key' },
       )
       assert.deepStrictEqual(data, Confetti.models.block.sample.single.formatted)

@@ -3,7 +3,6 @@ import { TYPE } from 'yayson/utils'
 export default {
   id: '210645',
   [TYPE]: 'block',
-  blockType: 'text',
   type: 'text',
   status: 'published',
   order: 2,

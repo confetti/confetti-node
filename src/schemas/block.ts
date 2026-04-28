@@ -25,9 +25,6 @@ export const BlockSchema = z.object({
   }),
 })
 
-// Block uses `blockType` instead of `type` to avoid collision with the
-// JSON:API resource `type` field. The presenter renames it back when sending
-// to the API.
 const blockTypes = [
   'text',
   'header',
@@ -52,7 +49,7 @@ const blockTypes = [
 const blockStatuses = ['published', 'preview', 'deleted', 'hidden'] as const
 
 const blockContentDescription = [
-  'Block content object. ONLY use fields listed for the specific blockType — unknown fields are silently stripped.',
+  'Block content object. ONLY use fields listed for the specific type — unknown fields are silently stripped.',
   '',
   'Shared fields (all types): name, cssClassName, theme (primary|inverted|secondary|custom), style (spacing object with spacing/spacingTop/spacingBottom each: small|medium|large|custom), blockStyleSettings (colors/fonts/css/effects), includeTickets (bool), filterTicketBatches (number[]), url.',
   '',
@@ -76,7 +73,7 @@ const blockContentDescription = [
 ].join('\n')
 
 export const BlockCreateSchema = z.object({
-  blockType: z
+  type: z
     .enum(blockTypes)
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
   status: z.enum(blockStatuses).meta({ label: 'Status', description: 'Block visibility status.' }),
@@ -91,7 +88,7 @@ export const BlockCreateSchema = z.object({
 })
 
 export const BlockUpdateSchema = z.object({
-  blockType: z
+  type: z
     .enum(blockTypes)
     .optional()
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),

@@ -62,11 +62,8 @@ export const ImageSchema = z.object({
   }),
 })
 
-// Image uses `imageType` instead of `type` to avoid colliding with the
-// JSON:API resource type. For S3 uploads, set provider to "s3" and public_id
-// to the key returned by image-uploads. Otherwise supply `url` for a hosted image.
 export const ImageCreateSchema = z.object({
-  imageType: z.string().meta({ label: 'Image Type' }),
+  type: z.string().meta({ label: 'Image Type' }),
   provider: z.string().optional().meta({ label: 'Provider', description: 'Image provider, e.g. "s3".' }),
   public_id: z.string().optional().meta({ label: 'Public Id', description: 'Provider-specific image key.' }),
   url: z.string().optional().meta({ label: 'Url' }),
