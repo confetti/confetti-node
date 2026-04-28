@@ -154,7 +154,6 @@ export const EventCreateSchema = z.object({
   timeZone: z.string().optional().meta({ label: 'Time Zone' }),
   continuous: z.boolean().optional().meta({ label: 'Continuous' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
-  // copy fields (branding/customisation)
   primaryColor: z.string().optional().meta({
     label: 'Primary color',
     description:
@@ -273,7 +272,6 @@ export const EventCreateSchema = z.object({
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
 
-// All fields are optional on update; you only patch what changed.
 export const EventUpdateSchema = EventCreateSchema.partial()
 
 const eventsFindAllSchema = {

@@ -133,7 +133,6 @@ function extractFieldConfig(
       if (option instanceof z.ZodArray) {
         const elementType = option.element
         if (elementType instanceof z.ZodEnum) {
-          // Check if the enum has enhanced metadata
           const meta = getMeta(elementType)
           if (meta?.values && Array.isArray(meta.values)) {
             return {
@@ -156,7 +155,6 @@ function extractFieldConfig(
         return { type: 'array', label }
       }
       if (option instanceof z.ZodEnum) {
-        // Check if the enum has enhanced metadata
         const meta = getMeta(option)
         if (meta?.values && Array.isArray(meta.values)) {
           return {
@@ -185,7 +183,6 @@ function extractFieldConfig(
   if (field instanceof z.ZodArray) {
     const elementType = field.element
     if (elementType instanceof z.ZodEnum) {
-      // Check if the enum has enhanced metadata
       const meta = getMeta(elementType)
       if (meta?.values && Array.isArray(meta.values)) {
         return {
@@ -209,7 +206,6 @@ function extractFieldConfig(
   }
 
   if (field instanceof z.ZodEnum) {
-    // Check if the enum has enhanced metadata
     const meta = getMeta(field)
     if (meta?.values && Array.isArray(meta.values)) {
       return {

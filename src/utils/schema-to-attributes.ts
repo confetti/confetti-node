@@ -24,14 +24,12 @@ export interface CreateAttribute extends BaseAttribute {
 
 export type Attribute = BaseAttribute | CreateAttribute
 
-// Extract children from a ZodObject's shape (recursive)
 function extractObjectChildren(zodObj: z.ZodObject<z.ZodRawShape>): CreateAttribute[] {
   const shape = zodObj.shape
   if (!shape || Object.keys(shape).length === 0) return []
   return schemaToAttributes(zodObj, { includeCreateFields: true })
 }
 
-// Get array element type info, recursing into object elements
 function getArrayElementInfo(arraySchema: z.ZodArray): {
   itemType: string
   children?: CreateAttribute[]
@@ -48,7 +46,6 @@ function getArrayElementInfo(arraySchema: z.ZodArray): {
   return { itemType: 'string' }
 }
 
-// Extract type info from a resolved (non-optional) Zod schema
 function resolveTypeInfo(schema: unknown): {
   type: string
   values?: string[]
@@ -92,7 +89,6 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     let children: CreateAttribute[] | undefined
     let itemType: string | undefined
 
-    // Extract metadata from Zod schema .meta()
     let metadata: {
       label?: string
       description?: string
