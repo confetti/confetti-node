@@ -133,7 +133,7 @@ export const ContactCreateSchema = z.object({
       }),
     ),
   categoryIds: z
-    .array(z.number())
+    .array(z.coerce.number())
     .optional()
     .describe(
       JSON.stringify({
@@ -141,7 +141,7 @@ export const ContactCreateSchema = z.object({
         helpText: 'Attach categories to your contact.',
       }),
     ),
-  workspaceId: z.number().describe(
+  workspaceId: z.coerce.number().describe(
     JSON.stringify({
       label: 'Workspace Id',
     }),

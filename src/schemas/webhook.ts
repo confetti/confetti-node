@@ -73,7 +73,7 @@ export const WebhookCreateSchema = z.object({
         label: 'Status',
       }),
     ),
-  workspaceId: z
+  workspaceId: z.coerce
     .number()
     .optional()
     .describe(
@@ -81,7 +81,7 @@ export const WebhookCreateSchema = z.object({
         label: 'Workspace Id',
       }),
     ),
-  eventId: z
+  eventId: z.coerce
     .number()
     .nullable()
     .optional()
@@ -95,7 +95,7 @@ export const WebhookCreateSchema = z.object({
 const webhooksFindAllSchema = {
   filter: z
     .object({
-      eventId: z.number().optional(),
+      eventId: z.coerce.number().optional(),
     })
     .optional(),
   sort: z.never().optional(),

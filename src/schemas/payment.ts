@@ -83,7 +83,7 @@ export const PaymentSchema = z.object({
 
 const paymentsFindAllSchema = {
   filter: z.object({
-    eventId: z.number(),
+    eventId: z.coerce.number(),
     status: z
       .array(
         z.enum(['paid', 'refunded', 'pending-invoice', 'sent-invoice', 'paid-invoice', 'cancelled-invoice']).describe(
