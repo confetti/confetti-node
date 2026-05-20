@@ -162,12 +162,12 @@ export const TicketSchema = z.object({
 })
 
 export const TicketCreateSchema = z.object({
-  eventId: z.number().describe(
+  eventId: z.coerce.number().describe(
     JSON.stringify({
       label: 'Event Id',
     }),
   ),
-  ticketBatchId: z
+  ticketBatchId: z.coerce
     .number()
     .optional()
     .describe(
@@ -250,7 +250,7 @@ export const TicketCreateSchema = z.object({
 
 const ticketsFindAllSchema = {
   filter: z.object({
-    eventId: z.number(),
+    eventId: z.coerce.number(),
     search: z.string().optional(),
     description: z.string().optional(),
     checkedIn: z.boolean().optional(),
