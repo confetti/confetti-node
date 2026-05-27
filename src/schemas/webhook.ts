@@ -45,10 +45,10 @@ export const WebhookCreateSchema = z.object({
   status: z.enum(['active', 'inactive']).optional().meta({
     label: 'Status',
   }),
-  workspaceId: z.number().optional().meta({
+  workspaceId: z.coerce.number().optional().meta({
     label: 'Workspace Id',
   }),
-  eventId: z.number().nullable().optional().meta({
+  eventId: z.coerce.number().nullable().optional().meta({
     label: 'Event Id',
   }),
 })
@@ -56,7 +56,7 @@ export const WebhookCreateSchema = z.object({
 const webhooksFindAllSchema = {
   filter: z
     .object({
-      eventId: z.number().optional(),
+      eventId: z.coerce.number().optional(),
     })
     .optional(),
   sort: z.never().optional(),

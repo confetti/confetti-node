@@ -74,11 +74,11 @@ export const ContactCreateSchema = z.object({
   company: z.string().optional().meta({
     label: 'Company',
   }),
-  categoryIds: z.array(z.number()).optional().meta({
+  categoryIds: z.array(z.coerce.number()).optional().meta({
     label: 'Categories',
     helpText: 'Attach categories to your contact.',
   }),
-  workspaceId: z.number().meta({
+  workspaceId: z.coerce.number().meta({
     label: 'Workspace Id',
   }),
 })

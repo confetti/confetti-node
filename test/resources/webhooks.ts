@@ -96,5 +96,38 @@ describe('Webhooks', () => {
 
       await Confetti.webhooks.delete(1, { apiKey: 'my-key' })
     })
+
+    // Regression: yayson keeps JSON:API ids as strings, so workspaces.findAll
+    // returns string-typed ids; webhooks.create used to reject them.
+    test('should round-trip a string id from workspaces.findAll into webhooks.create', async () => {
+      nock('https://api.confetti.events')
+        .get('/workspaces')
+        .reply(200, {
+          data: [
+            {
+              id: '57',
+              type: 'workspace',
+              attributes: { name: 'My workspace' },
+            },
+          ],
+        })
+
+      nock('https://api.confetti.events')
+        .post('/webhooks')
+        .reply(201, Confetti.models.webhook.sample.single.raw)
+
+      const workspaces = await Confetti.workspaces.findAll({ apiKey: 'my-key' })
+      assert.strictEqual(typeof workspaces[0]!.id, 'string')
+
+      await Confetti.webhooks.create(
+        {
+          type: 'ticket.attending',
+          url: 'https://hooks.zapier.com/hooks/standard/1337/',
+          provider: 'zapier',
+          workspaceId: workspaces[0]!.id,
+        },
+        { apiKey: 'my-key' },
+      )
+    })
   })
 })

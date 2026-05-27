@@ -83,7 +83,7 @@ export const TicketBatchSchema = z.object({
 
 const ticketBatchesFindAllSchema = {
   filter: z.object({
-    eventId: z.number(),
+    eventId: z.coerce.number(),
   }),
   sort: z.never().optional(),
   include: z

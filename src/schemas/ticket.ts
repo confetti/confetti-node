@@ -110,10 +110,10 @@ export const TicketSchema = z.object({
 })
 
 export const TicketCreateSchema = z.object({
-  eventId: z.number().meta({
+  eventId: z.coerce.number().meta({
     label: 'Event Id',
   }),
-  ticketBatchId: z.number().optional().meta({
+  ticketBatchId: z.coerce.number().optional().meta({
     label: 'Ticket Batch Id',
     helpText: 'Required for ticket events',
   }),
@@ -193,7 +193,7 @@ export const TicketUpdateSchema = z.object({
 
 const ticketsFindAllSchema = {
   filter: z.object({
-    eventId: z.number(),
+    eventId: z.coerce.number(),
     search: z.string().optional(),
     description: z.string().optional(),
     checkedIn: z.boolean().optional(),
