@@ -1,7 +1,7 @@
 // Presenter types for Confetti API
 
 import type { YaysonResult } from 'yayson'
-import { Contact, Ticket, Webhook } from './models.js'
+import { Ticket, Webhook } from './models.js'
 
 // Base presenter class type from yayson
 export type YaysonPresenter = YaysonResult['Presenter']
@@ -62,15 +62,7 @@ export interface ContactPresenter extends BasePresenter {
   type: 'contact'
   plural: 'contacts'
   new (): {
-    attributes(
-      _contact: Contact & {
-        workspaceId?: number
-        categoryIds?: number[]
-      },
-    ): Contact & {
-      workspace?: { id: number }
-      categories?: { id: number }[]
-    }
+    attributes(_contact: Record<string, unknown>): Record<string, unknown>
     relationships(): {
       workspace: WorkspacePresenter
       categories: CategoryPresenter

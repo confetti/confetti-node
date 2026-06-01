@@ -1,10 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import {
-  ScheduleItemSchema,
-  ScheduleItemCreateSchema,
-  ScheduleItemUpdateSchema,
-} from '../schemas/schedule-item.js'
+import { ScheduleItemSchema, ScheduleItemCreateSchema, ScheduleItemUpdateSchema } from '../schemas/schedule-item.js'
 import { ModelDefinition } from '../types/model.js'
 
 export default function ScheduleItemModel(): ModelDefinition {

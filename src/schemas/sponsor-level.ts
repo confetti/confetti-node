@@ -8,28 +8,28 @@ import {
 
 export const SponsorLevelSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the sponsor level.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the sponsor level.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   style: z.string().meta({
-      label: 'Style',
-      description: 'Visual style: large, medium, or small',
-    }),
+    label: 'Style',
+    description: 'Visual style: large, medium, or small',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
 })
 
 export const SponsorLevelCreateSchema = z.object({
@@ -49,9 +49,9 @@ export const staticSponsorLevelsUpdateOptionsSchema = staticBaseFindAllOptionsSc
 
 export type SponsorLevel = z.infer<typeof SponsorLevelSchema>
 export type SponsorLevelCreate = z.infer<typeof SponsorLevelCreateSchema>
-export type SponsorLevelCreateData = z.infer<typeof SponsorLevelCreateSchema>
+export type SponsorLevelCreateData = SponsorLevelCreate
 export type SponsorLevelUpdate = z.infer<typeof SponsorLevelUpdateSchema>
-export type SponsorLevelUpdateData = z.infer<typeof SponsorLevelUpdateSchema>
+export type SponsorLevelUpdateData = SponsorLevelUpdate
 export type SponsorLevelsFindOptions = z.infer<typeof sponsorLevelsFindOptionsSchema>
 export type SponsorLevelsCreateOptions = z.infer<typeof baseOptionsSchema>
 export type SponsorLevelsUpdateOptions = z.infer<typeof baseOptionsSchema>

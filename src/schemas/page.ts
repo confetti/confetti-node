@@ -9,20 +9,20 @@ import {
 
 export const PageSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-    }),
+    label: 'ID',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   slug: z.string().meta({
-      label: 'Slug',
-    }),
+    label: 'Slug',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   settings: z.looseObject({}).meta({
-      label: 'Settings',
-    }),
+    label: 'Settings',
+  }),
 })
 
 export const PageCreateSchema = z.object({
@@ -31,10 +31,7 @@ export const PageCreateSchema = z.object({
   status: z.string().optional().meta({ label: 'Status' }),
   order: z.number().optional().meta({ label: 'Order' }),
   settings: z.looseObject({}).optional().meta({ label: 'Settings' }),
-  prefillBlocks: z
-    .boolean()
-    .optional()
-    .meta({ label: 'Prefill Blocks' }),
+  prefillBlocks: z.boolean().optional().meta({ label: 'Prefill Blocks' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
@@ -48,9 +45,7 @@ const pagesFindAllSchema = {
     })
     .optional(),
   sort: z.never().optional(),
-  include: z
-    .array(z.enum(['blocks', 'blocks.images']))
-    .optional(),
+  include: z.array(z.enum(['blocks', 'blocks.images'])).optional(),
 }
 
 export const pagesFindAllOptionsSchema = baseFindAllOptionsSchema.extend(pagesFindAllSchema)
@@ -63,9 +58,9 @@ export const staticPagesUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ext
 
 export type Page = z.infer<typeof PageSchema>
 export type PageCreate = z.infer<typeof PageCreateSchema>
-export type PageCreateData = z.infer<typeof PageCreateSchema>
+export type PageCreateData = PageCreate
 export type PageUpdate = z.infer<typeof PageUpdateSchema>
-export type PageUpdateData = z.infer<typeof PageUpdateSchema>
+export type PageUpdateData = PageUpdate
 export type PagesFindAllOptions = z.infer<typeof pagesFindAllOptionsSchema>
 export type PagesFindOptions = z.infer<typeof pagesFindOptionsSchema>
 export type PagesCreateOptions = z.infer<typeof baseOptionsSchema>

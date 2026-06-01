@@ -99,6 +99,10 @@ import {
   formFieldsFindOptionsSchema,
   type FormFieldsFindAllOptions,
   type FormFieldsFindOptions,
+  type FormFieldsCreateOptions,
+  type FormFieldsUpdateOptions,
+  type FormFieldCreateData,
+  type FormFieldUpdateData,
 } from './schemas/form-field.js'
 import {
   speakersFindOptionsSchema,
@@ -598,6 +602,45 @@ export const formFieldsResource = {
   find: (id: string | number, options: FormFieldsFindOptions = {}, adapter: Adapter): Promise<FormField> => {
     const validatedOptions = formFieldsFindOptionsSchema.parse(options)
     return adapter.get<FormField>({
+      path: `${models.formField.path}/${id}`,
+      type: models.formField.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (
+    json: FormFieldCreateData,
+    options: FormFieldsCreateOptions = {},
+    adapter: Adapter,
+  ): Promise<FormField> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.formField.operations.create) throw new Error('FormField create operation not found')
+    const validatedData = models.formField.operations.create.schema.parse(json)
+    return adapter.post<FormField>({
+      json: validatedData,
+      path: models.formField.path,
+      type: models.formField.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: FormFieldUpdateData,
+    options: FormFieldsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<FormField> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.formField.operations.update) throw new Error('FormField update operation not found')
+    const validatedData = models.formField.operations.update.schema.parse(json)
+    return adapter.put<FormField>({
+      json: validatedData,
+      path: `${models.formField.path}/${id}`,
+      type: models.formField.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: FormFieldsFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = formFieldsFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
       path: `${models.formField.path}/${id}`,
       type: models.formField.endpoint,
       ...validatedOptions,

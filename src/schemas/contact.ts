@@ -9,99 +9,78 @@ import {
 
 export const ContactSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the contact.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the contact.',
+  }),
   firstName: z.string().meta({
-      label: 'First Name',
-    }),
+    label: 'First Name',
+  }),
   lastName: z.string().meta({
-      label: 'Last Name',
-    }),
+    label: 'Last Name',
+  }),
   email: z.string().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   phone: z.string().meta({
-      label: 'Phone',
-    }),
+    label: 'Phone',
+  }),
   token: z.string().meta({
-      label: 'Token',
-    }),
+    label: 'Token',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   comment: z.string().meta({
-      label: 'Comment',
-    }),
+    label: 'Comment',
+  }),
   lastSeen: z.date().meta({
-      label: 'Last Seen',
-    }),
-  deletionRequestedAt: z
-    .date()
-    .optional()
-    .meta({
-        label: 'Deletion Requested At',
-      }),
+    label: 'Last Seen',
+  }),
+  deletionRequestedAt: z.date().optional().meta({
+    label: 'Deletion Requested At',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
   organisationId: z.number().meta({
-      label: 'Organisation Id',
-    }),
+    label: 'Organisation Id',
+  }),
   company: z.string().meta({
-      label: 'Company',
-    }),
+    label: 'Company',
+  }),
 })
 
 export const ContactCreateSchema = z.object({
-  firstName: z
-    .string()
-    .optional()
-    .meta({
-        label: 'First Name',
-      }),
-  lastName: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Last Name',
-      }),
+  firstName: z.string().optional().meta({
+    label: 'First Name',
+  }),
+  lastName: z.string().optional().meta({
+    label: 'Last Name',
+  }),
   email: z.string().email().meta({
-      label: 'Email',
-    }),
-  phone: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Phone',
-        placeholder: '+46 12 345 67 89',
-        helpText: 'Mobile phone number with country code. Example: +46701234567',
-      }),
-  comment: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Comment',
-      }),
-  company: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Company',
-      }),
-  categoryIds: z
-    .array(z.number())
-    .optional()
-    .meta({
-        label: 'Categories',
-        helpText: 'Attach categories to your contact.',
-      }),
-  workspaceId: z.number().meta({
-      label: 'Workspace Id',
-    }),
+    label: 'Email',
+  }),
+  phone: z.string().optional().meta({
+    label: 'Phone',
+    placeholder: '+46 12 345 67 89',
+    helpText: 'Mobile phone number with country code. Example: +46701234567',
+  }),
+  comment: z.string().optional().meta({
+    label: 'Comment',
+  }),
+  company: z.string().optional().meta({
+    label: 'Company',
+  }),
+  categoryIds: z.array(z.coerce.number()).optional().meta({
+    label: 'Categories',
+    helpText: 'Attach categories to your contact.',
+  }),
+  workspaceId: z.coerce.number().meta({
+    label: 'Workspace Id',
+  }),
 })
 
 const contactsFindAllSchema = {
@@ -119,7 +98,7 @@ export const staticContactsCreateOptionsSchema = staticBaseFindAllOptionsSchema.
 
 export type Contact = z.infer<typeof ContactSchema>
 export type ContactCreate = z.infer<typeof ContactCreateSchema>
-export type ContactCreateData = z.infer<typeof ContactCreateSchema>
+export type ContactCreateData = ContactCreate
 export type ContactsFindAllOptions = z.infer<typeof contactsFindAllOptionsSchema>
 export type ContactsFindOptions = z.infer<typeof contactsFindOptionsSchema>
 export type ContactsCreateOptions = z.infer<typeof baseOptionsSchema>

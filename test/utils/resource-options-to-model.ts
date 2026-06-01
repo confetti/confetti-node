@@ -359,53 +359,53 @@ describe('resource-options-to-model', () => {
               .union([
                 z.array(
                   z.enum(['attending', 'waitlist', 'declined', 'invited', 'consumed', 'deletion-requested']).meta({
-                      label: 'Ticket Status',
-                      description: 'Filter tickets by status',
-                      values: [
-                        {
-                          label: 'Attending',
-                          description: 'Tickets for attendees',
-                          type: 'string',
-                          key: 'attending',
-                          value: 'attending',
-                        },
-                        {
-                          label: 'Waitlist',
-                          description: 'Tickets on waitlist',
-                          type: 'string',
-                          key: 'waitlist',
-                          value: 'waitlist',
-                        },
-                        {
-                          label: 'Declined',
-                          description: 'Declined tickets',
-                          type: 'string',
-                          key: 'declined',
-                          value: 'declined',
-                        },
-                        {
-                          label: 'Invited',
-                          description: 'Invited tickets',
-                          type: 'string',
-                          key: 'invited',
-                          value: 'invited',
-                        },
-                        {
-                          label: 'Consumed',
-                          description: 'Consumed tickets',
-                          type: 'string',
-                          key: 'consumed',
-                          value: 'consumed',
-                        },
-                        {
-                          label: 'Deletion Requested',
-                          description: 'Tickets with deletion requested',
-                          type: 'string',
-                          key: 'deletion-requested',
-                          value: 'deletion-requested',
-                        },
-                      ],
-                    }),
+                    label: 'Ticket Status',
+                    description: 'Filter tickets by status',
+                    values: [
+                      {
+                        label: 'Attending',
+                        description: 'Tickets for attendees',
+                        type: 'string',
+                        key: 'attending',
+                        value: 'attending',
+                      },
+                      {
+                        label: 'Waitlist',
+                        description: 'Tickets on waitlist',
+                        type: 'string',
+                        key: 'waitlist',
+                        value: 'waitlist',
+                      },
+                      {
+                        label: 'Declined',
+                        description: 'Declined tickets',
+                        type: 'string',
+                        key: 'declined',
+                        value: 'declined',
+                      },
+                      {
+                        label: 'Invited',
+                        description: 'Invited tickets',
+                        type: 'string',
+                        key: 'invited',
+                        value: 'invited',
+                      },
+                      {
+                        label: 'Consumed',
+                        description: 'Consumed tickets',
+                        type: 'string',
+                        key: 'consumed',
+                        value: 'consumed',
+                      },
+                      {
+                        label: 'Deletion Requested',
+                        description: 'Tickets with deletion requested',
+                        type: 'string',
+                        key: 'deletion-requested',
+                        value: 'deletion-requested',
+                      },
+                    ],
+                  }),
                 ),
                 z.string().refine(
                   (val) => {

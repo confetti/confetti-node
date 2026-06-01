@@ -77,10 +77,7 @@ describe('ScheduleItems', () => {
         .post('/schedule-items')
         .reply(201, mockData as MockResponseData)
 
-      const data = await Confetti.scheduleItems.create(
-        { title: 'Keynote', eventId: 1 },
-        { apiKey: 'my-key' },
-      )
+      const data = await Confetti.scheduleItems.create({ title: 'Keynote', eventId: 1 }, { apiKey: 'my-key' })
       assert.deepStrictEqual(data, Confetti.models.scheduleItem.sample.single.formatted)
     })
     test('should update a schedule item', async () => {

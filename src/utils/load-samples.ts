@@ -38,6 +38,10 @@ import sponsorRaw from '../models/samples/sponsor/raw.js'
 import sponsorFormatted from '../models/samples/sponsor/formatted.js'
 import sponsorLevelRaw from '../models/samples/sponsor-level/raw.js'
 import sponsorLevelFormatted from '../models/samples/sponsor-level/formatted.js'
+import imageUploadRaw from '../models/samples/image-upload/raw.js'
+import imageUploadFormatted from '../models/samples/image-upload/formatted.js'
+import previewTokenRaw from '../models/samples/preview-token/raw.js'
+import previewTokenFormatted from '../models/samples/preview-token/formatted.js'
 
 const samples = {
   block: { raw: blockRaw, formatted: blockFormatted },
@@ -59,6 +63,8 @@ const samples = {
   formField: { raw: formFieldRaw, formatted: formFieldFormatted },
   sponsor: { raw: sponsorRaw, formatted: sponsorFormatted },
   sponsorLevel: { raw: sponsorLevelRaw, formatted: sponsorLevelFormatted },
+  imageUpload: { raw: imageUploadRaw, formatted: imageUploadFormatted },
+  previewToken: { raw: previewTokenRaw, formatted: previewTokenFormatted },
 }
 
 /**
@@ -66,9 +72,8 @@ const samples = {
  * @param modelName - The name of the model (e.g., 'category', 'contact')
  * @returns Object containing single and multiple sample data, or default empty structure if no samples exist
  */
-export default function loadSamples(modelName: string) {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  const sample = samples[modelName as keyof typeof samples]
+export default function loadSamples(modelName: keyof typeof samples) {
+  const sample = samples[modelName]
 
   if (!sample) throw new Error(`Sample data for model ${modelName} not found`)
 

@@ -2,70 +2,70 @@ import { number, z } from 'zod'
 
 export const AddonSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the addon.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the addon.',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   status: z.string().meta({
-      label: 'Status',
-      description: 'Status of the addon. attending, declined, cancelled or refunded',
-    }),
+    label: 'Status',
+    description: 'Status of the addon. attending, declined, cancelled or refunded',
+  }),
   hashid: z.string().meta({
-      label: 'Hashid',
-    }),
+    label: 'Hashid',
+  }),
   startDate: z.date().meta({
-      label: 'Start Date',
-    }),
+    label: 'Start Date',
+  }),
   endDate: z.date().meta({
-      label: 'End date',
-    }),
+    label: 'End date',
+  }),
   checkinAt: z.date().meta({
-      label: 'Checkin at',
-    }),
+    label: 'Checkin at',
+  }),
   price: number().meta({
-      label: 'Price',
-    }),
+    label: 'Price',
+  }),
   vat: number().meta({
-      label: 'VAT',
-    }),
+    label: 'VAT',
+  }),
   originalPrice: number().meta({
-      label: 'Original Price',
-    }),
+    label: 'Original Price',
+  }),
   originalVat: number().meta({
-      label: 'Original VAT',
-    }),
+    label: 'Original VAT',
+  }),
   discount: number().meta({
-      label: 'Discount',
-    }),
+    label: 'Discount',
+  }),
   vatPercentage: number().meta({
-      label: 'VAT %',
-    }),
+    label: 'VAT %',
+  }),
   currency: z.string().meta({
-      label: 'Currency',
-    }),
+    label: 'Currency',
+  }),
   values: z.looseObject({}).meta({
-      label: 'Values',
-    }),
+    label: 'Values',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
   ticketId: z.number().meta({
-      label: 'Ticket Id',
-    }),
+    label: 'Ticket Id',
+  }),
   paymentId: z.number().meta({
-      label: 'Payment Id',
-    }),
+    label: 'Payment Id',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   addonBatchId: z.number().meta({
-      label: 'Addon Batch Id',
-    }),
+    label: 'Addon Batch Id',
+  }),
 })
 
 export const AddonCreateSchema = z.object({

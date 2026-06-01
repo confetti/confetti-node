@@ -9,64 +9,63 @@ import {
 
 export const ImageSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the image.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the image.',
+  }),
   type: z.string().meta({
-      label: 'Type',
-    }),
-  order: z.string().meta({
-      label: 'Order',
-    }),
+    label: 'Type',
+  }),
+  order: z.number().optional().meta({
+    label: 'Order',
+  }),
   original: z.string().meta({
-      label: 'Original',
-    }),
+    label: 'Original',
+  }),
   url30: z.string().meta({
-      label: 'Url30',
-    }),
+    label: 'Url30',
+  }),
   url50: z.string().meta({
-      label: 'Url50',
-    }),
+    label: 'Url50',
+  }),
   url75: z.string().meta({
-      label: 'Url75',
-    }),
+    label: 'Url75',
+  }),
   url100: z.string().meta({
-      label: 'Url100',
-    }),
+    label: 'Url100',
+  }),
   url300: z.string().meta({
-      label: 'Url300',
-    }),
+    label: 'Url300',
+  }),
   url500: z.string().meta({
-      label: 'Url500',
-    }),
+    label: 'Url500',
+  }),
   url500x500: z.string().meta({
-      label: 'Url500x500',
-    }),
+    label: 'Url500x500',
+  }),
   url1000: z.string().meta({
-      label: 'Url1000',
-    }),
+    label: 'Url1000',
+  }),
   url2000: z.string().meta({
-      label: 'Url2000',
-    }),
+    label: 'Url2000',
+  }),
   urlMax2000: z.string().meta({
-      label: 'UrlMax2000',
-    }),
+    label: 'UrlMax2000',
+  }),
   title: z.string().meta({
-      label: 'Title',
-    }),
+    label: 'Title',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   link: z.string().meta({
-      label: 'Link',
-    }),
+    label: 'Link',
+  }),
 })
 
-// Image uses `imageType` instead of `type` to avoid colliding with the
-// JSON:API resource type. Provider is fixed to S3 (default), and the asset
-// can be supplied via `url` or `base64`.
 export const ImageCreateSchema = z.object({
-  imageType: z.string().meta({ label: 'Image Type' }),
+  type: z.string().meta({ label: 'Image Type' }),
+  provider: z.string().optional().meta({ label: 'Provider', description: 'Image provider, e.g. "s3".' }),
+  public_id: z.string().optional().meta({ label: 'Public Id', description: 'Provider-specific image key.' }),
   url: z.string().optional().meta({ label: 'Url' }),
   base64: z.string().optional().meta({ label: 'Base64' }),
   description: z.string().optional().meta({ label: 'Description' }),
@@ -106,9 +105,9 @@ export const staticImagesUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Image = z.infer<typeof ImageSchema>
 export type ImageCreate = z.infer<typeof ImageCreateSchema>
-export type ImageCreateData = z.infer<typeof ImageCreateSchema>
+export type ImageCreateData = ImageCreate
 export type ImageUpdate = z.infer<typeof ImageUpdateSchema>
-export type ImageUpdateData = z.infer<typeof ImageUpdateSchema>
+export type ImageUpdateData = ImageUpdate
 export type ImagesFindAllOptions = z.infer<typeof imagesFindAllOptionsSchema>
 export type ImagesFindOptions = z.infer<typeof imagesFindOptionsSchema>
 export type ImagesCreateOptions = z.infer<typeof baseOptionsSchema>

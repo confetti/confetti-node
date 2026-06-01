@@ -9,25 +9,22 @@ import {
 
 export const BlockSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-    }),
+    label: 'ID',
+  }),
   type: z.string().meta({
-      label: 'Type',
-    }),
+    label: 'Type',
+  }),
   content: z.json().meta({
-      label: 'Content',
-    }),
+    label: 'Content',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
 })
 
-// Block uses `blockType` instead of `type` to avoid collision with the
-// JSON:API resource `type` field. The presenter renames it back when sending
-// to the API.
 const blockTypes = [
   'text',
   'header',
@@ -52,7 +49,7 @@ const blockTypes = [
 const blockStatuses = ['published', 'preview', 'deleted', 'hidden'] as const
 
 const blockContentDescription = [
-  'Block content object. ONLY use fields listed for the specific blockType — unknown fields are silently stripped.',
+  'Block content object. ONLY use fields listed for the specific type — unknown fields are silently stripped.',
   '',
   'Shared fields (all types): name, cssClassName, theme (primary|inverted|secondary|custom), style (spacing object with spacing/spacingTop/spacingBottom each: small|medium|large|custom), blockStyleSettings (colors/fonts/css/effects), includeTickets (bool), filterTicketBatches (number[]), url.',
   '',
@@ -76,12 +73,10 @@ const blockContentDescription = [
 ].join('\n')
 
 export const BlockCreateSchema = z.object({
-  blockType: z
+  type: z
     .enum(blockTypes)
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z
-    .enum(blockStatuses)
-    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  status: z.enum(blockStatuses).meta({ label: 'Status', description: 'Block visibility status.' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
   order: z.number().optional().meta({ label: 'Order' }),
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
@@ -89,21 +84,15 @@ export const BlockCreateSchema = z.object({
   pageId: z.number().optional().meta({ label: 'Page Id' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z
-    .array(z.number())
-    .optional()
-    .meta({ label: 'Categories' }),
+  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
 })
 
 export const BlockUpdateSchema = z.object({
-  blockType: z
+  type: z
     .enum(blockTypes)
     .optional()
     .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z
-    .enum(blockStatuses)
-    .optional()
-    .meta({ label: 'Status', description: 'Block visibility status.' }),
+  status: z.enum(blockStatuses).optional().meta({ label: 'Status', description: 'Block visibility status.' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
   order: z.number().optional().meta({ label: 'Order' }),
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
@@ -111,10 +100,7 @@ export const BlockUpdateSchema = z.object({
   pageId: z.number().optional().meta({ label: 'Page Id' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z
-    .array(z.number())
-    .optional()
-    .meta({ label: 'Categories' }),
+  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
 })
 
 const blocksFindAllSchema = {
@@ -125,9 +111,7 @@ const blocksFindAllSchema = {
     })
     .optional(),
   sort: z.never().optional(),
-  include: z
-    .array(z.enum(['images']))
-    .optional(),
+  include: z.array(z.enum(['images'])).optional(),
 }
 
 export const blocksFindAllOptionsSchema = baseFindAllOptionsSchema.extend(blocksFindAllSchema)
@@ -140,9 +124,9 @@ export const staticBlocksUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Block = z.infer<typeof BlockSchema>
 export type BlockCreate = z.infer<typeof BlockCreateSchema>
-export type BlockCreateData = z.infer<typeof BlockCreateSchema>
+export type BlockCreateData = BlockCreate
 export type BlockUpdate = z.infer<typeof BlockUpdateSchema>
-export type BlockUpdateData = z.infer<typeof BlockUpdateSchema>
+export type BlockUpdateData = BlockUpdate
 export type BlocksFindAllOptions = z.infer<typeof blocksFindAllOptionsSchema>
 export type BlocksFindOptions = z.infer<typeof blocksFindOptionsSchema>
 export type BlocksCreateOptions = z.infer<typeof baseOptionsSchema>

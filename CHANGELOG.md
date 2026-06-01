@@ -1,3 +1,7 @@
+# 3.0.5 - 2026-05-20
+
+- Fix: accept both string and number ids on write-side `*Id` fields (create, update, filter). JSON:API returns ids as strings, so values from `findAll` can now be passed straight into `create` without a `ZodError`. Uses `z.coerce.number()` — numeric callers keep working.
+
 # 3.0.0 - 2025-09-15
 
 - `model.attributes` are now found in `model.operations.read.attributes`

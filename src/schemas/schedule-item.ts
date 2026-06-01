@@ -19,39 +19,39 @@ export const ScheduleItemSettingsSchema = z.object({
 
 export const ScheduleItemSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the schedule item.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the schedule item.',
+  }),
   title: z.string().meta({
-      label: 'Title',
-    }),
+    label: 'Title',
+  }),
   location: z.string().meta({
-      label: 'Location',
-    }),
+    label: 'Location',
+  }),
   start: z.date().meta({
-      label: 'Start',
-    }),
+    label: 'Start',
+  }),
   description: z.string().meta({
-      label: 'Description',
-      description: 'HTML description of the schedule item',
-    }),
+    label: 'Description',
+    description: 'HTML description of the schedule item',
+  }),
   duration: z.number().meta({
-      label: 'Duration',
-      description: 'Duration in minutes',
-    }),
+    label: 'Duration',
+    description: 'Duration in minutes',
+  }),
   settings: ScheduleItemSettingsSchema.meta({
-      label: 'Settings',
-      description: 'Item settings including speakerIds and order',
-    }),
+    label: 'Settings',
+    description: 'Item settings including speakerIds and order',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
 })
 
 export const ScheduleItemCreateSchema = z.object({
@@ -75,9 +75,9 @@ export const staticScheduleItemsUpdateOptionsSchema = staticBaseFindAllOptionsSc
 export type ScheduleItem = z.infer<typeof ScheduleItemSchema>
 export type ScheduleItemSettings = z.infer<typeof ScheduleItemSettingsSchema>
 export type ScheduleItemCreate = z.infer<typeof ScheduleItemCreateSchema>
-export type ScheduleItemCreateData = z.infer<typeof ScheduleItemCreateSchema>
+export type ScheduleItemCreateData = ScheduleItemCreate
 export type ScheduleItemUpdate = z.infer<typeof ScheduleItemUpdateSchema>
-export type ScheduleItemUpdateData = z.infer<typeof ScheduleItemUpdateSchema>
+export type ScheduleItemUpdateData = ScheduleItemUpdate
 export type ScheduleItemsFindOptions = z.infer<typeof scheduleItemsFindOptionsSchema>
 export type ScheduleItemsCreateOptions = z.infer<typeof baseOptionsSchema>
 export type ScheduleItemsUpdateOptions = z.infer<typeof baseOptionsSchema>

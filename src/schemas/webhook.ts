@@ -9,67 +9,54 @@ import {
 
 export const WebhookSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the webhook.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the webhook.',
+  }),
   type: z.string().meta({
-      label: 'Type',
-    }),
+    label: 'Type',
+  }),
   url: z.string().meta({
-      label: 'URL',
-    }),
+    label: 'URL',
+  }),
   provider: z.string().meta({
-      label: 'Provider',
-    }),
+    label: 'Provider',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
 })
 
 export const WebhookCreateSchema = z.object({
   type: z.string().meta({
-      label: 'Type',
-    }),
+    label: 'Type',
+  }),
   url: z.string().url().meta({
-      label: 'URL',
-    }),
-  provider: z
-    .string()
-    .optional()
-    .meta({
-        label: 'Provider',
-      }),
-  status: z
-    .enum(['active', 'inactive'])
-    .optional()
-    .meta({
-        label: 'Status',
-      }),
-  workspaceId: z
-    .number()
-    .optional()
-    .meta({
-        label: 'Workspace Id',
-      }),
-  eventId: z
-    .number()
-    .nullable()
-    .optional()
-    .meta({
-        label: 'Event Id',
-      }),
+    label: 'URL',
+  }),
+  provider: z.string().optional().meta({
+    label: 'Provider',
+  }),
+  status: z.enum(['active', 'inactive']).optional().meta({
+    label: 'Status',
+  }),
+  workspaceId: z.coerce.number().optional().meta({
+    label: 'Workspace Id',
+  }),
+  eventId: z.coerce.number().nullable().optional().meta({
+    label: 'Event Id',
+  }),
 })
 
 const webhooksFindAllSchema = {
   filter: z
     .object({
-      eventId: z.number().optional(),
+      eventId: z.coerce.number().optional(),
     })
     .optional(),
   sort: z.never().optional(),
@@ -86,7 +73,7 @@ export const staticWebhooksCreateOptionsSchema = staticBaseFindAllOptionsSchema.
 
 export type Webhook = z.infer<typeof WebhookSchema>
 export type WebhookCreate = z.infer<typeof WebhookCreateSchema>
-export type WebhookCreateData = z.infer<typeof WebhookCreateSchema>
+export type WebhookCreateData = WebhookCreate
 export type WebhooksFindAllOptions = z.infer<typeof webhooksFindAllOptionsSchema>
 export type WebhooksFindOptions = z.infer<typeof webhooksFindOptionsSchema>
 export type WebhooksCreateOptions = z.infer<typeof baseOptionsSchema>

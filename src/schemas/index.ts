@@ -16,6 +16,7 @@ export * from './organiser.js'
 export * from './addon.js'
 export * from './form.js'
 export * from './form-field.js'
+export * from './preview-token.js'
 
 // Resource option schemas
 export * from './resource-options.js'

@@ -110,10 +110,10 @@ export const TicketSchema = z.object({
 })
 
 export const TicketCreateSchema = z.object({
-  eventId: z.number().meta({
+  eventId: z.coerce.number().meta({
     label: 'Event Id',
   }),
-  ticketBatchId: z.number().optional().meta({
+  ticketBatchId: z.coerce.number().optional().meta({
     label: 'Ticket Batch Id',
     helpText: 'Required for ticket events',
   }),
@@ -198,7 +198,7 @@ export const TicketUpdateSchema = z.object({
 
 const ticketsFindAllSchema = {
   filter: z.object({
-    eventId: z.number(),
+    eventId: z.coerce.number(),
     search: z.string().optional(),
     description: z.string().optional(),
     checkedIn: z.boolean().optional(),
@@ -360,9 +360,9 @@ export const staticTicketsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.e
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
-export type TicketCreateData = z.infer<typeof TicketCreateSchema>
+export type TicketCreateData = TicketCreate
 export type TicketUpdate = z.infer<typeof TicketUpdateSchema>
-export type TicketUpdateData = z.infer<typeof TicketUpdateSchema>
+export type TicketUpdateData = TicketUpdate
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>

@@ -2,7 +2,6 @@ import { PresenterOptions, BlockPresenter } from '../types/presenters.js'
 import { Block } from '../types/models.js'
 
 type BlockData = Block & {
-  blockType?: string
   pageId?: number
   eventId?: number
   workspaceId?: number
@@ -19,13 +18,6 @@ export default function ({ presenters, Presenter }: PresenterOptions): BlockPres
     static plural = 'blocks' as const
 
     attributes(block: BlockData): Record<string, unknown> {
-      // The public API exposes the block kind as `blockType` (because `type`
-      // collides with the JSON:API resource type). The admin API expects it
-      // back under `type`.
-      if (block.blockType !== undefined) {
-        block.type = block.blockType
-        delete block.blockType
-      }
       if (block.pageId != null) {
         block.page = { id: block.pageId }
         delete block.pageId

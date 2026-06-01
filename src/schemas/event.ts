@@ -9,93 +9,96 @@ import {
 
 export const EventSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the event.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the event.',
+  }),
   name: z.string().meta({
-      label: 'Name',
-      description: 'Event name',
-    }),
+    label: 'Name',
+    description: 'Event name',
+  }),
   startDate: z.date().meta({
-      label: 'Start Date',
-    }),
+    label: 'Start Date',
+  }),
   endDate: z.date().meta({
-      label: 'End Date',
-    }),
+    label: 'End Date',
+  }),
   timeZone: z.string().meta({
-      label: 'Time Zone',
-    }),
+    label: 'Time Zone',
+  }),
   slug: z.string().meta({
-      label: 'Slug',
-    }),
+    label: 'Slug',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   featureLevel: z.string().meta({
-      label: 'Feature Level',
-    }),
+    label: 'Feature Level',
+  }),
   signupType: z.string().meta({
-      label: 'Signup Type',
-    }),
+    label: 'Signup Type',
+  }),
   signupStartAt: z.date().meta({
-      label: 'Signup Start At',
-    }),
+    label: 'Signup Start At',
+  }),
   signupEndAt: z.date().meta({
-      label: 'Signup End At',
-    }),
+    label: 'Signup End At',
+  }),
   website: z.string().meta({
-      label: 'Website',
-    }),
+    label: 'Website',
+  }),
   email: z.string().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   rsvpLimit: z.number().meta({
-      label: 'Rsvp Limit',
-    }),
+    label: 'Rsvp Limit',
+  }),
   rsvpLeft: z.number().meta({
-      label: 'Rsvp Left',
-    }),
+    label: 'Rsvp Left',
+  }),
   waitlisted: z.number().meta({
-      label: 'Waitlisted',
-    }),
+    label: 'Waitlisted',
+  }),
   hasPassed: z.boolean().meta({
-      label: 'Has Passed',
-    }),
+    label: 'Has Passed',
+  }),
   createdAt: z.date().meta({
-      label: 'Created At',
-    }),
+    label: 'Created At',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated At',
-    }),
+    label: 'Updated At',
+  }),
   workspaceId: z.number().meta({
-      label: 'Workspace Id',
-    }),
+    label: 'Workspace Id',
+  }),
   shareTitle: z.string().meta({
-      label: 'ShareTitle',
-    }),
+    label: 'ShareTitle',
+  }),
   shareDescription: z.string().meta({
-      label: 'Share description',
-    }),
+    label: 'Share description',
+  }),
   summary: z.string().meta({
-      label: 'Summary',
-    }),
+    label: 'Summary',
+  }),
   timeFormat: z.string().meta({
-      label: 'Time format',
-    }),
+    label: 'Time format',
+  }),
   locale: z.string().meta({
-      label: 'Locale',
-    }),
+    label: 'Locale',
+  }),
   primaryColor: z.string().meta({
-      label: 'Primary color',
-      description: 'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
-    }),
+    label: 'Primary color',
+    description:
+      'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
+  }),
   contrastColor: z.string().meta({
-      label: 'Contrast color',
-      description: 'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
-    }),
+    label: 'Contrast color',
+    description:
+      'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
+  }),
   signupColor: z.string().meta({
     label: 'Signup color',
-    description: 'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
+    description:
+      'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
   }),
   textColor: z.string().meta({
     label: 'Text color',
@@ -107,7 +110,8 @@ export const EventSchema = z.object({
   }),
   hasAdvancedColors: z.boolean().meta({
     label: 'Has advanced colors',
-    description: 'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
+    description:
+      'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
   }),
   fontNormal: z.string().meta({ label: 'Body font' }),
   fontNormalCategory: z.string().meta({ label: 'Body font category' }),
@@ -121,61 +125,49 @@ export const EventSchema = z.object({
     description: 'Custom CSS included on all pages for the event.',
   }),
   waitlist: z.string().meta({
-      label: 'Has a waitlist',
-    }),
+    label: 'Has a waitlist',
+  }),
   enableExtraGuests: z.boolean().meta({
-      label: 'Are people allowed to bring guests',
-    }),
+    label: 'Are people allowed to bring guests',
+  }),
   maxExtraGuests: z.number().meta({
-      label: 'How many extra guests',
-    }),
+    label: 'How many extra guests',
+  }),
   location: z.looseObject({}).meta({
-      label: 'Location',
-    }),
+    label: 'Location',
+  }),
 })
 
 // Core + copy fields a client can send when creating/updating an event.
 // Excludes feature-level, financial, settings and password/otp fields.
 export const EventCreateSchema = z.object({
   name: z.string().meta({ label: 'Name' }),
-  startDate: z
-    .union([z.date(), z.string()])
-    .meta({ label: 'Start Date' }),
-  endDate: z
-    .union([z.date(), z.string()])
-    .optional()
-    .meta({ label: 'End Date' }),
+  startDate: z.union([z.date(), z.string()]).meta({ label: 'Start Date' }),
+  endDate: z.union([z.date(), z.string()]).optional().meta({ label: 'End Date' }),
   status: z.string().optional().meta({ label: 'Status' }),
-  signupType: z
-    .enum(['rsvp', 'tickets'])
-    .optional()
-    .meta({ label: 'Signup Type' }),
-  signupStartAt: z
-    .union([z.date(), z.string()])
-    .optional()
-    .meta({ label: 'Signup Start At' }),
-  signupEndAt: z
-    .union([z.date(), z.string()])
-    .optional()
-    .meta({ label: 'Signup End At' }),
+  signupType: z.enum(['rsvp', 'tickets']).optional().meta({ label: 'Signup Type' }),
+  signupStartAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup Start At' }),
+  signupEndAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup End At' }),
   rsvpLimit: z.number().optional().meta({ label: 'Rsvp Limit' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
   website: z.string().url().optional().meta({ label: 'Website' }),
   timeZone: z.string().optional().meta({ label: 'Time Zone' }),
   continuous: z.boolean().optional().meta({ label: 'Continuous' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
-  // copy fields (branding/customisation)
   primaryColor: z.string().optional().meta({
     label: 'Primary color',
-    description: 'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
+    description:
+      'Main brand color (hex). Used for buttons, links, and accent elements. Must contrast against contrastColor (background).',
   }),
   contrastColor: z.string().optional().meta({
     label: 'Contrast color',
-    description: 'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
+    description:
+      'Background color (hex). Used for page backgrounds and button text. Must contrast against primaryColor.',
   }),
   signupColor: z.string().optional().meta({
     label: 'Signup color',
-    description: 'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
+    description:
+      'CTA/button color used on signup and payment forms (hex). Must contrast against white (#FFFFFF). Defaults to primaryColor.',
   }),
   textColor: z.string().optional().meta({
     label: 'Text color',
@@ -187,7 +179,8 @@ export const EventCreateSchema = z.object({
   }),
   hasAdvancedColors: z.boolean().optional().meta({
     label: 'Has advanced colors',
-    description: 'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
+    description:
+      'When false, only primaryColor is used and other colors are auto-derived. When true, all colors are set independently.',
   }),
   fontNormal: z.string().optional().meta({
     label: 'Body font',
@@ -219,20 +212,21 @@ export const EventCreateSchema = z.object({
   }),
   customCss: z.string().optional().meta({
     label: 'Custom CSS',
-    description: 'Custom CSS included on all pages for the event. Use this to override default styles or add custom styling.',
+    description:
+      'Global CSS stylesheet applied to every page of the event. Use this to override default styles, customize layouts, hide elements, or add any custom styling. The CSS is injected into a <style> tag on all event pages. Combine with custom HTML blocks for full visual control.',
   }),
   shareTitle: z.string().optional().meta({ label: 'Share title' }),
   shareDescription: z.string().optional().meta({ label: 'Share description' }),
   summary: z.string().optional().meta({ label: 'Summary' }),
   smsSenderName: z.string().optional().meta({ label: 'SMS sender name' }),
-  ticketsPerPurchase: z
-    .number()
-    .optional()
-    .meta({ label: 'Tickets per purchase' }),
+  ticketsPerPurchase: z.number().optional().meta({ label: 'Tickets per purchase' }),
   locationName: z.string().optional().meta({ label: 'Location name' }),
   locationPlace: z
     .object({
-      formatted_address: z.string().meta({ description: 'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden").' }),
+      formatted_address: z.string().meta({
+        description:
+          'Full formatted address string (e.g. "Torkel Knutssonsgatan 2, 118 25 Stockholm, Sweden"). Used as display text and Google Maps link — but not sufficient alone for map rendering; geometry.location is also required.',
+      }),
       geometry: z
         .object({
           location: z.object({
@@ -241,7 +235,10 @@ export const EventCreateSchema = z.object({
           }),
         })
         .optional()
-        .meta({ description: 'Coordinates for map centering. When provided with linkToPosition=true, the map links directly to these coordinates.' }),
+        .meta({
+          description:
+            'Coordinates required for the map tile image to render correctly. Without lat/lng the map will be broken. When linkToPosition is true, the map also links to these coordinates.',
+        }),
       address_components: z
         .array(
           z.object({
@@ -251,19 +248,30 @@ export const EventCreateSchema = z.object({
           }),
         )
         .optional()
-        .meta({ description: 'Structured address parts (Google Places format). Used to extract city, country, postal code.' }),
-      linkToPosition: z.boolean().optional().meta({ description: 'When true, the map link uses lat/lng coordinates instead of the formatted address.' }),
-      adr_address: z.string().optional().meta({ description: 'HTML-formatted address (microformat adr). Used for display when available.' }),
+        .meta({
+          description: 'Structured address parts (Google Places format). Used to extract city, country, postal code.',
+        }),
+      linkToPosition: z
+        .boolean()
+        .optional()
+        .meta({
+          description:
+            'When true, the Google Maps link uses lat/lng coordinates instead of the formatted address. Recommended when geometry.location is provided.',
+        }),
+      adr_address: z
+        .string()
+        .optional()
+        .meta({ description: 'HTML-formatted address (microformat adr). Used for display when available.' }),
     })
     .optional()
-    .meta({ label: 'Location place', description: 'Location/venue details for maps. At minimum, set formatted_address for the map to work.' }),
-  workspaceId: z
-    .number()
-    .optional()
-    .meta({ label: 'Workspace Id' }),
+    .meta({
+      label: 'Location place',
+      description:
+        'Location/venue details. Both formatted_address and geometry.location (lat/lng) are needed for the map to render. Without coordinates the map image will be broken.',
+    }),
+  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
 
-// All fields are optional on update; you only patch what changed.
 export const EventUpdateSchema = EventCreateSchema.partial()
 
 const eventsFindAllSchema = {
@@ -272,48 +280,48 @@ const eventsFindAllSchema = {
       signupType: z
         .enum(['rsvp', 'tickets'])
         .meta({
-            label: 'Signup Type',
-            description: 'Filter events by signup type',
-            values: [
-              {
-                label: 'RSVP',
-                description: 'Events with signup type RSVP',
-                type: 'string',
-                key: 'rsvp',
-                value: 'rsvp',
-              },
-              {
-                label: 'Tickets',
-                description: 'Events with signup type tickets',
-                type: 'string',
-                key: 'tickets',
-                value: 'tickets',
-              },
-            ],
-          })
+          label: 'Signup Type',
+          description: 'Filter events by signup type',
+          values: [
+            {
+              label: 'RSVP',
+              description: 'Events with signup type RSVP',
+              type: 'string',
+              key: 'rsvp',
+              value: 'rsvp',
+            },
+            {
+              label: 'Tickets',
+              description: 'Events with signup type tickets',
+              type: 'string',
+              key: 'tickets',
+              value: 'tickets',
+            },
+          ],
+        })
         .optional(),
       type: z
         .enum(['future', 'past'])
         .meta({
-            label: 'Event Type',
-            description: 'Filter events by time',
-            values: [
-              {
-                label: 'Future',
-                description: 'Upcoming events',
-                type: 'string',
-                key: 'future',
-                value: 'future',
-              },
-              {
-                label: 'Past',
-                description: 'Completed events',
-                type: 'string',
-                key: 'past',
-                value: 'past',
-              },
-            ],
-          })
+          label: 'Event Type',
+          description: 'Filter events by time',
+          values: [
+            {
+              label: 'Future',
+              description: 'Upcoming events',
+              type: 'string',
+              key: 'future',
+              value: 'future',
+            },
+            {
+              label: 'Past',
+              description: 'Completed events',
+              type: 'string',
+              key: 'past',
+              value: 'past',
+            },
+          ],
+        })
         .optional(),
     })
     .optional(),
@@ -331,92 +339,84 @@ const eventsFindAllSchema = {
           'speakers.image',
           'organisers',
           'organisers.image',
-          'forms',
-          'forms.formFields',
+          'forms.form-fields',
         ])
         .meta({
-            label: 'Include Relations',
-            description: 'Include related data',
-            values: [
-              {
-                label: 'Categories',
-                description: 'Event categories',
-                type: 'string',
-                key: 'categories',
-                value: 'categories',
-              },
-              {
-                label: 'Pages',
-                description: 'Event pages',
-                type: 'string',
-                key: 'pages',
-                value: 'pages',
-              },
-              {
-                label: 'Pages Blocks',
-                description: 'Page content blocks',
-                type: 'string',
-                key: 'pages.blocks',
-                value: 'pages.blocks',
-              },
-              {
-                label: 'Pages Blocks Images',
-                description: 'Block images',
-                type: 'string',
-                key: 'pages.blocks.images',
-                value: 'pages.blocks.images',
-              },
-              {
-                label: 'Schedule Items',
-                description: 'Event schedule items',
-                type: 'string',
-                key: 'schedule-items',
-                value: 'schedule-items',
-              },
-              {
-                label: 'Speakers',
-                description: 'Event speakers',
-                type: 'string',
-                key: 'speakers',
-                value: 'speakers',
-              },
-              {
-                label: 'Speakers Image',
-                description: 'Speakers image',
-                type: 'string',
-                key: 'speakers.image',
-                value: 'speakers.image',
-              },
-              {
-                label: 'Organisers',
-                description: 'Event organisers',
-                type: 'string',
-                key: 'organisers',
-                value: 'organisers',
-              },
-              {
-                label: 'Organisers Image',
-                description: 'Organisers image',
-                type: 'string',
-                key: 'organisers.image',
-                value: 'organisers.image',
-              },
-              {
-                label: 'Forms',
-                description: 'Event forms',
-                type: 'string',
-                key: 'forms',
-                value: 'forms',
-              },
-              {
-                label: 'Forms Form Fields',
-                description: 'Form fields belonging to event forms',
-                type: 'string',
-                key: 'forms.formFields',
-                value: 'forms.formFields',
-              },
-            ],
-          }),
+          label: 'Include Relations',
+          description: 'Include related data',
+          values: [
+            {
+              label: 'Categories',
+              description: 'Event categories',
+              type: 'string',
+              key: 'categories',
+              value: 'categories',
+            },
+            {
+              label: 'Pages',
+              description: 'Event pages',
+              type: 'string',
+              key: 'pages',
+              value: 'pages',
+            },
+            {
+              label: 'Pages Blocks',
+              description: 'Page content blocks',
+              type: 'string',
+              key: 'pages.blocks',
+              value: 'pages.blocks',
+            },
+            {
+              label: 'Pages Blocks Images',
+              description: 'Block images',
+              type: 'string',
+              key: 'pages.blocks.images',
+              value: 'pages.blocks.images',
+            },
+            {
+              label: 'Schedule Items',
+              description: 'Event schedule items',
+              type: 'string',
+              key: 'schedule-items',
+              value: 'schedule-items',
+            },
+            {
+              label: 'Speakers',
+              description: 'Event speakers',
+              type: 'string',
+              key: 'speakers',
+              value: 'speakers',
+            },
+            {
+              label: 'Speakers Image',
+              description: 'Speakers image',
+              type: 'string',
+              key: 'speakers.image',
+              value: 'speakers.image',
+            },
+            {
+              label: 'Organisers',
+              description: 'Event organisers',
+              type: 'string',
+              key: 'organisers',
+              value: 'organisers',
+            },
+            {
+              label: 'Organisers Image',
+              description: 'Organisers image',
+              type: 'string',
+              key: 'organisers.image',
+              value: 'organisers.image',
+            },
+            {
+              label: 'Forms with Form Fields',
+              description: 'Event forms and their form fields',
+              type: 'string',
+              key: 'forms.form-fields',
+              value: 'forms.form-fields',
+            },
+          ],
+        }),
     )
     .optional(),
 }
@@ -431,9 +431,9 @@ export const staticEventsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.ex
 
 export type Event = z.infer<typeof EventSchema>
 export type EventCreate = z.infer<typeof EventCreateSchema>
-export type EventCreateData = z.infer<typeof EventCreateSchema>
+export type EventCreateData = EventCreate
 export type EventUpdate = z.infer<typeof EventUpdateSchema>
-export type EventUpdateData = z.infer<typeof EventUpdateSchema>
+export type EventUpdateData = EventUpdate
 export type EventsFindAllOptions = z.infer<typeof eventsFindAllOptionsSchema>
 export type EventsFindOptions = z.infer<typeof eventsFindOptionsSchema>
 export type EventsCreateOptions = z.infer<typeof baseOptionsSchema>

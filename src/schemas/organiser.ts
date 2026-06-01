@@ -12,45 +12,45 @@ export const OrganiserSettingsSchema = z.object({
 
 export const OrganiserSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the organiser.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the organiser.',
+  }),
   description: z.string().meta({
-      label: 'Description',
-    }),
+    label: 'Description',
+  }),
   email: z.string().meta({
-      label: 'Email',
-    }),
+    label: 'Email',
+  }),
   name: z.string().meta({
-      label: 'Name',
-    }),
+    label: 'Name',
+  }),
   twitter: z.string().meta({
-      label: 'Twitter',
-    }),
+    label: 'Twitter',
+  }),
   instagram: z.string().meta({
-      label: 'Instagram',
-    }),
+    label: 'Instagram',
+  }),
   url: z.string().meta({
-      label: 'Website URL',
-    }),
+    label: 'Website URL',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   settings: OrganiserSettingsSchema.meta({
-      label: 'Settings',
-    }),
+    label: 'Settings',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   imageId: z.number().meta({
-      label: 'Image Id',
-    }),
+    label: 'Image Id',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
 })
 
 export const OrganiserCreateSchema = z.object({
@@ -76,9 +76,9 @@ export const staticOrganisersUpdateOptionsSchema = staticBaseFindAllOptionsSchem
 
 export type Organiser = z.infer<typeof OrganiserSchema>
 export type OrganiserCreate = z.infer<typeof OrganiserCreateSchema>
-export type OrganiserCreateData = z.infer<typeof OrganiserCreateSchema>
+export type OrganiserCreateData = OrganiserCreate
 export type OrganiserUpdate = z.infer<typeof OrganiserUpdateSchema>
-export type OrganiserUpdateData = z.infer<typeof OrganiserUpdateSchema>
+export type OrganiserUpdateData = OrganiserUpdate
 export type OrganisersFindOptions = z.infer<typeof organisersFindOptionsSchema>
 export type OrganisersCreateOptions = z.infer<typeof baseOptionsSchema>
 export type OrganisersUpdateOptions = z.infer<typeof baseOptionsSchema>

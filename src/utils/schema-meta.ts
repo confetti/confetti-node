@@ -3,12 +3,16 @@
  * Zod's `GlobalMeta` has `[k: string]: unknown`, so this narrows the
  * keys we actually use to concrete types.
  */
+export type MetaValues =
+  | Array<{ value: string; label: string }>
+  | Array<{ label: string; description: string; type: string; key: string; value: string }>
+
 export interface SchemaMeta {
   label?: string
   description?: string
   placeholder?: string
   helpText?: string
-  values?: unknown[]
+  values?: MetaValues
 }
 
 /**
@@ -20,16 +24,16 @@ export interface SchemaMeta {
  * method exists — this helper bridges the gap with a single,
  * auditable runtime check.
  */
-export function getMeta(schema: unknown): SchemaMeta | undefined {
-  if (
+function hasMetaMethod(schema: unknown): schema is { meta: () => SchemaMeta | undefined } {
+  return (
     typeof schema === 'object' &&
     schema !== null &&
     'meta' in schema &&
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
     typeof (schema as Record<string, unknown>).meta === 'function'
-  ) {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    return (schema as { meta: () => SchemaMeta | undefined }).meta()
-  }
-  return undefined
+  )
+}
+
+export function getMeta(schema: unknown): SchemaMeta | undefined {
+  return hasMetaMethod(schema) ? schema.meta() : undefined
 }

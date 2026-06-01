@@ -11,5 +11,11 @@ export default {
     access: 'all',
     menuDisplay: 'show',
   },
-  blocks: [null, null, null, null, null],
+  blocks: [
+    { [TYPE]: 'block', id: '210644' },
+    { [TYPE]: 'block', id: '210645' },
+    { [TYPE]: 'block', id: '210646' },
+    { [TYPE]: 'block', id: '210647' },
+    { [TYPE]: 'block', id: '210651' },
+  ],
 }

@@ -3,7 +3,6 @@ export default {
     id: '210645',
     type: 'block',
     attributes: {
-      blockType: 'text',
       type: 'text',
       status: 'published',
       order: 2,

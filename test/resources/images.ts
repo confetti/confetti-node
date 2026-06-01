@@ -49,7 +49,7 @@ describe('Images', () => {
 
       const confetti = new Confetti({ apiKey: 'my-key' })
       const data = await confetti.images.create({
-        imageType: 'cover',
+        type: 'cover',
         url: 'https://example.com/photo.jpg',
         blockId: 1,
         eventId: 1,
@@ -97,7 +97,7 @@ describe('Images', () => {
 
       const data = await Confetti.images.create(
         {
-          imageType: 'cover',
+          type: 'cover',
           url: 'https://example.com/photo.jpg',
           blockId: 1,
           eventId: 1,

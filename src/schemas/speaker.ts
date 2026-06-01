@@ -20,50 +20,50 @@ export const SpeakerSettingsSchema = z.object({
 
 export const SpeakerSchema = z.object({
   id: z.number().meta({
-      label: 'ID',
-      description: 'Identifier of the speaker.',
-    }),
+    label: 'ID',
+    description: 'Identifier of the speaker.',
+  }),
   isAnnounced: z.boolean().meta({
-      label: 'Announced',
-    }),
+    label: 'Announced',
+  }),
   isHidden: z.boolean().meta({
-      label: 'Hidden',
-    }),
+    label: 'Hidden',
+  }),
   firstName: z.string().meta({
-      label: 'First name',
-    }),
+    label: 'First name',
+  }),
   lastName: z.string().meta({
-      label: 'Last name',
-    }),
+    label: 'Last name',
+  }),
   order: z.number().meta({
-      label: 'Order',
-    }),
+    label: 'Order',
+  }),
   occupation: z.string().meta({
-      label: 'Occupation',
-    }),
+    label: 'Occupation',
+  }),
   bio: z.string().meta({
-      label: 'Bio',
-      description: 'HTML biography of the speaker',
-    }),
+    label: 'Bio',
+    description: 'HTML biography of the speaker',
+  }),
   status: z.string().meta({
-      label: 'Status',
-    }),
+    label: 'Status',
+  }),
   settings: SpeakerSettingsSchema.meta({
-      label: 'Settings',
-      description: 'Speaker settings including social media',
-    }),
+    label: 'Settings',
+    description: 'Speaker settings including social media',
+  }),
   eventId: z.number().meta({
-      label: 'Event Id',
-    }),
+    label: 'Event Id',
+  }),
   imageId: z.number().meta({
-      label: 'Image Id',
-    }),
+    label: 'Image Id',
+  }),
   createdAt: z.date().meta({
-      label: 'Created at',
-    }),
+    label: 'Created at',
+  }),
   updatedAt: z.date().meta({
-      label: 'Updated at',
-    }),
+    label: 'Updated at',
+  }),
 })
 
 export const SpeakerCreateSchema = z.object({
@@ -89,9 +89,9 @@ export const staticSpeakersUpdateOptionsSchema = staticBaseFindAllOptionsSchema.
 export type Speaker = z.infer<typeof SpeakerSchema>
 export type SpeakerSettings = z.infer<typeof SpeakerSettingsSchema>
 export type SpeakerCreate = z.infer<typeof SpeakerCreateSchema>
-export type SpeakerCreateData = z.infer<typeof SpeakerCreateSchema>
+export type SpeakerCreateData = SpeakerCreate
 export type SpeakerUpdate = z.infer<typeof SpeakerUpdateSchema>
-export type SpeakerUpdateData = z.infer<typeof SpeakerUpdateSchema>
+export type SpeakerUpdateData = SpeakerUpdate
 export type SpeakersFindOptions = z.infer<typeof speakersFindOptionsSchema>
 export type SpeakersCreateOptions = z.infer<typeof baseOptionsSchema>
 export type SpeakersUpdateOptions = z.infer<typeof baseOptionsSchema>
