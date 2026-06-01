@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path'
 import Confetti from '../index.js'
 import { authLogin, authLogout, authStatus } from './commands/auth.js'
 import { dispatch, UsageError } from './commands/resource.js'
+import { printResult } from './output.js'
 import { ensureAccessToken, refresh, type HostTarget } from './oauth.js'
 
 const HELP = `confetti — command-line client for the Confetti API
@@ -29,6 +30,7 @@ Flags:
   -d, --data <json>       JSON body for create/update
       --data-file <path>  Read the JSON body from a file
   -o, --options <json>    JSON options passed to the SDK method (filter/include/sort/page)
+      --raw                Print the raw JSON:API document instead of plain JSON
       --host <host>        API host (default: $CONFETTI_API_HOST or api.confetti.events)
       --protocol <proto>   http|https (default: $CONFETTI_API_PROTOCOL or https)
       --api-key <key>      Use an API key instead of the stored OAuth token
@@ -46,6 +48,7 @@ const { values, positionals } = parseArgs({
     data: { type: 'string', short: 'd' },
     'data-file': { type: 'string' },
     options: { type: 'string', short: 'o' },
+    raw: { type: 'boolean' },
     'no-browser': { type: 'boolean' },
     help: { type: 'boolean', short: 'h' },
     version: { type: 'boolean' },
@@ -67,8 +70,13 @@ function readBody(): unknown {
 }
 
 function readOptions(): unknown {
-  if (typeof values.options === 'string') return JSON.parse(values.options)
-  return {}
+  const base: unknown = typeof values.options === 'string' ? JSON.parse(values.options) : {}
+  // `--raw` is sugar for the SDK's `raw` option, which returns the JSON:API
+  // document verbatim (no relationship resolution, so no circular references).
+  if (values.raw === true && typeof base === 'object' && base !== null) {
+    return { ...base, raw: true }
+  }
+  return base
 }
 
 function version(): string {
@@ -83,11 +91,6 @@ function version(): string {
     // fall through
   }
   return 'unknown'
-}
-
-function printResult(result: unknown): void {
-  if (result === undefined || result === null) return
-  console.log(JSON.stringify(result, null, 2))
 }
 
 function isUnauthorized(err: unknown): boolean {

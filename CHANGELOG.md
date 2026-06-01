@@ -1,6 +1,6 @@
 # 4.1.0 - 2026-06-01
 
-- Add a `confetti` CLI (`npx confetti`) with browser-based OAuth login (Authorization Code + PKCE). Resource commands map 1:1 onto the SDK: `confetti <resource> <method>`.
+- Add a `confetti` CLI (`npx confetti`) with browser-based OAuth login (Authorization Code + PKCE). Resource commands map 1:1 onto the SDK: `confetti <resource> <method>`. Results render as plain JSON (circular relationship references from includes are marked `[Circular <id>]` instead of throwing); pass `--raw` for the JSON:API document.
 - The SDK now accepts an OAuth access token: `new Confetti({ accessToken })` sends `Authorization: Bearer <token>`. API keys still work and take precedence when both are given.
 - The adapter now throws `missing_credentials` (was `missing_api_key`) when neither an API key nor an access token is provided.
 

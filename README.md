@@ -118,10 +118,15 @@ confetti webhooks delete 7
 
 Flags: `-d/--data <json>` (or `--data-file <path>`) for create/update bodies,
 `-o/--options <json>` for method options (`filter`/`include`/`sort`/`page`),
-`--host`/`--protocol` to target another environment (also read from
-`CONFETTI_API_HOST`/`CONFETTI_API_PROTOCOL`), `--api-key` to use an API key
-instead of the stored OAuth session, and `--no-browser` to print the authorize
-URL instead of opening a browser.
+`--raw` to print the raw JSON:API document, `--host`/`--protocol` to target
+another environment (also read from `CONFETTI_API_HOST`/`CONFETTI_API_PROTOCOL`),
+`--api-key` to use an API key instead of the stored OAuth session, and
+`--no-browser` to print the authorize URL instead of opening a browser.
+
+By default results print as plain JSON. When `include` resolves relationships
+the SDK produces objects with circular back-references; these are rendered as
+`"[Circular <id>]"` rather than failing. Use `--raw` to get the unresolved
+JSON:API document (`data` + `included`) instead.
 
 ## Development
 
