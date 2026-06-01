@@ -204,4 +204,33 @@ describe('Adapter', () => {
 
     assert.strictEqual(scope.isDone(), true)
   })
+
+  test('should send a bearer header when given an access token', async () => {
+    const scope = nock('https://api.confetti.events')
+      .get('/events')
+      .matchHeader('authorization', 'Bearer my-token')
+      .reply(200, { data: [] })
+
+    const confetti = new Confetti({ accessToken: 'my-token' })
+    await confetti.events.findAll()
+
+    assert.strictEqual(scope.isDone(), true)
+  })
+
+  test('should prefer the api key when both an api key and access token are given', async () => {
+    const scope = nock('https://api.confetti.events')
+      .get('/events')
+      .matchHeader('authorization', 'apikey my-key')
+      .reply(200, { data: [] })
+
+    const confetti = new Confetti({ apiKey: 'my-key', accessToken: 'my-token' })
+    await confetti.events.findAll()
+
+    assert.strictEqual(scope.isDone(), true)
+  })
+
+  test('should throw when neither an api key nor an access token is given', async () => {
+    const confetti = new Confetti({})
+    await assert.rejects(() => confetti.events.findAll(), /missing_credentials/)
+  })
 })

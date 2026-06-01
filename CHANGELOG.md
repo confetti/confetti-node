@@ -1,3 +1,9 @@
+# 4.1.0 - 2026-06-01
+
+- Add a `confetti` CLI (`npx confetti`) with browser-based OAuth login (Authorization Code + PKCE). Resource commands map 1:1 onto the SDK: `confetti <resource> <method>`.
+- The SDK now accepts an OAuth access token: `new Confetti({ accessToken })` sends `Authorization: Bearer <token>`. API keys still work and take precedence when both are given.
+- The adapter now throws `missing_credentials` (was `missing_api_key`) when neither an API key nor an access token is provided.
+
 # 3.0.5 - 2026-05-20
 
 - Fix: accept both string and number ids on write-side `*Id` fields (create, update, filter). JSON:API returns ids as strings, so values from `findAll` can now be passed straight into `create` without a `ZodError`. Uses `z.coerce.number()` — numeric callers keep working.

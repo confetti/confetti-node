@@ -193,6 +193,7 @@ export interface ConfettiSettings {
   apiKey?: string
   apiHost?: string
   apiProtocol?: string
+  accessToken?: string
 }
 
 // Export all types
@@ -206,6 +207,7 @@ class Confetti {
       apiKey: settings.apiKey || undefined,
       apiHost: settings.apiHost || undefined,
       apiProtocol: settings.apiProtocol || undefined,
+      accessToken: settings.accessToken || undefined,
     })
   }
 

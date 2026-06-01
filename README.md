@@ -47,6 +47,18 @@ const newContact = await Confetti.contacts.create(
 )
 ```
 
+### Authentication
+
+Authenticate with either an API key or an OAuth access token:
+
+```javascript
+new Confetti({ apiKey: 'your-api-key' })
+new Confetti({ accessToken: 'your-oauth-access-token' })
+```
+
+If both are provided, the API key takes precedence. Access tokens are sent as
+`Authorization: Bearer <token>`; API keys as `Authorization: apikey <key>`.
+
 ### TypeScript
 
 ```typescript
@@ -76,6 +88,40 @@ const events = await confetti.events.findAll({
 - **Workspaces** - `findAll`, `find`
 - **Categories** - `findAll`, `find`
 - **TicketBatches** - `findAll`, `find`
+
+## CLI
+
+The package ships a `confetti` command for signing in with OAuth and exercising
+the API from a terminal — handy for testing and exploration.
+
+```bash
+# Sign in through your browser (OAuth Authorization Code + PKCE).
+# You authenticate and pick a workspace in the browser; tokens are stored in
+# ~/.config/confetti/credentials.json (0600) and refreshed automatically.
+npx confetti auth login
+
+npx confetti auth status
+npx confetti auth logout
+```
+
+Once signed in, commands map 1:1 onto the SDK — `confetti <resource> <method>`,
+where `<method>` is `findAll`, `find`, `create`, `update`, or `delete` (whichever
+the resource supports). Results print as JSON.
+
+```bash
+confetti events findAll -o '{"filter":{"signupType":"rsvp"},"include":"categories"}'
+confetti events find 1 -o '{"include":"workspace"}'
+confetti contacts create -d '{"firstName":"John","lastName":"Doe","email":"john@example.com"}'
+confetti events update 1 -d '{"name":"New name"}'
+confetti webhooks delete 7
+```
+
+Flags: `-d/--data <json>` (or `--data-file <path>`) for create/update bodies,
+`-o/--options <json>` for method options (`filter`/`include`/`sort`/`page`),
+`--host`/`--protocol` to target another environment (also read from
+`CONFETTI_API_HOST`/`CONFETTI_API_PROTOCOL`), `--api-key` to use an API key
+instead of the stored OAuth session, and `--no-browser` to print the authorize
+URL instead of opening a browser.
 
 ## Development
 

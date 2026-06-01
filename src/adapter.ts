@@ -20,6 +20,7 @@ export interface AdapterOptions {
   apiKey?: string
   apiHost?: string
   apiProtocol?: string
+  accessToken?: string
 }
 
 export interface FilterOptions {
@@ -45,6 +46,7 @@ export interface HttpRequestOptions {
   apiKey?: string
   apiHost?: string
   apiProtocol?: string
+  accessToken?: string
 }
 
 export interface Adapter {
@@ -54,7 +56,7 @@ export interface Adapter {
   delete<T = ConfettiModel>(options: HttpRequestOptions): Promise<T>
 }
 
-export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}): Adapter {
+export default function ({ apiKey, apiHost, apiProtocol, accessToken }: AdapterOptions = {}): Adapter {
   const httpRequest = async function <T = ConfettiModel>(method: string, options: HttpRequestOptions): Promise<T> {
     const { path, json, filter, include, sort, page, raw, type } = options
 
@@ -63,10 +65,11 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
     const API_PROTOCOL = options.apiProtocol || apiProtocol || process.env['CONFETTI_API_PROTOCOL'] || 'https'
 
     const API_KEY = options.apiKey || apiKey
+    const ACCESS_TOKEN = options.accessToken || accessToken
     const fetchLib = nodeFetch
 
-    if (!API_KEY) {
-      throw new Error('missing_api_key')
+    if (!API_KEY && !ACCESS_TOKEN) {
+      throw new Error('missing_credentials')
     }
     let processedInclude = include
     if (Array.isArray(processedInclude)) {
@@ -77,7 +80,7 @@ export default function ({ apiKey, apiHost, apiProtocol }: AdapterOptions = {}):
       method,
       timeout: method === 'get' ? 5000 : 15000,
       headers: {
-        Authorization: `apikey ${API_KEY}`,
+        Authorization: API_KEY ? `apikey ${API_KEY}` : `Bearer ${ACCESS_TOKEN}`,
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip',
       },

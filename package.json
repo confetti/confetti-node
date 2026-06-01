@@ -3,6 +3,9 @@
   "version": "4.0.0",
   "description": "A Node wrapper for the Confetti API.",
   "type": "module",
+  "bin": {
+    "confetti": "./dist/cli/index.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
