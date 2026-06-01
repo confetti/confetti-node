@@ -109,6 +109,23 @@ export const TicketSchema = z.object({
   }),
 })
 
+// A guest ticket attached to a parent ticket. Guests are child tickets, written inline as
+// an array on the parent's create/update payload (mirrors the admin API's data.guestTickets).
+// Omit `id` to add a new guest; include the existing guest's `id` to edit it. Removing a
+// guest is done by deleting that guest's ticket, not by omitting it from the array.
+export const GuestTicketInputSchema = z.object({
+  id: z.coerce.number().optional().meta({
+    label: 'Guest Ticket Id',
+    helpText: 'Id of an existing guest ticket to edit. Omit to add a new guest.',
+  }),
+  firstName: z.string().optional().meta({ label: 'First name' }),
+  lastName: z.string().optional().meta({ label: 'Last name' }),
+  email: z.string().email().optional().meta({ label: 'Email' }),
+  phone: z.string().optional().meta({ label: 'Phone' }),
+  company: z.string().optional().meta({ label: 'Company' }),
+  values: z.looseObject({}).optional().meta({ label: 'Values' }),
+})
+
 export const TicketCreateSchema = z.object({
   eventId: z.coerce.number().meta({
     label: 'Event Id',
@@ -157,6 +174,11 @@ export const TicketCreateSchema = z.object({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
   }),
+  guestTickets: z.array(GuestTicketInputSchema).optional().meta({
+    label: 'Guest Tickets',
+    description:
+      'Guests attached to this ticket, as an array of guest people. Each guest becomes a child ticket. Requires the event to have guest info enabled.',
+  }),
 })
 
 export const TicketUpdateSchema = z.object({
@@ -188,6 +210,11 @@ export const TicketUpdateSchema = z.object({
   sendEmailConfirmation: z.boolean().optional().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee.',
+  }),
+  guestTickets: z.array(GuestTicketInputSchema).optional().meta({
+    label: 'Guest Tickets',
+    description:
+      'Guests attached to this ticket, as an array of guest people. Omit the id to add a guest, include the id to edit an existing one. Removing a guest is done by deleting that guest ticket. Requires the event to have guest info enabled.',
   }),
 })
 
@@ -320,7 +347,7 @@ const ticketsFindAllSchema = {
     .optional(),
   include: z
     .array(
-      z.enum(['addons', 'formattedValues']).meta({
+      z.enum(['addons', 'formattedValues', 'parentTicket', 'guestTickets']).meta({
         label: 'Include Relations',
         description: 'Include related data',
         values: [
@@ -338,6 +365,20 @@ const ticketsFindAllSchema = {
             type: 'string',
             key: 'formattedValues',
             value: 'formattedValues',
+          },
+          {
+            label: 'Parent Ticket',
+            description: 'The parent ticket, if this ticket is a guest of another ticket',
+            type: 'string',
+            key: 'parentTicket',
+            value: 'parentTicket',
+          },
+          {
+            label: 'Guest Tickets',
+            description: 'The guest tickets belonging to this ticket',
+            type: 'string',
+            key: 'guestTickets',
+            value: 'guestTickets',
           },
         ],
       }),
