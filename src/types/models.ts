@@ -3,7 +3,7 @@
 import type { Category } from '../schemas/category.js'
 import type { Contact, ContactCreate } from '../schemas/contact.js'
 import type { Event, EventCreate, EventUpdate } from '../schemas/event.js'
-import type { Ticket, TicketCreate } from '../schemas/ticket.js'
+import type { Ticket, TicketCreate, TicketUpdate } from '../schemas/ticket.js'
 import type { Payment } from '../schemas/payment.js'
 import type { Webhook, WebhookCreate } from '../schemas/webhook.js'
 import type { Workspace } from '../schemas/workspace.js'
@@ -30,6 +30,7 @@ export type {
   EventUpdate,
   Ticket,
   TicketCreate,
+  TicketUpdate,
   Payment,
   Webhook,
   WebhookCreate,

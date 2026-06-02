@@ -107,6 +107,48 @@ describe('Tickets', () => {
 
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
     })
+    test('should create a ticket with guest tickets', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .post('/tickets', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          const guests = attributes?.guestTickets as Array<Record<string, unknown>> | undefined
+          return (
+            !!guests && guests.length === 1 && guests[0].firstName === 'Guest' && guests[0].email === 'guest@doe.se'
+          )
+        })
+        .reply(201, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.create({
+        eventId: 1,
+        email: 'john@doe.se',
+        status: 'invited',
+        sendEmailConfirmation: true,
+        guestTickets: [{ firstName: 'Guest', email: 'guest@doe.se' }],
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
+    test('should update a ticket with guest tickets', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          const guests = attributes?.guestTickets as Array<Record<string, unknown>> | undefined
+          return !!guests && guests.length === 1 && guests[0].id === 42 && guests[0].firstName === 'Edited'
+        })
+        .reply(200, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.update(1, {
+        guestTickets: [{ id: 42, firstName: 'Edited' }],
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
   })
 
   describe('Static', () => {

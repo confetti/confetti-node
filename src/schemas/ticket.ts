@@ -123,7 +123,10 @@ export const GuestTicketInputSchema = z.object({
   email: z.string().email().optional().meta({ label: 'Email' }),
   phone: z.string().optional().meta({ label: 'Phone' }),
   company: z.string().optional().meta({ label: 'Company' }),
-  values: z.looseObject({}).optional().meta({ label: 'Values' }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
+  }),
 })
 
 export const TicketCreateSchema = z.object({
