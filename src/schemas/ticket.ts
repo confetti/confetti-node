@@ -109,17 +109,10 @@ export const TicketSchema = z.object({
   }),
 })
 
-// A guest ticket attached to a parent ticket. Guests are child tickets, provided inline as an
-// array when creating a parent ticket (mirrors the admin API's data.guestTickets); each entry
-// becomes a new child ticket.
-// NOTE: the API currently only applies guests at create time. Editing an existing guest in place
-// (via `id`) and changing guests on an already-created ticket via update are not honored yet.
-// Removing a guest is done by deleting that guest's ticket.
+// A guest provided when creating a ticket. Each entry becomes a new child ticket (mirrors the
+// admin API's data.guestTickets) and requires the event to have guest info enabled. Guests can
+// only be set at create time; editing or removing guests on an existing ticket is not supported yet.
 export const GuestTicketInputSchema = z.object({
-  id: z.coerce.number().optional().meta({
-    label: 'Guest Ticket Id',
-    helpText: 'Identifies an existing guest ticket. In-place guest editing is not yet supported by the API.',
-  }),
   firstName: z.string().optional().meta({ label: 'First name' }),
   lastName: z.string().optional().meta({ label: 'Last name' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
@@ -220,11 +213,6 @@ export const TicketUpdateSchema = z.object({
   sendEmailConfirmation: z.boolean().optional().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee.',
-  }),
-  guestTickets: z.array(GuestTicketInputSchema).optional().meta({
-    label: 'Guest Tickets',
-    description:
-      'NOTE: guest changes are not yet applied on update — guests can currently only be set when creating a ticket, not added or edited afterwards.',
   }),
 })
 
