@@ -170,6 +170,11 @@ export const TicketCreateSchema = z.object({
     label: 'Comment',
     description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
   }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description:
+      'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
+  }),
   sendEmailConfirmation: z.boolean().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
@@ -392,6 +397,7 @@ export const ticketsFindOptionsSchema = findBaseOptionsSchema.extend({})
 export const staticTicketsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketsFindAllSchema)
 export const staticTicketsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticTicketsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
@@ -401,6 +407,8 @@ export type TicketUpdateData = TicketUpdate
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type TicketsUpdateOptions = z.infer<typeof baseOptionsSchema>
 export type StaticTicketsFindAllOptions = z.infer<typeof staticTicketsFindAllOptionsSchema>
 export type StaticTicketsFindOptions = z.infer<typeof staticTicketsFindOptionsSchema>
 export type StaticTicketsCreateOptions = z.infer<typeof staticTicketsCreateOptionsSchema>
+export type StaticTicketsUpdateOptions = z.infer<typeof staticTicketsUpdateOptionsSchema>

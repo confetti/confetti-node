@@ -59,6 +59,54 @@ describe('Tickets', () => {
 
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
     })
+    test('should create a ticket with form field answers', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .post('/tickets', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          return (
+            !!attributes &&
+            typeof attributes.values === 'object' &&
+            (attributes.values as Record<string, unknown>)['field-one-field'] === 'Veg'
+          )
+        })
+        .reply(201, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.create({
+        eventId: 1,
+        email: 'john@doe.se',
+        status: 'invited',
+        sendEmailConfirmation: true,
+        values: { 'field-one-field': 'Veg' },
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
+    test('should update a ticket', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          return (
+            !!attributes &&
+            attributes.firstName === 'Updated' &&
+            typeof attributes.values === 'object' &&
+            (attributes.values as Record<string, unknown>)['field-one-field'] === 'Veg'
+          )
+        })
+        .reply(200, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.update(1, {
+        firstName: 'Updated',
+        values: { 'field-one-field': 'Veg' },
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
   })
 
   describe('Static', () => {
@@ -127,6 +175,28 @@ describe('Tickets', () => {
           company: 'Company AB',
           sendEmailConfirmation: true,
         },
+        { apiKey: 'my-key' },
+      )
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
+    test('should update a ticket', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          return (
+            !!attributes &&
+            attributes.firstName === 'Updated' &&
+            typeof attributes.values === 'object' &&
+            (attributes.values as Record<string, unknown>)['field-one-field'] === 'Veg'
+          )
+        })
+        .reply(200, mockData as MockResponseData)
+
+      const data = await Confetti.tickets.update(
+        1,
+        { firstName: 'Updated', values: { 'field-one-field': 'Veg' } },
         { apiKey: 'my-key' },
       )
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
