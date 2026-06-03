@@ -109,9 +109,6 @@ export const TicketSchema = z.object({
   }),
 })
 
-// A guest provided when creating a ticket. Each entry becomes a new child ticket (mirrors the
-// admin API's data.guestTickets) and requires the event to have guest info enabled. Guests can
-// only be set at create time; editing or removing guests on an existing ticket is not supported yet.
 export const GuestTicketInputSchema = z.object({
   firstName: z.string().optional().meta({ label: 'First name' }),
   lastName: z.string().optional().meta({ label: 'Last name' }),
