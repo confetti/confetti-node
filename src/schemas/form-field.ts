@@ -14,7 +14,8 @@ export const FormFieldSchema = z.object({
   }),
   name: z.string().meta({
     label: 'Name',
-    description: 'Machine-readable field name (used as key in ticket.values). Immutable after creation.',
+    description:
+      'Machine-readable field name (used as key in ticket.values). Immutable, cannot be changed after creation.',
   }),
   title: z.string().meta({
     label: 'Title',
@@ -50,7 +51,7 @@ export const FormFieldCreateSchema = z.object({
   name: z.string().optional().meta({
     label: 'Name',
     description:
-      'Machine-readable field name (used as key in ticket.values). Auto-generated from the title if omitted. Immutable after creation.',
+      'Machine-readable field name (used as key in ticket.values). Auto-generated from the title if omitted. Immutable, cannot be changed after creation.',
   }),
   title: z.string().meta({
     label: 'Title',
