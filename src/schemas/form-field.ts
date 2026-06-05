@@ -32,7 +32,7 @@ export const FormFieldSchema = z.object({
     }),
   order: z.number().meta({
     label: 'Order',
-    description: 'Display order within the form.',
+    description: 'Display order within the form. Defaults to last.',
   }),
   status: z.enum(['created', 'locked', 'deleted']).meta({
     label: 'Status',
