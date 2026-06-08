@@ -15,19 +15,6 @@ describe('FormFields', () => {
   })
 
   describe('Instance', () => {
-    test('should request multiple formFields', async () => {
-      const mockData = Confetti.models.formField.sample.multiple.raw
-
-      nock('https://api.confetti.events')
-        .get('/form-fields')
-        .query({ filter: { formId: 1 } })
-        .reply(200, mockData as MockResponseData)
-
-      const confetti = new Confetti({ apiKey: 'my-key' })
-      const data = await confetti.formFields.findAll({ filter: { formId: 1 } })
-
-      assert.deepStrictEqual(data, Confetti.models.formField.sample.multiple.formatted)
-    })
     test('should request one formField', async () => {
       const mockData = Confetti.models.formField.sample.single.raw
 
@@ -78,17 +65,6 @@ describe('FormFields', () => {
   })
 
   describe('Static', () => {
-    test('should request multiple formFields', async () => {
-      const mockData = Confetti.models.formField.sample.multiple.raw
-
-      nock('https://api.confetti.events')
-        .get('/form-fields')
-        .query({ filter: { formId: 1 } })
-        .reply(200, mockData as MockResponseData)
-
-      const data = await Confetti.formFields.findAll({ apiKey: 'my-key', filter: { formId: 1 } })
-      assert.deepStrictEqual(data, Confetti.models.formField.sample.multiple.formatted)
-    })
     test('should request one formField', async () => {
       const mockData = Confetti.models.formField.sample.single.raw
 

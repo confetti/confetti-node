@@ -111,18 +111,11 @@ import type {
   BlockCreateData,
   BlockUpdateData,
 } from './schemas/block.js'
+import type { FormsFindOptions, StaticFormsFindOptions } from './schemas/form.js'
 import type {
-  FormsFindAllOptions,
-  FormsFindOptions,
-  StaticFormsFindAllOptions,
-  StaticFormsFindOptions,
-} from './schemas/form.js'
-import type {
-  FormFieldsFindAllOptions,
   FormFieldsFindOptions,
   FormFieldsCreateOptions,
   FormFieldsUpdateOptions,
-  StaticFormFieldsFindAllOptions,
   StaticFormFieldsFindOptions,
   StaticFormFieldsCreateOptions,
   StaticFormFieldsUpdateOptions,
@@ -498,26 +491,17 @@ class Confetti {
   }
 
   forms = {
-    findAll: (options: FormsFindAllOptions) => {
-      return formsResource.findAll(options, this.adapter)
-    },
     find: (id: string | number, options: FormsFindOptions = {}) => {
       return formsResource.find(id, options, this.adapter)
     },
   }
   static forms = {
-    findAll: (options: StaticFormsFindAllOptions) => {
-      return formsResource.findAll(options, adapter(options))
-    },
     find: (id: string | number, options: StaticFormsFindOptions) => {
       return formsResource.find(id, options, adapter(options))
     },
   }
 
   formFields = {
-    findAll: (options: FormFieldsFindAllOptions) => {
-      return formFieldsResource.findAll(options, this.adapter)
-    },
     find: (id: string | number, options: FormFieldsFindOptions = {}) => {
       return formFieldsResource.find(id, options, this.adapter)
     },
@@ -532,9 +516,6 @@ class Confetti {
     },
   }
   static formFields = {
-    findAll: (options: StaticFormFieldsFindAllOptions) => {
-      return formFieldsResource.findAll(options, adapter(options))
-    },
     find: (id: string | number, options: StaticFormFieldsFindOptions) => {
       return formFieldsResource.find(id, options, adapter(options))
     },

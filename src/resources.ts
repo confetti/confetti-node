@@ -88,16 +88,9 @@ import {
   type ImageCreateData,
   type ImageUpdateData,
 } from './schemas/image.js'
+import { formsFindOptionsSchema, type FormsFindOptions } from './schemas/form.js'
 import {
-  formsFindAllOptionsSchema,
-  formsFindOptionsSchema,
-  type FormsFindAllOptions,
-  type FormsFindOptions,
-} from './schemas/form.js'
-import {
-  formFieldsFindAllOptionsSchema,
   formFieldsFindOptionsSchema,
-  type FormFieldsFindAllOptions,
   type FormFieldsFindOptions,
   type FormFieldsCreateOptions,
   type FormFieldsUpdateOptions,
@@ -531,10 +524,6 @@ export const imagesResource = {
 }
 
 export const formsResource = {
-  findAll: (options: FormsFindAllOptions, adapter: Adapter): Promise<Form[]> => {
-    const validatedOptions = formsFindAllOptionsSchema.parse(options)
-    return adapter.get<Form[]>({ path: models.form.path, type: models.form.endpoint, ...validatedOptions })
-  },
   find: (id: string | number, options: FormsFindOptions = {}, adapter: Adapter): Promise<Form> => {
     const validatedOptions = formsFindOptionsSchema.parse(options)
     return adapter.get<Form>({
@@ -592,14 +581,6 @@ export const speakersResource = {
 }
 
 export const formFieldsResource = {
-  findAll: (options: FormFieldsFindAllOptions, adapter: Adapter): Promise<FormField[]> => {
-    const validatedOptions = formFieldsFindAllOptionsSchema.parse(options)
-    return adapter.get<FormField[]>({
-      path: models.formField.path,
-      type: models.formField.endpoint,
-      ...validatedOptions,
-    })
-  },
   find: (id: string | number, options: FormFieldsFindOptions = {}, adapter: Adapter): Promise<FormField> => {
     const validatedOptions = formFieldsFindOptionsSchema.parse(options)
     return adapter.get<FormField>({
