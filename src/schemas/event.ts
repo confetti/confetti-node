@@ -53,6 +53,11 @@ export const EventSchema = z.object({
     description:
       "Who can register / RSVP for the event. 'everyone' = anyone, 'invite' = requires a valid invite, 'password' = requires the event password.",
   }),
+  privacyPassword: z.string().meta({
+    label: 'Privacy password',
+    description:
+      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
+  }),
   website: z.string().meta({
     label: 'Website',
   }),
@@ -171,7 +176,7 @@ export const EventCreateSchema = z.object({
   privacyPassword: z.string().optional().meta({
     label: 'Privacy password',
     description:
-      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'. Write-only; never returned in responses.",
+      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
   }),
   rsvpLimit: z.number().optional().meta({ label: 'Rsvp Limit' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
