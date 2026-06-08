@@ -68,11 +68,21 @@ const events = await confetti.events.findAll({
 
 ## Resources
 
-- **Events** - `findAll`, `find`
+- **Events** - `findAll`, `find`, `create`, `update`
+- **Tickets** - `findAll`, `find`, `create`, `update`
 - **Contacts** - `findAll`, `find`, `create`
-- **Tickets** - `findAll`, `find`, `create`
-- **Payments** - `findAll`, `find`
+- **Pages** - `findAll`, `find`, `create`, `update`, `delete`
+- **Blocks** - `findAll`, `find`, `create`, `update`, `delete`
+- **Images** - `findAll`, `find`, `create`, `update`, `delete`
+- **Forms** - `findAll`, `find`
+- **FormFields** - `findAll`, `find`, `create`, `update`, `delete`
+- **Speakers** - `findAll`, `find`, `create`, `update`, `delete`
+- **Organisers** - `findAll`, `find`, `create`, `update`, `delete`
+- **ScheduleItems** - `findAll`, `find`, `create`, `update`, `delete`
+- **Sponsors** - `findAll`, `find`, `create`, `update`, `delete`
+- **SponsorLevels** - `findAll`, `find`, `create`, `update`, `delete`
 - **Webhooks** - `findAll`, `find`, `create`, `delete`
+- **Payments** - `findAll`, `find`
 - **Workspaces** - `findAll`, `find`
 - **Categories** - `findAll`, `find`
 - **TicketBatches** - `findAll`, `find`

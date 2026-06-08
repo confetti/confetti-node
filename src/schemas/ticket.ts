@@ -109,6 +109,18 @@ export const TicketSchema = z.object({
   }),
 })
 
+export const GuestTicketInputSchema = z.object({
+  firstName: z.string().optional().meta({ label: 'First name' }),
+  lastName: z.string().optional().meta({ label: 'Last name' }),
+  email: z.string().email().optional().meta({ label: 'Email' }),
+  phone: z.string().optional().meta({ label: 'Phone' }),
+  company: z.string().optional().meta({ label: 'Company' }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
+  }),
+})
+
 export const TicketCreateSchema = z.object({
   eventId: z.coerce.number().meta({
     label: 'Event Id',
@@ -153,9 +165,19 @@ export const TicketCreateSchema = z.object({
     label: 'Comment',
     description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
   }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description:
+      'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
+  }),
   sendEmailConfirmation: z.boolean().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
+  }),
+  guestTickets: z.array(GuestTicketInputSchema).optional().meta({
+    label: 'Guest Tickets',
+    description:
+      'Guests attached to this ticket, as an array of guest people. Each guest becomes a child ticket. Requires the event to have guest info enabled.',
   }),
 })
 
@@ -320,7 +342,7 @@ const ticketsFindAllSchema = {
     .optional(),
   include: z
     .array(
-      z.enum(['addons', 'formattedValues']).meta({
+      z.enum(['addons', 'formattedValues', 'parentTicket', 'guestTickets']).meta({
         label: 'Include Relations',
         description: 'Include related data',
         values: [
@@ -339,6 +361,20 @@ const ticketsFindAllSchema = {
             key: 'formattedValues',
             value: 'formattedValues',
           },
+          {
+            label: 'Parent Ticket',
+            description: 'The parent ticket, if this ticket is a guest of another ticket',
+            type: 'string',
+            key: 'parentTicket',
+            value: 'parentTicket',
+          },
+          {
+            label: 'Guest Tickets',
+            description: 'The guest tickets belonging to this ticket',
+            type: 'string',
+            key: 'guestTickets',
+            value: 'guestTickets',
+          },
         ],
       }),
     )
@@ -351,6 +387,7 @@ export const ticketsFindOptionsSchema = findBaseOptionsSchema.extend({})
 export const staticTicketsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(ticketsFindAllSchema)
 export const staticTicketsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 export const staticTicketsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
+export const staticTicketsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 
 export type Ticket = z.infer<typeof TicketSchema>
 export type TicketCreate = z.infer<typeof TicketCreateSchema>
@@ -360,6 +397,8 @@ export type TicketUpdateData = TicketUpdate
 export type TicketsFindAllOptions = z.infer<typeof ticketsFindAllOptionsSchema>
 export type TicketsFindOptions = z.infer<typeof ticketsFindOptionsSchema>
 export type TicketsCreateOptions = z.infer<typeof baseOptionsSchema>
+export type TicketsUpdateOptions = z.infer<typeof baseOptionsSchema>
 export type StaticTicketsFindAllOptions = z.infer<typeof staticTicketsFindAllOptionsSchema>
 export type StaticTicketsFindOptions = z.infer<typeof staticTicketsFindOptionsSchema>
 export type StaticTicketsCreateOptions = z.infer<typeof staticTicketsCreateOptionsSchema>
+export type StaticTicketsUpdateOptions = z.infer<typeof staticTicketsUpdateOptionsSchema>

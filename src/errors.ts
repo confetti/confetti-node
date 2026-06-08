@@ -30,7 +30,22 @@ export class NotFoundError extends Error {
   }
 }
 
+export class OperationNotFoundError extends Error {
+  public errorType: string
+
+  constructor(message: string, options: ErrorOptions = {}) {
+    super(message)
+    this.name = 'OperationNotFoundError'
+    this.errorType = message
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor)
+    }
+    Object.assign(this, options)
+  }
+}
+
 export default {
   ParameterError,
   NotFoundError,
+  OperationNotFoundError,
 }

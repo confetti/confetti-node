@@ -14,7 +14,8 @@ export const FormFieldSchema = z.object({
   }),
   name: z.string().meta({
     label: 'Name',
-    description: 'Machine-readable field name (used as key in ticket.values).',
+    description:
+      'Machine-readable field name (used as key in ticket.values). Immutable, cannot be changed after creation.',
   }),
   title: z.string().meta({
     label: 'Title',
@@ -32,7 +33,7 @@ export const FormFieldSchema = z.object({
     }),
   order: z.number().meta({
     label: 'Order',
-    description: 'Display order within the form.',
+    description: 'Display order within the form. Defaults to last.',
   }),
   status: z.enum(['created', 'locked', 'deleted']).meta({
     label: 'Status',
@@ -47,46 +48,49 @@ export const FormFieldSchema = z.object({
 })
 
 export const FormFieldCreateSchema = z.object({
-  name: z.string().meta({
-      label: 'Name',
-      description: 'Machine-readable field name (used as key in ticket.values).',
-    }),
+  name: z.string().optional().meta({
+    label: 'Name',
+    description:
+      'Machine-readable field name (used as key in ticket.values). Auto-generated from the title if omitted. Immutable, cannot be changed after creation.',
+  }),
   title: z.string().meta({
-      label: 'Title',
-      description: 'Human-readable field label.',
-    }),
+    label: 'Title',
+    description: 'Human-readable field label.',
+  }),
   description: z.string().nullable().optional().meta({
-      label: 'Description',
-      description: 'Optional help text for the field.',
-    }),
+    label: 'Description',
+    description: 'Optional help text for the field.',
+  }),
   field: z
     .enum(['text', 'textarea', 'radio', 'checkbox', 'select', 'country', 'rating', 'section', 'company', 'title'])
     .meta({
-        label: 'Field Type',
-        description: 'The input type of the field.',
-      }),
+      label: 'Field Type',
+      description: 'The input type of the field.',
+    }),
   order: z.number().optional().meta({
-      label: 'Order',
-      description: 'Display order within the form.',
-    }),
+    label: 'Order',
+    description: 'Display order within the form.',
+  }),
   settings: z.looseObject({}).optional().meta({
-      label: 'Settings',
-    }),
+    label: 'Settings',
+  }),
   formId: z.number().meta({
-      label: 'Form Id',
-      description: 'Form this field belongs to.',
-    }),
+    label: 'Form Id',
+    description: 'Form this field belongs to.',
+  }),
   sectionId: z.number().nullable().optional().meta({
-      label: 'Section Id',
-      description: 'Parent section field ID, if nested.',
-    }),
+    label: 'Section Id',
+    description: 'Parent section field ID, if nested.',
+  }),
 })
 
-export const FormFieldUpdateSchema = FormFieldCreateSchema.partial().extend({
-  status: z.enum(['created', 'locked']).optional().meta({
+export const FormFieldUpdateSchema = FormFieldCreateSchema.omit({ name: true })
+  .partial()
+  .extend({
+    status: z.enum(['created', 'locked']).optional().meta({
       label: 'Status',
     }),
-})
+  })
 
 const formFieldsFindAllSchema = {
   filter: z.object({

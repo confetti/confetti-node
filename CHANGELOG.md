@@ -1,3 +1,24 @@
+# 4.1.0
+
+- Feature: `tickets.update(id, data, options)` for editing tickets after create.
+- Feature: tickets can now be created with inline `guestTickets` — an array of guest people that become child tickets attached to the parent. Each guest accepts `firstName`, `lastName`, `email`, `phone`, `company`, and `values`. Requires the event to have guest info enabled. Guests can only be set at create time; editing or removing guests on an existing ticket is not yet supported by the API.
+- Feature: tickets now expose `parentTicket` (the parent of a guest ticket) and `guestTickets` (the guests of a parent ticket) as includable relations.
+- Feature: ticket `values` (raw form field answers keyed by field name) can now be set on both create and update.
+- Change: form field `name` is auto-generated from `title` when omitted on create, and is now treated as immutable — it is no longer accepted by `formFields.update`.
+
+# 4.0.0 - 2026-06-01
+
+- Feature: write-side CRUD added across the SDK — `events.update`, full CRUD for `pages`, `blocks`, `images`, `formFields`, `speakers`, `organisers`, `scheduleItems`, `sponsors`, `sponsorLevels`, plus read-only `forms` and `formFields`.
+- Feature: image uploads supported via `images.create`.
+- Feature: every model now exposes Zod schemas at `model.operations.{read,create,update}.schema`, and a `schemaToJsonSchema()` utility converts them to JSON Schema for tools like MCP.
+- Feature: events expose `customCss`, a `workspace` relationship, and a tightened `location` schema.
+- Feature: new `previewToken` model.
+- Change: model attribute metadata moved from `model.attributes` to `model.operations.read.attributes`.
+- Change: model field descriptions migrated from `.describe(JSON.stringify(...))` to native Zod `.meta()`, including `label`, `description`, `helpText`, and enum `values` for tooling.
+- Change: blocks and images use `type` instead of `blockType` / `imageType`.
+- Change: yayson upgraded to v4; the SDK uses typed presenters and store symbols internally.
+- Change: dependency versions pinned (caret ranges dropped) for reproducible installs.
+
 # 3.0.5 - 2026-05-20
 
 - Fix: accept both string and number ids on write-side `*Id` fields (create, update, filter). JSON:API returns ids as strings, so values from `findAll` can now be passed straight into `create` without a `ZodError`. Uses `z.coerce.number()` — numeric callers keep working.
