@@ -109,6 +109,18 @@ export const TicketSchema = z.object({
   }),
 })
 
+export const GuestTicketInputSchema = z.object({
+  firstName: z.string().optional().meta({ label: 'First name' }),
+  lastName: z.string().optional().meta({ label: 'Last name' }),
+  email: z.string().email().optional().meta({ label: 'Email' }),
+  phone: z.string().optional().meta({ label: 'Phone' }),
+  company: z.string().optional().meta({ label: 'Company' }),
+  values: z.looseObject({}).optional().meta({
+    label: 'Values',
+    description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
+  }),
+})
+
 export const TicketCreateSchema = z.object({
   eventId: z.coerce.number().meta({
     label: 'Event Id',
@@ -161,6 +173,11 @@ export const TicketCreateSchema = z.object({
   sendEmailConfirmation: z.boolean().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
+  }),
+  guestTickets: z.array(GuestTicketInputSchema).optional().meta({
+    label: 'Guest Tickets',
+    description:
+      'Guests attached to this ticket, as an array of guest people. Each guest becomes a child ticket. Requires the event to have guest info enabled.',
   }),
 })
 
@@ -325,7 +342,7 @@ const ticketsFindAllSchema = {
     .optional(),
   include: z
     .array(
-      z.enum(['addons', 'formattedValues']).meta({
+      z.enum(['addons', 'formattedValues', 'parentTicket', 'guestTickets']).meta({
         label: 'Include Relations',
         description: 'Include related data',
         values: [
@@ -343,6 +360,20 @@ const ticketsFindAllSchema = {
             type: 'string',
             key: 'formattedValues',
             value: 'formattedValues',
+          },
+          {
+            label: 'Parent Ticket',
+            description: 'The parent ticket, if this ticket is a guest of another ticket',
+            type: 'string',
+            key: 'parentTicket',
+            value: 'parentTicket',
+          },
+          {
+            label: 'Guest Tickets',
+            description: 'The guest tickets belonging to this ticket',
+            type: 'string',
+            key: 'guestTickets',
+            value: 'guestTickets',
           },
         ],
       }),
