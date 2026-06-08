@@ -1,17 +1,7 @@
 import loadSamples from '../utils/load-samples.js'
 import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
-import {
-  FormFieldSchema,
-  FormFieldCreateSchema,
-  FormFieldUpdateSchema,
-  formFieldsFindAllOptionsSchema,
-} from '../schemas/form-field.js'
+import { FormFieldSchema, FormFieldCreateSchema, FormFieldUpdateSchema } from '../schemas/form-field.js'
 import { ModelDefinition } from '../types/model.js'
-import {
-  extractFiltersFromSchema,
-  extractSortingFromSchema,
-  extractIncludesFromSchema,
-} from '../utils/resource-options-to-model.js'
 
 export default function FormFieldModel(): ModelDefinition {
   return {
@@ -20,9 +10,9 @@ export default function FormFieldModel(): ModelDefinition {
     path: 'form-fields',
     name: 'Form Field',
     sample: loadSamples('formField'),
-    sorting: extractSortingFromSchema(formFieldsFindAllOptionsSchema),
-    filters: extractFiltersFromSchema(formFieldsFindAllOptionsSchema),
-    includes: extractIncludesFromSchema(formFieldsFindAllOptionsSchema),
+    sorting: [],
+    filters: {},
+    includes: [],
     operations: {
       read: {
         schema: FormFieldSchema,

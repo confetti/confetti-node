@@ -1,11 +1,5 @@
 import { z } from 'zod'
-import {
-  baseFindAllOptionsSchema,
-  baseOptionsSchema,
-  findBaseOptionsSchema,
-  staticBaseFindAllOptionsSchema,
-  staticBaseFindOptionsSchema,
-} from './resource-options.js'
+import { baseOptionsSchema, findBaseOptionsSchema, staticBaseFindAllOptionsSchema, staticBaseFindOptionsSchema } from './resource-options.js'
 
 export const FormFieldSchema = z.object({
   id: z.number().meta({
@@ -92,41 +86,8 @@ export const FormFieldUpdateSchema = FormFieldCreateSchema.omit({ name: true })
     }),
   })
 
-const formFieldsFindAllSchema = {
-  filter: z.object({
-    formId: z.number(),
-  }),
-  sort: z.never().optional(),
-  include: z
-    .array(
-      z.enum(['section', 'fields']).meta({
-        label: 'Include Relations',
-        description: 'Include related data',
-        values: [
-          {
-            label: 'Section',
-            description: 'Parent section field',
-            type: 'string',
-            key: 'section',
-            value: 'section',
-          },
-          {
-            label: 'Fields',
-            description: 'Child fields within this section',
-            type: 'string',
-            key: 'fields',
-            value: 'fields',
-          },
-        ],
-      }),
-    )
-    .optional(),
-}
-
-export const formFieldsFindAllOptionsSchema = baseFindAllOptionsSchema.extend(formFieldsFindAllSchema)
 export const formFieldsFindOptionsSchema = findBaseOptionsSchema.extend({})
 
-export const staticFormFieldsFindAllOptionsSchema = staticBaseFindAllOptionsSchema.extend(formFieldsFindAllSchema)
 export const staticFormFieldsFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 export const staticFormFieldsCreateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
 export const staticFormFieldsUpdateOptionsSchema = staticBaseFindAllOptionsSchema.extend({})
@@ -136,11 +97,9 @@ export type FormFieldCreate = z.infer<typeof FormFieldCreateSchema>
 export type FormFieldCreateData = FormFieldCreate
 export type FormFieldUpdate = z.infer<typeof FormFieldUpdateSchema>
 export type FormFieldUpdateData = FormFieldUpdate
-export type FormFieldsFindAllOptions = z.infer<typeof formFieldsFindAllOptionsSchema>
 export type FormFieldsFindOptions = z.infer<typeof formFieldsFindOptionsSchema>
 export type FormFieldsCreateOptions = z.infer<typeof baseOptionsSchema>
 export type FormFieldsUpdateOptions = z.infer<typeof baseOptionsSchema>
-export type StaticFormFieldsFindAllOptions = z.infer<typeof staticFormFieldsFindAllOptionsSchema>
 export type StaticFormFieldsFindOptions = z.infer<typeof staticFormFieldsFindOptionsSchema>
 export type StaticFormFieldsCreateOptions = z.infer<typeof staticFormFieldsCreateOptionsSchema>
 export type StaticFormFieldsUpdateOptions = z.infer<typeof staticFormFieldsUpdateOptionsSchema>
