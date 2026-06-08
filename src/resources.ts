@@ -22,7 +22,9 @@ import {
   type TicketsFindAllOptions,
   type TicketsFindOptions,
   type TicketsCreateOptions,
+  type TicketsUpdateOptions,
   type TicketCreateData,
+  type TicketUpdateData,
 } from './schemas/ticket.js'
 import {
   paymentsFindAllOptionsSchema,
@@ -145,6 +147,7 @@ import {
 import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
+import { OperationNotFoundError } from './errors.js'
 import {
   Event,
   Contact,
@@ -178,7 +181,7 @@ export const eventsResource = {
   },
   create: (json: EventCreateData, options: EventsCreateOptions = {}, adapter: Adapter): Promise<Event> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.event.operations.create) throw new Error('Event create operation not found')
+    if (!models.event.operations.create) throw new OperationNotFoundError('Event create operation not found')
     const validatedData = models.event.operations.create.schema.parse(json)
     return adapter.post<Event>({
       json: validatedData,
@@ -194,7 +197,7 @@ export const eventsResource = {
     adapter: Adapter,
   ): Promise<Event> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.event.operations.update) throw new Error('Event update operation not found')
+    if (!models.event.operations.update) throw new OperationNotFoundError('Event update operation not found')
     const validatedData = models.event.operations.update.schema.parse(json)
     return adapter.put<Event>({
       json: validatedData,
@@ -220,12 +223,28 @@ export const ticketsResource = {
   },
   create: (json: TicketCreateData, options: TicketsCreateOptions = {}, adapter: Adapter): Promise<Ticket> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.ticket.operations.create) throw new Error('Ticket create operation not found')
+    if (!models.ticket.operations.create) throw new OperationNotFoundError('Ticket create operation not found')
     const validatedData = models.ticket.operations.create.schema.parse(json)
 
     return adapter.post<Ticket>({
       json: validatedData,
       path: models.ticket.path,
+      type: models.ticket.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: TicketUpdateData,
+    options: TicketsUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Ticket> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.ticket.operations.update) throw new OperationNotFoundError('Ticket update operation not found')
+    const validatedData = models.ticket.operations.update.schema.parse(json)
+    return adapter.put<Ticket>({
+      json: validatedData,
+      path: `${models.ticket.path}/${id}`,
       type: models.ticket.endpoint,
       ...validatedOptions,
     })
@@ -247,7 +266,7 @@ export const contactsResource = {
   },
   create: (json: ContactCreateData, options: ContactsCreateOptions = {}, adapter: Adapter): Promise<Contact> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.contact.operations.create) throw new Error('Contact create operation not found')
+    if (!models.contact.operations.create) throw new OperationNotFoundError('Contact create operation not found')
     const validatedData = models.contact.operations.create.schema.parse(json)
 
     return adapter.post<Contact>({
@@ -289,7 +308,7 @@ export const webhooksResource = {
   },
   create: (json: WebhookCreateData, options: WebhooksCreateOptions = {}, adapter: Adapter): Promise<Webhook> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.webhook.operations.create) throw new Error('Webhook create operation not found')
+    if (!models.webhook.operations.create) throw new OperationNotFoundError('Webhook create operation not found')
     const validatedData = models.webhook.operations.create.schema.parse(json)
     return adapter.post<Webhook>({
       path: models.webhook.path,
@@ -376,7 +395,7 @@ export const pagesResource = {
   },
   create: (json: PageCreateData, options: PagesCreateOptions = {}, adapter: Adapter): Promise<Page> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.page.operations.create) throw new Error('Page create operation not found')
+    if (!models.page.operations.create) throw new OperationNotFoundError('Page create operation not found')
     const validatedData = models.page.operations.create.schema.parse(json)
     return adapter.post<Page>({
       json: validatedData,
@@ -392,7 +411,7 @@ export const pagesResource = {
     adapter: Adapter,
   ): Promise<Page> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.page.operations.update) throw new Error('Page update operation not found')
+    if (!models.page.operations.update) throw new OperationNotFoundError('Page update operation not found')
     const validatedData = models.page.operations.update.schema.parse(json)
     return adapter.put<Page>({
       json: validatedData,
@@ -426,7 +445,7 @@ export const blocksResource = {
   },
   create: (json: BlockCreateData, options: BlocksCreateOptions = {}, adapter: Adapter): Promise<Block> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.block.operations.create) throw new Error('Block create operation not found')
+    if (!models.block.operations.create) throw new OperationNotFoundError('Block create operation not found')
     const validatedData = models.block.operations.create.schema.parse(json)
     return adapter.post<Block>({
       json: validatedData,
@@ -442,7 +461,7 @@ export const blocksResource = {
     adapter: Adapter,
   ): Promise<Block> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.block.operations.update) throw new Error('Block update operation not found')
+    if (!models.block.operations.update) throw new OperationNotFoundError('Block update operation not found')
     const validatedData = models.block.operations.update.schema.parse(json)
     return adapter.put<Block>({
       json: validatedData,
@@ -476,7 +495,7 @@ export const imagesResource = {
   },
   create: (json: ImageCreateData, options: ImagesCreateOptions = {}, adapter: Adapter): Promise<Image> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.image.operations.create) throw new Error('Image create operation not found')
+    if (!models.image.operations.create) throw new OperationNotFoundError('Image create operation not found')
     const validatedData = models.image.operations.create.schema.parse(json)
     return adapter.post<Image>({
       json: validatedData,
@@ -492,7 +511,7 @@ export const imagesResource = {
     adapter: Adapter,
   ): Promise<Image> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.image.operations.update) throw new Error('Image update operation not found')
+    if (!models.image.operations.update) throw new OperationNotFoundError('Image update operation not found')
     const validatedData = models.image.operations.update.schema.parse(json)
     return adapter.put<Image>({
       json: validatedData,
@@ -537,7 +556,7 @@ export const speakersResource = {
   },
   create: (json: SpeakerCreateData, options: SpeakersCreateOptions = {}, adapter: Adapter): Promise<Speaker> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.speaker.operations.create) throw new Error('Speaker create operation not found')
+    if (!models.speaker.operations.create) throw new OperationNotFoundError('Speaker create operation not found')
     const validatedData = models.speaker.operations.create.schema.parse(json)
     return adapter.post<Speaker>({
       json: validatedData,
@@ -553,7 +572,7 @@ export const speakersResource = {
     adapter: Adapter,
   ): Promise<Speaker> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.speaker.operations.update) throw new Error('Speaker update operation not found')
+    if (!models.speaker.operations.update) throw new OperationNotFoundError('Speaker update operation not found')
     const validatedData = models.speaker.operations.update.schema.parse(json)
     return adapter.put<Speaker>({
       json: validatedData,
@@ -595,7 +614,7 @@ export const formFieldsResource = {
     adapter: Adapter,
   ): Promise<FormField> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.formField.operations.create) throw new Error('FormField create operation not found')
+    if (!models.formField.operations.create) throw new OperationNotFoundError('FormField create operation not found')
     const validatedData = models.formField.operations.create.schema.parse(json)
     return adapter.post<FormField>({
       json: validatedData,
@@ -611,7 +630,7 @@ export const formFieldsResource = {
     adapter: Adapter,
   ): Promise<FormField> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.formField.operations.update) throw new Error('FormField update operation not found')
+    if (!models.formField.operations.update) throw new OperationNotFoundError('FormField update operation not found')
     const validatedData = models.formField.operations.update.schema.parse(json)
     return adapter.put<FormField>({
       json: validatedData,
@@ -641,7 +660,7 @@ export const organisersResource = {
   },
   create: (json: OrganiserCreateData, options: OrganisersCreateOptions = {}, adapter: Adapter): Promise<Organiser> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.organiser.operations.create) throw new Error('Organiser create operation not found')
+    if (!models.organiser.operations.create) throw new OperationNotFoundError('Organiser create operation not found')
     const validatedData = models.organiser.operations.create.schema.parse(json)
     return adapter.post<Organiser>({
       json: validatedData,
@@ -657,7 +676,7 @@ export const organisersResource = {
     adapter: Adapter,
   ): Promise<Organiser> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.organiser.operations.update) throw new Error('Organiser update operation not found')
+    if (!models.organiser.operations.update) throw new OperationNotFoundError('Organiser update operation not found')
     const validatedData = models.organiser.operations.update.schema.parse(json)
     return adapter.put<Organiser>({
       json: validatedData,
@@ -691,7 +710,7 @@ export const scheduleItemsResource = {
     adapter: Adapter,
   ): Promise<ScheduleItem> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.scheduleItem.operations.create) throw new Error('ScheduleItem create operation not found')
+    if (!models.scheduleItem.operations.create) throw new OperationNotFoundError('ScheduleItem create operation not found')
     const validatedData = models.scheduleItem.operations.create.schema.parse(json)
     return adapter.post<ScheduleItem>({
       json: validatedData,
@@ -707,7 +726,7 @@ export const scheduleItemsResource = {
     adapter: Adapter,
   ): Promise<ScheduleItem> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.scheduleItem.operations.update) throw new Error('ScheduleItem update operation not found')
+    if (!models.scheduleItem.operations.update) throw new OperationNotFoundError('ScheduleItem update operation not found')
     const validatedData = models.scheduleItem.operations.update.schema.parse(json)
     return adapter.put<ScheduleItem>({
       json: validatedData,
@@ -737,7 +756,7 @@ export const sponsorsResource = {
   },
   create: (json: SponsorCreateData, options: SponsorsCreateOptions = {}, adapter: Adapter): Promise<Sponsor> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsor.operations.create) throw new Error('Sponsor create operation not found')
+    if (!models.sponsor.operations.create) throw new OperationNotFoundError('Sponsor create operation not found')
     const validatedData = models.sponsor.operations.create.schema.parse(json)
     return adapter.post<Sponsor>({
       json: validatedData,
@@ -753,7 +772,7 @@ export const sponsorsResource = {
     adapter: Adapter,
   ): Promise<Sponsor> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsor.operations.update) throw new Error('Sponsor update operation not found')
+    if (!models.sponsor.operations.update) throw new OperationNotFoundError('Sponsor update operation not found')
     const validatedData = models.sponsor.operations.update.schema.parse(json)
     return adapter.put<Sponsor>({
       json: validatedData,
@@ -787,7 +806,7 @@ export const sponsorLevelsResource = {
     adapter: Adapter,
   ): Promise<SponsorLevel> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsorLevel.operations.create) throw new Error('SponsorLevel create operation not found')
+    if (!models.sponsorLevel.operations.create) throw new OperationNotFoundError('SponsorLevel create operation not found')
     const validatedData = models.sponsorLevel.operations.create.schema.parse(json)
     return adapter.post<SponsorLevel>({
       json: validatedData,
@@ -803,7 +822,7 @@ export const sponsorLevelsResource = {
     adapter: Adapter,
   ): Promise<SponsorLevel> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsorLevel.operations.update) throw new Error('SponsorLevel update operation not found')
+    if (!models.sponsorLevel.operations.update) throw new OperationNotFoundError('SponsorLevel update operation not found')
     const validatedData = models.sponsorLevel.operations.update.schema.parse(json)
     return adapter.put<SponsorLevel>({
       json: validatedData,

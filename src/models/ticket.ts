@@ -36,6 +36,7 @@ export default function TicketModel(): ModelDefinition {
     relationships: [
       { field: 'eventId', relationship: 'event', type: 'belongsTo' },
       { field: 'ticketBatchId', relationship: 'ticketBatch', type: 'belongsTo' },
+      { field: 'parentTicketId', relationship: 'parentTicket', type: 'belongsTo' },
     ],
     meta: [{ field: 'sendEmailConfirmation', key: 'sendEmailConfirmation' }],
     webhooks: [
