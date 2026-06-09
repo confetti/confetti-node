@@ -174,6 +174,11 @@ export const TicketCreateSchema = z.object({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
   }),
+  guests: z.number().optional().meta({
+    label: 'Guests',
+    description:
+      'Number of additional guests attached to this ticket (e.g. 3 for "John +3"). Use this when you only need a guest count; use guestTickets when you need per-guest details.',
+  }),
   guestTickets: z.array(GuestTicketInputSchema).optional().meta({
     label: 'Guest Tickets',
     description:
