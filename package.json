@@ -1,6 +1,6 @@
 {
   "name": "confetti",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "A Node wrapper for the Confetti API.",
   "type": "module",
   "exports": {
