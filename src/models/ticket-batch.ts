@@ -1,6 +1,6 @@
 import loadSamples from '../utils/load-samples.js'
-import { schemaToAttributes } from '../utils/schema-to-attributes.js'
-import { TicketBatchSchema } from '../schemas/ticket-batch.js'
+import { schemaToAttributes, schemaToCreateAttributes } from '../utils/schema-to-attributes.js'
+import { TicketBatchSchema, TicketBatchCreateSchema, TicketBatchUpdateSchema } from '../schemas/ticket-batch.js'
 import { ModelDefinition } from '../types/model.js'
 import {
   extractFiltersFromSchema,
@@ -24,8 +24,19 @@ export default function TicketBatchModel(): ModelDefinition {
         schema: TicketBatchSchema,
         attributes: schemaToAttributes(TicketBatchSchema),
       },
+      create: {
+        schema: TicketBatchCreateSchema,
+        attributes: schemaToCreateAttributes(TicketBatchCreateSchema),
+      },
+      update: {
+        schema: TicketBatchUpdateSchema,
+        attributes: schemaToCreateAttributes(TicketBatchUpdateSchema),
+      },
     },
     webhooks: [],
-    relationships: [{ field: 'formId', relationship: 'form', type: 'belongsTo' }],
+    relationships: [
+      { field: 'eventId', relationship: 'event', type: 'belongsTo' },
+      { field: 'formId', relationship: 'form', type: 'belongsTo' },
+    ],
   }
 }

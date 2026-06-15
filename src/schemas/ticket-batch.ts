@@ -81,6 +81,57 @@ export const TicketBatchSchema = z.object({
   }),
 })
 
+export const TicketBatchCreateSchema = z.object({
+  eventId: z.coerce.number().meta({
+    label: 'Event Id',
+  }),
+  name: z.string().meta({
+    label: 'Name',
+  }),
+  price: z.union([z.string(), z.number()]).meta({
+    label: 'Price',
+  }),
+  limit: z.coerce.number().meta({
+    label: 'Limit',
+  }),
+  order: z.coerce.number().optional().meta({
+    label: 'Order',
+  }),
+  description: z.string().optional().meta({
+    label: 'Description',
+  }),
+  promoCode: z.string().optional().meta({
+    label: 'Promo code',
+    helpText: 'Must not contain spaces or commas.',
+  }),
+  releasedAt: z.union([z.date(), z.string()]).optional().meta({
+    label: 'Released at',
+  }),
+  closedAt: z.union([z.date(), z.string()]).optional().meta({
+    label: 'Closed at',
+  }),
+  startDate: z.union([z.date(), z.string()]).optional().meta({
+    label: 'Start date',
+  }),
+  endDate: z.union([z.date(), z.string()]).optional().meta({
+    label: 'End date',
+  }),
+  useCustomVat: z.boolean().optional().meta({
+    label: 'Use custom VAT',
+  }),
+  vatPercentage: z.coerce.number().optional().meta({
+    label: 'VAT percentage',
+  }),
+  settings: z.looseObject({}).optional().meta({
+    label: 'Settings',
+  }),
+  formId: z.coerce.number().optional().meta({
+    label: 'Form Id',
+  }),
+})
+
+export const TicketBatchUpdateSchema = TicketBatchCreateSchema.omit({ eventId: true }).partial()
+
 const ticketBatchesFindAllSchema = {
   filter: z.object({
     eventId: z.coerce.number(),
@@ -112,6 +163,8 @@ export const staticTicketBatchesFindAllOptionsSchema = staticBaseFindAllOptionsS
 export const staticTicketBatchesFindOptionsSchema = staticBaseFindOptionsSchema.extend({})
 
 export type TicketBatch = z.infer<typeof TicketBatchSchema>
+export type TicketBatchCreateData = z.infer<typeof TicketBatchCreateSchema>
+export type TicketBatchUpdateData = z.infer<typeof TicketBatchUpdateSchema>
 export type TicketBatchesFindAllOptions = z.infer<typeof ticketBatchesFindAllOptionsSchema>
 export type TicketBatchesFindOptions = z.infer<typeof ticketBatchesFindOptionsSchema>
 export type StaticTicketBatchesFindAllOptions = z.infer<typeof staticTicketBatchesFindAllOptionsSchema>
