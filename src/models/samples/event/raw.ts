@@ -11,6 +11,8 @@ export default {
       status: 'open',
       featureLevel: 'business',
       signupType: 'rsvp',
+      privacyVisibility: 'everyone',
+      privacyAttendability: 'invite',
       website: 'http://jonny-action.confetti.test/my-first-event',
       email: 'jonny.stromberg@gmail.com',
       rsvpLimit: 100,

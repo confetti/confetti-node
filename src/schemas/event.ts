@@ -43,6 +43,21 @@ export const EventSchema = z.object({
   signupEndAt: z.date().meta({
     label: 'Signup End At',
   }),
+  privacyVisibility: z.enum(['everyone', 'invite', 'password']).meta({
+    label: 'Privacy visibility',
+    description:
+      "Who can view the event page. 'everyone' = public, 'invite' = only invited guests with a valid invite, 'password' = requires the event password.",
+  }),
+  privacyAttendability: z.enum(['everyone', 'invite', 'password']).meta({
+    label: 'Privacy attendability',
+    description:
+      "Who can register / RSVP for the event. 'everyone' = anyone, 'invite' = requires a valid invite, 'password' = requires the event password.",
+  }),
+  privacyPassword: z.string().meta({
+    label: 'Privacy password',
+    description:
+      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
+  }),
   website: z.string().meta({
     label: 'Website',
   }),
@@ -148,6 +163,21 @@ export const EventCreateSchema = z.object({
   signupType: z.enum(['rsvp', 'tickets']).optional().meta({ label: 'Signup Type' }),
   signupStartAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup Start At' }),
   signupEndAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup End At' }),
+  privacyVisibility: z.enum(['everyone', 'invite', 'password']).optional().meta({
+    label: 'Privacy visibility',
+    description:
+      "Who can view the event page. 'everyone' = public, 'invite' = only invited guests with a valid invite, 'password' = requires the event password.",
+  }),
+  privacyAttendability: z.enum(['everyone', 'invite', 'password']).optional().meta({
+    label: 'Privacy attendability',
+    description:
+      "Who can register / RSVP for the event. 'everyone' = anyone, 'invite' = requires a valid invite, 'password' = requires the event password.",
+  }),
+  privacyPassword: z.string().optional().meta({
+    label: 'Privacy password',
+    description:
+      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
+  }),
   rsvpLimit: z.number().optional().meta({ label: 'Rsvp Limit' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
   website: z.string().url().optional().meta({ label: 'Website' }),
@@ -251,13 +281,10 @@ export const EventCreateSchema = z.object({
         .meta({
           description: 'Structured address parts (Google Places format). Used to extract city, country, postal code.',
         }),
-      linkToPosition: z
-        .boolean()
-        .optional()
-        .meta({
-          description:
-            'When true, the Google Maps link uses lat/lng coordinates instead of the formatted address. Recommended when geometry.location is provided.',
-        }),
+      linkToPosition: z.boolean().optional().meta({
+        description:
+          'When true, the Google Maps link uses lat/lng coordinates instead of the formatted address. Recommended when geometry.location is provided.',
+      }),
       adr_address: z
         .string()
         .optional()
