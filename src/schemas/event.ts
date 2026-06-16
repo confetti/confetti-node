@@ -28,7 +28,7 @@ export const EventSchema = z.object({
   slug: z.string().meta({
     label: 'Slug',
   }),
-  status: z.string().meta({
+  status: z.enum(['draft', 'open', 'cancelled', 'deleted', 'template']).meta({
     label: 'Status',
   }),
   featureLevel: z.string().meta({
@@ -159,7 +159,15 @@ export const EventCreateSchema = z.object({
   name: z.string().meta({ label: 'Name' }),
   startDate: z.union([z.date(), z.string()]).meta({ label: 'Start Date' }),
   endDate: z.union([z.date(), z.string()]).optional().meta({ label: 'End Date' }),
-  status: z.string().optional().meta({ label: 'Status' }),
+  status: z
+    .enum(['draft', 'open', 'cancelled'])
+    .optional()
+    .meta({
+      label: 'Status',
+      description:
+        "Event lifecycle status. 'draft' = unpublished/private, 'open' = published and live, 'cancelled' = cancelled. To publish a draft event, set status to 'open'; to unpublish, set it back to 'draft'. Publishing requires the event owner's account to be verified.",
+      values: ['draft', 'open', 'cancelled'],
+    }),
   signupType: z.enum(['rsvp', 'tickets']).optional().meta({ label: 'Signup Type' }),
   signupStartAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup Start At' }),
   signupEndAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup End At' }),
@@ -180,7 +188,8 @@ export const EventCreateSchema = z.object({
   }),
   rsvpLimit: z.number().optional().meta({ label: 'Rsvp Limit' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
-  website: z.string().url().optional().meta({ label: 'Website' }),
+  // website is read-only: it is derived from the event's domain server-side and
+  // must not be set by clients. It remains in EventSchema (read) but not here.
   timeZone: z.string().optional().meta({ label: 'Time Zone' }),
   continuous: z.boolean().optional().meta({ label: 'Continuous' }),
   slug: z.string().optional().meta({ label: 'Slug' }),
