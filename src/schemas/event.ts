@@ -7,8 +7,8 @@ import {
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
 
-const eventStatuses = ['draft', 'open', 'cancelled', 'deleted', 'template'] as const
-const eventSettableStatuses = ['draft', 'open', 'cancelled'] as const
+const EVENT_STATUSES = ['draft', 'open', 'cancelled', 'deleted', 'template'] as const
+const EVENT_SETTABLE_STATUSES = ['draft', 'open', 'cancelled'] as const
 
 export const EventSchema = z.object({
   id: z.number().meta({
@@ -31,7 +31,7 @@ export const EventSchema = z.object({
   slug: z.string().meta({
     label: 'Slug',
   }),
-  status: z.enum(eventStatuses).meta({
+  status: z.enum(EVENT_STATUSES).meta({
     label: 'Status',
   }),
   featureLevel: z.string().meta({
@@ -162,13 +162,13 @@ export const EventCreateSchema = z.object({
   startDate: z.union([z.date(), z.string()]).meta({ label: 'Start Date' }),
   endDate: z.union([z.date(), z.string()]).optional().meta({ label: 'End Date' }),
   status: z
-    .enum(eventSettableStatuses)
+    .enum(EVENT_SETTABLE_STATUSES)
     .optional()
     .meta({
       label: 'Status',
       description:
         "Event lifecycle status. 'draft' = unpublished/private, 'open' = published and live, 'cancelled' = cancelled. To publish a draft event, set status to 'open'; to unpublish, set it back to 'draft'. Publishing requires the event owner's account to be verified.",
-      values: [...eventSettableStatuses],
+      values: [...EVENT_SETTABLE_STATUSES],
     }),
   signupType: z.enum(['rsvp', 'tickets']).optional().meta({ label: 'Signup Type' }),
   signupStartAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup Start At' }),
