@@ -7,6 +7,9 @@ import {
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
 
+const eventStatuses = ['draft', 'open', 'cancelled', 'deleted', 'template'] as const
+const eventSettableStatuses = ['draft', 'open', 'cancelled'] as const
+
 export const EventSchema = z.object({
   id: z.number().meta({
     label: 'ID',
@@ -28,7 +31,7 @@ export const EventSchema = z.object({
   slug: z.string().meta({
     label: 'Slug',
   }),
-  status: z.enum(['draft', 'open', 'cancelled', 'deleted', 'template']).meta({
+  status: z.enum(eventStatuses).meta({
     label: 'Status',
   }),
   featureLevel: z.string().meta({
@@ -55,8 +58,7 @@ export const EventSchema = z.object({
   }),
   privacyPassword: z.string().meta({
     label: 'Privacy password',
-    description:
-      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
+    description: "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
   }),
   website: z.string().meta({
     label: 'Website',
@@ -160,13 +162,13 @@ export const EventCreateSchema = z.object({
   startDate: z.union([z.date(), z.string()]).meta({ label: 'Start Date' }),
   endDate: z.union([z.date(), z.string()]).optional().meta({ label: 'End Date' }),
   status: z
-    .enum(['draft', 'open', 'cancelled'])
+    .enum(eventSettableStatuses)
     .optional()
     .meta({
       label: 'Status',
       description:
         "Event lifecycle status. 'draft' = unpublished/private, 'open' = published and live, 'cancelled' = cancelled. To publish a draft event, set status to 'open'; to unpublish, set it back to 'draft'. Publishing requires the event owner's account to be verified.",
-      values: ['draft', 'open', 'cancelled'],
+      values: [...eventSettableStatuses],
     }),
   signupType: z.enum(['rsvp', 'tickets']).optional().meta({ label: 'Signup Type' }),
   signupStartAt: z.union([z.date(), z.string()]).optional().meta({ label: 'Signup Start At' }),
@@ -183,8 +185,7 @@ export const EventCreateSchema = z.object({
   }),
   privacyPassword: z.string().optional().meta({
     label: 'Privacy password',
-    description:
-      "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
+    description: "Password required to view/attend when privacyVisibility or privacyAttendability is 'password'.",
   }),
   rsvpLimit: z.number().optional().meta({ label: 'Rsvp Limit' }),
   email: z.string().email().optional().meta({ label: 'Email' }),
