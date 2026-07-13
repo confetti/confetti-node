@@ -306,7 +306,10 @@ export const EventCreateSchema = z.object({
       description:
         'Location/venue details. Both formatted_address and geometry.location (lat/lng) are needed for the map to render. Without coordinates the map image will be broken.',
     }),
-  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
+  workspaceId: z.number().meta({
+    label: 'Workspace Id',
+    description: 'Required — the workspace the event belongs to.',
+  }),
 })
 
 export const EventUpdateSchema = EventCreateSchema.partial()

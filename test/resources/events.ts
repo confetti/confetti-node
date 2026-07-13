@@ -50,6 +50,7 @@ describe('Events', () => {
       const data = await confetti.events.create({
         name: 'My event',
         startDate: '2026-01-01T12:00:00Z',
+        workspaceId: 123,
       })
 
       assert.deepStrictEqual(data, Confetti.models.event.sample.single.formatted)
@@ -97,7 +98,7 @@ describe('Events', () => {
         .reply(201, mockData as MockResponseData)
 
       const data = await Confetti.events.create(
-        { name: 'My event', startDate: '2026-01-01T12:00:00Z' },
+        { name: 'My event', startDate: '2026-01-01T12:00:00Z', workspaceId: 123 },
         { apiKey: 'my-key' },
       )
       assert.deepStrictEqual(data, Confetti.models.event.sample.single.formatted)

@@ -7,7 +7,12 @@ describe('EventCreateSchema', () => {
   describe('status', () => {
     for (const status of ['draft', 'open', 'cancelled']) {
       test(`should accept writable status "${status}"`, () => {
-        const result = EventCreateSchema.parse({ name: 'My event', startDate: '2026-01-01T12:00:00Z', status })
+        const result = EventCreateSchema.parse({
+          name: 'My event',
+          startDate: '2026-01-01T12:00:00Z',
+          workspaceId: 123,
+          status,
+        })
         assert.strictEqual(result.status, status)
       })
     }
@@ -15,15 +20,47 @@ describe('EventCreateSchema', () => {
     for (const status of ['published', 'deleted', 'template', 'foo']) {
       test(`should reject invalid/non-writable status "${status}"`, () => {
         assert.throws(
-          () => EventCreateSchema.parse({ name: 'My event', startDate: '2026-01-01T12:00:00Z', status }),
+          () =>
+            EventCreateSchema.parse({
+              name: 'My event',
+              startDate: '2026-01-01T12:00:00Z',
+              workspaceId: 123,
+              status,
+            }),
           z.ZodError,
         )
       })
     }
 
     test('should allow omitting status', () => {
-      const result = EventCreateSchema.parse({ name: 'My event', startDate: '2026-01-01T12:00:00Z' })
+      const result = EventCreateSchema.parse({
+        name: 'My event',
+        startDate: '2026-01-01T12:00:00Z',
+        workspaceId: 123,
+      })
       assert.strictEqual(result.status, undefined)
+    })
+  })
+
+  describe('workspaceId', () => {
+    test('should reject create without workspaceId', () => {
+      assert.throws(() => EventCreateSchema.parse({ name: 'My event', startDate: '2026-01-01T12:00:00Z' }), z.ZodError)
+    })
+
+    test('should accept create with workspaceId', () => {
+      const result = EventCreateSchema.parse({
+        name: 'My event',
+        startDate: '2026-01-01T12:00:00Z',
+        workspaceId: 123,
+      })
+      assert.strictEqual(result.workspaceId, 123)
+    })
+  })
+
+  describe('workspaceId on update', () => {
+    test('should allow update without workspaceId (update stays partial)', () => {
+      const result = EventUpdateSchema.parse({})
+      assert.deepStrictEqual(result, {})
     })
   })
 
@@ -32,6 +69,7 @@ describe('EventCreateSchema', () => {
       const result = EventCreateSchema.parse({
         name: 'My event',
         startDate: '2026-01-01T12:00:00Z',
+        workspaceId: 123,
         website: 'https://evil.example/phish',
       })
       assert.ok(!('website' in result))

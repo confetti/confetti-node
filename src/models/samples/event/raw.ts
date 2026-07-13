@@ -21,6 +21,7 @@ export default {
       hasPassed: false,
       createdAt: '2018-10-11T13:06:16.432Z',
       updatedAt: '2020-03-09T20:19:40.956Z',
+      workspaceId: 123,
       summary: 'Write a three sentence pitch for your event here.',
       timeFormat: '24',
       locale: 'en',
