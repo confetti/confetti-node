@@ -18,6 +18,10 @@ export const ContactSchema = z.object({
   lastName: z.string().meta({
     label: 'Last Name',
   }),
+  title: z.string().nullable().optional().meta({
+    label: 'Title',
+    description: 'Formal title selected for the contact.',
+  }),
   email: z.string().meta({
     label: 'Email',
   }),
@@ -59,6 +63,10 @@ export const ContactCreateSchema = z.object({
   }),
   lastName: z.string().optional().meta({
     label: 'Last Name',
+  }),
+  title: z.string().nullable().optional().meta({
+    label: 'Title',
+    description: 'Formal title selected for the contact.',
   }),
   email: z.string().email().meta({
     label: 'Email',

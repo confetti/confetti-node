@@ -33,6 +33,14 @@ export const TicketSchema = z.object({
   lastName: z.string().meta({
     label: 'Last name',
   }),
+  title: z.string().nullable().optional().meta({
+    label: 'Title',
+    description: 'Formal title selected for the ticket holder.',
+  }),
+  greeting: z.string().nullable().optional().meta({
+    label: 'Greeting',
+    description: 'Localized greeting derived from the selected formal title.',
+  }),
   name: z.string().meta({
     label: 'Name',
   }),
@@ -135,6 +143,10 @@ export const TicketCreateSchema = z.object({
   lastName: z.string().optional().meta({
     label: 'Last name',
   }),
+  title: z.string().nullable().optional().meta({
+    label: 'Title',
+    description: 'Formal title selected for the ticket holder.',
+  }),
   email: z.string().email().meta({
     label: 'Email',
   }),
@@ -189,6 +201,10 @@ export const TicketCreateSchema = z.object({
 export const TicketUpdateSchema = z.object({
   firstName: z.string().optional().meta({ label: 'First name' }),
   lastName: z.string().optional().meta({ label: 'Last name' }),
+  title: z.string().nullable().optional().meta({
+    label: 'Title',
+    description: 'Formal title selected for the ticket holder.',
+  }),
   email: z.string().email({ message: 'Email is not a valid email' }).optional().meta({ label: 'Email' }),
   status: z
     .string()

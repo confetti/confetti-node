@@ -5,6 +5,7 @@ export default {
     attributes: {
       firstName: 'Jonny',
       lastName: 'Stromberg',
+      title: 'Mx',
       email: 'jonny@foo.bar',
       phone: '+46701122333',
       token: 'gsd00876ec00cdef2233b4ace769c54sdf46',

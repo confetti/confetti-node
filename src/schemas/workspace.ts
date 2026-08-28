@@ -5,6 +5,7 @@ import {
   staticBaseFindAllOptionsSchema,
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
+import { TitleModeSchema, TitleOptionSchema } from './title-option.js'
 
 export const WorkspaceSchema = z.object({
   id: z.number().meta({
@@ -47,6 +48,14 @@ export const WorkspaceSchema = z.object({
   }),
   primaryColor: z.string().meta({
     label: 'Primary color',
+  }),
+  titleMode: TitleModeSchema.optional().meta({
+    label: 'Title mode',
+    description: 'Workspace-level mode for formal title options.',
+  }),
+  titleOptions: z.array(TitleOptionSchema).optional().meta({
+    label: 'Title options',
+    description: 'Workspace-level formal title options.',
   }),
 })
 

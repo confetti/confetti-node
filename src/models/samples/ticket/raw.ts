@@ -11,6 +11,8 @@ export default {
       name: 'Foo Bar',
       firstName: 'Foo',
       lastName: 'Bar',
+      title: 'Dr',
+      greeting: 'Dear Dr',
       email: 'foo@bar.com',
       phone: '+46701111111',
       token: 'd92614282978451b7942fffda421df47740c',

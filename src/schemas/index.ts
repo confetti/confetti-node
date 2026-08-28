@@ -17,6 +17,7 @@ export * from './addon.js'
 export * from './form.js'
 export * from './form-field.js'
 export * from './preview-token.js'
+export * from './title-option.js'
 
 // Resource option schemas
 export * from './resource-options.js'

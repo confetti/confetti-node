@@ -19,6 +19,7 @@ import type { Form } from '../schemas/form.js'
 import type { FormField } from '../schemas/form-field.js'
 import type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
 import type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
+import type { TitleMode, TitleOption } from '../schemas/title-option.js'
 
 // Re-export all model types
 export type {
@@ -63,6 +64,8 @@ export type {
   SponsorLevel,
   SponsorLevelCreate,
   SponsorLevelUpdate,
+  TitleMode,
+  TitleOption,
 }
 
 // Union type for all models

@@ -6,6 +6,7 @@ import {
   staticBaseFindAllOptionsSchema,
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
+import { TitleModeSchema, TitleOptionSchema } from './title-option.js'
 
 const EVENT_STATUSES = ['draft', 'open', 'cancelled', 'deleted', 'template'] as const
 const EVENT_SETTABLE_STATUSES = ['draft', 'open', 'cancelled'] as const
@@ -147,6 +148,22 @@ export const EventSchema = z.object({
   enableExtraGuests: z.boolean().meta({
     label: 'Are people allowed to bring guests',
   }),
+  enableTitle: z.boolean().optional().meta({
+    label: 'Enable formal titles',
+    description: 'Whether attendees can select a formal title during signup.',
+  }),
+  titleOverride: TitleModeSchema.optional().meta({
+    label: 'Title override',
+    description: 'How this event resolves formal title options relative to the workspace defaults.',
+  }),
+  titleOptions: z.array(TitleOptionSchema).optional().meta({
+    label: 'Title options',
+    description: 'Event-specific formal title options used when titleOverride is custom.',
+  }),
+  effectiveTitleOptions: z.array(TitleOptionSchema).optional().meta({
+    label: 'Effective title options',
+    description: 'Resolved formal title options for this event after workspace defaults and hidden options are applied.',
+  }),
   maxExtraGuests: z.number().meta({
     label: 'How many extra guests',
   }),
@@ -260,6 +277,18 @@ export const EventCreateSchema = z.object({
   summary: z.string().optional().meta({ label: 'Summary' }),
   smsSenderName: z.string().optional().meta({ label: 'SMS sender name' }),
   ticketsPerPurchase: z.number().optional().meta({ label: 'Tickets per purchase' }),
+  enableTitle: z.boolean().optional().meta({
+    label: 'Enable formal titles',
+    description: 'Whether attendees can select a formal title during signup.',
+  }),
+  titleOverride: TitleModeSchema.optional().meta({
+    label: 'Title override',
+    description: 'How this event resolves formal title options relative to the workspace defaults.',
+  }),
+  titleOptions: z.array(TitleOptionSchema).optional().meta({
+    label: 'Title options',
+    description: 'Event-specific formal title options used when titleOverride is custom.',
+  }),
   locationName: z.string().optional().meta({ label: 'Location name' }),
   locationPlace: z
     .object({

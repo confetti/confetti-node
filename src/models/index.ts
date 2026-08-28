@@ -41,6 +41,7 @@ export type { FormField } from '../schemas/form-field.js'
 export type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
 export type { PreviewToken, PreviewTokenCreate } from '../schemas/preview-token.js'
 export type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
+export type { TitleMode, TitleOption } from '../schemas/title-option.js'
 
 export default {
   block: block(),

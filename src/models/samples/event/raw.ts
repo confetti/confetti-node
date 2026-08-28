@@ -26,6 +26,16 @@ export default {
       locale: 'en',
       primaryColor: '#00DB7D',
       contrastColor: '#ffaa99',
+      enableTitle: true,
+      titleOverride: 'default',
+      titleOptions: [
+        { title: 'Dr', greeting: 'Dear Dr' },
+        { title: null, greeting: 'Hello', isDefault: true },
+      ],
+      effectiveTitleOptions: [
+        { title: 'Dr', greeting: 'Dear Dr' },
+        { title: null, greeting: 'Hello', isDefault: true },
+      ],
       waitlist: true,
       location: {
         url: 'http://www.google.com/maps?q=undefined',
