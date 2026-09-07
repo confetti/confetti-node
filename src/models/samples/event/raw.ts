@@ -29,11 +29,11 @@ export default {
       enableTitle: true,
       titleOverride: 'default',
       titleOptions: [
-        { title: 'Dr', greeting: 'Dear Dr' },
+        { title: 'Dr', greeting: 'Dear' },
         { title: null, greeting: 'Hello', isDefault: true },
       ],
       effectiveTitleOptions: [
-        { title: 'Dr', greeting: 'Dear Dr' },
+        { title: 'Dr', greeting: 'Dear' },
         { title: null, greeting: 'Hello', isDefault: true },
       ],
       waitlist: true,

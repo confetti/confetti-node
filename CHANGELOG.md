@@ -1,3 +1,7 @@
+# Unreleased
+
+- Fix: formal-title options preserve their stable ids, accept the API's title-less default option, and use greetings that do not duplicate the title in samples.
+
 # 4.1.0
 
 - Feature: `tickets.update(id, data, options)` for editing tickets after create.

@@ -6,9 +6,9 @@ export default {
       name: 'My workspace',
       titleMode: 'custom',
       titleOptions: [
-        { title: 'Dr', greeting: 'Dear Dr' },
+        { title: 'Dr', greeting: 'Dear' },
         { title: null, greeting: 'Hello', isDefault: true },
-        { title: 'Prof', greeting: 'Dear Prof', isHidden: true },
+        { title: 'Prof', greeting: 'Dear', isHidden: true },
       ],
     },
   },
