@@ -1,3 +1,7 @@
+# 4.2.0
+
+- Feature: ticket `status` can now be set to `declined` on `tickets.update`, in addition to `attending` and `invited`. Only free tickets can be declined — the API rejects declining a paid ticket.
+
 # 4.1.0
 
 - Feature: `tickets.update(id, data, options)` for editing tickets after create.
