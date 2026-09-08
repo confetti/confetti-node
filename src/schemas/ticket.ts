@@ -193,14 +193,15 @@ export const TicketUpdateSchema = z.object({
   status: z
     .string()
     .superRefine((val, ctx) => {
-      if (!['invited', 'attending'].includes(val)) {
+      if (!['invited', 'attending', 'declined'].includes(val)) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, message: `${val} is not included in the list` })
       }
     })
     .optional()
     .meta({
       label: 'Status',
-      values: ['attending', 'invited'],
+      values: ['attending', 'invited', 'declined'],
+      helpText: 'Only free tickets can be declined. Declining a paid ticket is rejected by the API.',
     }),
   phone: z.string().optional().meta({ label: 'Phone' }),
   company: z.string().optional().meta({ label: 'Company' }),
