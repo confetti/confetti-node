@@ -110,12 +110,12 @@ export const TicketSchema = z.object({
 })
 
 export const GuestTicketInputSchema = z.object({
-  firstName: z.string().optional().meta({ label: 'First name' }),
-  lastName: z.string().optional().meta({ label: 'Last name' }),
-  email: z.string().email().optional().meta({ label: 'Email' }),
-  phone: z.string().optional().meta({ label: 'Phone' }),
-  company: z.string().optional().meta({ label: 'Company' }),
-  values: z.looseObject({}).optional().meta({
+  firstName: z.string().nullable().optional().meta({ label: 'First name' }),
+  lastName: z.string().nullable().optional().meta({ label: 'Last name' }),
+  email: z.string().email().nullable().optional().meta({ label: 'Email' }),
+  phone: z.string().nullable().optional().meta({ label: 'Phone' }),
+  company: z.string().nullable().optional().meta({ label: 'Company' }),
+  values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
   }),
@@ -125,14 +125,14 @@ export const TicketCreateSchema = z.object({
   eventId: z.coerce.number().meta({
     label: 'Event Id',
   }),
-  ticketBatchId: z.coerce.number().optional().meta({
+  ticketBatchId: z.coerce.number().nullable().optional().meta({
     label: 'Ticket Batch Id',
     helpText: 'Required for ticket events',
   }),
-  firstName: z.string().optional().meta({
+  firstName: z.string().nullable().optional().meta({
     label: 'First name',
   }),
-  lastName: z.string().optional().meta({
+  lastName: z.string().nullable().optional().meta({
     label: 'Last name',
   }),
   email: z.string().email().meta({
@@ -153,19 +153,19 @@ export const TicketCreateSchema = z.object({
       label: 'Status',
       values: ['attending', 'invited'],
     }),
-  phone: z.string().optional().meta({
+  phone: z.string().nullable().optional().meta({
     label: 'Phone',
     placeholder: '+46 12 345 67 89',
     helpText: 'Mobile phone number with country code. Example: +46701234567',
   }),
-  company: z.string().optional().meta({
+  company: z.string().nullable().optional().meta({
     label: 'Company',
   }),
-  comment: z.string().optional().meta({
+  comment: z.string().nullable().optional().meta({
     label: 'Comment',
     description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
   }),
-  values: z.looseObject({}).optional().meta({
+  values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     description:
       'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
@@ -174,7 +174,7 @@ export const TicketCreateSchema = z.object({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
   }),
-  guests: z.number().optional().meta({
+  guests: z.number().nullable().optional().meta({
     label: 'Guests',
     description:
       'Number of additional guests attached to this ticket (e.g. 3 for "John +3"). Use this when you only need a guest count; use guestTickets when you need per-guest details.',
@@ -187,9 +187,9 @@ export const TicketCreateSchema = z.object({
 })
 
 export const TicketUpdateSchema = z.object({
-  firstName: z.string().optional().meta({ label: 'First name' }),
-  lastName: z.string().optional().meta({ label: 'Last name' }),
-  email: z.string().email({ message: 'Email is not a valid email' }).optional().meta({ label: 'Email' }),
+  firstName: z.string().nullable().optional().meta({ label: 'First name' }),
+  lastName: z.string().nullable().optional().meta({ label: 'Last name' }),
+  email: z.string().email({ message: 'Email is not a valid email' }).nullable().optional().meta({ label: 'Email' }),
   status: z
     .string()
     .superRefine((val, ctx) => {
@@ -203,16 +203,22 @@ export const TicketUpdateSchema = z.object({
       values: ['attending', 'invited', 'declined'],
       helpText: 'Only free tickets can be declined. Declining a paid ticket is rejected by the API.',
     }),
-  phone: z.string().optional().meta({ label: 'Phone' }),
-  company: z.string().optional().meta({ label: 'Company' }),
-  comment: z.string().optional().meta({
+  phone: z.string().nullable().optional().meta({ label: 'Phone' }),
+  company: z.string().nullable().optional().meta({ label: 'Company' }),
+  comment: z.string().nullable().optional().meta({
     label: 'Comment',
     description: 'Internal note visible only to workspace teammates. Not shown to attendees.',
   }),
-  guests: z.number().optional().meta({ label: 'Guests' }),
-  values: z.looseObject({}).optional().meta({ label: 'Values' }),
-  checkinAt: z.union([z.date(), z.string(), z.null()]).optional().meta({ label: 'Checkin At' }),
-  ticketBatchId: z.number().optional().meta({ label: 'Ticket Batch Id' }),
+  guests: z.number().nullable().optional().meta({ label: 'Guests' }),
+  values: z.looseObject({}).nullable().optional().meta({
+    label: 'Values',
+    helpText: 'Passing null clears every stored form answer.',
+  }),
+  checkinAt: z.union([z.date(), z.string()]).nullable().optional().meta({ label: 'Checkin At' }),
+  ticketBatchId: z.number().nullable().optional().meta({
+    label: 'Ticket Batch Id',
+    helpText: 'Moves the ticket to another batch. Passing null leaves the current batch unchanged.',
+  }),
   sendEmailConfirmation: z.boolean().optional().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee.',

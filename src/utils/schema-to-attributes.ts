@@ -46,6 +46,21 @@ function getArrayElementInfo(arraySchema: z.ZodArray): {
   return { itemType: 'string' }
 }
 
+/**
+ * Peel `.optional()` / `.nullable()` wrappers (in any order and nesting) so the
+ * underlying type is still detected. Only `.optional()` makes a field non-required —
+ * a `.nullable()` field still has to be present.
+ */
+function unwrapWrappers(schema: unknown): { inner: unknown; optional: boolean } {
+  let inner = schema
+  let optional = false
+  while (inner instanceof z.ZodOptional || inner instanceof z.ZodNullable) {
+    if (inner instanceof z.ZodOptional) optional = true
+    inner = inner._def.innerType
+  }
+  return { inner, optional }
+}
+
 function resolveTypeInfo(schema: unknown): {
   type: string
   values?: string[]
@@ -83,12 +98,6 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
   const shape = schema.shape
 
   for (const [key, fieldSchema] of Object.entries(shape)) {
-    let type = 'string'
-    let required = true
-    let values: string[] | undefined
-    let children: CreateAttribute[] | undefined
-    let itemType: string | undefined
-
     let metadata: {
       label?: string
       description?: string
@@ -97,9 +106,10 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
       values?: string[]
     } = {}
 
-    // Try outer schema first, then inner type (for .partial() wrapping)
-    const meta =
-      getMeta(fieldSchema) ?? (fieldSchema instanceof z.ZodOptional ? getMeta(fieldSchema._def.innerType) : undefined)
+    const { inner, optional } = unwrapWrappers(fieldSchema)
+
+    // Try outer schema first, then the unwrapped type (for .partial()/.nullable() wrapping)
+    const meta = getMeta(fieldSchema) ?? getMeta(inner)
     if (meta) {
       metadata = {
         label: meta.label,
@@ -111,21 +121,8 @@ export function schemaToAttributes(schema: z.ZodObject<z.ZodRawShape>, options: 
     }
 
     // Determine type and required status from Zod schema
-    if (fieldSchema instanceof z.ZodOptional) {
-      const inner = fieldSchema._def.innerType
-      required = false
-      const info = resolveTypeInfo(inner)
-      type = info.type
-      values = info.values
-      children = info.children
-      itemType = info.itemType
-    } else {
-      const info = resolveTypeInfo(fieldSchema)
-      type = info.type
-      values = info.values
-      children = info.children
-      itemType = info.itemType
-    }
+    const required = !optional
+    const { type, values, children, itemType } = resolveTypeInfo(inner)
 
     // Use metadata label if available, otherwise generate from key
     const label =
