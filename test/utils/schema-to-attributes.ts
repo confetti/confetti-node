@@ -719,6 +719,30 @@ describe('schemaToAttributes()', () => {
       })
     })
 
+    test('should resolve the underlying type through .nullable() wrappers', () => {
+      const schema = z.object({
+        ticketBatchId: z.number().nullable().optional().meta({ label: 'Ticket Batch Id' }),
+        checkedIn: z.boolean().nullable(),
+        comment: z.nullable(z.string()).optional(),
+        tags: z.array(z.string()).nullable().optional(),
+      })
+
+      const attributes = schemaToCreateAttributes(schema)
+
+      assert.deepStrictEqual(
+        attributes.map(({ key, type, required }) => ({ key, type, required })),
+        [
+          { key: 'ticketBatchId', type: 'number', required: false },
+          // .nullable() alone does not make a field optional
+          { key: 'checkedIn', type: 'boolean', required: true },
+          { key: 'comment', type: 'string', required: false },
+          { key: 'tags', type: 'array', required: false },
+        ],
+      )
+      assert.strictEqual(attributes[0].label, 'Ticket Batch Id')
+      assert.strictEqual(attributes[3].itemType, 'string')
+    })
+
     test('should maintain backward compatibility with existing function signatures', () => {
       const schema = z.object({
         name: z.string(),

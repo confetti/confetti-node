@@ -2,6 +2,15 @@
 
 - Fix: formal-title options preserve their stable ids, accept the API's title-less default option, and use greetings that do not duplicate the title in samples.
 
+# 4.2.1
+
+- Fix: ticket fields that the API returns as `null` are now accepted as `null` on write. `tickets.update` previously rejected `company`, `comment`, `ticketBatchId`, `firstName`, `lastName`, `email`, `phone`, `guests` and `values` with `Invalid input: expected string, received null`, so a ticket read from the API could not be written back unchanged. The same fields are now nullable on `tickets.create` and on inline `guestTickets`. Passing `null` clears the field, except for `ticketBatchId`, where it leaves the current batch unchanged.
+- Fix: `schemaToAttributes()` (and therefore `model.operations.*.attributes`) reported `type: 'string'` for any nullable field. Optional and nullable wrappers are now unwrapped in any order, so `ticketBatchId` is `number`, form field `sectionId` is `number`, and webhook `eventId` is `number`. Only `.optional()` marks an attribute as not required — `.nullable()` on its own still requires the key.
+
+# 4.2.0
+
+- Feature: ticket `status` can now be set to `declined` on `tickets.update`, in addition to `attending` and `invited`. Only free tickets can be declined — the API rejects declining a paid ticket.
+
 # 4.1.0
 
 - Feature: `tickets.update(id, data, options)` for editing tickets after create.
