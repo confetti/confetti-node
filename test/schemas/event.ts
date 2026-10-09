@@ -55,3 +55,20 @@ describe('EventSchema (read)', () => {
     assert.throws(() => EventSchema.shape.status.parse('published'), z.ZodError)
   })
 })
+
+describe('EventCreateSchema copy fields', () => {
+  for (const locale of ['en', 'sv', 'da', 'de', 'nb', 'fr', 'ja']) {
+    test(`should accept supported locale "${locale}"`, () => {
+      assert.strictEqual(EventUpdateSchema.parse({ locale }).locale, locale)
+    })
+  }
+
+  test('should reject an unsupported locale', () => {
+    assert.throws(() => EventUpdateSchema.parse({ locale: 'xx' }), z.ZodError)
+  })
+
+  test('should accept emailSenderName and calendarText', () => {
+    const result = EventUpdateSchema.parse({ emailSenderName: 'Acme Events', calendarText: 'See you there' })
+    assert.deepStrictEqual(result, { emailSenderName: 'Acme Events', calendarText: 'See you there' })
+  })
+})

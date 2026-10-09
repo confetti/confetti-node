@@ -1,3 +1,7 @@
+# 4.3.0
+
+- Feature: events expose `locale`, `emailSenderName` and `calendarText` (the calendar invite description) on read, create and update. `locale` is one of `en`, `sv`, `da`, `de`, `nb`, `fr`, `ja`. `smsSenderName` is now also returned on read.
+
 # 4.2.1
 
 - Fix: ticket fields that the API returns as `null` are now accepted as `null` on write. `tickets.update` previously rejected `company`, `comment`, `ticketBatchId`, `firstName`, `lastName`, `email`, `phone`, `guests` and `values` with `Invalid input: expected string, received null`, so a ticket read from the API could not be written back unchanged. The same fields are now nullable on `tickets.create` and on inline `guestTickets`. Passing `null` clears the field, except for `ticketBatchId`, where it leaves the current batch unchanged.
