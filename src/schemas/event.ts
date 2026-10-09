@@ -9,6 +9,14 @@ import {
 
 const EVENT_STATUSES = ['draft', 'open', 'cancelled', 'deleted', 'template'] as const
 const EVENT_SETTABLE_STATUSES = ['draft', 'open', 'cancelled'] as const
+const EVENT_LOCALES = ['en', 'sv', 'da', 'de', 'nb', 'fr', 'ja'] as const
+
+const LOCALE_DESCRIPTION =
+  'Language of the event page, emails and tickets: en (English), sv (Swedish), da (Danish), de (German), nb (Norwegian), fr (French), ja (Japanese).'
+const EMAIL_SENDER_NAME_DESCRIPTION =
+  'Sender name shown on emails sent for the event. Falls back to the event name when empty.'
+const CALENDAR_TEXT_DESCRIPTION =
+  'Description added to calendar invites (.ics / Google Calendar) for the event. Falls back to summary when empty.'
 
 export const EventSchema = z.object({
   id: z.number().meta({
@@ -101,6 +109,18 @@ export const EventSchema = z.object({
   }),
   locale: z.string().meta({
     label: 'Locale',
+    description: LOCALE_DESCRIPTION,
+  }),
+  emailSenderName: z.string().meta({
+    label: 'Email sender name',
+    description: EMAIL_SENDER_NAME_DESCRIPTION,
+  }),
+  smsSenderName: z.string().meta({
+    label: 'SMS sender name',
+  }),
+  calendarText: z.string().meta({
+    label: 'Calendar description',
+    description: CALENDAR_TEXT_DESCRIPTION,
   }),
   primaryColor: z.string().meta({
     label: 'Primary color',
@@ -258,7 +278,23 @@ export const EventCreateSchema = z.object({
   shareTitle: z.string().optional().meta({ label: 'Share title' }),
   shareDescription: z.string().optional().meta({ label: 'Share description' }),
   summary: z.string().optional().meta({ label: 'Summary' }),
+  locale: z
+    .enum(EVENT_LOCALES)
+    .optional()
+    .meta({
+      label: 'Locale',
+      description: LOCALE_DESCRIPTION,
+      values: [...EVENT_LOCALES],
+    }),
+  emailSenderName: z.string().optional().meta({
+    label: 'Email sender name',
+    description: EMAIL_SENDER_NAME_DESCRIPTION,
+  }),
   smsSenderName: z.string().optional().meta({ label: 'SMS sender name' }),
+  calendarText: z.string().optional().meta({
+    label: 'Calendar description',
+    description: CALENDAR_TEXT_DESCRIPTION,
+  }),
   ticketsPerPurchase: z.number().optional().meta({ label: 'Tickets per purchase' }),
   locationName: z.string().optional().meta({ label: 'Location name' }),
   locationPlace: z
