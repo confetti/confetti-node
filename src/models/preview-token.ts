@@ -6,9 +6,9 @@ import loadSamples from '../utils/load-samples.js'
 
 // Merge union variants into a single optional-all object for attribute display.
 // The actual validation still uses the union schema.
-const previewTokenCreateAttributesSchema = z.object(
-  Object.assign({}, ...PreviewTokenCreateSchema.options.map((opt) => opt.shape)),
-).partial()
+const previewTokenCreateAttributesSchema = z
+  .object(Object.assign({}, ...PreviewTokenCreateSchema.options.map((opt) => opt.shape)))
+  .partial()
 
 export default function PreviewTokenModel(): ModelDefinition {
   return {

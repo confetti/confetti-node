@@ -38,6 +38,8 @@ import sponsorRaw from '../models/samples/sponsor/raw.js'
 import sponsorFormatted from '../models/samples/sponsor/formatted.js'
 import sponsorLevelRaw from '../models/samples/sponsor-level/raw.js'
 import sponsorLevelFormatted from '../models/samples/sponsor-level/formatted.js'
+import messageRaw from '../models/samples/message/raw.js'
+import messageFormatted from '../models/samples/message/formatted.js'
 import imageUploadRaw from '../models/samples/image-upload/raw.js'
 import imageUploadFormatted from '../models/samples/image-upload/formatted.js'
 import previewTokenRaw from '../models/samples/preview-token/raw.js'
@@ -63,6 +65,7 @@ const samples = {
   formField: { raw: formFieldRaw, formatted: formFieldFormatted },
   sponsor: { raw: sponsorRaw, formatted: sponsorFormatted },
   sponsorLevel: { raw: sponsorLevelRaw, formatted: sponsorLevelFormatted },
+  message: { raw: messageRaw, formatted: messageFormatted },
   imageUpload: { raw: imageUploadRaw, formatted: imageUploadFormatted },
   previewToken: { raw: previewTokenRaw, formatted: previewTokenFormatted },
 }

@@ -19,6 +19,7 @@ import type { Form } from '../schemas/form.js'
 import type { FormField } from '../schemas/form-field.js'
 import type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
 import type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
+import type { Message, MessageCreate, MessageUpdate } from '../schemas/message.js'
 
 // Re-export all model types
 export type {
@@ -63,6 +64,9 @@ export type {
   SponsorLevel,
   SponsorLevelCreate,
   SponsorLevelUpdate,
+  Message,
+  MessageCreate,
+  MessageUpdate,
 }
 
 // Union type for all models
@@ -86,3 +90,4 @@ export type ConfettiModel =
   | FormField
   | Sponsor
   | SponsorLevel
+  | Message

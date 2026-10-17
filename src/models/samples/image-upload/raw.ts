@@ -9,7 +9,8 @@ export default {
       key: 'uploads/events/123/photo.jpg',
       eventId: 123,
       signature: null,
-      uploadUrl: 'https://confetti-uploads.s3.eu-west-1.amazonaws.com/uploads/events/123/photo.jpg?X-Amz-Signature=example',
+      uploadUrl:
+        'https://confetti-uploads.s3.eu-west-1.amazonaws.com/uploads/events/123/photo.jpg?X-Amz-Signature=example',
     },
   },
 }

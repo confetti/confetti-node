@@ -1,5 +1,10 @@
 import { z } from 'zod'
-import { baseOptionsSchema, findBaseOptionsSchema, staticBaseFindAllOptionsSchema, staticBaseFindOptionsSchema } from './resource-options.js'
+import {
+  baseOptionsSchema,
+  findBaseOptionsSchema,
+  staticBaseFindAllOptionsSchema,
+  staticBaseFindOptionsSchema,
+} from './resource-options.js'
 
 export const FormFieldSchema = z.object({
   id: z.number().meta({

@@ -44,6 +44,7 @@ const blockTypes = [
   'link',
   'message-text',
   'message-image',
+  'message-button',
 ] as const
 
 const blockStatuses = ['published', 'preview', 'deleted', 'hidden'] as const
@@ -67,6 +68,7 @@ const blockContentDescription = [
   '- live: liveStreamId, liveStreamMode (block|theater)',
   '- custom: html',
   '- organisation-events: title, organisationEventsLayout (standard|grid-layout), organisationEventsSelection (all|upcoming|past)',
+  '- message-button: title (button text), url',
   '- sponsors, menu-organisation, link, message-image: shared fields only',
   '',
   'When updating, provide the complete content object — partial content replaces the entire content.',
@@ -82,6 +84,11 @@ export const BlockCreateSchema = z.object({
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
   blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
   pageId: z.number().optional().meta({ label: 'Page Id' }),
+  messageId: z.number().optional().meta({
+    label: 'Message Id',
+    description:
+      'Message the block belongs to. Use the message-text, message-image and message-button types, and also set the eventId or workspaceId of the message.',
+  }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
   categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
@@ -98,6 +105,11 @@ export const BlockUpdateSchema = z.object({
   content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
   blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
   pageId: z.number().optional().meta({ label: 'Page Id' }),
+  messageId: z.number().optional().meta({
+    label: 'Message Id',
+    description:
+      'Message the block belongs to. Use the message-text, message-image and message-button types, and also set the eventId or workspaceId of the message.',
+  }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
   categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),

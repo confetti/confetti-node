@@ -57,6 +57,24 @@ describe('Blocks', () => {
 
       assert.deepStrictEqual(data, Confetti.models.block.sample.single.formatted)
     })
+    test('should create a block in a message', async () => {
+      const mockData = Confetti.models.block.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .post('/blocks', (body) => body.data.relationships.message.data.id === '7')
+        .reply(201, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.blocks.create({
+        type: 'message-button',
+        status: 'published',
+        messageId: 7,
+        eventId: 1,
+        content: { title: 'Get your ticket', url: 'https://example.com' },
+      })
+
+      assert.deepStrictEqual(data, Confetti.models.block.sample.single.formatted)
+    })
     test('should update a block', async () => {
       const mockData = Confetti.models.block.sample.single.raw
 
