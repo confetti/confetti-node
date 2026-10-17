@@ -600,7 +600,11 @@ export const formFieldsResource = {
       ...validatedOptions,
     })
   },
-  create: (json: FormFieldCreateData, options: FormFieldsCreateOptions = {}, adapter: Adapter): Promise<FormField> => {
+  create: (
+    json: FormFieldCreateData,
+    options: FormFieldsCreateOptions = {},
+    adapter: Adapter,
+  ): Promise<FormField> => {
     const validatedOptions = baseOptionsSchema.parse(options)
     if (!models.formField.operations.create) throw new OperationNotFoundError('FormField create operation not found')
     const validatedData = models.formField.operations.create.schema.parse(json)
@@ -698,8 +702,7 @@ export const scheduleItemsResource = {
     adapter: Adapter,
   ): Promise<ScheduleItem> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.scheduleItem.operations.create)
-      throw new OperationNotFoundError('ScheduleItem create operation not found')
+    if (!models.scheduleItem.operations.create) throw new OperationNotFoundError('ScheduleItem create operation not found')
     const validatedData = models.scheduleItem.operations.create.schema.parse(json)
     return adapter.post<ScheduleItem>({
       json: validatedData,
@@ -715,8 +718,7 @@ export const scheduleItemsResource = {
     adapter: Adapter,
   ): Promise<ScheduleItem> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.scheduleItem.operations.update)
-      throw new OperationNotFoundError('ScheduleItem update operation not found')
+    if (!models.scheduleItem.operations.update) throw new OperationNotFoundError('ScheduleItem update operation not found')
     const validatedData = models.scheduleItem.operations.update.schema.parse(json)
     return adapter.put<ScheduleItem>({
       json: validatedData,
@@ -796,8 +798,7 @@ export const sponsorLevelsResource = {
     adapter: Adapter,
   ): Promise<SponsorLevel> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsorLevel.operations.create)
-      throw new OperationNotFoundError('SponsorLevel create operation not found')
+    if (!models.sponsorLevel.operations.create) throw new OperationNotFoundError('SponsorLevel create operation not found')
     const validatedData = models.sponsorLevel.operations.create.schema.parse(json)
     return adapter.post<SponsorLevel>({
       json: validatedData,
@@ -813,8 +814,7 @@ export const sponsorLevelsResource = {
     adapter: Adapter,
   ): Promise<SponsorLevel> => {
     const validatedOptions = baseOptionsSchema.parse(options)
-    if (!models.sponsorLevel.operations.update)
-      throw new OperationNotFoundError('SponsorLevel update operation not found')
+    if (!models.sponsorLevel.operations.update) throw new OperationNotFoundError('SponsorLevel update operation not found')
     const validatedData = models.sponsorLevel.operations.update.schema.parse(json)
     return adapter.put<SponsorLevel>({
       json: validatedData,

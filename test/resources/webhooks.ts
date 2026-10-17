@@ -112,7 +112,9 @@ describe('Webhooks', () => {
           ],
         })
 
-      nock('https://api.confetti.events').post('/webhooks').reply(201, Confetti.models.webhook.sample.single.raw)
+      nock('https://api.confetti.events')
+        .post('/webhooks')
+        .reply(201, Confetti.models.webhook.sample.single.raw)
 
       const workspaces = await Confetti.workspaces.findAll({ apiKey: 'my-key' })
       assert.strictEqual(typeof workspaces[0]!.id, 'string')
