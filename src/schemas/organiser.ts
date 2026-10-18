@@ -6,8 +6,18 @@ import {
   staticBaseFindOptionsSchema,
 } from './resource-options.js'
 
+const socialMediaButtonSchema = z.object({
+  id: z.string().optional(),
+  url: z.string(),
+  type: z.string(),
+  order: z.number().optional(),
+  title: z.string().nullable().optional(),
+})
+
 export const OrganiserSettingsSchema = z.object({
+  id: z.string().optional(),
   imageStyle: z.string().optional(),
+  socialMediaButtons: z.array(socialMediaButtonSchema).optional(),
 })
 
 export const OrganiserSchema = z.object({
@@ -38,6 +48,7 @@ export const OrganiserSchema = z.object({
   }),
   settings: OrganiserSettingsSchema.meta({
     label: 'Settings',
+    description: 'Organiser settings including image style and social media buttons',
   }),
   eventId: z.number().meta({
     label: 'Event Id',
