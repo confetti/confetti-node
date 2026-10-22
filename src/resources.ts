@@ -137,6 +137,16 @@ import {
   type SponsorLevelCreateData,
   type SponsorLevelUpdateData,
 } from './schemas/sponsor-level.js'
+import {
+  messagesFindAllOptionsSchema,
+  messagesFindOptionsSchema,
+  type MessagesFindAllOptions,
+  type MessagesFindOptions,
+  type MessagesCreateOptions,
+  type MessagesUpdateOptions,
+  type MessageCreateData,
+  type MessageUpdateData,
+} from './schemas/message.js'
 import { baseOptionsSchema } from './schemas/resource-options.js'
 
 import { Adapter } from './adapter.js'
@@ -160,6 +170,7 @@ import {
   ScheduleItem,
   Sponsor,
   SponsorLevel,
+  Message,
 } from './types/models.js'
 import models from './models/index.js'
 
@@ -817,6 +828,56 @@ export const sponsorLevelsResource = {
     return adapter.delete<void>({
       path: `${models.sponsorLevel.path}/${id}`,
       type: models.sponsorLevel.endpoint,
+      ...validatedOptions,
+    })
+  },
+}
+
+export const messagesResource = {
+  findAll: (options: MessagesFindAllOptions, adapter: Adapter): Promise<Message[]> => {
+    const validatedOptions = messagesFindAllOptionsSchema.parse(options)
+    return adapter.get<Message[]>({ path: models.message.path, type: models.message.endpoint, ...validatedOptions })
+  },
+  find: (id: string | number, options: MessagesFindOptions = {}, adapter: Adapter): Promise<Message> => {
+    const validatedOptions = messagesFindOptionsSchema.parse(options)
+    return adapter.get<Message>({
+      path: `${models.message.path}/${id}`,
+      type: models.message.endpoint,
+      ...validatedOptions,
+    })
+  },
+  create: (json: MessageCreateData, options: MessagesCreateOptions = {}, adapter: Adapter): Promise<Message> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.message.operations.create) throw new OperationNotFoundError('Message create operation not found')
+    const validatedData = models.message.operations.create.schema.parse(json)
+    return adapter.post<Message>({
+      json: validatedData,
+      path: models.message.path,
+      type: models.message.endpoint,
+      ...validatedOptions,
+    })
+  },
+  update: (
+    id: string | number,
+    json: MessageUpdateData,
+    options: MessagesUpdateOptions = {},
+    adapter: Adapter,
+  ): Promise<Message> => {
+    const validatedOptions = baseOptionsSchema.parse(options)
+    if (!models.message.operations.update) throw new OperationNotFoundError('Message update operation not found')
+    const validatedData = models.message.operations.update.schema.parse(json)
+    return adapter.put<Message>({
+      json: validatedData,
+      path: `${models.message.path}/${id}`,
+      type: models.message.endpoint,
+      ...validatedOptions,
+    })
+  },
+  delete: (id: string | number, options: MessagesFindOptions = {}, adapter: Adapter): Promise<void> => {
+    const validatedOptions = messagesFindOptionsSchema.parse(options)
+    return adapter.delete<void>({
+      path: `${models.message.path}/${id}`,
+      type: models.message.endpoint,
       ...validatedOptions,
     })
   },
