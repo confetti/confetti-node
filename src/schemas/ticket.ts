@@ -71,6 +71,11 @@ export const TicketSchema = z.object({
     description:
       'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
   }),
+  hiddenValues: z.looseObject({}).nullable().meta({
+    label: 'Hidden Values',
+    description:
+      'Answers to hidden (organisers only) form fields, keyed by field name. Attendees never see these. Kept separate from values so that writing values back never exposes them.',
+  }),
   comment: z.string().meta({
     label: 'Comment',
     description: 'Internal note visible only to workspace teammates in Confetti. Not shown to attendees.',
@@ -118,6 +123,10 @@ export const GuestTicketInputSchema = z.object({
   values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
+  }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    description: 'Answers to hidden (organisers only) form fields for this guest, keyed by field name.',
   }),
 })
 
@@ -170,6 +179,11 @@ export const TicketCreateSchema = z.object({
     description:
       'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
   }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    description:
+      'Answers to hidden (organisers only) form fields, keyed by field name. Use this, not values, for fields with settings.hidden.',
+  }),
   sendEmailConfirmation: z.boolean().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
@@ -213,6 +227,10 @@ export const TicketUpdateSchema = z.object({
   values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     helpText: 'Passing null clears every stored form answer.',
+  }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    helpText: 'Answers to hidden (organisers only) form fields. Passing null clears every stored hidden answer.',
   }),
   checkinAt: z.union([z.date(), z.string()]).nullable().optional().meta({ label: 'Checkin At' }),
   ticketBatchId: z.number().nullable().optional().meta({
