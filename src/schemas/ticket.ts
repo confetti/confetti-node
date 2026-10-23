@@ -105,7 +105,7 @@ export const TicketSchema = z.object({
   formattedValues: z.array(z.looseObject({})).optional().meta({
     label: 'Formatted Values',
     description:
-      'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
+      'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), value (the answer) and hidden (true for organiser-only fields that attendees never see). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
   }),
 })
 
