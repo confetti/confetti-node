@@ -1,6 +1,18 @@
 import { z } from 'zod'
 import { baseOptionsSchema, findBaseOptionsSchema, staticBaseFindAllOptionsSchema, staticBaseFindOptionsSchema } from './resource-options.js'
 
+const FormFieldSettingsSchema = z.looseObject({
+  required: z.boolean().optional().meta({
+    label: 'Required',
+    description: 'Attendees must answer the field when signing up. Ignored for hidden fields.',
+  }),
+  hidden: z.boolean().optional().meta({
+    label: 'Hidden',
+    description:
+      'Organisers only. Hidden from attendees on the signup form and their tickets. Organisers can still set the value, for example when importing or updating a ticket.',
+  }),
+})
+
 export const FormFieldSchema = z.object({
   id: z.number().meta({
     label: 'ID',
@@ -36,7 +48,7 @@ export const FormFieldSchema = z.object({
     label: 'Section Id',
     description: 'Parent section field ID, if nested.',
   }),
-  settings: z.looseObject({}).meta({
+  settings: FormFieldSettingsSchema.meta({
     label: 'Settings',
   }),
 })
@@ -65,7 +77,7 @@ export const FormFieldCreateSchema = z.object({
     label: 'Order',
     description: 'Display order within the form.',
   }),
-  settings: z.looseObject({}).optional().meta({
+  settings: FormFieldSettingsSchema.optional().meta({
     label: 'Settings',
   }),
   formId: z.number().meta({

@@ -84,6 +84,23 @@ describe('TicketCreateSchema', () => {
     assert.strictEqual(result.guests, null)
   })
 
+  test('should accept hiddenValues separately from values', () => {
+    const result = TicketCreateSchema.parse({
+      eventId: 1,
+      email: 'foo@bar.com',
+      status: 'attending',
+      sendEmailConfirmation: false,
+      values: { 'dietary-needs': 'Vegan' },
+      hiddenValues: { table: '4' },
+      guestTickets: [{ firstName: 'Guest', hiddenValues: { table: '4' } }],
+    })
+
+    assert.deepStrictEqual(result.values, { 'dietary-needs': 'Vegan' })
+    assert.deepStrictEqual(result.hiddenValues, { table: '4' })
+    assert.deepStrictEqual(result.guestTickets?.[0]?.hiddenValues, { table: '4' })
+    assert.deepStrictEqual(TicketUpdateSchema.parse({ hiddenValues: null }), { hiddenValues: null })
+  })
+
   test('should not coerce a null ticketBatchId to 0', () => {
     const result = TicketCreateSchema.parse({
       eventId: '1',
