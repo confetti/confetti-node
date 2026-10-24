@@ -69,12 +69,12 @@ export const TicketSchema = z.object({
   values: z.looseObject({}).meta({
     label: 'Values',
     description:
-      'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
+      'Raw answers to attendee-visible form fields, as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Answers to hidden (organisers only) fields are in hiddenValues, not here. Use ?include=formattedValues for one combined list with titles and field metadata.',
   }),
   hiddenValues: z.looseObject({}).nullable().meta({
     label: 'Hidden Values',
     description:
-      'Answers to hidden (organisers only) form fields, keyed by field name. Attendees never see these. Kept separate from values so that writing values back never exposes them.',
+      'Answers to hidden (organisers only) form fields, keyed by field name. Attendees never see these. Kept separate from values so that writing values back never exposes them; webhook payloads use the same split. Hiding a field that already has answers moves them from values to hiddenValues.',
   }),
   comment: z.string().meta({
     label: 'Comment',
