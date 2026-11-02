@@ -1,5 +1,6 @@
 # Unreleased
 
+- Fix: `schemaToJsonSchema()` emitted `additionalProperties: {}` for loose objects such as block `content` and page `settings`. It now emits `additionalProperties: true`, which MCP clients that refuse the empty schema accept.
 - Feature: new `message` model with `messages.findAll/find/create/update/delete` for email and SMS messages. Messages created or changed through the API stay drafts; sending is done from the dashboard. Set `isTemplate` and `content.standardOverload` to replace a standard email such as the welcome or ticket email.
 - Feature: blocks accept `messageId`, and the `message-button` block type is added, for building the body of a workspace message. `message-text` blocks need `content.html` and `message-button` blocks need `content.title` and `content.url`; other content is rejected instead of being saved empty.
 
