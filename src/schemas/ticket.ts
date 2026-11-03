@@ -69,7 +69,12 @@ export const TicketSchema = z.object({
   values: z.looseObject({}).meta({
     label: 'Values',
     description:
-      'Raw form field answers as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Contains only answers — use ?include=formattedValues to get titles and field metadata alongside each answer.',
+      'Raw answers to attendee-visible form fields, as a flat object keyed by field name (e.g. {"dietary-needs": "Vegan"}). Answers to hidden (organisers only) fields are in hiddenValues, not here. Use ?include=formattedValues for one combined list with titles and field metadata.',
+  }),
+  hiddenValues: z.looseObject({}).nullable().meta({
+    label: 'Hidden Values',
+    description:
+      'Answers to hidden (organisers only) form fields, keyed by field name. Attendees never see these. Kept separate from values so that writing values back never exposes them; webhook payloads use the same split. Hiding a field that already has answers moves them from values to hiddenValues.',
   }),
   comment: z.string().meta({
     label: 'Comment',
@@ -105,7 +110,7 @@ export const TicketSchema = z.object({
   formattedValues: z.array(z.looseObject({})).optional().meta({
     label: 'Formatted Values',
     description:
-      'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), and value (the answer). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
+      'Form field answers with question titles and field IDs. Each entry has formFieldId, title (the question), value (the answer) and hidden (true for organiser-only fields that attendees never see). Only present when ?include=formattedValues is requested. Use this instead of raw values when you need to display or interpret form responses.',
   }),
 })
 
@@ -118,6 +123,10 @@ export const GuestTicketInputSchema = z.object({
   values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     description: 'Raw form field answers for this guest, keyed by field name (e.g. {"dietary-needs": "Vegan"}).',
+  }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    description: 'Answers to hidden (organisers only) form fields for this guest, keyed by field name.',
   }),
 })
 
@@ -170,6 +179,11 @@ export const TicketCreateSchema = z.object({
     description:
       'Raw form field answers keyed by field name (e.g. {"dietary-needs": "Vegan"}). Agents using MCP should prefer passing formValues, which resolves field titles or IDs to field names automatically.',
   }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    description:
+      'Answers to hidden (organisers only) form fields, keyed by field name. Use this, not values, for fields with settings.hidden.',
+  }),
   sendEmailConfirmation: z.boolean().meta({
     label: 'Send email confirmation',
     helpText: 'If set to true, an email confirmation will be sent to the attendee / invitee.',
@@ -213,6 +227,10 @@ export const TicketUpdateSchema = z.object({
   values: z.looseObject({}).nullable().optional().meta({
     label: 'Values',
     helpText: 'Passing null clears every stored form answer.',
+  }),
+  hiddenValues: z.looseObject({}).nullable().optional().meta({
+    label: 'Hidden Values',
+    helpText: 'Answers to hidden (organisers only) form fields. Passing null clears every stored hidden answer.',
   }),
   checkinAt: z.union([z.date(), z.string()]).nullable().optional().meta({ label: 'Checkin At' }),
   ticketBatchId: z.number().nullable().optional().meta({
