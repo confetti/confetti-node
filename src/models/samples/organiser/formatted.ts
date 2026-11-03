@@ -6,11 +6,15 @@ export default {
   description: null,
   email: 'john@doe.se',
   name: 'John Doe',
-  twitter: null,
-  instagram: 'JohnDoe',
   url: 'https://my-website.se',
   order: null,
-  settings: {},
+  settings: {
+    id: 'organiser-112',
+    imageStyle: 'photo',
+    socialMediaButtons: [
+      { id: 'organiser-112-instagram', type: 'instagram', url: 'https://www.instagram.com/JohnDoe', order: 1 },
+    ],
+  },
   eventId: 107,
   imageId: 936,
   createdAt: '2024-12-10T07:39:29.226Z',
