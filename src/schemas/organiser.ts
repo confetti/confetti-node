@@ -34,12 +34,6 @@ export const OrganiserSchema = z.object({
   name: z.string().meta({
     label: 'Name',
   }),
-  twitter: z.string().meta({
-    label: 'Twitter',
-  }),
-  instagram: z.string().meta({
-    label: 'Instagram',
-  }),
   url: z.string().meta({
     label: 'Website URL',
   }),
@@ -69,8 +63,6 @@ export const OrganiserCreateSchema = z.object({
   eventId: z.number().meta({ label: 'Event Id' }),
   email: z.string().optional().meta({ label: 'Email' }),
   description: z.string().optional().meta({ label: 'Description' }),
-  twitter: z.string().optional().meta({ label: 'Twitter' }),
-  instagram: z.string().optional().meta({ label: 'Instagram' }),
   url: z.string().optional().meta({ label: 'Website URL' }),
   order: z.number().optional().meta({ label: 'Order' }),
   settings: OrganiserSettingsSchema.optional().meta({ label: 'Settings' }),

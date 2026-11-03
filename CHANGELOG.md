@@ -1,5 +1,6 @@
 # Unreleased
 
+- Breaking: organiser `twitter` and `instagram` are removed from the read, create and update schemas. Use `settings.socialMediaButtons` instead; the API no longer stores the handles.
 - Feature: organiser `settings` now accepts `socialMediaButtons` (same shape as speakers: `type`, `url`, optional `title` and `order`), replacing the plain `twitter` and `instagram` handles on the event site.
 
 # 4.2.1
