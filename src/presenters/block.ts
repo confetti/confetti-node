@@ -3,10 +3,12 @@ import { Block } from '../types/models.js'
 
 type BlockData = Block & {
   pageId?: number
+  messageId?: number
   eventId?: number
   workspaceId?: number
   categoryIds?: number[]
   page?: { id: number }
+  message?: { id: number }
   event?: { id: number }
   workspace?: { id: number }
   categories?: { id: number }[]
@@ -21,6 +23,10 @@ export default function ({ presenters, Presenter }: PresenterOptions): BlockPres
       if (block.pageId != null) {
         block.page = { id: block.pageId }
         delete block.pageId
+      }
+      if (block.messageId != null) {
+        block.message = { id: block.messageId }
+        delete block.messageId
       }
       if (block.eventId != null) {
         block.event = { id: block.eventId }
@@ -40,6 +46,7 @@ export default function ({ presenters, Presenter }: PresenterOptions): BlockPres
     relationships() {
       return {
         page: presenters.PagePresenter,
+        message: presenters.MessagePresenter,
         event: presenters.EventPresenter,
         workspace: presenters.WorkspacePresenter,
         images: presenters.ImagePresenter,

@@ -44,6 +44,7 @@ const blockTypes = [
   'link',
   'message-text',
   'message-image',
+  'message-button',
 ] as const
 
 const blockStatuses = ['published', 'preview', 'deleted', 'hidden'] as const
@@ -54,7 +55,7 @@ const blockContentDescription = [
   'Shared fields (all types): name, cssClassName, theme (primary|inverted|secondary|custom), style (spacing object with spacing/spacingTop/spacingBottom each: small|medium|large|custom), blockStyleSettings (colors/fonts/css/effects), includeTickets (bool), filterTicketBatches (number[]), url.',
   '',
   'Type-specific fields:',
-  '- text, message-text: html, textLayout (text-only|image-left|image-right|image-top|image-background|custom), showSocial, showRsvpButton, ctaText, ctaUrl',
+  '- text: html, textLayout (text-only|image-left|image-right|image-top|image-background|custom), showSocial, showRsvpButton, ctaText, ctaUrl',
   '- header: title, headerStyle (text|logo|none), logoSize, coverStyle (fullscreen|poster|compact), shadowStyle (gradient|grid|none), shadowOpacity, headerTextColor, ctaText, ctaUrl',
   '- gallery: title, html, galleryLayout (standard|grid|info|custom)',
   '- video: videoEmbedId, videoEmbedType (youtube|vimeo|vimeo-event|facebook|twitch), videoEmbedVimeoChat, videoLayout (block|block-large|theater)',
@@ -67,41 +68,83 @@ const blockContentDescription = [
   '- live: liveStreamId, liveStreamMode (block|theater)',
   '- custom: html',
   '- organisation-events: title, organisationEventsLayout (standard|grid-layout), organisationEventsSelection (all|upcoming|past)',
-  '- sponsors, menu-organisation, link, message-image: shared fields only',
+  '- message-text: html (required)',
+  '- message-button: title (button text, required), url (required). Not ctaText/ctaUrl.',
+  '- message-image: shared fields only. Attach the picture with create_image (blockId and workspaceId); without an image the block is removed when the message is saved in the dashboard.',
+  '- sponsors, menu-organisation, link: shared fields only',
   '',
   'When updating, provide the complete content object — partial content replaces the entire content.',
 ].join('\n')
 
-export const BlockCreateSchema = z.object({
-  type: z
-    .enum(blockTypes)
-    .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z.enum(blockStatuses).meta({ label: 'Status', description: 'Block visibility status.' }),
-  slug: z.string().optional().meta({ label: 'Slug' }),
-  order: z.number().optional().meta({ label: 'Order' }),
-  content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
-  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
-  pageId: z.number().optional().meta({ label: 'Page Id' }),
-  eventId: z.number().optional().meta({ label: 'Event Id' }),
-  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
-})
+const requiredMessageBlockContent: Partial<Record<(typeof blockTypes)[number], string[]>> = {
+  'message-text': ['html'],
+  'message-button': ['title', 'url'],
+}
 
-export const BlockUpdateSchema = z.object({
-  type: z
-    .enum(blockTypes)
-    .optional()
-    .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
-  status: z.enum(blockStatuses).optional().meta({ label: 'Status', description: 'Block visibility status.' }),
-  slug: z.string().optional().meta({ label: 'Slug' }),
-  order: z.number().optional().meta({ label: 'Order' }),
-  content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
-  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
-  pageId: z.number().optional().meta({ label: 'Page Id' }),
-  eventId: z.number().optional().meta({ label: 'Event Id' }),
-  workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
-  categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
-})
+// The API drops content fields a block type doesn't know, so a message block with the wrong
+// fields would be saved empty instead of failing.
+function checkMessageBlockContent(
+  block: { type?: (typeof blockTypes)[number]; content?: Record<string, unknown> },
+  ctx: z.RefinementCtx,
+): void {
+  const required = block.type ? requiredMessageBlockContent[block.type] : undefined
+  if (!required || block.content === undefined) return
+  for (const key of required) {
+    const value = block.content[key]
+    if (typeof value !== 'string' || value.trim() === '') {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['content', key],
+        message: `${block.type} blocks need content.${key} (fields: ${required.join(', ')})`,
+      })
+    }
+  }
+}
+
+export const BlockCreateSchema = z
+  .object({
+    type: z
+      .enum(blockTypes)
+      .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
+    status: z.enum(blockStatuses).meta({ label: 'Status', description: 'Block visibility status.' }),
+    slug: z.string().optional().meta({ label: 'Slug' }),
+    order: z.number().optional().meta({ label: 'Order' }),
+    content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
+    blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
+    pageId: z.number().optional().meta({ label: 'Page Id' }),
+    messageId: z.number().optional().meta({
+      label: 'Message Id',
+      description:
+        'Workspace message the block belongs to, shown below the body in order. Use the message-text, message-image and message-button types and set workspaceId too. Event messages do not support blocks.',
+    }),
+    eventId: z.number().optional().meta({ label: 'Event Id' }),
+    workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
+    categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
+  })
+  .superRefine(checkMessageBlockContent)
+
+export const BlockUpdateSchema = z
+  .object({
+    type: z
+      .enum(blockTypes)
+      .optional()
+      .meta({ label: 'Block Type', description: 'The type of block. Determines which content fields are valid.' }),
+    status: z.enum(blockStatuses).optional().meta({ label: 'Status', description: 'Block visibility status.' }),
+    slug: z.string().optional().meta({ label: 'Slug' }),
+    order: z.number().optional().meta({ label: 'Order' }),
+    content: z.looseObject({}).optional().meta({ label: 'Content', description: blockContentDescription }),
+    blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
+    pageId: z.number().optional().meta({ label: 'Page Id' }),
+    messageId: z.number().optional().meta({
+      label: 'Message Id',
+      description:
+        'Workspace message the block belongs to, shown below the body in order. Use the message-text, message-image and message-button types and set workspaceId too. Event messages do not support blocks.',
+    }),
+    eventId: z.number().optional().meta({ label: 'Event Id' }),
+    workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
+    categoryIds: z.array(z.number()).optional().meta({ label: 'Categories' }),
+  })
+  .superRefine(checkMessageBlockContent)
 
 const blocksFindAllSchema = {
   filter: z

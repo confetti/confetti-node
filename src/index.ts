@@ -19,6 +19,7 @@ import {
   scheduleItemsResource,
   sponsorsResource,
   sponsorLevelsResource,
+  messagesResource,
 } from './resources.js'
 import type {
   CategoriesFindAllOptions,
@@ -184,6 +185,18 @@ import type {
   SponsorLevelCreateData,
   SponsorLevelUpdateData,
 } from './schemas/sponsor-level.js'
+import type {
+  MessagesFindAllOptions,
+  MessagesFindOptions,
+  MessagesCreateOptions,
+  MessagesUpdateOptions,
+  StaticMessagesFindAllOptions,
+  StaticMessagesFindOptions,
+  StaticMessagesCreateOptions,
+  StaticMessagesUpdateOptions,
+  MessageCreateData,
+  MessageUpdateData,
+} from './schemas/message.js'
 
 export interface ConfettiSettings {
   apiKey?: string
@@ -672,6 +685,41 @@ class Confetti {
     },
     delete: (id: string | number, options: StaticSponsorLevelsFindOptions) => {
       return sponsorLevelsResource.delete(id, options, adapter(options))
+    },
+  }
+
+  messages = {
+    findAll: (options: MessagesFindAllOptions) => {
+      return messagesResource.findAll(options, this.adapter)
+    },
+    find: (id: string | number, options: MessagesFindOptions = {}) => {
+      return messagesResource.find(id, options, this.adapter)
+    },
+    create: (json: MessageCreateData, options: MessagesCreateOptions = {}) => {
+      return messagesResource.create(json, options, this.adapter)
+    },
+    update: (id: string | number, json: MessageUpdateData, options: MessagesUpdateOptions = {}) => {
+      return messagesResource.update(id, json, options, this.adapter)
+    },
+    delete: (id: string | number, options: MessagesFindOptions = {}) => {
+      return messagesResource.delete(id, options, this.adapter)
+    },
+  }
+  static messages = {
+    findAll: (options: StaticMessagesFindAllOptions) => {
+      return messagesResource.findAll(options, adapter(options))
+    },
+    find: (id: string | number, options: StaticMessagesFindOptions) => {
+      return messagesResource.find(id, options, adapter(options))
+    },
+    create: (json: MessageCreateData, options: StaticMessagesCreateOptions) => {
+      return messagesResource.create(json, options, adapter(options))
+    },
+    update: (id: string | number, json: MessageUpdateData, options: StaticMessagesUpdateOptions) => {
+      return messagesResource.update(id, json, options, adapter(options))
+    },
+    delete: (id: string | number, options: StaticMessagesFindOptions) => {
+      return messagesResource.delete(id, options, adapter(options))
     },
   }
 }

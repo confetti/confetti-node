@@ -19,6 +19,7 @@ import imageUpload from './image-upload.js'
 import sponsor from './sponsor.js'
 import previewToken from './preview-token.js'
 import sponsorLevel from './sponsor-level.js'
+import message from './message.js'
 
 export type { Category } from '../schemas/category.js'
 export type { Contact, ContactCreate } from '../schemas/contact.js'
@@ -41,6 +42,7 @@ export type { FormField } from '../schemas/form-field.js'
 export type { Sponsor, SponsorCreate, SponsorUpdate } from '../schemas/sponsor.js'
 export type { PreviewToken, PreviewTokenCreate } from '../schemas/preview-token.js'
 export type { SponsorLevel, SponsorLevelCreate, SponsorLevelUpdate } from '../schemas/sponsor-level.js'
+export type { Message, MessageCreate, MessageUpdate } from '../schemas/message.js'
 
 export default {
   block: block(),
@@ -64,4 +66,5 @@ export default {
   previewToken: previewToken(),
   sponsor: sponsor(),
   sponsorLevel: sponsorLevel(),
+  message: message(),
 }

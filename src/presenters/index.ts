@@ -19,6 +19,7 @@ import organiserPresenter from './organiser.js'
 import scheduleItemPresenter from './schedule-item.js'
 import sponsorPresenter from './sponsor.js'
 import sponsorLevelPresenter from './sponsor-level.js'
+import messagePresenter from './message.js'
 
 const { Presenter } = yayson()
 // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
@@ -59,6 +60,7 @@ const SpeakerPresenter = speakerPresenter({ presenters, Presenter })
 const OrganiserPresenter = organiserPresenter({ presenters, Presenter })
 const ScheduleItemPresenter = scheduleItemPresenter({ presenters, Presenter })
 const SponsorLevelPresenter = sponsorLevelPresenter({ presenters, Presenter })
+const MessagePresenter = messagePresenter({ presenters, Presenter })
 const SponsorPresenter = sponsorPresenter({ presenters, Presenter })
 
 presenters.WebhookPresenter = WebhookPresenter
@@ -79,6 +81,7 @@ presenters.SpeakerPresenter = SpeakerPresenter
 presenters.OrganiserPresenter = OrganiserPresenter
 presenters.ScheduleItemPresenter = ScheduleItemPresenter
 presenters.SponsorLevelPresenter = SponsorLevelPresenter
+presenters.MessagePresenter = MessagePresenter
 presenters.SponsorPresenter = SponsorPresenter
 
 const presentersCollection: Presenters = {
@@ -101,6 +104,7 @@ const presentersCollection: Presenters = {
   scheduleItems: ScheduleItemPresenter,
   sponsors: SponsorPresenter,
   sponsorLevels: SponsorLevelPresenter,
+  messages: MessagePresenter,
 }
 
 export default presentersCollection
