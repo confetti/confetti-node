@@ -1,3 +1,13 @@
+# 4.3.0
+
+- Feature: events expose `locale`, `emailSenderName` and `calendarText` (the calendar invite description) on read, create and update. `locale` is one of `en`, `sv`, `da`, `de`, `nb`, `fr`, `ja`. `smsSenderName` is now also returned on read. Reading the sender names and calendar text requires a corresponding API update.
+- Feature: blocks expose `blockLinkId`, the block a `link` block shows, on read, create and update. Leaving it out of an update keeps the current link; `null` removes it. Requires a corresponding API update.
+- Feature: images expose `alt` on read and accept it on create and update.
+- Change: `blocks.create` and `blocks.update` no longer accept `slug` or `blockStyleId`, which the API never used. `blocks.update` no longer accepts `pageId`, `eventId` or `workspaceId`, since a block cannot be moved. Requires a corresponding API update.
+- Change: `images.update` only accepts `title`, `description`, `link`, `alt`, `order`, `width` and `height`. The API ignored the rest; to replace an image file, delete the image and create a new one. `images.create` no longer accepts `blockStyleId`.
+- Feature: block `content` on `blocks.create` and `blocks.update` is typed: each field the API knows has its type and allowed values, and says which block types it applies to. `null` values, as the API returns them for unset fields, are dropped, so content read from the API can be sent back unchanged. Unknown fields still pass through.
+- Fix: `schemaToJsonSchema()` emits loose objects such as block `content` as `{ type: 'object', additionalProperties: true }`. Before, they had `additionalProperties: {}`, which some MCP clients reject, and an empty `properties`, which made MCP Inspector show no input for them.
+
 # 4.2.1
 
 - Fix: ticket fields that the API returns as `null` are now accepted as `null` on write. `tickets.update` previously rejected `company`, `comment`, `ticketBatchId`, `firstName`, `lastName`, `email`, `phone`, `guests` and `values` with `Invalid input: expected string, received null`, so a ticket read from the API could not be written back unchanged. The same fields are now nullable on `tickets.create` and on inline `guestTickets`. Passing `null` clears the field, except for `ticketBatchId`, where it leaves the current batch unchanged.

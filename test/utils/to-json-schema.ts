@@ -18,6 +18,12 @@ function assertValidSchema(property: JsonSchemaProperty) {
 }
 
 describe('schemaToJsonSchema()', () => {
+  test('should emit loose objects as free-form objects', () => {
+    const result = schemaToJsonSchema(z.object({ content: z.looseObject({}).optional() }))
+
+    assert.deepStrictEqual(result.properties?.content, { type: 'object', additionalProperties: true })
+  })
+
   test('should convert basic types correctly', () => {
     const schema = z.object({
       name: z.string().meta({ label: 'Name', description: 'The name' }),
