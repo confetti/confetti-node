@@ -113,3 +113,19 @@ describe('GuestTicketInputSchema', () => {
     assert.strictEqual(result.email, null)
   })
 })
+
+describe('Ticket status', () => {
+  test('should accept waitlist on create', () => {
+    const base = { eventId: 1, email: 'foo@bar.com', sendEmailConfirmation: false }
+
+    assert.strictEqual(TicketCreateSchema.parse({ ...base, status: 'waitlist' }).status, 'waitlist')
+    assert.deepStrictEqual(TicketCreateSchema.parse({ ...base, status: ['waitlist'] }).status, ['waitlist'])
+    assert.throws(() => TicketCreateSchema.parse({ ...base, status: 'declined' }))
+    assert.throws(() => TicketCreateSchema.parse({ ...base, status: 'consumed' }))
+  })
+
+  test('should accept waitlist on update', () => {
+    assert.strictEqual(TicketUpdateSchema.parse({ status: 'waitlist' }).status, 'waitlist')
+    assert.throws(() => TicketUpdateSchema.parse({ status: 'consumed' }))
+  })
+})

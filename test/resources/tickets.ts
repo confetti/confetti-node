@@ -122,12 +122,27 @@ describe('Tickets', () => {
 
       assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
     })
+    test('should move a ticket to the waitlist', async () => {
+      const mockData = Confetti.models.ticket.sample.single.raw
+
+      nock('https://api.confetti.events')
+        .put('/tickets/1', (body) => {
+          const attributes = (body as { data?: { attributes?: Record<string, unknown> } })?.data?.attributes
+          return attributes?.status === 'waitlist'
+        })
+        .reply(200, mockData as MockResponseData)
+
+      const confetti = new Confetti({ apiKey: 'my-key' })
+      const data = await confetti.tickets.update(1, { status: 'waitlist' })
+
+      assert.deepStrictEqual(data, Confetti.models.ticket.sample.single.formatted)
+    })
     test('should reject a status that cannot be set on update', () => {
       const confetti = new Confetti({ apiKey: 'my-key' })
 
       // Validation runs synchronously in `parse`, before any request is made.
       assert.throws(
-        () => confetti.tickets.update(1, { status: 'waitlist' }),
+        () => confetti.tickets.update(1, { status: 'consumed' }),
         (error: unknown) => (error as Error).name === 'ZodError',
       )
     })
