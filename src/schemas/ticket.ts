@@ -223,7 +223,8 @@ export const TicketUpdateSchema = z.object({
   }),
   sendEmailConfirmation: z.boolean().optional().meta({
     label: 'Send email confirmation',
-    helpText: 'If set to true, an email confirmation will be sent to the attendee.',
+    helpText:
+      'A status or email change emails the attendee (e.g. the waitlist or welcome email). Set to false to skip that email.',
   }),
 })
 

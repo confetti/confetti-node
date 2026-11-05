@@ -1,6 +1,7 @@
 # Unreleased
 
 - Feature: ticket `status` can now be set to `waitlist` on `tickets.create` and `tickets.update`. The API accepts it only for RSVP events with the waitlist enabled.
+- Fix: `sendEmailConfirmation: false` on `tickets.update` now skips the email that a status or email change sends. Requires a corresponding API update; before that it was ignored.
 
 # 4.2.1
 
