@@ -143,15 +143,16 @@ export const TicketCreateSchema = z.object({
       z.string().refine(
         (val) => {
           const values = val.split(',').map((v) => v.trim())
-          return values.every((v) => v === 'attending' || v === 'invited')
+          return values.every((v) => v === 'attending' || v === 'invited' || v === 'waitlist')
         },
-        { message: 'Status must be "attending", "invited", or a comma-separated list of these values' },
+        { message: 'Status must be "attending", "invited", "waitlist", or a comma-separated list of these values' },
       ),
-      z.array(z.enum(['attending', 'invited'])),
+      z.array(z.enum(['attending', 'invited', 'waitlist'])),
     ])
     .meta({
       label: 'Status',
-      values: ['attending', 'invited'],
+      values: ['attending', 'invited', 'waitlist'],
+      helpText: 'waitlist requires an RSVP event with the waitlist enabled.',
     }),
   phone: z.string().nullable().optional().meta({
     label: 'Phone',
@@ -193,15 +194,16 @@ export const TicketUpdateSchema = z.object({
   status: z
     .string()
     .superRefine((val, ctx) => {
-      if (!['invited', 'attending', 'declined'].includes(val)) {
+      if (!['invited', 'attending', 'declined', 'waitlist'].includes(val)) {
         ctx.addIssue({ code: z.ZodIssueCode.custom, message: `${val} is not included in the list` })
       }
     })
     .optional()
     .meta({
       label: 'Status',
-      values: ['attending', 'invited', 'declined'],
-      helpText: 'Only free tickets can be declined. Declining a paid ticket is rejected by the API.',
+      values: ['attending', 'invited', 'declined', 'waitlist'],
+      helpText:
+        'Only free tickets can be declined. Declining a paid ticket is rejected by the API. waitlist requires an RSVP event with the waitlist enabled.',
     }),
   phone: z.string().nullable().optional().meta({ label: 'Phone' }),
   company: z.string().nullable().optional().meta({ label: 'Company' }),
