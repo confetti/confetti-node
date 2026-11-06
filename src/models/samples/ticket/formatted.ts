@@ -3,6 +3,7 @@ import { TYPE, META } from 'yayson/utils'
 export default {
   persons: 1,
   hashid: 'g265xg',
+  qrCodeContent: 'C1:G265XG:7K3MQ9TA',
   description: 'My cool batch',
   price: 10,
   currency: 'SEK',
