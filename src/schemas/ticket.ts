@@ -18,6 +18,11 @@ export const TicketSchema = z.object({
   hashid: z.string().meta({
     label: 'Hashid',
   }),
+  qrCodeContent: z.string().meta({
+    label: 'QR code content',
+    description:
+      'The value to encode in the ticket QR code, for example on printed badges. Newer tickets are only checked in with this value, not with the bare hashid.',
+  }),
   description: z.string().meta({
     label: 'Description',
   }),
