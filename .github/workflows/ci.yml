@@ -10,7 +10,7 @@ jobs:
     timeout-minutes: 15
     strategy:
       matrix:
-        node-version: [20, 22, 24, 26]
+        node-version: [22, 24, 26]
 
     steps:
       - uses: actions/checkout@v3
@@ -20,6 +20,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          check-latest: true
       - run: npm install
       - name: Run Lint
         run: npm run lint
