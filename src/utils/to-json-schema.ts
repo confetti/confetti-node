@@ -35,6 +35,12 @@ export function schemaToJsonSchema(
         ctx.jsonSchema.type = 'string'
         ctx.jsonSchema.format = 'date-time'
       }
+      // z.looseObject() emits `additionalProperties: {}`, which some MCP clients refuse.
+      // `true` means the same thing and is understood everywhere.
+      const additional = ctx.jsonSchema.additionalProperties
+      if (typeof additional === 'object' && Object.keys(additional).length === 0) {
+        ctx.jsonSchema.additionalProperties = true
+      }
       // Strip non-standard .meta() keys from JSON Schema output
       for (const key of metaKeysToStrip) delete ctx.jsonSchema[key]
     },

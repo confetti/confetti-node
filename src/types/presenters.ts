@@ -50,6 +50,7 @@ export interface PresentersMap {
   ScheduleItemPresenter: ScheduleItemPresenter
   SponsorPresenter: SponsorPresenter
   SponsorLevelPresenter: SponsorLevelPresenter
+  MessagePresenter: MessagePresenter
 }
 
 // Specific presenter types
@@ -188,6 +189,11 @@ export interface SponsorLevelPresenter extends BasePresenter {
   plural: 'sponsorLevels'
 }
 
+export interface MessagePresenter extends BasePresenter {
+  type: 'message'
+  plural: 'messages'
+}
+
 // Presenters collection type
 export interface Presenters {
   webhooks: WebhookPresenter
@@ -209,4 +215,5 @@ export interface Presenters {
   scheduleItems: ScheduleItemPresenter
   sponsors: SponsorPresenter
   sponsorLevels: SponsorLevelPresenter
+  messages: MessagePresenter
 }

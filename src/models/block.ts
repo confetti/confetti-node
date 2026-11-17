@@ -34,6 +34,7 @@ export default function BlockModel(): ModelDefinition {
     },
     relationships: [
       { field: 'pageId', relationship: 'page', type: 'belongsTo' },
+      { field: 'messageId', relationship: 'message', type: 'belongsTo' },
       { field: 'eventId', relationship: 'event', type: 'belongsTo' },
       { field: 'workspaceId', relationship: 'workspace', type: 'belongsTo' },
       { field: 'categoryIds', relationship: 'categories', type: 'hasMany' },

@@ -144,6 +144,19 @@ describe('schemaToJsonSchema()', () => {
     assert.ok('age' in props)
   })
 
+  test('should allow any extra keys of a loose object with additionalProperties true', () => {
+    const schema = z.object({
+      content: z.looseObject({ html: z.string().optional() }).optional(),
+      settings: z.looseObject({}).nullable().optional(),
+    })
+
+    const props = schemaToJsonSchema(schema).properties as Record<string, Record<string, unknown>>
+    const settings = (props.settings.anyOf as Record<string, unknown>[])[0]
+
+    assert.strictEqual(props.content.additionalProperties, true)
+    assert.strictEqual(settings.additionalProperties, true)
+  })
+
   test('should remove $schema key', () => {
     const schema = z.object({ name: z.string() })
     const result = schemaToJsonSchema(schema)
