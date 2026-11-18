@@ -26,6 +26,10 @@ In practice:
 
 When unsure whether something is OK to include, leave it out.
 
+## Comments
+
+Code is self-documenting: names, types and small functions carry the meaning. A comment is the rare exception: one line in English giving the _why_ the code can't show, such as a business rule, a workaround or a constraint a reader would otherwise undo. A change's history lives in the commit message and PR description. Keep comments as sparse as in the existing code.
+
 ## Commands
 
 | Command         | Purpose                       |
