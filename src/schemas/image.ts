@@ -60,7 +60,20 @@ export const ImageSchema = z.object({
   link: z.string().meta({
     label: 'Link',
   }),
+  alt: z.string().meta({
+    label: 'Alt text',
+  }),
 })
+
+const imageTextFields = {
+  title: z.string().optional().meta({ label: 'Title' }),
+  description: z.string().max(255).optional().meta({ label: 'Description' }),
+  link: z
+    .string()
+    .optional()
+    .meta({ label: 'Link', description: 'URL the image links to, where the block shows links.' }),
+  alt: z.string().optional().meta({ label: 'Alt text', description: 'Alternative text for screen readers.' }),
+}
 
 export const ImageCreateSchema = z.object({
   type: z.string().meta({ label: 'Image Type' }),
@@ -68,21 +81,28 @@ export const ImageCreateSchema = z.object({
   public_id: z.string().optional().meta({ label: 'Public Id', description: 'Provider-specific image key.' }),
   url: z.string().optional().meta({ label: 'Url' }),
   base64: z.string().optional().meta({ label: 'Base64' }),
-  description: z.string().optional().meta({ label: 'Description' }),
-  title: z.string().optional().meta({ label: 'Title' }),
-  link: z.string().optional().meta({ label: 'Link' }),
+  ...imageTextFields,
   order: z.number().optional().meta({ label: 'Order' }),
   width: z.number().optional().meta({ label: 'Width' }),
   height: z.number().optional().meta({ label: 'Height' }),
-  content: z.looseObject({}).optional().meta({ label: 'Content' }),
+  content: z.looseObject({}).optional().meta({
+    label: 'Content',
+    description:
+      'Provider metadata, e.g. color and blurHash for static images. Set title, description, link and alt with their own fields.',
+  }),
   blockId: z.number().optional().meta({ label: 'Block Id' }),
-  blockStyleId: z.number().optional().meta({ label: 'Block Style Id' }),
   themeId: z.number().optional().meta({ label: 'Theme Id' }),
   eventId: z.number().optional().meta({ label: 'Event Id' }),
   workspaceId: z.number().optional().meta({ label: 'Workspace Id' }),
 })
 
-export const ImageUpdateSchema = ImageCreateSchema.partial()
+// The image file, type and owner are fixed once created; replace an image by deleting it and creating a new one.
+export const ImageUpdateSchema = z.object({
+  ...imageTextFields,
+  order: z.number().optional().meta({ label: 'Order' }),
+  width: z.number().optional().meta({ label: 'Width' }),
+  height: z.number().optional().meta({ label: 'Height' }),
+})
 
 const imagesFindAllSchema = {
   filter: z

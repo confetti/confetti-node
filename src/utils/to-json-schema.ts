@@ -37,6 +37,21 @@ export function schemaToJsonSchema(
       }
       // Strip non-standard .meta() keys from JSON Schema output
       for (const key of metaKeysToStrip) delete ctx.jsonSchema[key]
+      // z.looseObject() emits `additionalProperties: {}`, which some MCP clients reject; `true` means the same
+      const { additionalProperties } = ctx.jsonSchema
+      if (
+        typeof additionalProperties === 'object' &&
+        additionalProperties !== null &&
+        Object.keys(additionalProperties).length === 0
+      ) {
+        ctx.jsonSchema.additionalProperties = true
+        // An empty `properties` makes form-based clients (e.g. MCP Inspector) render a form with no fields
+        // instead of a JSON editor
+        const { properties } = ctx.jsonSchema
+        if (typeof properties === 'object' && properties !== null && Object.keys(properties).length === 0) {
+          delete ctx.jsonSchema.properties
+        }
+      }
     },
   })
 
