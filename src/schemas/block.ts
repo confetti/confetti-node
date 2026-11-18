@@ -85,7 +85,7 @@ const blockStyleSettingsSchema = z
   .optional()
 
 const speakersSettingSchema = z.object({
-  id: z.number().meta({ description: 'Speaker ID.' }),
+  id: z.coerce.number().meta({ description: 'Speaker ID.' }),
   order: z.number(),
   show: z.boolean(),
   isAnnounced: z.boolean().optional(),
@@ -181,9 +181,9 @@ const blockContentSchema = z
         .optional()
         .meta({ description: forTypes(['header']) }),
       logoSize: z
-        .enum(['small', 'medium', 'large'])
+        .string()
         .optional()
-        .meta({ description: forTypes(['header'], 'Defaults to medium.') }),
+        .meta({ description: forTypes(['header'], 'small, medium or large. Defaults to medium.') }),
       coverStyle: z
         .enum(['fullscreen', 'poster', 'compact'])
         .optional()
@@ -192,10 +192,8 @@ const blockContentSchema = z
         .enum(['gradient', 'grid', 'none'])
         .optional()
         .meta({ description: forTypes(['header']) }),
-      shadowOpacity: z
+      shadowOpacity: z.coerce
         .number()
-        .min(0)
-        .max(1)
         .optional()
         .meta({ description: forTypes(['header'], 'From 0 to 1. Defaults to 0.5.') }),
       headerTextColor: z
@@ -211,7 +209,10 @@ const blockContentSchema = z
         .optional()
         .meta({ description: forTypes(['video'], 'ID of the video at the provider.') }),
       videoEmbedType: z
-        .enum(['youtube', 'vimeo', 'vimeo-event', 'facebook', 'twitch'])
+        .preprocess(
+          (value) => (value === '' ? undefined : value),
+          z.enum(['youtube', 'vimeo', 'vimeo-event', 'facebook', 'twitch']).optional(),
+        )
         .optional()
         .meta({ description: forTypes(['video']) }),
       videoEmbedVimeoChat: z
@@ -293,7 +294,7 @@ const blockContentSchema = z
         .string()
         .optional()
         .meta({ description: forTypes(['mailinglist']) }),
-      liveStreamId: z
+      liveStreamId: z.coerce
         .number()
         .optional()
         .meta({ description: forTypes(['live']) }),

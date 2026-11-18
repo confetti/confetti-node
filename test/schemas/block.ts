@@ -72,6 +72,26 @@ describe('block content', () => {
     assert.deepStrictEqual(BlockUpdateSchema.parse({ content }).content, content)
   })
 
+  test('should accept stored content the API accepts', () => {
+    const result = BlockUpdateSchema.parse({
+      status: 'hidden',
+      content: {
+        videoEmbedType: '',
+        speakersSettings: [{ id: '3', order: 1, show: true }],
+        logoSize: 'medium',
+        shadowOpacity: '0.4',
+        liveStreamId: '12',
+      },
+    })
+    // An empty videoEmbedType counts as unset, like in the API
+    assert.deepStrictEqual(JSON.parse(JSON.stringify(result.content)), {
+      speakersSettings: [{ id: 3, order: 1, show: true }],
+      logoSize: 'medium',
+      shadowOpacity: 0.4,
+      liveStreamId: 12,
+    })
+  })
+
   test('should reject an unknown enum value', () => {
     assert.throws(() => BlockUpdateSchema.parse({ content: { textLayout: 'sideways' } }), z.ZodError)
   })
